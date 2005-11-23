@@ -108,7 +108,7 @@
 	<target name="compile" depends="init">
 		<mkdir dir="${dist.dir}/lib"/>
 		<exec executable="perl" output="${dist.dir}/lib/log4js-lib.js">
-			<arg line="-Tw ${tools.dir}/jsjam/jsjam.pl -q ${src.dir}/js/log4js.js" />
+			<arg line="-Tw ${tools.dir}/jsjam/jsjam.pl --quiet --keep-globals --keep-identifiers ${src.dir}/js/log4js.js" />
 		</exec>
 
 	</target>
