@@ -1,0 +1,191 @@
+<?xml version="1.0"?>
+<!-- ====================================================================== 
+     18.11.2005 12:01:30                                                        
+
+     log4js    
+     Logging library for JavaScript which is using almost same API than log4j
+                   
+     Stephan Strittmatter                                                               
+     ====================================================================== -->
+<project name="log4js" default="dist" basedir=".">
+
+	<!-- The build.properties file defines the parth to local jar files -->
+	<property file="build.properties" />
+
+	<property name="version" value="0.1.5" />
+
+	<property name="lib.dir" value="lib" />
+	<property name="dist.dir" value="release" />
+	<property name="src.dir" value="src" />
+	<property name="doc.dir" value="docs" />
+	<property name="tools.dir" value="tools" />
+
+	<property name="log4j.jar" value="${lib.dir}/log4j.jar" />
+
+	<property name="example.src.dir" value="examples" />
+	<property name="example.webapp.dir" value="${dist.dir}/webapp" />
+	<property name="example.war.name" value="log4js-example.war" />
+
+
+	<description>
+            Logging library for JavaScript which is using almost same API than log4j
+    </description>
+
+	<!-- ================================= 
+          target: distribute              
+         ================================= -->
+	<target name="dist" depends="dist.api, dist.doc, dist.example" description="generate distribution og log4js">
+		<echo>generate complete distribution archive: ${dist.dir}/log4js-${version}.zip</echo>
+		<zip destfile="${dist.dir}/log4js-${version}.zip">
+			<fileset dir="${basedir}">
+				<include name="${src.dir}/**" />
+			</fileset>
+			<fileset dir="${dist.dir}">
+				<include name="lib/**" />
+				<include name="docs/**" />
+			</fileset>
+			<fileset file="${dist.dir}/${example.war.name}" />
+
+			<fileset file="CHANGELOG.txt" />
+			<fileset file="INSTALL.txt" />
+			<fileset file="LICENSE.txt" />
+			<fileset file="NOTICE.txt" />
+		</zip>
+	</target>
+
+
+	<!-- ================================= 
+          target: dist.api              
+         ================================= -->
+	<target name="dist.api" depends="init, compile" description="--> distribution archive for API">
+
+	</target>
+
+
+	<!-- ================================= 
+          target: dist.example              
+         ================================= -->
+	<target name="dist.example" depends="init, compile" description="--> distribution WAR for example">
+		<echo>generate example web archive: ${dist.dir}/${example.war.name}</echo>
+
+		<copy todir="${example.webapp.dir}">
+			<fileset dir="${example.src.dir}">
+				<exclude name="**/web.xml" />
+				<exclude name="**/*.bak" />
+			</fileset>
+			<fileset dir="${src.dir}">
+				<exclude name="**/*.bak" />
+			</fileset>
+		</copy>
+
+		<!-- additional libraries -->
+		<copy todir="${example.webapp.dir}/WEB-INF/lib" file="${log4j.jar}" />
+
+		<war destfile="${dist.dir}/${example.war.name}" basedir="${example.src.dir}" webxml="${example.src.dir}/WEB-INF/web.xml" />
+	</target>
+
+
+	<!-- ================================= 
+          target: dist.doc              
+         ================================= -->
+	<target name="dist.doc" depends="init, doc" description="--> generate documentation arcive">
+		<echo>generate documentation archive: ${dist.dir}/log4js-doc-${version}.zip</echo>
+		<copy todir="${dist.dir}/docs">
+			<fileset dir="${doc.dir}">
+				<exclude name="*.bak" />
+			</fileset>
+		</copy>
+		<zip destfile="${dist.dir}/log4js-doc-${version}.zip">
+			<fileset dir="${dist.dir}/docs">
+			</fileset>
+		</zip>
+	</target>
+
+
+	<!-- - - - - - - - - - - - - - - - - - 
+          target: compile                      
+         - - - - - - - - - - - - - - - - - -->
+	<target name="compile" depends="init">
+		<mkdir dir="${dist.dir}/lib"/>
+		<exec executable="perl" output="${dist.dir}/lib/log4js-lib.js">
+			<arg line="-Tw ${tools.dir}/jsjam/jsjam.pl -q ${src.dir}/js/log4js.js" />
+		</exec>
+
+	</target>
+
+	<target name="doc.api" description="generate the API doc" depends="init">
+		<property name="apidoc.dir" value="${dist.dir}/docs/api" />
+
+		<echo>Gererate JSDoc to ${apidoc.dir}</echo>
+		<mkdir dir="${apidoc.dir}" />
+
+		<property name="footer" value="log4js - Logging API for JavaScript" />
+
+		<exec executable="perl">
+			<arg line="${tools.dir}/JSDoc/jsdoc.pl -r &quot;${src.dir}&quot; -d &quot;${apidoc.dir}&quot; -project-name &quot;${ant.project.name} ${version}&quot; -page-footer &quot;${footer}&quot;" />
+		</exec>
+	</target>
+
+	<target name="doc" depends="doc.api" description="generate documentation">
+	</target>
+
+
+	<!-- - - - - - - - - - - - - - - - - - 
+          target: init                      
+         - - - - - - - - - - - - - - - - - -->
+	<target name="init">
+		<mkdir dir="${tools.dir}" />
+		<mkdir dir="${lib.dir}" />
+		<mkdir dir="${dist.dir}" />
+	</target>
+
+	<target name="download-dependencies" depends="init">
+		<setproxy proxyhost="proxy" proxyport="80" />
+
+		<description>
+	          To use this Maven-like freedom with respect to dependency setup,
+	          do the following:
+
+	          - run ant as you normally would, but add the following target to the command
+	            line:
+
+	            download-dependencies
+
+	          For example:
+	             C:>myproject\ant download-dependencies dist
+		</description>
+
+		<!-- for "compile" -->
+		<get dest="${tools.dir}/jsjam/jsjam.pl" usetimestamp="true" ignoreerrors="true" 
+			src="http://www.anvilon.com/software/download/jsjam" />
+		
+		<get dest="${lib.dir}/JSUnit.zip" usetimestamp="true" ignoreerrors="true" 
+			src="http://mesh.dl.sourceforge.net/sourceforge/jsunit/jsunit2_1.zip" verbose="true" />
+		<unzip src="${lib.dir}/JSUnit.zip" dest="${tools.dir}/JSUnit" />
+		
+		<!-- for documentation -->
+		<get dest="${lib.dir}/JSDoc.tgz" usetimestamp="true" ignoreerrors="true" 
+			src="http://mesh.dl.sourceforge.net/sourceforge/jsdoc/JSDoc-1.9.6.1.tgz" verbose="true" />
+		<gunzip src="${lib.dir}/JSDoc.tgz" dest="${tools.dir}/JSDoc" />
+		
+		<get dest="${lib.dir}/apache-forrest.zip" usetimestamp="true" ignoreerrors="true" 
+			src="http://www.artfiles.org/apache.org/forrest/apache-forrest-0.7.zip" />
+		<unzip src="${lib.dir}/apache-forrest.zip" dest="${tools.dir}/apache-forrest" verbose="true" />
+		
+		<!-- for examples -->
+		<get dest="${log4j.jar}" usetimestamp="true" ignoreerrors="true" 
+			src="http://www.ibiblio.org/maven/log4j/jars/log4j-1.2.9.jar" verbose="true" />
+	</target>
+
+
+	<!-- ================================= 
+          target: clean              
+         ================================= -->
+	<target name="clean" description="--> clean the generated files">
+		<delete dir="${dist.dir}" />
+	</target>
+
+
+
+</project>
+
