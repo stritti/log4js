@@ -24,6 +24,10 @@
 		   var windowLog = new Log4js.Logger("windowTest"); 
 		   windowLog.setLevel(Log4js.Level.ALL);
  		   windowLog.addAppender(new ConsoleAppender(windowLog)); //to windowLog to seperate windowLog window
+		   
+		   var alertLog = new Log4js.Logger("alertTest"); 
+		   alertLog.setLevel(Log4js.Level.ALL);
+ 		   alertLog.addAppender(new JSAlertAppender(alertLog));
  		// -->
  		</script>
 	</head>
@@ -93,5 +97,17 @@
 			<input type="button" name="error" value="Error" onclick="windowEventLog.error('I was errored!');return false;" />
 			<input type="button" name="fatal" value="Fatal" onclick="windowEventLog.fatal('I was fataled!');return false;" />
 		</fieldset>	
+		
+		<fieldset><legend>Alert Logging</legend>
+			<input type="text" id="alertMessage" value="add alertLog message" onChange="alertLog.trace(document.getElementById('alertMessage').value);"/>
+			<input type="button" name="trace" value="Trace Message" onClick="alertLog.trace(document.getElementById('alertMessage').value);" />
+			<br />
+			<input type="button" name="trace" value="Trace" onclick="alertLog.trace('I was traced!');return false;" />
+			<input type="button" name="debug" value="Debug" onclick="alertLog.debug('I was debuged!');return false;" />
+			<input type="button" name="info" value="Info" onclick="alertLog.info('I was infoed!');return false;" />
+			<input type="button" name="warn" value="Warn" onclick="alertLog.warn('I was warned!');return false;" />
+			<input type="button" name="error" value="Error" onclick="alertLog.error('I was errored!');return false;" />
+			<input type="button" name="fatal" value="Fatal" onclick="alertLog.fatal('I was fataled!');return false;" />
+		</fieldset>
 	</body>
 </html>
