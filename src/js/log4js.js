@@ -1057,9 +1057,8 @@ JSAlertAppender.prototype = {
 	/** 
 	 * @see Appender#doAppend
 	 */
-	doAppend: function(category, message, level) {
-		var now = new Date();
-		alert(category + " " + now.toLocaleString() + " [" + LogLevel.valueOf(level) + "] " + message);
+	doAppend: function(loggingEvent) {
+		alert(loggingEvent.getRenderedMessage());
 	},
 	/** 
 	 * @see Appender#doClear
