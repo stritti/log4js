@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2002-2004 The Apache Software Foundation or its licensors,
+  as applicable.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!--
+Log4js site.xml
+
+This file contains an outline of the site's information content.  It is used to:
+- Generate the website menus (though these can be overridden - see docs)
+- Provide semantic, location-independent aliases for internal 'site:' URIs, eg
+  <link href="site:changes"> links to changes.html (or ../changes.html if in
+  subdir).
+- Provide aliases for external URLs in the external-refs section.  Eg, <link
+  href="ext:cocoon"> links to http://cocoon.apache.org/
+
+See http://forrest.apache.org/docs/linking.html for more info
+-->
+<site label="Log4js" href="" tab=""
+    xmlns="http://apache.org/forrest/linkmap/1.0"
+    xmlns:ns="http://apache.org/forrest/linkmap/1.0">
+
+    <about label="About">
+       <index label="Index" description="Welcome to Log4js" href="index.html" wholesite="true" />
+       <faq label="FAQ" description="Frequently Asked Questions"  href="faq.html" wholesite="true" />
+       <license label="License" description="License" href="ext:license" />
+		 <downloads label="Downloads" href="ext:log4js.downloads" />
+	    <changes label="Changes" href="changes.html" wholesite="true" />
+	    <todo label="Todos" href="todo.html" wholesite="true" />
+	    <contributors label="Contributors" description="Hall of Fame" href="contributors.html" wholesite="true" />
+	    <links label="Links" description="Further Information" href="links.html" wholesite="true" />
+	    <!--<whole_pdftab label="Tab as PDF" href="pdf-tab.pdf" />-->
+	    <!--<whole_site_pdf label="Whole Site PDF" href="wholesite.pdf"/>-->
+    </about>
+
+    <project label="Project" href="project/" tab="project">
+      <index description="Welcome to Log4js" href="index.html" label="Index" />
+      <viewsvn label="SVN Repository" description="Subversion Repository" href="viewsvn.html"/>
+      <javadocs label="API Documentation" description="Documentation of API" href="ext:apidocs"/>
+     </project>
+
+    <files>
+<!--
+    <hello_print href="hello.pdf" />
+    <test1 href="test1.html" />
+-->
+    </files>
+<!--
+  The href must be wholesite.html/pdf  You can change the labels and node names
+-->
+<!--
+  <all label="All">
+    <whole_site_html label="Whole Site HTML" href="wholesite.html"/>
+    <whole_site_pdf label="Whole Site PDF" href="wholesite.pdf"/>
+  </all>
+-->
+    <external-refs>
+         <log4js.site href="http://log4js.berlios.de" />
+    	  <log4js.develop href="http://developer.berlios.de/projects/log4js/" />
+    	  <log4js.downloads href="http://developer.berlios.de/project/showfiles.php?group_id=5368" />
+    	  <apidocs href="apidocs/index.html"/>
+        <logging.apache.org href="http://logging.apache.org" />
+        <log4j.apache.org href="http://logging.apache.org/log4j" />
+        <license href="http://www.apache.org/licenses/LICENSE-2.0.txt" />
+        <svn href="http://developer.berlios.de/svn/&amp;group_id=5368" />
+        <svnhowto href="http://developer.berlios.de/docman/display_doc.php?docid=394&amp;group_id=2" />
+        <forrest href="http://forrest.apache.org/">
+            <linking href="docs/linking.html" />
+            <validation href="docs/validation.html" />
+            <webapp href="docs/your-project.html#webapp" />
+            <dtd-docs href="docs/dtd-docs.html" />
+        </forrest>
+    </external-refs>
+</site>

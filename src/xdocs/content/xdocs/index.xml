@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2002-2004 The Apache Software Foundation or its licensors,
+  as applicable.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN"
+"http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+  <header>
+    <title>Welcome to Log4js</title>
+
+  <authors>
+      <person email="stritti@users.berlios.de" id="ssr"
+              name="Stephan Strittmatter" />
+    </authors>
+  </header>
+
+  <body>
+    <section id="overview">
+      <title>Overview</title>
+
+      <p>Log4js is a logging API for JavaScript. The main goal is to have a
+      robust and solid logging API which is very simmilar to the Java logging
+      API <a href="ext:log4j.apache.org">Log4j</a>.</p>
+    </section>
+
+    <section id="usage">
+      <title>Usage</title>
+
+      <p>Log4js is a simple API, which could be included in your Scripts:</p>
+      <source>&lt;script src="log4js.js" type="text/javascript"&gt;&lt;/script&gt;
+&lt;script type="text/javascript"&gt;&lt;!-- //
+   //initialize the logger with your category
+   var log = new Log4js.Logger("ajaxTest");
+   //set the level of logging
+   log.setLevel(Log4js.Level.ALL);
+   //set the Appender to write the log to
+   log.addAppender(new AjaxAppender(log, "./log4j.jsp"));
+// --&gt;
+&lt;/script&gt;
+</source>
+
+      <p>Now you can call the log in your logic like follow line:</p>
+
+      <source>&lt;input type="button" name="trace" value="Trace" 
+  onclick="log.trace('I was traced!');return false;" /&gt;</source>
+    </section>
+    <section id="architecture">
+    	<title>Architecture</title>
+    	<p><img src="architecture.png" alt="Architecture of Log4js"/></p>
+    	
+    </section>
+  </body>
+</document>
