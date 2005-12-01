@@ -9,7 +9,7 @@ Using log4js
    PATH_OF_YOUR_CHOICE, untarring the distribution file should create
    a logging-log4js-VERSION directory, where VERSION is the log4js
    version number, under PATH_OF_YOUR_CHOICE. We will refer to the
-   directory PATH_OF_YOUR_CHOICE/logging-log4j-VERSION/ as $LOG4JS_HOME/.
+   directory PATH_OF_YOUR_CHOICE/log4js-VERSION/ as $LOG4JS_HOME/.
 
 @TODO
 
@@ -42,13 +42,11 @@ requirements:
     AJAXAppender example to log the messages on server side.
 
 
-==============
+===============
 Building log4js
-==============
+===============
     
 Like most java appilicatios today, log4js relies on ANT as its build
 tool. ANT is availale from "http://ant.apache.org/".  ANT
 requires a build file called build.xml which is part of this
-distribution. Required components from other projects are specified in
-the build.properties and example of which is supplied in the
-build.properties.sample file.
+distribution.

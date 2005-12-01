@@ -187,7 +187,8 @@
         
         <actions priority="medium">
             <action context="design" dev="open" type="add"> Add Layout 
-                capability. (Probably RegEx required, infos see: http://www.regular-expressions.info/javascript.html).
+                capability like log4j (http://logging.apache.org/log4j/docs/api/org/apache/log4j/Layout.html).
+                Probably RegEx required, infos see: http://www.regular-expressions.info/javascript.html.
             </action>
             <action context="docs" dev="open" type="add"> 
             	Implement Mozilla JSConsole Appender. 
