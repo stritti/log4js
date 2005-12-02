@@ -182,7 +182,7 @@
 		<property name="footer" value="log4js - Logging API for JavaScript" />
 
 		<exec executable="perl">
-			<arg line="${tools.dir}/JSDoc/jsdoc.pl -r &quot;${src.dir}&quot; -d &quot;${apidoc.dir}&quot; -project-name &quot;${ant.project.name} ${version}&quot; -page-footer &quot;${footer}&quot;" />
+			<arg line="${tools.dir}/JSDoc/jsdoc.pl -r &quot;${src.dir}/js&quot; -d &quot;${apidoc.dir}&quot; -project-name &quot;${ant.project.name} ${version}&quot; -page-footer &quot;${footer}&quot;" />
 		</exec>
 	</target>
 
