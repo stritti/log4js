@@ -108,22 +108,19 @@ which will be used to configure the chosen Forrest skin.
 
   <!-- optional host logo (e.g. sourceforge logo)
        default skin: renders it at the bottom-left corner -->
-  <host-url>http://develop.berlinos.de</host-url>
+  <host-url>http://developer.berlios.de/projects/log4js/</host-url>
   <host-logo>http://developer.berlios.de/bslogo.php?group_id=5368</host-logo>
   
   <!-- relative url of a favicon file, normally favicon.ico -->
   <favicon-url></favicon-url>
 
   <!-- The following are used to construct a copyright statement -->
-
   <year>2005</year>
-
   <vendor>Stephan Strittmatter</vendor>
 
   <!-- The optional copyright-link URL will be used as a link in the
     copyright statement
    -->
-
   <copyright-link>http://www.apache.org/licenses/LICENSE-2.0.html</copyright-link>
 
   <!-- Some skins use this to form a 'breadcrumb trail' of links.
@@ -139,10 +136,8 @@ which will be used to configure the chosen Forrest skin.
   -->
 
   <trail location="none">
-    <link1 href="http://log4js.berlios.de/" name="Log4js" />
-
-    <link2 href="http://logging.apache.org/" name="logging.apache.org" />
-
+    <link1 href="http://logging.apache.org/" name="logging.apache.org" />
+    <link2 href="http://log4js.berlios.de/" name="Log4js" />   
     <link3 href="" name="" />
   </trail>
 
@@ -438,7 +433,7 @@ which will be used to configure the chosen Forrest skin.
       will be generated. This latter can be disabled.
     -->
 
-    <disable-copyright-footer>false</disable-copyright-footer>
+    <disable-copyright-footer>true</disable-copyright-footer>
   </pdf>
 
   <!-- 
