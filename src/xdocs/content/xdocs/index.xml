@@ -59,7 +59,9 @@
     </section>
     <section id="architecture">
     	<title>Architecture</title>
-    	<p><img src="architecture.png" alt="Architecture of Log4js"/></p>
+    	<p><img src="architecture.png" alt="Architecture of Log4js" title="Log4js Architecture"/>
+    	    
+    	 </p>
     	
     </section>
   </body>
