@@ -58,9 +58,8 @@ var Log4js = {
 }
 
 /**
- * Log4js.Level Enumeration
+ * Log4js.Level Enumeration. Do not use directly. Use static objects instead.
  * @constructor
- * @private
  * @param {Number} level
  * @param {String} levelString
  */
@@ -71,7 +70,7 @@ Log4js.Level = function(level, levelStr) {
 
 Log4js.Level.prototype =  {
 	/** 
-	 * converts given String to Level
+	 * converts given String to corresponding Level
 	 * @param {String} sArg String value of Level
 	 * @param {Log4js.Level} defaultLevel default Level, if no String representation
 	 * @return Level object
@@ -162,14 +161,50 @@ Log4js.Level.ALL_INT = Number.MIN_VALUE;
 /** 
  * Logging Level OFF - all disabled
  * @type Log4js.Level
+ * @static
  */
 Log4js.Level.OFF = new Log4js.Level(Log4js.Level.OFF_INT, "OFF");
+/** 
+ * Logging Level Fatal
+ * @type Log4js.Level
+ * @static
+ */
 Log4js.Level.FATAL = new Log4js.Level(Log4js.Level.FATAL_INT, "FATAL");
+/** 
+ * Logging Level Error
+ * @type Log4js.Level
+ * @static
+ */
 Log4js.Level.ERROR = new Log4js.Level(Log4js.Level.ERROR_INT, "ERROR"); 
+/** 
+ * Logging Level Warn
+ * @type Log4js.Level
+ * @static
+ */
 Log4js.Level.WARN = new Log4js.Level(Log4js.Level.WARN_INT, "WARN"); 
+/** 
+ * Logging Level Info
+ * @type Log4js.Level
+ * @static
+ */
 Log4js.Level.INFO = new Log4js.Level(Log4js.Level.INFO_INT, "INFO");     
+/** 
+ * Logging Level Debug
+ * @type Log4js.Level
+ * @static
+ */
 Log4js.Level.DEBUG = new Log4js.Level(Log4js.Level.DEBUG_INT, "DEBUG");  
+/** 
+ * Logging Level Trace
+ * @type Log4js.Level
+ * @static
+ */
 Log4js.Level.TRACE = new Log4js.Level(Log4js.Level.TRACE_INT, "TRACE");  
+/** 
+ * Logging Level All - All traces are enabled
+ * @type Log4js.Level
+ * @static
+ */
 Log4js.Level.ALL = new Log4js.Level(Log4js.Level.ALL_INT, "ALL"); 
 
 /**
@@ -211,7 +246,7 @@ Log4js.CustomEvent.prototype = {
 				this.listeners[i](handler)
 			}
 			catch (e) {
-				alert("Could not run the listener " + this.listeners[i] + ". " + e.message)
+				alert("Could not run the listener " + this.listeners[i] + ". \n" + e)
 			}
 		}
 	},
@@ -458,7 +493,57 @@ Appender.prototype = {
 	/** 
 	 * clears the Appender
 	 */
-	doClear: function() {}
+	doClear: function() {},
+	
+	/**
+	 * Set the Layout for this appender.
+	 * @param {Layout} 
+	 */
+	setLayout: function(layout){
+		this.layout = layout;
+	} 
+}
+
+/**
+ * Interface for Layouts.
+ * Use this Layout as "interface" for other Layouts. It is doing nothing.
+ *
+ * @constructor
+ * @author Stephan Strittmatter
+ */
+function Layout() {}
+Layout.prototype = {
+	/** 
+	 * Implement this method to create your own layout format.
+	 * @param {Log4js.LoggingEvent} loggingEvent loggingEvent to format
+	 * @return formatted String
+	 * @type String
+	 */
+	format: function(loggingEvent) {
+		return "";
+	},
+	/** 
+	 * Returns the content type output by this layout. 
+	 * @return The base class returns "text/plain".
+	 * @type String
+	 */
+	getContentType: function() {
+		return "text/plain";
+	},
+	/** 
+	 * @return Returns the header for the layout format. The base class returns null.
+	 * @type String
+	 */
+	getHeader: function() {
+		return null;
+	},
+	/** 
+	 * @return Returns the footer for the layout format. The base class returns null.
+	 * @type String
+	 */
+	getFooter: function() {
+		return null;
+	}
 }
 
 /**
@@ -482,6 +567,7 @@ ConsoleAppender = function(logger, inline) {
 	 * @type Log4js.Logger
 	 */
 	this.logger = logger;
+	this.layout = new SimpleLayout();
 	this.inline = inline || false;
 	
 	if(this.inline) {
@@ -734,7 +820,7 @@ ConsoleAppender.prototype = {
 			style += 'color:yellow';
 		}
 	
-		this.output(loggingEvent.getRenderedMessage(), style);	
+		this.output(this.layout.format(loggingEvent), style);	
 	},
 
 	/**
@@ -742,6 +828,12 @@ ConsoleAppender.prototype = {
 	 */
 	doClear : function() {
 		this.outputElement.innerHTML = "";
+	},
+	/**
+	 * @see Appender#setLayout
+	 */
+	setLayout: function(layout){
+		this.layout = layout;
 	},
 	/**
 	 * @private
@@ -845,7 +937,15 @@ MetatagAppender.prototype = {
 };
 
 /**
- * AJAX Appender sending logging messages asynchron via XMLHttpREquest to server
+ * AJAX Appender sending <code>Log4js.LoggingEvent</code> asynchron via 
+ * XMLHttpREquest to server.<br />
+ * The <code>Log4js.LoggingEvent</code> is splitted in request parameters:
+ * <ul>
+ * <li><code>log4js.client</code>: navigator.userAgent</li>
+ * <li><code>log4js.category</code>: loggingEvent.categoryName</li>
+ * <li><code>log4js.level</code>: loggingEvent.level.toString()</li>
+ * <li><code>log4js.msg</code>: loggingEvent.message</li>
+ * </ul>
  *
  * @extends Appender 
  * @constructor
@@ -860,12 +960,18 @@ function AjaxAppender(logger, loggingUrl) {
 	/**
 	 * set reference to calling logger
 	 * @type Log4js.Logger
+	 * @private
 	 */
 	this.logger = logger;
 	/**
 	 * @type XMLHttpRequest
+	 * @private
 	 */
 	this.httpRequest = false;
+	/**
+	 * @type String
+	 * @private
+	 */
 	this.loggingUrl = loggingUrl || "log4js.jsp";
 
 	if (window.XMLHttpRequest) { // Mozilla, Safari,...
@@ -940,6 +1046,7 @@ function FileAppender(logger, file) {
 	 * @type Log4js.Logger
 	 */
 	this.logger = logger;
+	this.layout = new SimpleLayout();
 	
 	this.file = file || "C:\\log4js.log";
 	try{
@@ -957,7 +1064,7 @@ FileAppender.prototype = {
 			// try opening existing file, create if needed
 			var fileHandle = this.fso.OpenTextFile(this.file, 8, true);        
 			// write out our data
-			fileHandle.WriteLine(loggingEvent.getRenderedMessage());
+			fileHandle.WriteLine(this.layout.format(loggingEvent));
 			fileHandle.close();   
 		} catch (e) {}
 	},
@@ -971,6 +1078,12 @@ FileAppender.prototype = {
 		} catch (e) {
 			
 		}
+	},
+	/**
+	 * @see Appender#setLayout
+	 */
+	setLayout: function(layout){
+		this.layout = layout;
 	}
 };
 
@@ -992,6 +1105,7 @@ function WindowsEventAppender(logger) {
 	 * @type Log4js.Logger
 	 */
 	this.logger = logger;
+	this.layout = new SimpleLayout();
 	
 	try {
 		this.shell = new ActiveXObject("WScript.Shell");
@@ -1024,7 +1138,7 @@ WindowsEventAppender.prototype = {
 		}
 		
 		try {
-			this.shell.LogEvent(winLevel, loggingEvent.getRenderedMessage());
+			this.shell.LogEvent(winLevel, this.level.format(loggingEvent));
 		} catch(e) {
 				
 		}
@@ -1032,7 +1146,13 @@ WindowsEventAppender.prototype = {
 	/**
 	 * @see Appender#doClear
 	 */
-	doClear: function() {}
+	doClear: function() {},
+	/**
+	 * @see Appender#setLayout
+	 */
+	setLayout: function(layout){
+		this.layout = layout;
+	} 
 };
 
 /**
@@ -1040,7 +1160,7 @@ WindowsEventAppender.prototype = {
  * @constructor
  * @extends Appender  
  * @param logger log4js instance this appender is attached to
- * @author S?bastien LECACHEUR
+ * @author S&eacute;bastien LECACHEUR
  */
 function JSAlertAppender(logger) {
 	// add listener to the logger methods
@@ -1051,6 +1171,7 @@ function JSAlertAppender(logger) {
 	 * @type Log4js.Logger
 	 */
 	this.logger = logger;
+	this.layout = new SimpleLayout();
 };
  
 JSAlertAppender.prototype = {
@@ -1058,12 +1179,19 @@ JSAlertAppender.prototype = {
 	 * @see Appender#doAppend
 	 */
 	doAppend: function(loggingEvent) {
-		alert(loggingEvent.getRenderedMessage());
+		alert(this.layout.format(loggingEvent));
 	},
 	/** 
 	 * @see Appender#doClear
 	 */
-	doClear: function() {}
+	doClear: function() {},
+	
+	/**
+	 * @see Appender#setLayout
+	 */
+	setLayout: function(layout){
+		this.layout = layout;
+	} 
 };
 
 /**
@@ -1091,5 +1219,95 @@ if(!Function.prototype.bind) {
 	  return function() {
 		return __method.apply(object, arguments);
 	  }
+	}
+}
+
+/**
+ * SimpleLayout consists of the level of the log statement, followed by " - " 
+ * and then the log message itself. For example,
+ * <code>DEBUG - Hello world</code>
+ *
+ * @constructor
+ * @extends Layout
+ * @author Stephan Strittmatter
+ */
+function SimpleLayout() {
+	this.LINE_SEP  = "\n";
+	this.LINE_SEP_LEN = 1;
+}
+SimpleLayout.prototype = {
+	/** 
+	 * Implement this method to create your own layout format.
+	 * @param {Log4js.LoggingEvent} loggingEvent loggingEvent to format
+	 * @return formatted String
+	 * @type String
+	 */
+	format: function(loggingEvent) {
+		return loggingEvent.level.toString() + " - " + loggingEvent.message + this.LINE_SEP;
+	},
+	/** 
+	 * Returns the content type output by this layout. 
+	 * @return The base class returns "text/plain".
+	 * @type String
+	 */
+	getContentType: function() {
+		return "text/plain";
+	},
+	/** 
+	 * @return Returns the header for the layout format. The base class returns null.
+	 * @type String
+	 */
+	getHeader: function() {
+		return null;
+	},
+	/** 
+	 * @return Returns the footer for the layout format. The base class returns null.
+	 * @type String
+	 */
+	getFooter: function() {
+		return null;
+	}
+}	
+/**
+ * BasicLayout 
+ *
+ * @constructor
+ * @extends Layout
+ * @author Stephan Strittmatter
+ */
+function BasicLayout() {
+	this.LINE_SEP  = "\n";
+}
+BasicLayout.prototype = {
+	/** 
+	 * Implement this method to create your own layout format.
+	 * @param {Log4js.LoggingEvent} loggingEvent loggingEvent to format
+	 * @return formatted String
+	 * @type String
+	 */
+	format: function(loggingEvent) {
+		return this.categoryName + "~" + this.startTime.toLocaleString() + " [" + this.level.toString() + "] " + this.message + this.LINE_SEP;
+	},
+	/** 
+	 * Returns the content type output by this layout. 
+	 * @return The base class returns "text/plain".
+	 * @type String
+	 */
+	getContentType: function() {
+		return "text/plain";
+	},
+	/** 
+	 * @return Returns the header for the layout format. The base class returns null.
+	 * @type String
+	 */
+	getHeader: function() {
+		return null;
+	},
+	/** 
+	 * @return Returns the footer for the layout format. The base class returns null.
+	 * @type String
+	 */
+	getFooter: function() {
+		return null;
 	}
 }
