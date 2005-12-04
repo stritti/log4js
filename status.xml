@@ -38,7 +38,24 @@
     </contexts>
     <changes>
         <!-- Add new releases here -->
-        <release version="0.1.5-dev" date="unreleased">
+       <release version="0.2.0-dev" date="unreleased">
+            <notes>
+                <section>
+                    <title></title>
+                    <p>
+                    </p>
+                </section>
+            </notes>
+            <action dev="ssr" type="add" context="code" importance="medium"> 
+                Layout added to support different Layouts of logging output.
+            </action>
+            <action dev="ssr" type="add" context="code" importance="medium"> 
+                SimpleLayout and BasicLayout as first implementation of Layouts
+                added.
+            </action>            
+		</release>
+			       
+        <release version="0.1.5" date="2005-12-01">
             <notes>
                 <section>
                     <title></title>
@@ -181,10 +198,7 @@
             
         </release>          
     </changes>
-    <todo>
-        <actions priority="high">
-        </actions>
-        
+    <todo>        
         <actions priority="medium">
             <action context="design" dev="open" type="add"> Add Layout 
                 capability like log4j (http://logging.apache.org/log4j/docs/api/org/apache/log4j/Layout.html).
@@ -197,9 +211,9 @@
             	Implement log4js.properties feature to config log4js at central place.
             	Probably the properties-file has to be located at {web-root}/js/log4js.properties?
             </action>
-        </actions>
-        
-        <actions priority="low">
+            <action context="code" dev="open" type="add">
+            	Add JSUnit tests.
+            </action>
         </actions>
     </todo>
 </status>
