@@ -48,8 +48,9 @@ See http://forrest.apache.org/docs/linking.html for more info
     <project label="Project" href="project/" tab="project">
       <index description="Welcome to Log4js" href="index.html" label="Index" />
       <viewsvn label="SVN Repository" description="Subversion Repository" href="viewsvn.html"/>
+      <javadocs label="Mailing Lists" description="Mailing Lists for Log4js" href="mailinglists.html"/>
       <javadocs label="API Documentation" description="Documentation of API" href="ext:apidocs"/>
-      <berlios label="BerliOS Project" description="Project page at BerliOS" href="ext:log4js.develop"/>
+      <berlios label="BerliOS Hosting" description="Hosting of Project at BerliOS" href="ext:log4js.develop"/>
      </project>
 
     <files>
