@@ -66,7 +66,7 @@ var Log4js = {
 Log4js.Level = function(level, levelStr) {
 	this.level = level;
 	this.levelStr = levelStr;
-};
+}
 
 Log4js.Level.prototype =  {
 	/** 
@@ -223,17 +223,17 @@ Log4js.CustomEvent.prototype = {
  	 * @param method method to be added
  	 */ 
 	addListener : function(method) {
-		this.listeners.push(method)
+		this.listeners.push(method);
 	},
 
  	/**
  	 * @param method method to be removed
  	 */ 
 	removeListener : function(method) {
-		var foundIndexes = this._findListenerIndexes(method)
+		var foundIndexes = this._findListenerIndexes(method);
 
 		for(var i = 0; i < foundIndexes.length; i++) {
-			this.listeners.splice(foundIndexes[i], 1)
+			this.listeners.splice(foundIndexes[i], 1);
 		}
 	},
 
@@ -243,10 +243,10 @@ Log4js.CustomEvent.prototype = {
 	dispatch : function(handler) {
 		for(var i = 0; i < this.listeners.length; i++) {
 			try {
-				this.listeners[i](handler)
+				this.listeners[i](handler);
 			}
 			catch (e) {
-				alert("Could not run the listener " + this.listeners[i] + ". \n" + e)
+				alert("Could not run the listener " + this.listeners[i] + ". \n" + e);
 			}
 		}
 	},
@@ -256,16 +256,17 @@ Log4js.CustomEvent.prototype = {
 	 * @param method
 	 */
 	_findListenerIndexes : function(method) {
-		var indexes = []
+		var indexes = [];
 		for(var i = 0; i < this.listeners.length; i++) {			
 			if (this.listeners[i] == method) {
-				indexes.push(i)
+				indexes.push(i);
 			}
 		}
 
-		return indexes
+		return indexes;
 	}
 }
+
 /**
  * Models a logging event
  * @constructor
@@ -308,6 +309,7 @@ Log4js.LoggingEvent.prototype = {
 	 * Returns the layouted message line
 	 * @return layouted Message
 	 * @type String
+	 * @deprecated use Layout instead.
 	 */
 	getRenderedMessage: function() {
 		return	this.categoryName + "~" + this.startTime.toLocaleString() + " [" + this.level.toString() + "] " + this.message;
@@ -484,6 +486,7 @@ function Appender(logger) {
 	 */
 	this.logger = logger;
 }
+
 Appender.prototype = {
 	/** 
 	 * appends the given loggingEvent appender specific
@@ -502,7 +505,7 @@ Appender.prototype = {
 	setLayout: function(layout){
 		this.layout = layout;
 	} 
-}
+};
 
 /**
  * Interface for Layouts.
@@ -511,7 +514,7 @@ Appender.prototype = {
  * @constructor
  * @author Stephan Strittmatter
  */
-function Layout() {}
+function Layout() {};
 Layout.prototype = {
 	/** 
 	 * Implement this method to create your own layout format.
@@ -544,7 +547,7 @@ Layout.prototype = {
 	getFooter: function() {
 		return null;
 	}
-}
+};
 
 /**
  * Console Appender writes the logs to a console.  If "useWindow" is
@@ -558,7 +561,7 @@ Layout.prototype = {
  * @author Corey Johnson - original console code in Lumberjack (http://gleepglop.com/javascripts/logger/)
  * @author Seth Chisamore - adapted for use as a log4js appender
  */
-ConsoleAppender = function(logger, inline) {
+function ConsoleAppender(logger, inline) {
 	// add  listener to the logger methods
 	logger.onlog.addListener(this.doAppend.bind(this));
 	logger.onclear.addListener(this.doClear.bind(this));
@@ -574,7 +577,7 @@ ConsoleAppender = function(logger, inline) {
 		Log4js.attachEvent(window, 'load', this.initialize.bind(this));
 	}
 }
-
+ConsoleAppender.superclass = Appender.prototype;
 ConsoleAppender.prototype = {  
 
 	commandHistory : [],
@@ -904,7 +907,6 @@ function MetatagAppender(logger) {
 	 */
 	this.logger = logger;
 }
-
 MetatagAppender.prototype = {
 	/**
 	 * @param loggingEvent event to be logged
@@ -934,7 +936,7 @@ MetatagAppender.prototype = {
 	 * @see Appender#doClear
 	 */	
 	doClear: function() {}
-};
+}
 
 /**
  * AJAX Appender sending <code>Log4js.LoggingEvent</code> asynchron via 
@@ -991,7 +993,7 @@ function AjaxAppender(logger, loggingUrl) {
 	}else{
 	//	this.httpRequest.onreadystatechange = this.logged;
 	}
-};
+}
 
 AjaxAppender.prototype = {
 	/**
@@ -1025,7 +1027,7 @@ AjaxAppender.prototype = {
  	 * @see Appender#doClear
 	 */
 	doClear: function() {}
-};
+}
 
 /**
  * File Appender writing the logs to a text file.
@@ -1052,7 +1054,7 @@ function FileAppender(logger, file) {
 	try{
 		this.fso = new ActiveXObject("Scripting.FileSystemObject");
 	} catch(e){}
-};
+}
 
 FileAppender.prototype = {
 	/**
@@ -1085,7 +1087,7 @@ FileAppender.prototype = {
 	setLayout: function(layout){
 		this.layout = layout;
 	}
-};
+}
 
 /**
  * Windows Event Appender writes the logs to the Windows Event log.
@@ -1110,7 +1112,7 @@ function WindowsEventAppender(logger) {
 	try {
 		this.shell = new ActiveXObject("WScript.Shell");
 	} catch(e) {}
-};
+}
 
 WindowsEventAppender.prototype = {
 	/**
@@ -1153,7 +1155,7 @@ WindowsEventAppender.prototype = {
 	setLayout: function(layout){
 		this.layout = layout;
 	} 
-};
+}
 
 /**
  * JS Alert Appender writes the logs to the JavaScript alert dialog box
@@ -1172,7 +1174,7 @@ function JSAlertAppender(logger) {
 	 */
 	this.logger = logger;
 	this.layout = new SimpleLayout();
-};
+}
  
 JSAlertAppender.prototype = {
 	/** 
@@ -1192,7 +1194,78 @@ JSAlertAppender.prototype = {
 	setLayout: function(layout){
 		this.layout = layout;
 	} 
+}
+
+/**
+ * Appender writes the logs to the JavaScript console of Mozilla browser
+ * More infos: http://kb.mozillazine.org/index.php?title=JavaScript_Console&redirect=no
+ * PLEASE NOTE - Only works in Mozilla browser
+ * @constructor
+ * @extends Appender  
+ * @param logger log4js instance this appender is attached to
+ * @author Stephan Strittmatter
+ */
+MozJSConsoleAppender.superclass = Appender.prototype;
+function MozJSConsoleAppender(logger) {
+	// add listener to the logger methods
+	logger.onlog.addListener(this.doAppend.bind(this));
+	logger.onclear.addListener(this.doClear.bind(this));
+
+	this.logger = logger;
+	this.layout = new SimpleLayout();
+	netscape.security.PrivilegeManager.enablePrivilege('UniversalXPConnect');
+	this.jsConsole = Components.classes["@mozilla.org/consoleservice;1"]
+						.getService(Components.interfaces.nsIConsoleService);
+	this.scriptError = Components.classes["@mozilla.org/scripterror;1"]
+	                    .createInstance(Components.interfaces.nsIScriptError);
 };
+ 
+MozJSConsoleAppender.prototype = {
+	/** 
+	 * @see Appender#doAppend
+	 */
+	doAppend: function(loggingEvent) {
+		netscape.security.PrivilegeManager.enablePrivilege('UniversalXPConnect');
+		this.scriptError.init(this.layout.format(loggingEvent), null, null, null, 
+	                   null, this.getFlag(loggingEvent), loggingEvent.categoryName);
+		this.jsConsole.logMessage(this.scriptError);
+	},
+	/** 
+	 * @see Appender#doClear
+	 */
+	doClear: function() {},
+	/**
+	 * @see Appender#setLayout
+	 */
+	setLayout: function(layout){
+		this.layout = layout;
+	},
+	/**
+	 * map Log4js.Level to jsConsole Flag
+	 * @private
+	 */	
+	getFlag: function(loggingEvent)
+	{
+		var retval;
+		switch (loggingEvent.level) {	
+			case Log4js.Level.FATAL:
+				retval = 2;//nsIScriptError.exceptionFlag = 2
+				break;
+			case Log4js.Level.ERROR:
+				retval = 0;//nsIScriptError.errorFlag
+				break;
+			case Log4js.Level.WARN:
+				retval = 1;//nsIScriptError.warningFlag = 1
+				break;
+			default:
+				retval = 1;//nsIScriptError.warningFlag = 1
+				break;
+		}
+		//nsIScriptError.strictFlag = 4
+		
+		return retval;		
+	}
+}
 
 /**
  * Functions taken from Prototype library, 
