@@ -97,7 +97,7 @@
             <action dev="ssr" type="add" context="admin" importance="medium"> 
                 ANT build.xml created for build processes.
             </action> 
-            <action dev="ssr" type="add" context="docu" importance="medium"> 
+            <action dev="ssr" type="add" context="docs" importance="medium"> 
                 Forrest capabilities added to generate web site doumentation
             </action>                         
         </release>
@@ -214,6 +214,10 @@
             <action context="code" dev="open" type="add">
             	Add JSUnit tests.
             </action>
+            <action context="docs" dev="open" type="add">
+                Matrix of supported browsers/environments required. Probably someone
+                could help on non-Windows platforms?
+            </action>            
         </actions>
     </todo>
 </status>
