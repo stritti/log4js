@@ -1359,7 +1359,7 @@ BasicLayout.prototype = {
 	 * @type String
 	 */
 	format: function(loggingEvent) {
-		return this.categoryName + "~" + this.startTime.toLocaleString() + " [" + this.level.toString() + "] " + this.message + this.LINE_SEP;
+		return loggingEvent.categoryName + "~" + loggingEvent.startTime.toLocaleString() + " [" + loggingEvent.level.toString() + "] " + loggingEvent.message + this.LINE_SEP;
 	},
 	/** 
 	 * Returns the content type output by this layout. 
@@ -1383,4 +1383,4 @@ BasicLayout.prototype = {
 	getFooter: function() {
 		return null;
 	}
-}
+}                            
