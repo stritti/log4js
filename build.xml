@@ -33,14 +33,14 @@
 
 	<property name="version" value="0.1.5" />
 
-	<property name="src.dir" value="src" />
+	<property name="src.dir" value="${basedir}/src" />
 	<property name="src.js.dir" value="${src.dir}/js" />
 
 	<property name="lib.dir" value="lib" />
 
-	<property name="tools.dir" value="tools" />
+	<property name="tools.dir" value="${basedir}/tools" />
 
-	<property name="doc.dir" value="docs" />
+	<property name="doc.dir" value="${basedir}/docs" />
 	<property name="xdoc.dir" value="${src.dir}/xdocs" />
 	<!-- FORREST_HOME must be set as an environment variable -->
 	<property name="forrest.home" value="${env.FORREST_HOME}" />
@@ -60,21 +60,21 @@
 	<property name="release.dir" value="release" />
 
 
-    <!-- ================================= 
+	<!-- ================================= 
           target: release              
          ================================= -->
-    <target name="release" depends="dist" description="--> create release">
+	<target name="release" depends="dist" description="--> create release">
 		<echo>generate complete distribution archive: ${release.dir}/log4js-${version}.zip</echo>
-    	
-    	<mkdir dir="${release.dir}" />
-		
-    	<zip destfile="${release.dir}/log4js-${version}.zip">
+
+		<mkdir dir="${release.dir}" />
+
+		<zip destfile="${release.dir}/log4js-${version}.zip">
 			<fileset dir="${basedir}">
 				<include name="${src.dir}/**" />
 			</fileset>
 			<fileset dir="${basedir}">
 				<include name="${example.src.dir}/**" />
-			</fileset>			
+			</fileset>
 			<fileset dir="${dist.dir}">
 				<include name="lib/**" />
 				<include name="docs/**" />
@@ -85,8 +85,8 @@
 			<fileset file="INSTALL.txt" />
 			<fileset file="LICENSE.txt" />
 			<fileset file="NOTICE.txt" />
-		</zip>  
-
+		</zip>
+		<!--
     	<tar compression="gzip" destfile="${release.dir}/log4js-${version}.tar.gz" >
 			<fileset dir="${basedir}">
 				<include name="${src.dir}/**" />
@@ -105,7 +105,8 @@
 			<fileset file="LICENSE.txt" />
 			<fileset file="NOTICE.txt" />
 		</tar>     		
-    </target>
+-->
+	</target>
 
 	<!-- ================================= 
           target: distribute              
@@ -151,11 +152,13 @@
          ================================= -->
 	<target name="dist.doc" depends="init, doc" description="--> generate documentation arcive">
 		<echo>generate documentation archive: ${dist.dir}/log4js-doc-${version}.zip</echo>
+		<!--
 		<copy todir="${dist.dir}/docs">
 			<fileset dir="${doc.dir}">
 				<exclude name="*.bak" />
 			</fileset>
 		</copy>
+		-->
 		<zip destfile="${dist.dir}/log4js-doc-${version}.zip">
 			<fileset dir="${dist.dir}/docs">
 			</fileset>
@@ -166,13 +169,16 @@
 	<!-- - - - - - - - - - - - - - - - - - 
           target: compile                      
          - - - - - - - - - - - - - - - - - -->
-	<target name="compile" depends="init">
+	<target name="compile" depends="init, jslint">
 		<mkdir dir="${dist.dir}/lib" />
 		<exec executable="perl" output="${dist.dir}/lib/log4js-lib.js">
 			<arg line="-Tw ${tools.dir}/jsjam/jsjam.pl --quiet --keep-globals --keep-identifiers ${src.js.dir}/log4js.js" />
 		</exec>
 	</target>
 
+    <!-- ================================= 
+          target: doc.api              
+         ================================= -->
 	<target name="doc.api" description="generate the API doc" depends="init">
 		<property name="apidoc.dir" value="${dist.dir}/docs/api" />
 
@@ -185,6 +191,16 @@
 			<arg line="${tools.dir}/JSDoc/jsdoc.pl -r &quot;${src.dir}/js&quot; -d &quot;${apidoc.dir}&quot; -project-name &quot;${ant.project.name} ${version}&quot; -page-footer &quot;${footer}&quot;" />
 		</exec>
 	</target>
+	
+	
+    <!-- ================================= 
+          target: jslint              
+         ================================= -->
+    <target name="jslint" depends="init" description="--> verify syntax of JavaScripts">
+        <exec executable="${tools.dir}/jsl/jsl.exe" failonerror="true">
+        	<arg  line="conf ${tools.dir}/jsl/jsl.conf process ${src.js.dir}/*.js" />
+        </exec>
+    </target>
 
 	<target name="doc" depends="doc.api" description="generate documentation">
 	</target>
@@ -201,7 +217,7 @@
 
 	<!-- - - - - - - - - - - - - - - - - - 
           target: download-dependencies                      
-         - - - - - - - - - - - - - - - - - -->	
+         - - - - - - - - - - - - - - - - - -->
 	<target name="download-dependencies" depends="init">
 		<setproxy proxyhost="proxy" proxyport="80" />
 
@@ -249,13 +265,12 @@
 
 
 	<!-- ================================= 
-          targets for forrest: use site to generate the files        
+          target for forrest: use site to generate the files        
          ================================= -->
-  <import file="${env.FORREST_HOME}/main/forrest.build.xml"/>
+	<target name="forrest-site" description="Generates static HTML documentation">
+		<ant antfile="${env.FORREST_HOME}/main/forrest.build.xml" target="site" />
 
-	<!-- 'site' is a target imported from forrest.build.xml -->
-	<target name="post-build" depends="site, doc.api">
-		<mkdir dir="${project.site-dir}/apidocs"/>
+		<mkdir dir="${project.site-dir}/apidocs" />
 		<copy todir="${project.site-dir}/apidocs">
 			<fileset dir="${doc.dir}">
 				<exclude name="*.bak" />
@@ -263,5 +278,19 @@
 		</copy>
 	</target>
 
+
+	<!--
+	<import file="${env.FORREST_HOME}/main/forrest.build.xml" />
+-->
+	<!-- 'site' is a target imported from forrest.build.xml -->
+	<!--	<target name="post-build" depends="site, doc.api">
+		<mkdir dir="${project.site-dir}/apidocs" />
+		<copy todir="${project.site-dir}/apidocs">
+			<fileset dir="${doc.dir}">
+				<exclude name="*.bak" />
+			</fileset>
+		</copy>
+	</target>
+-->
 </project>
 
