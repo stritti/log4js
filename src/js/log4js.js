@@ -33,7 +33,7 @@
  * @author Stephan Strittmatter - http://jroller.com/page/stritti
  * @author Seth Chisamore - http://www.chisamore.com
  * @author Corey Johnson - some parts inspired by Lumberjack (http://gleepglop.com/javascripts/logger/)
- * @author S?bastien LECACHEUR - JSAlertAppender
+ * @author S&eacute;bastien LECACHEUR - JSAlertAppender
  */
 
 var Log4js = {
@@ -41,7 +41,7 @@ var Log4js = {
 	 * current version of log4js 
 	 * @static
 	 */
-  	version: "0.1.5",
+  	version: "0.2.0-dev",
   	
   	/**
   	 * @param element
@@ -55,7 +55,7 @@ var Log4js = {
 			element.attachEvent('on' + name, observer);
     	}	
 	}
-}
+};
 
 /**
  * Log4js.Level Enumeration. Do not use directly. Use static objects instead.
@@ -66,7 +66,7 @@ var Log4js = {
 Log4js.Level = function(level, levelStr) {
 	this.level = level;
 	this.levelStr = levelStr;
-}
+};
 
 Log4js.Level.prototype =  {
 	/** 
@@ -78,19 +78,20 @@ Log4js.Level.prototype =  {
 	 */
 	toLevel: function(sArg, defaultLevel) {                  
 				
-		if(sArg == null)
+		if(sArg === null) {
 			return defaultLevel;
+		}
 		
 		if(typeof sArg == "string") { 
 			var s = sArg.toUpperCase();
-			if(s == "ALL") return Log4js.Level.ALL; 
-			if(s == "DEBUG") return Log4js.Level.DEBUG; 
-			if(s == "INFO")  return Log4js.Level.INFO;
-			if(s == "WARN")  return Log4js.Level.WARN;  
-			if(s == "ERROR") return Log4js.Level.ERROR;
-			if(s == "FATAL") return Log4js.Level.FATAL;
-			if(s == "OFF") return Log4js.Level.OFF;
-			if(s == "TRACE") return Log4js.Level.TRACE;
+			if(s == "ALL") {return Log4js.Level.ALL;}
+			if(s == "DEBUG") {return Log4js.Level.DEBUG;}
+			if(s == "INFO") {return Log4js.Level.INFO;}
+			if(s == "WARN") {return Log4js.Level.WARN;}
+			if(s == "ERROR") {return Log4js.Level.ERROR;}
+			if(s == "FATAL") {return Log4js.Level.FATAL;}
+			if(s == "OFF") {return Log4js.Level.OFF;}
+			if(s == "TRACE") {return Log4js.Level.TRACE;}
 			return defaultLevel;
 		} else if(typeof sArg == "number") {
 			switch(sArg) {
@@ -122,7 +123,7 @@ Log4js.Level.prototype =  {
 	valueOf: function() {
 		return this.level;
 	}
-}
+};
 
 // Static variables
 /** 
@@ -215,7 +216,7 @@ Log4js.Level.ALL = new Log4js.Level(Log4js.Level.ALL_INT, "ALL");
  */
 Log4js.CustomEvent = function() {
 	this.listeners = [];
-}
+};
 
 Log4js.CustomEvent.prototype = {
  
@@ -265,7 +266,7 @@ Log4js.CustomEvent.prototype = {
 
 		return indexes;
 	}
-}
+};
 
 /**
  * Models a logging event
@@ -302,7 +303,8 @@ Log4js.LoggingEvent = function(categoryName, level, message, logger) {
 	 * @private
 	 */
 	this.logger = logger;
-}
+};
+
 Log4js.LoggingEvent.prototype = {
 	// TODO: Need to add support Layouts
 	/**
@@ -314,7 +316,7 @@ Log4js.LoggingEvent.prototype = {
 	getRenderedMessage: function() {
 		return	this.categoryName + "~" + this.startTime.toLocaleString() + " [" + this.level.toString() + "] " + this.message;
 	}
-}
+};
 
 /**
  * Logger to log messages to the defined appender.</p>
@@ -341,7 +343,7 @@ Log4js.Logger = function(name) {
 	// if multiple log objects are instanciated this will only log to the log object that is declared last
 	// can't seem to get the attachEvent method to work correctly
 	window.onerror = this.windowError.bind(this);
-}
+};
 
 Log4js.Logger.prototype = {
 	/**
@@ -466,7 +468,7 @@ Log4js.Logger.prototype = {
 		var message = "Error in (" + (url || window.location) + ") on line "+ line +" with message (" + msg + ")";
 		this.log(message, Log4js.Level.FATAL);	
 	}
-}
+};
 
 /**
  * Interface for Appender.
@@ -492,15 +494,19 @@ Appender.prototype = {
 	 * appends the given loggingEvent appender specific
 	 * @param {Log4js.LoggingEvent} loggingEvent loggingEvent to append
 	 */
-	doAppend: function(loggingEvent) {},
+	doAppend: function(loggingEvent) {
+		return;
+	},
 	/** 
 	 * clears the Appender
 	 */
-	doClear: function() {},
+	doClear: function() {
+		return;
+	},
 	
 	/**
 	 * Set the Layout for this appender.
-	 * @param {Layout} 
+	 * @param {Layout} layout Layout for formatting loggingEvent
 	 */
 	setLayout: function(layout){
 		this.layout = layout;
@@ -747,7 +753,9 @@ ConsoleAppender.prototype = {
 	  	style = (style ? style += ';' : '');	  	
 	  	style += 'padding:1px;margin:0 0 5px 0';	     
 		  
-		if (this.outputCount % 2 == 0) style += ";background-color:#101010";
+		if (this.outputCount % 2 === 0) {
+			style += ";background-color:#101010";
+		}
 	  	
 	  	message = message || "undefined";
 	  	message = message.toString();
@@ -766,7 +774,9 @@ ConsoleAppender.prototype = {
 		
 		var pattern = this.tagFilterElement.value;
 	
-		if (this.tagPattern == pattern) return;
+		if (this.tagPattern == pattern) {
+			return;
+		}
 		
 		try {
 			new RegExp(pattern);
@@ -804,8 +814,9 @@ ConsoleAppender.prototype = {
 			this.initialize();
 		}
 		
-		if (loggingEvent.level.toString().search(new RegExp(this.tagPattern, 'igm')) == -1)
+		if (loggingEvent.level.toString().search(new RegExp(this.tagPattern, 'igm')) == -1) {
 			return;
+		}
 		
 		var style = '';
 	  	
@@ -844,7 +855,7 @@ ConsoleAppender.prototype = {
 	 */
 	handleInput : function(e) {
 		if (e.keyCode == 13 ) {      
-			var command = this.inputElement.value
+			var command = this.inputElement.value;
 			
 			switch(command) {
 				case "clear":
@@ -852,7 +863,7 @@ ConsoleAppender.prototype = {
 					break;
 					
 				default:        
-					var consoleOutput = "" ;
+					var consoleOutput = "";
 				
 					try {
 						consoleOutput = eval(this.inputElement.value);
@@ -865,7 +876,7 @@ ConsoleAppender.prototype = {
 					break;
 			}        
 		
-			if (this.inputElement.value != "" && this.inputElement.value != this.commandHistory[0]) {
+			if (this.inputElement.value !== "" && this.inputElement.value !== this.commandHistory[0]) {
 				this.commandHistory.unshift(this.inputElement.value);
 			}
 		  
@@ -887,7 +898,7 @@ ConsoleAppender.prototype = {
     		this.commandIndex = 0;
     	}
 	}
-}
+};
 
 /**
  * Metatag Appender writing the logs to meta tags
@@ -906,6 +917,7 @@ function MetatagAppender(logger) {
 	 * @type Log4js.Logger
 	 */
 	this.logger = logger;
+	this.currentLine = 0;
 }
 MetatagAppender.prototype = {
 	/**
@@ -926,7 +938,7 @@ MetatagAppender.prototype = {
 			}
 
 			var metaTag = document.createElement("meta");
-			metaTag.setAttribute("name", "X-log4js:" + this.logger.currentLine++);
+			metaTag.setAttribute("name", "X-log4js:" + (this.currentLine++));
 			metaTag.setAttribute("content", value);
 			headTag.appendChild(metaTag);
 		}
@@ -935,8 +947,10 @@ MetatagAppender.prototype = {
 	 * do nothing
 	 * @see Appender#doClear
 	 */	
-	doClear: function() {}
-}
+	doClear: function() {
+		return;
+	}
+};
 
 /**
  * AJAX Appender sending <code>Log4js.LoggingEvent</code> asynchron via 
@@ -1002,16 +1016,28 @@ AjaxAppender.prototype = {
 	 * @see Appender#doAppend
 	 */
 	doAppend: function(loggingEvent) {
-		var msg = "log4js.client=" + navigator.userAgent
-			+ "&log4js.category=" + loggingEvent.categoryName
-			+ "&log4js.level=" + loggingEvent.level.toString()
-			+ "&log4js.msg=" + loggingEvent.message;
+		var msg = "log4js.client=" + navigator.userAgent;
+		msg += "&log4js.category=" + loggingEvent.categoryName;
+		msg += "&log4js.level=" + loggingEvent.level.toString();
+		msg += "&log4js.msg=" + loggingEvent.message;
+			
+		var content = "<?xml version=\"1.0\"?>\n<log4js><category>"; 
+        content += loggingEvent.categoryName + "</category><level>";
+		content += loggingEvent.level.toString() + "</level><client>";
+		content += navigator.userAgent + "</client><message>";
+		content += loggingEvent.message + "</message><referer>";
+		content += location.href + "</referer>";
+        content += "</log4js>";
 
 		this.httpRequest.open("POST", this.loggingUrl + "?" + msg , true);
-		this.httpRequest.send("<log4js><category>" + loggingEvent.categoryName + "</category><level>"
-			+ loggingEvent.level.toString() + "</level><client>"
-			+ navigator.userAgent + "</client><message>"
-			+ loggingEvent.message + "</message></log4js>");
+		this.httpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        // set the request headers. REFERER will be the top-level
+        // URI which may differ from the location of the error if
+        // it occurs in an included .js file
+        this.req.setRequestHeader("REFERER", location.href);
+ 		this.httpRequest.setRequestHeader("Content-length", content.length);
+		this.httpRequest.setRequestHeader("Connection", "close");
+		this.httpRequest.send(content);
 	},
 	/** 
 	 * callback method only to verify if sending was successful 
@@ -1026,8 +1052,8 @@ AjaxAppender.prototype = {
 	/**
  	 * @see Appender#doClear
 	 */
-	doClear: function() {}
-}
+	doClear: function() {return;}
+};
 
 /**
  * File Appender writing the logs to a text file.
@@ -1087,7 +1113,7 @@ FileAppender.prototype = {
 	setLayout: function(layout){
 		this.layout = layout;
 	}
-}
+};
 
 /**
  * Windows Event Appender writes the logs to the Windows Event log.
@@ -1148,14 +1174,16 @@ WindowsEventAppender.prototype = {
 	/**
 	 * @see Appender#doClear
 	 */
-	doClear: function() {},
+	doClear: function() {
+		return;
+	},
 	/**
 	 * @see Appender#setLayout
 	 */
 	setLayout: function(layout){
 		this.layout = layout;
 	} 
-}
+};
 
 /**
  * JS Alert Appender writes the logs to the JavaScript alert dialog box
@@ -1186,7 +1214,9 @@ JSAlertAppender.prototype = {
 	/** 
 	 * @see Appender#doClear
 	 */
-	doClear: function() {},
+	doClear: function() {
+		return;
+	},
 	
 	/**
 	 * @see Appender#setLayout
@@ -1194,7 +1224,7 @@ JSAlertAppender.prototype = {
 	setLayout: function(layout){
 		this.layout = layout;
 	} 
-}
+};
 
 /**
  * Appender writes the logs to the JavaScript console of Mozilla browser
@@ -1205,7 +1235,6 @@ JSAlertAppender.prototype = {
  * @param logger log4js instance this appender is attached to
  * @author Stephan Strittmatter
  */
-MozJSConsoleAppender.superclass = Appender.prototype;
 function MozJSConsoleAppender(logger) {
 	// add listener to the logger methods
 	logger.onlog.addListener(this.doAppend.bind(this));
@@ -1214,26 +1243,26 @@ function MozJSConsoleAppender(logger) {
 	this.logger = logger;
 	this.layout = new SimpleLayout();
 	netscape.security.PrivilegeManager.enablePrivilege('UniversalXPConnect');
-	this.jsConsole = Components.classes["@mozilla.org/consoleservice;1"]
-						.getService(Components.interfaces.nsIConsoleService);
-	this.scriptError = Components.classes["@mozilla.org/scripterror;1"]
-	                    .createInstance(Components.interfaces.nsIScriptError);
-};
- 
+	this.jsConsole = Components.classes["@mozilla.org/consoleservice;1"].getService(Components.interfaces.nsIConsoleService);
+	this.scriptError = Components.classes["@mozilla.org/scripterror;1"].createInstance(Components.interfaces.nsIScriptError);
+}
+
+MozJSConsoleAppender.superclass = Appender.prototype;
 MozJSConsoleAppender.prototype = {
 	/** 
 	 * @see Appender#doAppend
 	 */
 	doAppend: function(loggingEvent) {
 		netscape.security.PrivilegeManager.enablePrivilege('UniversalXPConnect');
-		this.scriptError.init(this.layout.format(loggingEvent), null, null, null, 
-	                   null, this.getFlag(loggingEvent), loggingEvent.categoryName);
+		this.scriptError.init(this.layout.format(loggingEvent), null, null, null, null, this.getFlag(loggingEvent), loggingEvent.categoryName);
 		this.jsConsole.logMessage(this.scriptError);
 	},
 	/** 
 	 * @see Appender#doClear
 	 */
-	doClear: function() {},
+	doClear: function() {
+		return;
+	},
 	/**
 	 * @see Appender#setLayout
 	 */
@@ -1265,7 +1294,7 @@ MozJSConsoleAppender.prototype = {
 		
 		return retval;		
 	}
-}
+};
 
 /**
  * Functions taken from Prototype library, 
@@ -1273,12 +1302,13 @@ MozJSConsoleAppender.prototype = {
  * More info at {@link http://prototype.conio.net/}
  */
 if (!Array.prototype.push) {
-  Array.prototype.push = function() {
+	Array.prototype.push = function() {
 		var startLength = this.length;
-		for (var i = 0; i < arguments.length; i++)
+		for (var i = 0; i < arguments.length; i++) {
 			this[startLength + i] = arguments[i];
+		}
 		return this.length;
-	}
+	};
 }
 
 if(!Function.prototype.bind) {
@@ -1291,8 +1321,8 @@ if(!Function.prototype.bind) {
 	  var __method = this;
 	  return function() {
 		return __method.apply(object, arguments);
-	  }
-	}
+	  };
+	};
 }
 
 /**
@@ -1340,7 +1370,8 @@ SimpleLayout.prototype = {
 	getFooter: function() {
 		return null;
 	}
-}	
+};
+	
 /**
  * BasicLayout 
  *
@@ -1383,4 +1414,4 @@ BasicLayout.prototype = {
 	getFooter: function() {
 		return null;
 	}
-}                            
+};
