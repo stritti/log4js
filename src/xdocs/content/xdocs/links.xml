@@ -21,22 +21,38 @@
     <header>
         <title>Related Links</title>
     <authors>
-      <person email="stritti@users.berlios.de" id="ssr"
-              name="Stephan Strittmatter" />
+      <person email="stritti@users.berlios.de" id="ssr"  name="Stephan Strittmatter" />
     </authors>
     </header>
 
     <body>
         <section id="links">
 	        <title>Related Links</title>
-
+            <p>Here you can find some related links to JavaScript and especially 
+                logging and this project.
+            </p>
+            
 	        <section id="development">
-	            <title>Tools used for development</title>
+	            <title>Tools used for development in this project</title>
 	            <ul>
-	                <li>ANT as build tool: <a href="http://ant.apache.org">http://ant.apache.org</a></li> 
+	                <li>ANT as build tool: 
+	                    <a href="http://ant.apache.org">http://ant.apache.org</a></li>
+	                <li>JSlint - The JavaScript Verifier: 
+	                	<a href="http://www.crockford.com/jslint/lint.html">http://www.crockford.com/jslint/lint.html</a></li>
 	            </ul>
 	        </section>
-	        
+
+	        <section id="test">
+	            <title>Tools used for testing</title>
+				<note>These tools are not used yet. They are just to remind.</note>
+	            <ul>
+	                <li>JSUnit for Unit testing: 
+	                	<a href="http://www.edwardh.com/jsunit/">http://www.edwardh.com/jsunit/</a></li>
+	                <li>Selenium is a test tool for web applications: 
+	                	<a href="http://www.openqa.org/selenium/index.html">http://www.openqa.org/selenium/index.html</a></li>
+	            </ul>
+	        </section>
+
 	        <section id="documentation">
 	            <title>Tools used for documentation</title>
 	            <ul>
@@ -44,13 +60,12 @@
 	                	<a href="http://forrest.apache.org">http://forrest.apache.org</a></li>
 	                <li>JSDoc for API documentation: 
 	                	<a href="http://www.anvilon.com/software/jsjam/">http://www.anvilon.com/software/jsjam/</a></li>
-	                <li>JSUnit for Unit testing: 
-	                	<a href="http://www.edwardh.com/jsunit/">http://www.edwardh.com/jsunit/</a></li>
 	            </ul>
 	        </section>
 
-	        <section id="other">
-	            <title>Other logging projects</title>
+	        <section id="otherProjects">
+	            <title>Other logging projects and related links</title>
+	            <p>There are a lot other projects which are started logging in JavaScript:</p>
 	            <ul>
 	            	<li>General logging services for several languages: 
 	            		<a href="http://logging.apache.org/">logging.apache.org</a></li>
@@ -61,9 +76,35 @@
 	               <li>Lumberjack: 
 	               	<a href="http://gleepglop.com/javascripts/logger/">http://gleepglop.com/javascripts/logger/</a></li>
 	               <li>fvlogger: 
-	               	<a href="http://www.alistapart.com/articles/jslogging">http://www.alistapart.com/articles/jslogging</a></li> 	
+	               	<a href="http://www.alistapart.com/articles/jslogging">http://www.alistapart.com/articles/jslogging</a></li>
 	               <li>jslib: 
 					<a href="http://www.petrusrex.com/Programmes/jslib.htm">http://www.petrusrex.com/Programmes/jslib.htm</a></li>
+	               <li>jsTrace: 
+					<a href="http://www.easy-designs.net/code/jsTrace/">http://www.easy-designs.net/code/jsTrace/</a></li>
+	               <li>Logger: 
+					<a href="http://insin.woaf.net/code/javascript/logger.html">http://insin.woaf.net/code/javascript/logger.html</a></li>
+	               <li>Dan Allen's Scriptsandbox jsError and Logger.js: 
+					<a href="http://mojavelinux.com/wiki/doku.php?id=scriptsandbox#jserror.js__jserror.php">http://mojavelinux.com/wiki/doku.php?id=scriptsandbox#jserror.js__jserror.php</a><br />
+					Dan Allen also wrote the first odeas of MetaTagLogging which are influenced MetatagAppender:
+					<a href="http://www.mojavelinux.com/blog/archives/2005/01/javascript_logging_via_meta/index.php">http://www.mojavelinux.com/blog/archives/2005/01/javascript_logging_via_meta/index.php</a>
+					</li>
+	               <li>Eric Spiegelberg's Log4Ajax: 
+					<a href="http://log4ajax.sourceforge.net/">http://log4ajax.sourceforge.net/</a> and associated article: 
+					<a href="http://today.java.net/pub/a/today/2005/12/13/log4ajax.html">http://today.java.net/pub/a/today/2005/12/13/log4ajax.html</a> </li>
+
+					<li>Andre's JSLog: <a href="http://www.earthcode.com/ajax/2005/12/jslog.html">http://www.earthcode.com/ajax/2005/12/jslog.html</a></li>
+				</ul>
+            </section>
+            
+	        <section id="other">
+	            <title>Other logging related links</title>
+	            <ul>					
+	               <li>AJAX Testing and Logging: 
+					<a href="http://www.decafbad.com/blog/2005/07/18/ajax_testing_and_logging">http://www.decafbad.com/blog/2005/07/18/ajax_testing_and_logging</a></li>
+	               <li>AJAX Patterns: 
+					<a href="http://ajaxpatterns.org/Logging">http://ajaxpatterns.org/Logging</a></li>
+	               <li>XML.com: Erros and AJAX: 
+					<a href="http://www.xml.com/pub/a/2005/05/11/ajax-error.html">http://www.xml.com/pub/a/2005/05/11/ajax-error.html</a></li>
 	            </ul>
 	        </section>
         </section>
