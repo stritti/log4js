@@ -938,9 +938,10 @@ MetatagAppender.prototype = {
 			}
 
 			var metaTag = document.createElement("meta");
-			metaTag.setAttribute("name", "X-log4js:" + (this.currentLine++));
+			metaTag.setAttribute("name", "X-log4js:" + this.currentLine);
 			metaTag.setAttribute("content", value);
 			headTag.appendChild(metaTag);
+			this.currentLine += 1;
 		}
 	},
 	/**
@@ -1006,6 +1007,7 @@ function AjaxAppender(logger, loggingUrl) {
 		alert('Unfortunatelly you browser doesn\'t support AJAX appender for log4js!');
 	}else{
 	//	this.httpRequest.onreadystatechange = this.logged;
+		return;
 	}
 }
 
