@@ -31,17 +31,18 @@
 	<property file="build.properties" />
 	<property environment="env" />
 
-	<property name="version" value="0.1.5" />
+	<property name="version" value="0.2.0-dev" />
 
-	<property name="src.dir" value="${basedir}/src" />
+	<property name="src.dir" value="src" />
 	<property name="src.js.dir" value="${src.dir}/js" />
 
 	<property name="lib.dir" value="lib" />
 
-	<property name="tools.dir" value="${basedir}/tools" />
+	<property name="tools.dir" value="tools" />
 
-	<property name="doc.dir" value="${basedir}/docs" />
+	<property name="doc.dir" value="docs" />
 	<property name="xdoc.dir" value="${src.dir}/xdocs" />
+	
 	<!-- FORREST_HOME must be set as an environment variable -->
 	<property name="forrest.home" value="${env.FORREST_HOME}" />
 
@@ -70,15 +71,15 @@
 
 		<zip destfile="${release.dir}/log4js-${version}.zip">
 			<fileset dir="${basedir}">
-				<include name="${src.dir}/**" />
-			</fileset>
-			<fileset dir="${basedir}">
+				<include name="${src.js.dir}/**" />
 				<include name="${example.src.dir}/**" />
 			</fileset>
+
 			<fileset dir="${dist.dir}">
 				<include name="lib/**" />
 				<include name="docs/**" />
 			</fileset>
+			
 			<fileset file="${dist.dir}/${example.war.name}" />
 
 			<fileset file="CHANGELOG.txt" />
@@ -185,7 +186,7 @@
 		<echo>Gererate JSDoc to ${apidoc.dir}</echo>
 		<mkdir dir="${apidoc.dir}" />
 
-		<property name="footer" value="log4js - Logging API for JavaScript" />
+		<property name="footer" value="log4js - Logging API for JavaScript" />	
 
 		<exec executable="perl">
 			<arg line="${tools.dir}/JSDoc/jsdoc.pl -r &quot;${src.dir}/js&quot; -d &quot;${apidoc.dir}&quot; -project-name &quot;${ant.project.name} ${version}&quot; -page-footer &quot;${footer}&quot;" />
@@ -197,9 +198,9 @@
           target: jslint              
          ================================= -->
     <target name="jslint" depends="init" description="--> verify syntax of JavaScripts">
-        <exec executable="${tools.dir}/jsl/jsl.exe" failonerror="true">
+        <exec executable="${basedir}/${tools.dir}/jsl/jsl.exe" resultproperty="${jslint.result}">
         	<arg  line="conf ${tools.dir}/jsl/jsl.conf process ${src.js.dir}/*.js" />
-        </exec>
+        </exec>       
     </target>
 
 	<target name="doc" depends="doc.api" description="generate documentation">
@@ -240,14 +241,18 @@
 		<get dest="${lib.dir}/JSUnit.zip" usetimestamp="true" ignoreerrors="true" src="http://mesh.dl.sourceforge.net/sourceforge/jsunit/jsunit2_1.zip" verbose="true" />
 		<unzip src="${lib.dir}/JSUnit.zip" dest="${tools.dir}/JSUnit" />
 
+        <get dest="${lib.dir}/jsl.zip" usetimestamp="true" ignoreerrors="true" src="http://www.javascriptlint.com/download/jsl-0.2.0-win32.zip" verbose="true" />
+		<unzip src="${lib.dir}/jsl.zip" dest="${tools.dir}/jsl" />
+		
+
 		<!-- for documentation -->
 		<get dest="${lib.dir}/JSDoc.tgz" usetimestamp="true" ignoreerrors="true" src="http://mesh.dl.sourceforge.net/sourceforge/jsdoc/JSDoc-1.9.6.1.tgz" verbose="true" />
 		<gunzip src="${lib.dir}/JSDoc.tgz" dest="${tools.dir}/JSDoc" />
 <!--
 		<get dest="${lib.dir}/apache-forrest.zip" usetimestamp="true" ignoreerrors="true" src="http://www.artfiles.org/apache.org/forrest/apache-forrest-0.7.zip" />
 		<unzip src="${lib.dir}/apache-forrest.zip" dest="${tools.dir}/apache-forrest" />
--->
 		<copy todir="${ant.home}/lib" file="${env.FORREST_HOME}/lib/core/xml-commons-resolver-1.1.jar" />
+-->
 <!--
 		<get dest="${lib.dir}/velocity.zip" usetimestamp="true" ignoreerrors="true" src="http://www.apache.org/dist/jakarta/velocity/velocity-1.4/velocity-1.4.zip" />
 -->
@@ -293,4 +298,3 @@
 	</target>
 -->
 </project>
-
