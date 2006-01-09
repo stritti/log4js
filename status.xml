@@ -50,9 +50,11 @@
                 Layout added to support different Layouts of logging output.
             </action>
             <action dev="ssr" type="add" context="code" importance="medium"> 
-                SimpleLayout and BasicLayout as first implementation of Layouts
-                added.
+                SimpleLayout and BasicLayout as first implementation of Layouts added.
             </action>            
+            <action dev="ssr" type="add" context="code" importance="medium"> 
+                JavaScript Lint (http://www.javascriptlint.com/) added to ant target and warnings corrected in scripts.
+            </action>  
 		</release>
 			       
         <release version="0.1.5" date="2005-12-01">
@@ -200,14 +202,11 @@
     </changes>
     <todo>        
         <actions priority="medium">
-            <action context="design" dev="open" type="add"> Add Layout 
-                capability like log4j (http://logging.apache.org/log4j/docs/api/org/apache/log4j/Layout.html).
+            <action context="code" dev="open" type="add"> Add PatternLayout 
+                capability like log4j (http://logging.apache.org/log4j/docs/api/org/apache/log4j/PatternLayout.html).
                 Probably RegEx required, infos see: http://www.regular-expressions.info/javascript.html.
             </action>
-            <action context="docs" dev="open" type="add"> 
-            	Implement Mozilla JSConsole Appender. 
-            </action>
-            <action context="docs" dev="open" type="add"> 
+            <action context="design" dev="open" type="add"> 
             	Implement log4js.properties feature to config log4js at central place.
             	Probably the properties-file has to be located at {web-root}/js/log4js.properties?
             </action>
@@ -217,7 +216,10 @@
             <action context="docs" dev="open" type="add">
                 Matrix of supported browsers/environments required. Probably someone
                 could help on non-Windows platforms?
-            </action>            
+            </action>     
+            <action context="docs" dev="open" type="add">
+                Add live Example to web pages.
+            </action>                     
         </actions>
     </todo>
 </status>
