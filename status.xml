@@ -25,6 +25,7 @@
             id="sce"/>
         <person name="Volunteer needed" email="stritti@berlios.de" id="open"/>
     </developers>
+    
     <!-- Define here the Title of the Context you want to display in the Changes pages.
        id = the context value of actions
        title = Title of the Context
@@ -38,7 +39,7 @@
     </contexts>
     <changes>
         <!-- Add new releases here -->
-       <release version="0.2.0-dev" date="unreleased">
+       <release version="0.2-dev" date="unreleased">
             <notes>
                 <section>
                     <title></title>
@@ -46,15 +47,32 @@
                     </p>
                 </section>
             </notes>
-            <action dev="ssr" type="add" context="code" importance="medium"> 
-                Layout added to support different Layouts of logging output.
+            <action dev="ssr" type="add" context="design" importance="medium"> 
+                Layout added to support different layouts of logging output.
             </action>
             <action dev="ssr" type="add" context="code" importance="medium"> 
                 SimpleLayout and BasicLayout as first implementation of Layouts added.
             </action>            
             <action dev="ssr" type="add" context="code" importance="medium"> 
-                JavaScript Lint (http://www.javascriptlint.com/) added to ant target and warnings corrected in scripts.
+                HtmlLayout implemented.
+            </action> 
+            <action dev="ssr" type="add" context="code" importance="medium"> 
+                XmlLayout implemented.
+            </action> 
+            <action dev="ssr" type="add" context="design" importance="medium"> 
+                <a href="http://www.javascriptlint.com">JavaScript Lint</a> 
+                added to ant target and warnings corrected in scripts.
             </action>  
+            <action dev="ssr" type="add" context="code" importance="medium"> 
+                MozJSConsoleAppender created. It loggs to the JavaScript console of Mozilla browsers.
+            </action>  
+            <action dev="ssr" type="add" context="code" importance="medium"> 
+                OperaJSConsoleAppender created. It loggs to the JavaScript console of Opera browser.
+            </action>  
+            <action dev="ssr" type="add" context="code" importance="medium"> 
+                SafariJSConsoleAppender created. It loggs to the JavaScript console of Safari browser. 
+               <strong>Who coulr test this?</strong>
+            </action> 
 		</release>
 			       
         <release version="0.1.5" date="2005-12-01">
@@ -66,10 +84,10 @@
                 </section>
             </notes>
             <action dev="ssr" type="add" context="docs" importance="medium"> 
-                Installation of website at <a href="ext:log4js.site">http://log4js.berlios.de</a>
+                Innitial installation of website at <a href="ext:log4js">http://log4js.berlios.de</a>
             </action>
             <action dev="ssr" type="add" context="admin" importance="medium"> 
-                Project setup at  <a href="ext:log4js.develop">http://developer.berlios.de/projects/log4js/</a> and initial checkin at SVN.
+                Project setup at <a href="ext:log4js/develop">http://developer.berlios.de/projects/log4js/</a> and initial checkin at SVN.
             </action> 
             <action dev="sce" type="fix" context="code" importance="medium"> 
                 Changed the way log levels are modeled to mirror Log4j conventions.  
@@ -87,9 +105,9 @@
             <action dev="sce" type="update" context="code" importance="medium"> 
                 Renamed Log4js.LogEntry to Log4js.LoggingEvent to mirror Log4j naming conventions.
             </action> 
-            <action dev="ssr" type="add" context="code" importance="medium"> 
-                JSAlertAppender added. Thanks to S&eacute;bastien LECACHEUR.
-            </action>                                        
+			<action dev="ssr" type="add" context="code" importance="medium" 
+				due-to="S&eacute;bastien LECACHEUR"> JSAlertAppender added. 
+				Thanks to S&eacute;bastien LECACHEUR. </action>
             <action dev="ssr" type="add" context="code" importance="high"> 
                 DefaultAppender renamed to Appender to reflect it as "Interface" for other appenders.
             </action> 
@@ -103,7 +121,7 @@
                 Forrest capabilities added to generate web site doumentation
             </action>                         
         </release>
-        <release version="0.1.4" date="unreleased">
+        <release version="0.1.4" date="Dec. 2005">
             <notes>
                 <section>
                     <title></title>
@@ -118,7 +136,7 @@
                 New appender is called ConsoleAppender, you indicate whether the console should run inline during construction (default is to launch in new window) 
             </action>                                    
         </release>        
-        <release version="0.1.3" date="unreleased">
+        <release version="0.1.3" date="Dec. 2005">
             <notes>
                 <section>
                     <title></title>
@@ -142,14 +160,14 @@
             <action dev="sce" type="add" context="code" importance="medium"> 
 					When log entries are cleared all appenders are notified and cleared.
             </action>
-            <action dev="sce" type="add" context="code" importance="medium"> 
+            <action dev="sce" type="add" context="code" importance="medium" due-to="Corey Johnson"> 
 					Added HtmlConsoleAppender that writes log messages to a hidden "console" that can be toggled with "Alt-d".
 					Thanks to Corey Johnson whose Lumberjack (http://gleepglop.com/javascripts/logger/) code was adapted for this appender.
             </action>
 
         </release>   
 
-        <release version="0.1.2" date="unreleased">
+        <release version="0.1.2" date="Dec. 2005">
             <notes>
                 <section>
                     <title></title>
@@ -173,7 +191,7 @@
 					Updated all tests and comments to reflect above changes.  
 				</action>
         </release>  
-               <release version="0.1.1" date="unreleased">
+               <release version="0.1.1" date="Nov. 2005">
             <notes>
                 <section>
                     <title>Initial public version</title>
@@ -186,7 +204,7 @@
 					</action>
             
         </release>  
-        <release version="0.1.0" date="unreleased">
+        <release version="0.1.0" date="Nov. 2005">
             <notes>
                 <section>
                     <title>Initial public version</title>
