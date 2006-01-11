@@ -1299,33 +1299,85 @@ MozJSConsoleAppender.prototype = {
 };
 
 /**
- * Functions taken from Prototype library, 
- * didn't want to require for just few functions
- * More info at {@link http://prototype.conio.net/}
+ * Appender writes the logs to the JavaScript console of Opera browser
+ * PLEASE NOTE - Only works in Opera browser
+ * @constructor
+ * @extends Appender  
+ * @param logger log4js instance this appender is attached to
+ * @author Stephan Strittmatter
  */
-if (!Array.prototype.push) {
-	Array.prototype.push = function() {
-		var startLength = this.length;
-		for (var i = 0; i < arguments.length; i++) {
-			this[startLength + i] = arguments[i];
-		}
-		return this.length;
-	};
+function OperaJSConsoleAppender(logger) {
+	// add listener to the logger methods
+	logger.onlog.addListener(this.doAppend.bind(this));
+	logger.onclear.addListener(this.doClear.bind(this));
+
+	this.logger = logger;
+	this.layout = new SimpleLayout();
+
 }
 
-if(!Function.prototype.bind) {
+OperaJSConsoleAppender.superclass = Appender.prototype;
+OperaJSConsoleAppender.prototype = {
+	/** 
+	 * @see Appender#doAppend
+	 */
+	doAppend: function(loggingEvent) {
+		opera.postError(this.layout.format(loggingEvent));
+	},
+	/** 
+	 * @see Appender#doClear
+	 */
+	doClear: function() {
+		return;
+	},
 	/**
-	 * Functions taken from Prototype library, 
-	 * didn't want to require for just few functions
-	 * More info at {@link http://prototype.conio.net/}
-	 */	
-	Function.prototype.bind = function(object) {
-	  var __method = this;
-	  return function() {
-		return __method.apply(object, arguments);
-	  };
-	};
+	 * @see Appender#setLayout
+	 */
+	setLayout: function(layout){
+		this.layout = layout;
+	}
+};
+
+/**
+ * Appender writes the logs to the JavaScript console of Safari browser
+ * PLEASE NOTE - Only works in Safari browser
+ * @constructor
+ * @extends Appender  
+ * @param logger log4js instance this appender is attached to
+ * @author Stephan Strittmatter
+ */
+function SafariJSConsoleAppender(logger) {
+	// add listener to the logger methods
+	logger.onlog.addListener(this.doAppend.bind(this));
+	logger.onclear.addListener(this.doClear.bind(this));
+
+	this.logger = logger;
+	this.layout = new SimpleLayout();
+
 }
+
+SafariJSConsoleAppender.superclass = Appender.prototype;
+SafariJSConsoleAppender.prototype = {
+	/** 
+	 * @see Appender#doAppend
+	 */
+	doAppend: function(loggingEvent) {
+		window.console.log(this.layout.format(loggingEvent));
+	},
+	/** 
+	 * @see Appender#doClear
+	 */
+	doClear: function() {
+		return;
+	},
+	/**
+	 * @see Appender#setLayout
+	 */
+	setLayout: function(layout){
+		this.layout = layout;
+	}
+};
+
 
 /**
  * SimpleLayout consists of the level of the log statement, followed by " - " 
@@ -1417,3 +1469,147 @@ BasicLayout.prototype = {
 		return null;
 	}
 };
+
+/**
+ * HtmlLayout write the logs in Html format.
+ *
+ * @constructor
+ * @extends Layout
+ * @author Stephan Strittmatter
+ */
+function HtmlLayout() {
+};
+HtmlLayout.prototype = {
+	/** 
+	 * Implement this method to create your own layout format.
+	 * @param {Log4js.LoggingEvent} loggingEvent loggingEvent to format
+	 * @return formatted String
+	 * @type String
+	 */
+	format: function(loggingEvent) {
+		return "<div style=\"" + this.getStyle(loggingEvent) + "\">" +loggingEvent.level.toString() + " - " + loggingEvent.message + "</div>\n";
+	},
+	/** 
+	 * Returns the content type output by this layout. 
+	 * @return The base class returns "text/html".
+	 * @type String
+	 */
+	getContentType: function() {
+		return "text/html";
+	},
+	/** 
+	 * @return Returns the header for the layout format. The base class returns null.
+	 * @type String
+	 */
+	getHeader: function() {
+		return "<html><head><title>log4js</head><body>";
+	},
+	/** 
+	 * @return Returns the footer for the layout format. The base class returns null.
+	 * @type String
+	 */
+	getFooter: function() {
+		return "</body></html>";
+	},
+	
+	getStyle: function(loggingEvent)
+	{
+		var style;
+		if (loggingEvent.level.toString().search(/ERROR/) != -1) { 
+			style = 'color:red';
+		} else if (loggingEvent.level.toString().search(/FATAL/) != -1) { 
+			style = 'color:red';
+		} else if (loggingEvent.level.toString().search(/WARN/) != -1) { 
+			style = 'color:orange';
+		} else if (loggingEvent.level.toString().search(/DEBUG/) != -1) {
+			style = 'color:green';
+		} else if (loggingEvent.level.toString().search(/INFO/) != -1) {
+			style = 'color:white';
+		} else {
+			style = 'color:yellow';
+		}
+		
+		return style;
+	}
+};
+
+/**
+ * XmlLayout write the logs in XML format.
+ *
+ * @constructor
+ * @extends Layout
+ * @author Stephan Strittmatter
+ */
+function XmlLayout() {
+};
+XmlLayout.prototype = {
+	/** 
+	 * Implement this method to create your own layout format.
+	 * @param {Log4js.LoggingEvent} loggingEvent loggingEvent to format
+	 * @return formatted String
+	 * @type String
+	 */
+	format: function(loggingEvent) {
+		var content = "<log4js category =\"";
+        content += loggingEvent.categoryName + "\" level=\"";
+		content += loggingEvent.level.toString() + "\" client=\"";
+		content += navigator.userAgent + "\" referer=\"";
+		content += location.href + "\" timestamp=\"";
+		content += loggingEvent.startTime + "\" >";
+        content += loggingEvent.message;	
+        content += "</log4js>";
+        
+        return content;
+	},
+	/** 
+	 * Returns the content type output by this layout. 
+	 * @return The base class returns "text/xml".
+	 * @type String
+	 */
+	getContentType: function() {
+		return "text/xml";
+	},
+	/** 
+	 * @return Returns the header for the layout format. The base class returns null.
+	 * @type String
+	 */
+	getHeader: function() {
+		return "<?xml version=\"1.0\"?>";
+	},
+	/** 
+	 * @return Returns the footer for the layout format. The base class returns null.
+	 * @type String
+	 */
+	getFooter: function() {
+		return "";
+	}
+};
+
+/**
+ * Functions taken from Prototype library, 
+ * didn't want to require for just few functions
+ * More info at {@link http://prototype.conio.net/}
+ */
+if (!Array.prototype.push) {
+	Array.prototype.push = function() {
+		var startLength = this.length;
+		for (var i = 0; i < arguments.length; i++) {
+			this[startLength + i] = arguments[i];
+		}
+		return this.length;
+	};
+}
+
+if(!Function.prototype.bind) {
+	/**
+	 * Functions taken from Prototype library, 
+	 * didn't want to require for just few functions
+	 * More info at {@link http://prototype.conio.net/}
+	 */	
+	Function.prototype.bind = function(object) {
+	  var __method = this;
+	  return function() {
+		return __method.apply(object, arguments);
+	  };
+	};
+}
