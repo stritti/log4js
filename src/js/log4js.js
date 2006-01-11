@@ -41,7 +41,7 @@ var Log4js = {
 	 * current version of log4js 
 	 * @static
 	 */
-  	version: "0.2.0-dev",
+  	version: "0.2-dev",
   	
   	/**
   	 * @param element
