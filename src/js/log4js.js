@@ -13,12 +13,12 @@
  */
 
 /**
- * @fileoverview log4js is a helper to log in JavaScript in simmilar manner than in log4j 
+ * @fileoverview log4js is a library to log in JavaScript in simmilar manner than in log4j 
  * for Java. The API should be nearly the same.
  * <h3>Example:</h3>
  * <pre>
  *  //logging see log4js
- *  var log = new Log4js.Logger("some-category-name"); 
+ *  var log = new Log4js.getLogger("some-category-name"); 
  *  log.setLevel(Log4js.Level.TRACE); //set the Level
  *  log.addAppender(new ConsoleAppender(log, false)); // console that launches in new window
  
@@ -53,10 +53,23 @@ var Log4js = {
 			element.addEventListener(name, observer, false);
     	} else if (element.attachEvent) {
 			element.attachEvent('on' + name, observer);
-    	}	
+    	}
 	}
 };
 
+/**
+ * Get a logger instance. Instance is cached on categoryName level.
+ * @param categoryName name of category to log to.
+ */
+Log4js.getLogger = function(categoryName) {
+	if (!Log4js.logger.contains(categoryName))
+	{
+   		Log4js.logger.put(categoryName, new Logger(categoryName));
+	}
+	return new Log4js.logger.get(categoryName); 
+};
+
+Log4js.logger = new Map();
 /**
  * Log4js.Level Enumeration. Do not use directly. Use static objects instead.
  * @constructor
@@ -269,12 +282,12 @@ Log4js.CustomEvent.prototype = {
 };
 
 /**
- * Models a logging event
+ * Models a logging event.
  * @constructor
  * @param {String} categoryName name of category
  * @param {Log4js.Level} level level of message
  * @param {String} message message to log
- * @param {Log4js.Logger} logger the logger
+ * @param {Log4js.Logger} logger the associated logger
  * @author Seth Chisamore
  */
 Log4js.LoggingEvent = function(categoryName, level, message, logger) {
@@ -306,7 +319,7 @@ Log4js.LoggingEvent = function(categoryName, level, message, logger) {
 };
 
 Log4js.LoggingEvent.prototype = {
-	// TODO: Need to add support Layouts
+
 	/**
 	 * Returns the layouted message line
 	 * @return layouted Message
@@ -322,6 +335,7 @@ Log4js.LoggingEvent.prototype = {
  * Logger to log messages to the defined appender.</p>
  * Default appender is Appender, which is ignoring all messages. Please
  * use setAppender() to set a specific appender (e.g. WindowAppender).
+ * use {@see Log4js#getLogger(String)} to get an instance.
  * @constructor
  * @param name name of category to log to
  * @author Stephan Strittmatter
@@ -346,14 +360,7 @@ Log4js.Logger = function(name) {
 };
 
 Log4js.Logger.prototype = {
-	/**
-	 * Get a logger instance
-	 * @param name name of category to log to	 
-	 * @todo probably cache the logger here?
-	 */
-	getLogger: function(name) {
-		return new Logger(name);
-	},
+
 	/**
 	 * add additional appender. DefaultAppender always is there.
 	 * @param appender additional wanted appender
@@ -520,7 +527,7 @@ Appender.prototype = {
  * @constructor
  * @author Stephan Strittmatter
  */
-function Layout() {};
+function Layout() {return;}
 Layout.prototype = {
 	/** 
 	 * Implement this method to create your own layout format.
@@ -950,19 +957,23 @@ MetatagAppender.prototype = {
 	 */	
 	doClear: function() {
 		return;
+	},
+	/**
+	 * @see Appender#setLayout
+	 */
+	setLayout: function(layout){
+		this.layout = layout;
 	}
 };
 
 /**
  * AJAX Appender sending <code>Log4js.LoggingEvent</code> asynchron via 
- * XMLHttpREquest to server.<br />
- * The <code>Log4js.LoggingEvent</code> is splitted in request parameters:
- * <ul>
- * <li><code>log4js.client</code>: navigator.userAgent</li>
- * <li><code>log4js.category</code>: loggingEvent.categoryName</li>
- * <li><code>log4js.level</code>: loggingEvent.level.toString()</li>
- * <li><code>log4js.msg</code>: loggingEvent.message</li>
- * </ul>
+ * <code>XMLHttpRequest</code> to server.<br />
+ * The <code>Log4js.LoggingEvent</code> is splitted in request parameters
+ * is POSTed as response and is formatted by layout. Default layout is
+ * <@link XMLLayout>. The <code>threshold</code> defines when the logs 
+ * should be send to the server. By default every event is sent on its
+ * own (threshold=1).
  *
  * @extends Appender 
  * @constructor
@@ -974,27 +985,55 @@ function AjaxAppender(logger, loggingUrl) {
 	// add  listener to the logger methods
 	logger.onlog.addListener(this.doAppend.bind(this));
 	logger.onclear.addListener(this.doClear.bind(this));
+	
 	/**
 	 * set reference to calling logger
 	 * @type Log4js.Logger
 	 * @private
 	 */
 	this.logger = logger;
+	
 	/**
 	 * @type XMLHttpRequest
 	 * @private
 	 */
 	this.httpRequest = false;
+	
 	/**
 	 * @type String
 	 * @private
 	 */
 	this.loggingUrl = loggingUrl || "log4js.jsp";
+	
+	/**
+	 * @type Integer
+	 * @private
+	 */
+	this.threshold = 1;
+	
+	/**
+	 * Current threshold which is incremented by each logging event until
+	 * threshold is reached.
+	 * @type Integer
+	 * @private
+	 */
+	this.currentThreshold=0;
+	
+	/**
+	 * List of LoggingEvents which should be send after threshold is reached.
+	 * @private
+	 */
+	this.loggingEventMap = new Map();
+
+	/**
+	 * @type Layout
+	 */
+	this.layout = new XMLLayout();
 
 	if (window.XMLHttpRequest) { // Mozilla, Safari,...
 		this.httpRequest = new XMLHttpRequest();
 		if (this.httpRequest.overrideMimeType) {
-			this.httpRequest.overrideMimeType('text/xml');
+			this.httpRequest.overrideMimeType(this.layout.getContentType());
 		}
 	} else if (window.ActiveXObject) { // IE
 		try {
@@ -1004,10 +1043,7 @@ function AjaxAppender(logger, loggingUrl) {
 		}
 	}
 	if (!this.httpRequest) {
-		alert('Unfortunatelly you browser doesn\'t support AJAX appender for log4js!');
-	}else{
-	//	this.httpRequest.onreadystatechange = this.logged;
-		return;
+		alert('Unfortunatelly you browser does not support AjaxAppender for log4js!');
 	}
 }
 
@@ -1018,43 +1054,51 @@ AjaxAppender.prototype = {
 	 * @see Appender#doAppend
 	 */
 	doAppend: function(loggingEvent) {
-		var msg = "log4js.client=" + navigator.userAgent;
-		msg += "&log4js.category=" + loggingEvent.categoryName;
-		msg += "&log4js.level=" + loggingEvent.level.toString();
-		msg += "&log4js.msg=" + loggingEvent.message;
+	
+		if (this.currentThreshold <= this.threshold) {
+			this.loggingEventMap.put(loggingEvent);
+			this.currentThreshold++;
+		}
+		
+		if(this.currentThreshold >= this.threshold) {
+		
+			var content = this.layout.getHeader();
 			
-		var content = "<?xml version=\"1.0\"?>\n<log4js><category>"; 
-        content += loggingEvent.categoryName + "</category><level>";
-		content += loggingEvent.level.toString() + "</level><client>";
-		content += navigator.userAgent + "</client><message>";
-		content += loggingEvent.message + "</message><referer>";
-		content += location.href + "</referer>";
-        content += "</log4js>";
-
-		this.httpRequest.open("POST", this.loggingUrl + "?" + msg , true);
-		this.httpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        // set the request headers. REFERER will be the top-level
-        // URI which may differ from the location of the error if
-        // it occurs in an included .js file
-        this.req.setRequestHeader("REFERER", location.href);
- 		this.httpRequest.setRequestHeader("Content-length", content.length);
-		this.httpRequest.setRequestHeader("Connection", "close");
-		this.httpRequest.send(content);
-	},
-	/** 
-	 * callback method only to verify if sending was successful 
-	 */
-	logged: function() {
-		if (this.httpRequest.readyState == 4) {
-			if (this.httpRequest.status != 200  ) {
-				alert('There was a problem with the log4js AjaxAppender: ' + this.httpRequest.responseText );
-			}
+			for(var i = 0; i < this.loggingEventMap.size(); i++) {
+				content +=  this.layout.format(this.loggingEventM.get(i));
+			} 
+			
+			content += this.layout.getFooter();
+		
+			this.httpRequest.open("POST", this.loggingUrl, true);
+			this.httpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	        // set the request headers. REFERER will be the top-level
+	        // URI which may differ from the location of the error if
+	        // it occurs in an included .js file
+	        this.req.setRequestHeader("REFERER", location.href);
+	 		this.httpRequest.setRequestHeader("Content-length", content.length);
+			this.httpRequest.setRequestHeader("Connection", "close");
+			this.httpRequest.send(content);
+			this.currentThreshold = 0;
 		}
 	},
 	/**
  	 * @see Appender#doClear
 	 */
-	doClear: function() {return;}
+	doClear: function() {return;},
+	/**
+	 * @see Appender#setLayout
+	 */
+	setLayout: function(layout){
+		this.layout = layout;
+	},
+	
+	/**
+	 * set the threshold when logs are send
+	 */
+	setThreshold: function(threshold) {
+		this.threshold = threshold;
+	}
 };
 
 /**
@@ -1211,7 +1255,7 @@ JSAlertAppender.prototype = {
 	 * @see Appender#doAppend
 	 */
 	doAppend: function(loggingEvent) {
-		alert(this.layout.format(loggingEvent));
+		alert(this.layout.getHeader() + this.layout.format(loggingEvent) + this.layout.getFooter());
 	},
 	/** 
 	 * @see Appender#doClear
@@ -1353,7 +1397,6 @@ function SafariJSConsoleAppender(logger) {
 
 	this.logger = logger;
 	this.layout = new SimpleLayout();
-
 }
 
 SafariJSConsoleAppender.superclass = Appender.prototype;
@@ -1415,19 +1458,23 @@ SimpleLayout.prototype = {
 	 * @type String
 	 */
 	getHeader: function() {
-		return null;
+		return "";
 	},
 	/** 
 	 * @return Returns the footer for the layout format. The base class returns null.
 	 * @type String
 	 */
 	getFooter: function() {
-		return null;
+		return "";
 	}
 };
 	
 /**
- * BasicLayout 
+ * BasicLayout is a simple layout for storing the loggs. The loggs are stored
+ * in following format:
+ * <pre>
+ * categoryName~startTime [logLevel] message\n
+ * </pre>
  *
  * @constructor
  * @extends Layout
@@ -1459,14 +1506,14 @@ BasicLayout.prototype = {
 	 * @type String
 	 */
 	getHeader: function() {
-		return null;
+		return "";
 	},
 	/** 
 	 * @return Returns the footer for the layout format. The base class returns null.
 	 * @type String
 	 */
 	getFooter: function() {
-		return null;
+		return "";
 	}
 };
 
@@ -1477,8 +1524,7 @@ BasicLayout.prototype = {
  * @extends Layout
  * @author Stephan Strittmatter
  */
-function HtmlLayout() {
-};
+function HtmlLayout() {return;}
 HtmlLayout.prototype = {
 	/** 
 	 * Implement this method to create your own layout format.
@@ -1527,22 +1573,25 @@ HtmlLayout.prototype = {
 			style = 'color:white';
 		} else {
 			style = 'color:yellow';
-		}
-		
+		}	
 		return style;
 	}
 };
 
 /**
- * XmlLayout write the logs in XML format.
- *
+ * XMLLayout write the logs in XML format.
+ * Layout is simmilar to log4j's XMLLayout:
+ * <pre>
+ * <log4js:event category="category" level="Level" client="Client" referer="ref" timestam="Date">
+ * <log4js:message>Logged message</log4js:message>
+ * </log4js:event>
+ * </pre>
  * @constructor
  * @extends Layout
  * @author Stephan Strittmatter
  */
-function XmlLayout() {
-};
-XmlLayout.prototype = {
+function XMLLayout() {return;}
+XMLLayout.prototype = {
 	/** 
 	 * Implement this method to create your own layout format.
 	 * @param {Log4js.LoggingEvent} loggingEvent loggingEvent to format
@@ -1550,16 +1599,16 @@ XmlLayout.prototype = {
 	 * @type String
 	 */
 	format: function(loggingEvent) {
-		var content = "<log4js category =\"";
-        content += loggingEvent.categoryName + "\" level=\"";
+		var content = "<log4js:event logger=\"";
+		content += loggingEvent.categoryName + "\" level=\"";
 		content += loggingEvent.level.toString() + "\" client=\"";
 		content += navigator.userAgent + "\" referer=\"";
 		content += location.href + "\" timestamp=\"";
-		content += loggingEvent.startTime + "\" >";
-        content += loggingEvent.message;	
-        content += "</log4js>";
+		content += loggingEvent.startTime + "\">\n";
+		content += "<log4js:message><![CDATA[" + loggingEvent.message + "]]></log4js:message>\n";	
+ 		content += "</log4js:event>\n";
         
-        return content;
+      return content;
 	},
 	/** 
 	 * Returns the content type output by this layout. 
@@ -1574,7 +1623,50 @@ XmlLayout.prototype = {
 	 * @type String
 	 */
 	getHeader: function() {
-		return "<?xml version=\"1.0\"?>";
+		return "<log4js:eventSet version=\"" + Log4js.version + 
+			"\" xmlns:log4js=\"http://log4js.berlios.de/log4js/\">\n";
+	},
+	/** 
+	 * @return Returns the footer for the layout format. The base class returns null.
+	 * @type String
+	 */
+	getFooter: function() {
+		return "</log4js:eventSet>\n";
+	}
+};
+
+/**
+ * JSONLayout write the logs in JSON format.
+ * JSON library is required to use this Layout. See also {@link http://www.json.org}
+ * @constructor
+ * @extends Layout
+ * @author Stephan Strittmatter
+ */
+function JSONLayout() {return;}
+JSONLayout.prototype = {
+	/** 
+	 * Implement this method to create your own layout format.
+	 * @param {Log4js.LoggingEvent} loggingEvent loggingEvent to format
+	 * @return formatted String
+	 * @type String
+	 */
+	format: function(loggingEvent) {        
+        return JSON.stringify(loggingEvent);
+	},
+	/** 
+	 * Returns the content type output by this layout. 
+	 * @return The base class returns "text/xml".
+	 * @type String
+	 */
+	getContentType: function() {
+		return "text/json";
+	},
+	/** 
+	 * @return Returns the header for the layout format. The base class returns null.
+	 * @type String
+	 */
+	getHeader: function() {
+		return "";
 	},
 	/** 
 	 * @return Returns the footer for the layout format. The base class returns null.
@@ -1585,9 +1677,59 @@ XmlLayout.prototype = {
 	}
 };
 
+ /**
+  * Implementtion of java.util.Map
+  * @private 
+  */
+function Map(){
+	var keys = new Array();
+};
+Map.prototype = {
+	/**
+	 * @private 
+	 */
+	contains: function(key){
+		var entry = findEntry(key);
+		return !(entry === null || entry instanceof NullKey);
+	},
+	/**
+	 * @private 
+	 */
+	get: function(key) {
+		var entry = findEntry(key);
+		if ( !(entry === null || entry instanceof NullKey) )
+			return entry.value;
+		else
+			return null;
+	},
+	/**
+	 * @private 
+	 */
+	put: function(key, value) {
+		var entry = findEntry(key);
+		if (entry){
+			entry.value = value;
+		} else {
+			entry = new Object();
+			entry.key = key;
+			entry.value = value;
+			keys[keys.length] = entry;
+		}
+	}
+};
+
 /**
- * Functions taken from Prototype library, 
- * didn't want to require for just few functions
+ * replace the entries of map in key array, removing the former value
+ * @private
+ */
+function NullKey(){
+}
+new NullKey();
+  
+  
+/**
+ * Functions taken from Prototype library, didn't want to require for just few 
+ * functions.
  * More info at {@link http://prototype.conio.net/}
  */
 if (!Array.prototype.push) {
@@ -1602,8 +1744,8 @@ if (!Array.prototype.push) {
 
 if(!Function.prototype.bind) {
 	/**
-	 * Functions taken from Prototype library, 
-	 * didn't want to require for just few functions
+	 * Functions taken from Prototype library,  didn't want to require for just 
+	 * few functions.
 	 * More info at {@link http://prototype.conio.net/}
 	 */	
 	Function.prototype.bind = function(object) {
@@ -1612,4 +1754,62 @@ if(!Function.prototype.bind) {
 		return __method.apply(object, arguments);
 	  };
 	};
+}
+
+/**
+ * ArrayList like java.util.ArrayList
+ * @private
+ */
+function ArrayList()
+{
+  this.array = new Array();
+};
+
+ArrayList.prototype = {
+
+	add: function(obj){
+		this.array[this.array.length] = obj;
+	},
+
+	iterator: function (){
+		return new Iterator(this);
+		},
+  
+	length: function (){
+		return this.array.length;
+	},
+  
+	get: function (index){
+		return this.array[index];
+	},
+  
+	addAll: function (obj)
+	{
+		if (obj instanceof Array) {
+			for (var i=0;i<obj.length;i++) {
+				this.add(obj[i]);
+			}
+		} else if (obj instanceof ArrayList) {
+			for (var j=0;j<obj.length();i++) {
+				this.add(obj.get(j));
+			}
+		}
+	}
+};
+
+/**
+ * Iterator for ArrayList
+ * @private
+ */
+function Iterator (arrayList){
+	this.arrayList;
+	this.index = 0;
+};
+Iterator.prototype = {
+	hasNext: function (){
+		return this.index < this.arrayList.length();
+	},
+	next: function() {
+		return this.arrayList.get( index++ );
+	}
 }
