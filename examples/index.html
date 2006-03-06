@@ -28,15 +28,28 @@
 		   var alertLog = new Log4js.Logger("alertTest"); 
 		   alertLog.setLevel(Log4js.Level.ALL);
  		   alertLog.addAppender(new JSAlertAppender(alertLog));
+
+ 		   var operaLog = new Log4js.Logger("operaTest"); 
+		   operaLog.setLevel(Log4js.Level.ALL);
+		   var operaAppender = new OperaJSConsoleAppender(operaLog);
+ 		   operaLog.addAppender(operaAppender);
+ 		   
+		   var mozLog = new Log4js.Logger("mozillaTest"); 
+		   mozLog.setLevel(Log4js.Level.ALL);
+		   var appender = new MozJSConsoleAppender(mozLog);
+		   appender.setLayout(new PatternLayout("%p-> %m"));
+ 		   mozLog.addAppender(appender);
+ 		   
+
  		// -->
  		</script>
 	</head>
 
 	<body>
-		<h1>Log4js <script>document.write(Log4js.version)</script> Tests</h1>
+		<h1>Log4js <script type="text/javascript">document.write(Log4js.version)</script> Tests</h1>
 		<fieldset><legend>Window Console Logging</legend>
-			<input type="text" id="windowMessage" value="add windowLog message" onChange="windowLog.trace(document.getElementById('windowMessage').value);"/>
-			<input type="button" name="trace" value="Trace Message" onClick="windowLog.trace(document.getElementById('windowMessage').value);" />
+			<input type="text" id="windowMessage" value="add windowLog message" onchange="windowLog.trace(document.getElementById('windowMessage').value);"/>
+			<input type="button" name="trace" value="Trace Message" onclick="windowLog.trace(document.getElementById('windowMessage').value);" />
 			<br />
 			<input type="button" name="trace" value="Trace" onclick="windowLog.trace('I was traced!');return false;" />
 			<input type="button" name="debug" value="Debug" onclick="windowLog.debug('I was debuged!');return false;" />
@@ -108,6 +121,30 @@
 			<input type="button" name="warn" value="Warn" onclick="alertLog.warn('I was warned!');return false;" />
 			<input type="button" name="error" value="Error" onclick="alertLog.error('I was errored!');return false;" />
 			<input type="button" name="fatal" value="Fatal" onclick="alertLog.fatal('I was fataled!');return false;" />
+		</fieldset>
+		
+		<fieldset><legend>Mozilla JavaScript Logging</legend>
+			<input type="text" id="alertMessage" value="add alertLog message" onChange="mozLog.trace(document.getElementById('alertMessage').value);"/>
+			<input type="button" name="trace" value="Trace Message" onClick="mozLog.trace(document.getElementById('alertMessage').value);" />
+			<br />
+			<input type="button" name="trace" value="Trace" onclick="mozLog.trace('I was traced!');return false;" />
+			<input type="button" name="debug" value="Debug" onclick="mozLog.debug('I was debuged!');return false;" />
+			<input type="button" name="info" value="Info" onclick="mozLog.info('I was infoed!');return false;" />
+			<input type="button" name="warn" value="Warn" onclick="mozLog.warn('I was warned!');return false;" />
+			<input type="button" name="error" value="Error" onclick="mozLog.error('I was errored!');return false;" />
+			<input type="button" name="fatal" value="Fatal" onclick="mozLog.fatal('I was fataled!');return false;" />
+		</fieldset>
+		
+		<fieldset><legend>Opera JavaScript Logging</legend>
+			<input type="text" id="alertMessage" value="add alertLog message" onChange="operaLog.trace(document.getElementById('alertMessage').value);"/>
+			<input type="button" name="trace" value="Trace Message" onClick="operaLog.trace(document.getElementById('alertMessage').value);" />
+			<br />
+			<input type="button" name="trace" value="Trace" onclick="operaLog.trace('I was traced!');return false;" />
+			<input type="button" name="debug" value="Debug" onclick="operaLog.debug('I was debuged!');return false;" />
+			<input type="button" name="info" value="Info" onclick="operaLog.info('I was infoed!');return false;" />
+			<input type="button" name="warn" value="Warn" onclick="operaLog.warn('I was warned!');return false;" />
+			<input type="button" name="error" value="Error" onclick="operaLog.error('I was errored!');return false;" />
+			<input type="button" name="fatal" value="Fatal" onclick="operaLog.fatal('I was fataled!');return false;" />
 		</fieldset>
 	</body>
 </html>
