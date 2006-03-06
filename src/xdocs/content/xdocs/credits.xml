@@ -30,7 +30,18 @@
     <section id="credits">
       <title>Credits</title>
 
-      <p>...</p>
+      <p>Special thanks to all who helped to improve log4js. Here a list of
+      	people supported us:</p>
+      <ul>
+      	<li><a href="http://www.sven-space.de">Sven.Space</a>: 
+      		The nice logo of log4js.</li>
+      	<li><a href="http://zer0.free.fr/blog/index.php/">Sébastien Lecacheur</a>: 
+      		Some documentations.</li>
+      	<li><a href="http://www.javablog.com/pages/ben.html">Ben Simpson</a>: 
+      		Improvements in english docs.</li>
+      	<li><a href="http://www.devspace.com">Christian Gross</a>: Found the sources to be good enought to be used
+      		in his book "Ajax Patterns and Best Practices"</li>
+      </ul>
     </section>
   </body>
 </document>

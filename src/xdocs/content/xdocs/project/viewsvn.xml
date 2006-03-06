@@ -29,7 +29,7 @@
 
   <body>
     <note>For futher information about usage of Subversion see the <a
-    href="ext:svnhowto">Subversion (SVN) HowTo</a>.</note>
+    href="ext:log4js/svnhowto">Subversion (SVN) HowTo</a>.</note>
 
     <section>
       <title>Browse the SVN Tree</title>

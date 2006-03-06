@@ -32,25 +32,32 @@ See http://forrest.apache.org/docs/linking.html for more info
     xmlns="http://apache.org/forrest/linkmap/1.0"
     xmlns:ns="http://apache.org/forrest/linkmap/1.0">
 
-    <about label="About">
-       <index label="Index" description="Welcome to Log4js" href="index.html" wholesite="true" />
-       <faq label="FAQ" description="Frequently Asked Questions"  href="faq.html" wholesite="true" />
-       <license label="License" description="License" href="ext:license" />
-		 <downloads label="Downloads" href="ext:log4js.downloads" />
-	    <changes label="Changes" href="changes.html" wholesite="true" />
-	    <todo label="Todos" href="todo.html" wholesite="true" />
-	    <contributors label="Contributors" description="Hall of Fame" href="contributors.html" wholesite="true" />
-	    <links label="Links" description="Further Information" href="links.html" wholesite="true" />
-	    <!--<whole_pdftab label="Tab as PDF" href="pdf-tab.pdf" />-->
-	    <!--<whole_site_pdf label="Whole Site PDF" href="wholesite.pdf"/>-->
-    </about>
+	<about label="About">
+		<index label="Index" description="Welcome to Log4js" href="index.html" 
+			wholesite="true" />
+		<examples label="Examples" description="Examples of Log4js" 
+			href="examples.html" />
+		<faq label="FAQ" description="Frequently Asked Questions" 
+			href="faq.html" wholesite="true" />
+		<license label="License" description="License" 
+			href="license.html" />
+		<downloads label="Downloads" href="ext:log4js/downloads" />
+		<changes label="Changes" href="changes.html" wholesite="true" />
+		<todo label="Todos" href="todo.html" wholesite="true" />
+		<committer label="Committer" description="Hall of Fame" 
+			href="committer.html" wholesite="true" />
+		<links label="Links" description="Further Information" 
+			href="links.html" wholesite="true" />
+		<!--<whole_pdftab label="Tab as PDF" href="pdf-tab.pdf" />-->
+		<!--<whole_site_pdf label="Whole Site PDF" href="wholesite.pdf"/>-->
+	</about>
 
     <project label="Project" href="project/" tab="project">
       <index description="Welcome to Log4js" href="index.html" label="Index" />
       <viewsvn label="SVN Repository" description="Subversion Repository" href="viewsvn.html"/>
       <javadocs label="Mailing Lists" description="Mailing Lists for Log4js" href="mailinglists.html"/>
-      <javadocs label="API Documentation" description="Documentation of API" href="ext:apidocs"/>
-      <berlios label="BerliOS Hosting" description="Hosting of Project at BerliOS" href="ext:log4js.develop"/>
+      <javadocs label="API Documentation" description="Documentation of API" href="ext:log4js/apidocs"/>
+      <berlios label="BerliOS Hosting" description="Hosting of Project at BerliOS" href="ext:log4js/develop"/>
      </project>
 
     <files>
@@ -68,21 +75,27 @@ See http://forrest.apache.org/docs/linking.html for more info
     <whole_site_pdf label="Whole Site PDF" href="wholesite.pdf"/>
   </all>
 -->
-    <external-refs>
-         <log4js.site href="http://log4js.berlios.de" />
-    	  <log4js.develop href="http://developer.berlios.de/projects/log4js/" />
-    	  <log4js.downloads href="http://developer.berlios.de/project/showfiles.php?group_id=5368" />
-    	  <apidocs href="apidocs/index.html"/>
-        <logging.apache.org href="http://logging.apache.org" />
-        <log4j.apache.org href="http://logging.apache.org/log4j" />
-        <license href="http://www.apache.org/licenses/LICENSE-2.0.txt" />
-        <svn href="http://developer.berlios.de/svn/&amp;group_id=5368" />
-        <svnhowto href="http://developer.berlios.de/docman/display_doc.php?docid=394&amp;group_id=2" />
-        <forrest href="http://forrest.apache.org/">
-            <linking href="docs/linking.html" />
-            <validation href="docs/validation.html" />
-            <webapp href="docs/your-project.html#webapp" />
-            <dtd-docs href="docs/dtd-docs.html" />
-        </forrest>
-    </external-refs>
+	<external-refs>
+		<log4js href="http://log4js.berlios.de">
+			<develop href="http://developer.berlios.de/projects/log4js/" />
+			<downloads 
+				href="http://developer.berlios.de/project/showfiles.php?group_id=5368" 
+				/>
+			<apidocs href="http://log4js.berlios.de/apidocs/index.html" />
+			<svn href="http://developer.berlios.de/svn/&amp;group_id=5368" />
+			<svnhowto 
+				href="http://developer.berlios.de/docman/display_doc.php?docid=394&amp;group_id=2" 
+				/>
+			<license href="http://www.apache.org/licenses/LICENSE-2.0.txt" />
+		</log4js>
+		<logging.apache.org href="http://logging.apache.org" />
+		<log4j.apache.org href="http://logging.apache.org/log4j" />
+		<apache.license href="http://www.apache.org/licenses/" />
+		<forrest href="http://forrest.apache.org/">
+			<linking href="docs/linking.html" />
+			<validation href="docs/validation.html" />
+			<webapp href="docs/your-project.html#webapp" />
+			<dtd-docs href="docs/dtd-docs.html" />
+		</forrest>
+	</external-refs>
 </site>

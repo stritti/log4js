@@ -19,7 +19,7 @@
 "http://forrest.apache.org/dtd/document-v20.dtd">
 <document>
     <header>
-        <title>Contributors</title>
+        <title>Comitter</title>
     <authors>
       <person email="stritti@users.berlios.de" id="ssr"
               name="Stephan Strittmatter" />
@@ -34,7 +34,7 @@
             <title>Active Committers</title>
             <ul>
                 <li>
-                    <strong>[ssr] - Stephan Strittmatter</strong>
+                    <strong>[ssr] - Stephan Strittmatter</strong> <a href="http://www.jroller.com/page/stritti">[Blog]</a>
                 </li>
                 <li>
                     <strong>[sce] - Seth Chisamore</strong>

@@ -311,6 +311,9 @@
    <uris name="mirrors" follow-links="false">
      <uri type="append" src="mirrors.html"/>
    </uris>
+   <uris name="examples" follow-links="false">
+     <uri type="append" src="examples.html"/>
+   </uris>
    -->
 
    <!--+
