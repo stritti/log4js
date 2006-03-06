@@ -57,7 +57,7 @@
                 HtmlLayout implemented.
             </action> 
             <action dev="ssr" type="add" context="code" importance="medium"> 
-                XmlLayout implemented.
+                XMLLayout implemented.
             </action> 
             <action dev="ssr" type="add" context="design" importance="medium"> 
                 <a href="http://www.javascriptlint.com">JavaScript Lint</a> 
@@ -71,7 +71,10 @@
             </action>  
             <action dev="ssr" type="add" context="code" importance="medium"> 
                 SafariJSConsoleAppender created. It loggs to the JavaScript console of Safari browser. 
-               <strong>Who coulr test this?</strong>
+               <strong>Who could test this?</strong>
+            </action> 
+            <action dev="ssr" type="add" context="code" importance="medium"> 
+                AjaxAppender supports now threshold for sending events in groups. 
             </action> 
 		</release>
 			       
@@ -102,6 +105,9 @@
             <action dev="sce" type="add" context="code" importance="medium"> 
                 Added OFF and ALL levels to mirror Log4j levels. 
             </action>            
+            <action dev="ssr" type="add" context="code" importance="medium"> 
+                JSONLayout implemented to support exchange of data by <a href="http://www.json.org">JSON</a></action>
+            
             <action dev="sce" type="update" context="code" importance="medium"> 
                 Renamed Log4js.LogEntry to Log4js.LoggingEvent to mirror Log4j naming conventions.
             </action> 
@@ -109,7 +115,7 @@
 				due-to="S&eacute;bastien LECACHEUR"> JSAlertAppender added. 
 				Thanks to S&eacute;bastien LECACHEUR. </action>
             <action dev="ssr" type="add" context="code" importance="high"> 
-                DefaultAppender renamed to Appender to reflect it as "Interface" for other appenders.
+                DefaultAppender renamed to Appender to reflect it as &quot;Interface&quot; for other appenders.
             </action> 
             <action dev="ssr" type="add" context="docs" importance="high"> 
                 JSDoc added to build and comments updated to JSDoc.
@@ -121,6 +127,7 @@
                 Forrest capabilities added to generate web site doumentation
             </action>                         
         </release>
+        
         <release version="0.1.4" date="Dec. 2005">
             <notes>
                 <section>
