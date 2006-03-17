@@ -2,14 +2,14 @@
 <html>
 	<head>
 		<title>Log4js tests</title>
-		<script src="../src/js/log4js.js" type="text/javascript"></script>
+		<script src="js/log4js.js" type="text/javascript"></script>
 		<script type="text/javascript">
 		<!-- //
-		   var ajaxLog = new Log4js.Logger("ajaxTest");
+		   var ajaxLog = new Log4js.getLogger("ajaxTest");
 		   ajaxLog.setLevel(Log4js.Level.ALL);
  		   ajaxLog.addAppender(new AjaxAppender(ajaxLog, "./log4j.jsp"));
 
-		   var windowEventLog = new Log4js.Logger("windowEventTest");
+		   var windowEventLog = new Log4js.getLogger("windowEventTest");
 		   windowEventLog.setLevel(Log4js.Level.ALL);
  		   windowEventLog.addAppender(new WindowsEventAppender(windowEventLog));
 
@@ -21,7 +21,7 @@
 		   consoleLog.setLevel(Log4js.Level.ALL);
  		   consoleLog.addAppender(new ConsoleAppender(consoleLog, true));
 		   
-		   var windowLog = new Log4js.Logger("windowTest"); 
+		   var windowLog = new Log4js.getLogger("windowTest"); 
 		   windowLog.setLevel(Log4js.Level.ALL);
  		   windowLog.addAppender(new ConsoleAppender(windowLog)); //to windowLog to seperate windowLog window
 		   
@@ -34,7 +34,7 @@
 		   var operaAppender = new OperaJSConsoleAppender(operaLog);
  		   operaLog.addAppender(operaAppender);
  		   
-		   var mozLog = new Log4js.Logger("mozillaTest"); 
+		   var mozLog = new Log4js.getLogger("mozillaTest"); 
 		   mozLog.setLevel(Log4js.Level.ALL);
 		   var appender = new MozJSConsoleAppender(mozLog);
 		   appender.setLayout(new PatternLayout("%p-> %m"));
