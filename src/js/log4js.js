@@ -13,8 +13,8 @@
  */
 
 /**
- * @fileoverview log4js is a library to log in JavaScript in simmilar manner than in log4j 
- * for Java. The API should be nearly the same.
+ * @fileoverview log4js is a library to log in JavaScript in simmilar manner 
+ * than in log4j for Java. The API should be nearly the same.
  * <h3>Example:</h3>
  * <pre>
  *  //logging see log4js
@@ -30,23 +30,46 @@
  *  log.trace("trace me" );
  * </pre>
  *
+ * @version 0.2
  * @author Stephan Strittmatter - http://jroller.com/page/stritti
  * @author Seth Chisamore - http://www.chisamore.com
- * @author Corey Johnson - some parts inspired by Lumberjack (http://gleepglop.com/javascripts/logger/)
- * @author S&eacute;bastien LECACHEUR - JSAlertAppender
  */
 
 var Log4js = {
+	/**  
+	 * map of loggers
+	 * @static
+	 * @final
+	 * @private  
+	 */
+	loggerMap: new Map(),
+	
 	/** 
 	 * current version of log4js 
 	 * @static
+	 * @final
 	 */
   	version: "0.2-dev",
-  	
+
+
+	/**
+	 * Get a logger instance. Instance is cached on categoryName level.
+	 * @param  {String} categoryName name of category to log to.
+	 * @return {Logger} instance of logger for the category
+	 * @static
+	 */
+	getLogger: function(categoryName) {
+		if (!Log4js.loggerMap.contains(categoryName))
+		{
+	   		Log4js.loggerMap.put(categoryName, new Log4js.Logger(categoryName));
+		}
+		return Log4js.loggerMap.get(categoryName); 
+	},
   	/**
   	 * @param element
   	 * @param name
   	 * @param observer
+  	 * @private
   	 */
   	attachEvent: function (element, name, observer) {
 		if (element.addEventListener) {
@@ -57,19 +80,9 @@ var Log4js = {
 	}
 };
 
-/**
- * Get a logger instance. Instance is cached on categoryName level.
- * @param categoryName name of category to log to.
- */
-Log4js.getLogger = function(categoryName) {
-	if (!Log4js.logger.contains(categoryName))
-	{
-   		Log4js.logger.put(categoryName, new Logger(categoryName));
-	}
-	return new Log4js.logger.get(categoryName); 
-};
 
-Log4js.logger = new Map();
+
+
 /**
  * Log4js.Level Enumeration. Do not use directly. Use static objects instead.
  * @constructor
@@ -226,6 +239,7 @@ Log4js.Level.ALL = new Log4js.Level(Log4js.Level.ALL_INT, "ALL");
  * @constructor
  * @author Corey Johnson - original code in Lumberjack (http://gleepglop.com/javascripts/logger/)
  * @author Seth Chisamore - adapted for Log4js
+ * @private
  */
 Log4js.CustomEvent = function() {
 	this.listeners = [];
@@ -492,6 +506,7 @@ function Appender(logger) {
 	/**
 	 * set reference to calling logger
 	 * @type Log4js.Logger
+	 * @private
 	 */
 	this.logger = logger;
 }
@@ -571,6 +586,7 @@ Layout.prototype = {
  * @extends Appender
  * @param {Log4js.Logger} logger log4js instance this appender is attached to
  * @param {boolean} inline boolean value that indicates whether the console be placed inline, default is to launch in new window
+ *
  * @author Corey Johnson - original console code in Lumberjack (http://gleepglop.com/javascripts/logger/)
  * @author Seth Chisamore - adapted for use as a log4js appender
  */
@@ -583,7 +599,13 @@ function ConsoleAppender(logger, inline) {
 	 * @type Log4js.Logger
 	 */
 	this.logger = logger;
+	/**
+	 * @type Layout
+	 */
 	this.layout = new SimpleLayout();
+	/**
+	 * @type boolean
+	 */
 	this.inline = inline || false;
 	
 	if(this.inline) {
@@ -967,13 +989,14 @@ MetatagAppender.prototype = {
 };
 
 /**
- * AJAX Appender sending <code>Log4js.LoggingEvent</code> asynchron via 
+ * AJAX Appender sending {@link Log4js.LoggingEvent}s asynchron via 
  * <code>XMLHttpRequest</code> to server.<br />
- * The <code>Log4js.LoggingEvent</code> is splitted in request parameters
- * is POSTed as response and is formatted by layout. Default layout is
- * <@link XMLLayout>. The <code>threshold</code> defines when the logs 
+ * The {@link Log4js.LoggingEvent} is POSTed as response content and is 
+ * formatted by the accociated layout. Default layout is {@link XMLLayout}. 
+ * The <code>threshold</code> defines when the logs 
  * should be send to the server. By default every event is sent on its
- * own (threshold=1).
+ * own (threshold=1). If it is set to 10, then the events are send in groups of
+ * 10 events.
  *
  * @extends Appender 
  * @constructor
@@ -1021,12 +1044,14 @@ function AjaxAppender(logger, loggingUrl) {
 	
 	/**
 	 * List of LoggingEvents which should be send after threshold is reached.
+	 * @type Map
 	 * @private
 	 */
-	this.loggingEventMap = new Map();
+	this.loggingEventMap = new ArrayList();
 
 	/**
 	 * @type Layout
+	 * @private
 	 */
 	this.layout = new XMLLayout();
 
@@ -1043,7 +1068,7 @@ function AjaxAppender(logger, loggingUrl) {
 		}
 	}
 	if (!this.httpRequest) {
-		alert('Unfortunatelly you browser does not support AjaxAppender for log4js!');
+		alert('Unfortunatelly your browser does not support AjaxAppender for log4js!');
 	}
 }
 
@@ -1056,48 +1081,55 @@ AjaxAppender.prototype = {
 	doAppend: function(loggingEvent) {
 	
 		if (this.currentThreshold <= this.threshold) {
-			this.loggingEventMap.put(loggingEvent);
+			this.loggingEventMap.add(loggingEvent);
 			this.currentThreshold++;
 		}
 		
 		if(this.currentThreshold >= this.threshold) {
-		
-			var content = this.layout.getHeader();
-			
-			for(var i = 0; i < this.loggingEventMap.size(); i++) {
-				content +=  this.layout.format(this.loggingEventM.get(i));
-			} 
-			
-			content += this.layout.getFooter();
-		
-			this.httpRequest.open("POST", this.loggingUrl, true);
-			this.httpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	        // set the request headers. REFERER will be the top-level
-	        // URI which may differ from the location of the error if
-	        // it occurs in an included .js file
-	        this.req.setRequestHeader("REFERER", location.href);
-	 		this.httpRequest.setRequestHeader("Content-length", content.length);
-			this.httpRequest.setRequestHeader("Connection", "close");
-			this.httpRequest.send(content);
-			this.currentThreshold = 0;
+			this.send();
 		}
 	},
-	/**
- 	 * @see Appender#doClear
-	 */
-	doClear: function() {return;},
-	/**
-	 * @see Appender#setLayout
-	 */
+	
+	/** @see Appender#doClear */
+	doClear: function() {
+		this.threshold = 0;
+		this.send();
+	},
+	
+	/** @see Appender#setLayout */
 	setLayout: function(layout){
 		this.layout = layout;
 	},
 	
 	/**
-	 * set the threshold when logs are send
+	 * Set the threshold when logs have to be send. Default threshold is 1.
 	 */
 	setThreshold: function(threshold) {
 		this.threshold = threshold;
+	},
+	
+	/**
+	 * send the request.
+	 */
+	send: function() {
+		var content = this.layout.getHeader();
+		
+		for(var i = 0; i < this.loggingEventMap.length(); i++) {
+			content +=  this.layout.format(this.loggingEventMap.get(i));
+		} 
+		
+		content += this.layout.getFooter();
+	
+		this.httpRequest.open("POST", this.loggingUrl, true);
+		this.httpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		// set the request headers. REFERER will be the top-level
+		// URI which may differ from the location of the error if
+		// it occurs in an included .js file
+		this.httpRequest.setRequestHeader("REFERER", location.href);
+ 		this.httpRequest.setRequestHeader("Content-length", content.length);
+		this.httpRequest.setRequestHeader("Connection", "close");
+		this.httpRequest.send(content);
+		this.currentThreshold = 0;
 	}
 };
 
@@ -1288,7 +1320,7 @@ function MozJSConsoleAppender(logger) {
 
 	this.logger = logger;
 	this.layout = new SimpleLayout();
-	netscape.security.PrivilegeManager.enablePrivilege('UniversalXPConnect');
+	netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
 	this.jsConsole = Components.classes["@mozilla.org/consoleservice;1"].getService(Components.interfaces.nsIConsoleService);
 	this.scriptError = Components.classes["@mozilla.org/scripterror;1"].createInstance(Components.interfaces.nsIScriptError);
 }
@@ -1299,7 +1331,7 @@ MozJSConsoleAppender.prototype = {
 	 * @see Appender#doAppend
 	 */
 	doAppend: function(loggingEvent) {
-		netscape.security.PrivilegeManager.enablePrivilege('UniversalXPConnect');
+		netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
 		this.scriptError.init(this.layout.format(loggingEvent), null, null, null, null, this.getFlag(loggingEvent), loggingEvent.categoryName);
 		this.jsConsole.logMessage(this.scriptError);
 	},
@@ -1678,46 +1710,59 @@ JSONLayout.prototype = {
 };
 
  /**
-  * Implementtion of java.util.Map
+  * Implementtion of java.util.HashMap
   * @private 
   */
 function Map(){
-	var keys = new Array();
-};
-Map.prototype = {
-	/**
-	 * @private 
-	 */
-	contains: function(key){
-		var entry = findEntry(key);
-		return !(entry === null || entry instanceof NullKey);
-	},
-	/**
-	 * @private 
-	 */
-	get: function(key) {
-		var entry = findEntry(key);
-		if ( !(entry === null || entry instanceof NullKey) )
-			return entry.value;
-		else
-			return null;
-	},
-	/**
-	 * @private 
-	 */
-	put: function(key, value) {
-		var entry = findEntry(key);
-		if (entry){
-			entry.value = value;
-		} else {
-			entry = new Object();
-			entry.key = key;
-			entry.value = value;
-			keys[keys.length] = entry;
-		}
-	}
-};
-
+    var keys = new Array();
+    this.contains = function(key){
+       var entry = findEntry(key);
+       return !(entry == null || entry instanceof NullKey);
+    }
+    this.get = function(key) {
+     var entry = findEntry(key);
+     if ( !(entry == null || entry instanceof NullKey) )
+        return entry.value;
+      else
+        return null;
+    };
+    this.put = function(key, value) {
+      var entry = findEntry(key);
+      if (entry){
+        entry.value = value;
+      } else {
+        addNewEntry(key, value);
+      }
+    };
+    this.remove = function (key){
+      for (var i=0;i<keys.length;i++){
+        var entry = keys[i];
+        if (entry instanceof NullKey) continue;
+        if (entry.key == key){
+            keys[i] = NullKey;
+        }
+      }        
+    };
+    this.size = function() {
+    	return keys.length;
+    };
+    function findEntry(key){
+      for (var i=0;i<keys.length;i++){
+        var entry = keys[i];
+        if (entry instanceof NullKey) continue;
+        if (entry.key == key){
+            return entry
+        }
+      }
+      return null;
+    };
+    function addNewEntry(key, value){
+        var entry = new Object();
+        entry.key = key;
+        entry.value = value;
+        keys[keys.length] = entry; 
+    }
+  }
 /**
  * replace the entries of map in key array, removing the former value
  * @private
@@ -1725,14 +1770,17 @@ Map.prototype = {
 function NullKey(){
 }
 new NullKey();
-  
-  
+
 /**
- * Functions taken from Prototype library, didn't want to require for just few 
- * functions.
- * More info at {@link http://prototype.conio.net/}
+ * @private
  */
 if (!Array.prototype.push) {
+	/**
+	 * Functions taken from Prototype library, didn't want to require for just few 
+	 * functions.
+	 * More info at {@link http://prototype.conio.net/}
+	 * @private
+	 */
 	Array.prototype.push = function() {
 		var startLength = this.length;
 		for (var i = 0; i < arguments.length; i++) {
@@ -1742,11 +1790,15 @@ if (!Array.prototype.push) {
 	};
 }
 
+/**
+ * @private
+ */
 if(!Function.prototype.bind) {
 	/**
 	 * Functions taken from Prototype library,  didn't want to require for just 
 	 * few functions.
 	 * More info at {@link http://prototype.conio.net/}
+	 * @private
 	 */	
 	Function.prototype.bind = function(object) {
 	  var __method = this;
@@ -1802,7 +1854,7 @@ ArrayList.prototype = {
  * @private
  */
 function Iterator (arrayList){
-	this.arrayList;
+	this.arrayList = arrayList;
 	this.index = 0;
 };
 Iterator.prototype = {
