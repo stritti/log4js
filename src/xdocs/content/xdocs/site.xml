@@ -46,6 +46,8 @@ See http://forrest.apache.org/docs/linking.html for more info
 		<todo label="Todos" href="todo.html" wholesite="true" />
 		<committer label="Committer" description="Hall of Fame" 
 			href="committer.html" wholesite="true" />
+		<credits label="Credits" description="Credits" 
+			href="credits.html" wholesite="true" />
 		<links label="Links" description="Further Information" 
 			href="links.html" wholesite="true" />
 		<!--<whole_pdftab label="Tab as PDF" href="pdf-tab.pdf" />-->

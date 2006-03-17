@@ -18,88 +18,94 @@
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN"
 "http://forrest.apache.org/dtd/document-v20.dtd">
 <document>
-	<header>
-		<title>Welcome to Log4js</title>
-		<authors>
-			<person email="stritti@users.berlios.de" id="ssr" 
-				name="Stephan Strittmatter" />
-		</authors>
-	</header>    <body>
-        <section id="overview">
-            <title>Overview</title>
-            <p>Log4js is a logging API for JavaScript. The main goal is to have 
-                a robust and solid logging API which is very simmilar to the 
-                Java logging API <a href="ext:log4j.apache.org">Log4j</a>.</p>
-        </section>
-		<section id="toLog">
-			<title>Severals ways to log</title>
-			<p>The current available Appenders [<a href="#note1">1</a>] are:</p>
-			<ul>
-				<li>DummyAppender : log nothing.</li>
-				<li>WindowAppender : open a new window in the browser and 
-					insert log messages in real time.</li>
-				<li> WindowsEventAppender : send log messages in the MS Windows 
-					event manager[2].</li>
-				<li>FileAppender : write log messages in a local file on the 
-					client[3].</li>
-				<li>AjaxAppender : allow to send log messages to a remote 
-					server with asynchronous HTTP request.</li>
-				<li> MetatagAppender : add log messages as meta data[4].</li>
-			</ul>
-			<p>Many Appender can be used in a same time.</p>
-		</section>
-        <section id="usage">
-            <title>Usage</title>
-            <p>Log4js is a simple API, which could be included in your 
-                scripts:</p>
-            <source id="code">
-            	<![CDATA[
-            	<script src="log4js.js" type="text/javascript"></script> 
-                <script type="text/javascript">
-                <!-- // //initialize the logger with your category 
-                var log = new Log4js.Logger("ajaxTest"); 
+  <header>
+    <title>Welcome to Log4js</title>
+
+    <authors>
+      <person email="stritti@users.berlios.de" id="ssr"
+              name="Stephan Strittmatter" />
+    </authors>
+  </header>
+
+  <body>
+    <section id="overview">
+      <title>Overview</title>
+
+      <p>Log4js is a logging API for JavaScript. The main goal is to have a
+      robust and solid logging API which is very simmilar to the Java logging
+      API <a href="ext:log4j.apache.org">Log4j</a>.</p>
+    </section>
+
+    <section id="toLog">
+      <title>Severals ways to log</title>
+
+      <p>The current available Appenders are:</p>
+
+      <ul>
+        <li>DummyAppender : log nothing.</li>
+
+        <li>WindowAppender : open a new window in the browser and insert log
+        messages in real time.</li>
+
+        <li>WindowsEventAppender : send log messages in the MS Windows event
+        manager.</li>
+
+        <li>FileAppender : write log messages in a local file on the
+        client.</li>
+
+        <li>AjaxAppender : allow to send log messages to a remote server with
+        asynchronous HTTP request.</li>
+
+        <li>MetatagAppender : add log messages as meta data.</li>
+      </ul>
+
+      <p>Many Appender can be used in a same time.</p>
+    </section>
+
+    <section id="usage">
+      <title>Usage</title>
+
+      <p>Log4js is a simple API, which could be included in your scripts:</p>
+
+      <source id="code">
+            	
+            	&lt;script src="log4js.js" type="text/javascript"&gt;&lt;/script&gt;
+ 
+                &lt;script type="text/javascript"&gt;
+                &lt;!-- // //initialize the logger with your category 
+                var log = Log4js.getLogger("ajaxTest"); 
                 //set the level of logging 
                 log.setLevel(Log4js.Level.ALL); 
                 //set the Appender to write the log to 
                 log.addAppender(new AjaxAppender(log, "./log4j.jsp")); 
-                // -->
-                </script>
-                ]]>
+                // --&gt;
+                &lt;/script&gt;
+                
                 </source>
-            <p>Now you can call the log in your logic like follow line:</p>
-			<source> <![CDATA[
-            	<input type="button" name="trace" value="Trace" 
-                   onclick="log.trace('I was traced!');return false;" />
-                ]]> </source>
-        </section>
-        <section id="architecture">
-            <title>Architecture</title>
-            <p>
-                <img src="architecture.png" alt="Architecture of Log4js" />
-            </p>
-        </section>
-		<section id="conclution">
-			<title>Conclusion</title>
-			<p>There are <a href="links.html#other">other libraries</a> in order to get this goal. We are 
-				discussing with the authors of another logging APIs in order to 
-				gather thier efforts and provide a common framework if 
-				possible.</p>
-			<p>Log4js is very simple to install and use.</p>
-			<source> <![CDATA[
-        <link href="skin/SyntaxHighlighter.css" />
-        <link href="skin/shCore.js" />
-        <link href="skin/shBrushPhp.js" />
-        <link href="skin/shBrushJScript.js" />
-        <link href="skin/shBrushXml.js" />
 
-        <script class="javascript"> 
-                dp.SyntaxHighlighter.HighlightAll('code'); 
-        </script>
-       ]]></source>
-		</section>
-		
-		<note id="notes">
-			<a href="#" id="note1">1:</a>
-		</note>
-    </body>
+      <p>Now you can call the log in your logic like follow line:</p>
+
+      <source> 
+            	&lt;input type="button" name="trace" value="Trace" 
+                   onclick="log.trace('I was traced!');return false;" /&gt;
+                 </source>
+    </section>
+
+    <section id="architecture">
+      <title>Architecture</title>
+
+      <p><img alt="Architecture of Log4js" src="architecture.png" /></p>
+    </section>
+
+    <section id="conclution">
+      <title>Conclusion</title>
+
+      <p>There are <a href="links.html#other">other libraries</a> in order to
+      get this goal. We are discussing with the authors of another logging
+      APIs in order to gather thier efforts and provide a common framework if
+      possible.</p>
+
+      <p>Log4js is very simple to install and use.</p>
+    </section>
+  </body>
 </document>

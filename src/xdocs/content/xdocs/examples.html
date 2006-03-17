@@ -1,0 +1,149 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
+
+<html>
+<!--
+  Copyright 2002-2004 The Apache Software Foundation or its licensors,
+  as applicable.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+	<head>
+		<title>Log4js tests</title>
+		<script src="/skin/log4js.js" type="text/javascript"></script>
+		<script type="text/javascript">
+		<!-- //
+		   var ajaxLog = new Log4js.Logger("ajaxTest");
+		   ajaxLog.setLevel(Log4js.Level.ALL);
+ 		   ajaxLog.addAppender(new AjaxAppender(ajaxLog, "./log4j.jsp"));
+
+		   var windowEventLog = new Log4js.Logger("windowEventTest");
+		   windowEventLog.setLevel(Log4js.Level.ALL);
+ 		   windowEventLog.addAppender(new WindowsEventAppender(windowEventLog));
+
+		   var fileLog = new Log4js.Logger("fileTest");
+		   fileLog.setLevel(Log4js.Level.ALL);
+ 		   fileLog.addAppender(new FileAppender(fileLog, "C:\\log4js.log"));
+		   
+		   var consoleLog = new Log4js.Logger("consoleTest");
+		   consoleLog.setLevel(Log4js.Level.ALL);
+ 		   consoleLog.addAppender(new ConsoleAppender(consoleLog, true));
+		   
+		   var windowLog = new Log4js.Logger("windowTest"); 
+		   windowLog.setLevel(Log4js.Level.ALL);
+ 		   windowLog.addAppender(new ConsoleAppender(windowLog)); //to windowLog to seperate windowLog window
+		   
+		   var alertLog = new Log4js.Logger("alertTest"); 
+		   alertLog.setLevel(Log4js.Level.ALL);
+ 		   alertLog.addAppender(new JSAlertAppender(alertLog));
+
+		   var mozLog = new Log4js.Logger("mozillaTest"); 
+		   mozLog.setLevel(Log4js.Level.ALL);
+		   var appender = new MozJSConsoleAppender(mozLog);
+		   appender.setLayout(new PatternLayout("%p-> %m"));
+ 		   mozLog.addAppender(appender);
+
+ 		// -->
+ 		</script>
+	</head>
+
+	<body>
+		<h1>Log4js <script type="text/javascript">document.write(Log4js.version)</script> Tests</h1>
+		<fieldset><legend>Window Console Logging</legend>
+			<input type="text" id="windowMessage" value="add windowLog message" onchange="windowLog.trace(document.getElementById('windowMessage').value);"/>
+			<input type="button" name="trace" value="Trace Message" onclick="windowLog.trace(document.getElementById('windowMessage').value);" />
+			<br />
+			<input type="button" name="trace" value="Trace" onclick="windowLog.trace('I was traced!');return false;" />
+			<input type="button" name="debug" value="Debug" onclick="windowLog.debug('I was debuged!');return false;" />
+			<input type="button" name="info" value="Info" onclick="windowLog.info('I was infoed!');return false;" />
+			<input type="button" name="warn" value="Warn" onclick="windowLog.warn('I was warned!');return false;" />
+			<input type="button" name="error" value="Error" onclick="windowLog.error('I was errored!');return false;" />
+			<input type="button" name="fatal" value="Fatal" onclick="windowLog.fatal('I was fataled!');return false;" />
+			&nbsp;&nbsp;
+			<input type="button" name="test" value="Test window.error" onclick="badObject.badMethod;" />
+		</fieldset>
+		
+		<fieldset><legend>Inline Console Logging (toggle on with ALT-D)</legend>
+			<input type="text" id="consoleMessage" value="add consoleLog message" onChange="consoleLog.trace(document.getElementById('consoleMessage').value);"/>
+			<input type="button" name="trace" value="Trace Message" onClick="consoleLog.trace(document.getElementById('consoleMessage').value);" />
+			<br />
+			<input type="button" name="trace" value="Trace" onclick="consoleLog.trace('I was traced!');return false;" />
+			<input type="button" name="debug" value="Debug" onclick="consoleLog.debug('I was debuged!');return false;" />
+			<input type="button" name="info" value="Info" onclick="consoleLog.info('I was infoed!');return false;" />
+			<input type="button" name="warn" value="Warn" onclick="consoleLog.warn('I was warned!');return false;" />
+			<input type="button" name="error" value="Error" onclick="consoleLog.error('I was errored!');return false;" />
+			<input type="button" name="fatal" value="Fatal" onclick="consoleLog.fatal('I was fataled!');return false;" />
+		</fieldset>
+		
+		<fieldset><legend>Ajax Logging</legend>
+			<input type="text" id="ajaxMessage" value="add ajaxLog message" onChange="ajaxLog.trace(document.getElementById('ajaxMessage').value);"/>
+			<input type="button" name="trace" value="Trace Message" onClick="ajaxLog.trace(document.getElementById('ajaxMessage').value);" />
+			<br />
+			<input type="button" name="trace" value="Trace" onclick="ajaxLog.trace('I was traced!');return false;" />
+			<input type="button" name="debug" value="Debug" onclick="ajaxLog.debug('I was debuged!');return false;" />
+			<input type="button" name="info" value="Info" onclick="ajaxLog.info('I was infoed!');return false;" />
+			<input type="button" name="warn" value="Warn" onclick="ajaxLog.warn('I was warned!');return false;" />
+			<input type="button" name="error" value="Error" onclick="ajaxLog.error('I was errored!');return false;" />
+			<input type="button" name="fatal" value="Fatal" onclick="ajaxLog.fatal('I was fataled!');return false;" />
+		</fieldset>
+
+		<fieldset><legend>Local File Logging (Internet Explorer only) (C:\log4js.log)</legend>
+			<input type="text" id="fileMessage" value="add fileLog message" onChange="fileLog.trace(document.getElementById('fileMessage').value);"/>
+			<input type="button" name="trace" value="Trace Message" onClick="fileLog.trace(document.getElementById('fileMessage').value);" />
+			<br />
+			<input type="button" name="trace" value="Trace" onclick="fileLog.trace('I was traced!');return false;" />
+			<input type="button" name="debug" value="Debug" onclick="fileLog.debug('I was debuged!');return false;" />
+			<input type="button" name="info" value="Info" onclick="fileLog.info('I was infoed!');return false;" />
+			<input type="button" name="warn" value="Warn" onclick="fileLog.warn('I was warned!');return false;" />
+			<input type="button" name="error" value="Error" onclick="fileLog.error('I was errored!');return false;" />
+			<input type="button" name="fatal" value="Fatal" onclick="fileLog.fatal('I was fataled!');return false;" />
+			&nbsp;&nbsp;
+			<input type="button" name="clear" value="Clear Log" onclick="fileLog.clear();return false;" />
+		</fieldset>
+		
+		<fieldset><legend>Window Event Logging (Internet Explorer only) (Control Panel > Administrative Tools > Event Viewer)</legend>
+			<input type="text" id="winEventMessage" value="add windowEventLog message" onChange="windowEventLog.trace(document.getElementById('winEventMessage').value);"/>
+			<input type="button" name="trace" value="Trace Message" onClick="windowEventLog.trace(document.getElementById('winEventMessage').value);" />
+			<br />
+			<input type="button" name="trace" value="Trace" onclick="windowEventLog.trace('I was traced!');return false;" />
+			<input type="button" name="debug" value="Debug" onclick="windowEventLog.debug('I was debuged!');return false;" />
+			<input type="button" name="info" value="Info" onclick="windowEventLog.info('I was infoed!');return false;" />
+			<input type="button" name="warn" value="Warn" onclick="windowEventLog.warn('I was warned!');return false;" />
+			<input type="button" name="error" value="Error" onclick="windowEventLog.error('I was errored!');return false;" />
+			<input type="button" name="fatal" value="Fatal" onclick="windowEventLog.fatal('I was fataled!');return false;" />
+		</fieldset>	
+		
+		<fieldset><legend>Alert Logging</legend>
+			<input type="text" id="alertMessage" value="add alertLog message" onChange="alertLog.trace(document.getElementById('alertMessage').value);"/>
+			<input type="button" name="trace" value="Trace Message" onClick="alertLog.trace(document.getElementById('alertMessage').value);" />
+			<br />
+			<input type="button" name="trace" value="Trace" onclick="alertLog.trace('I was traced!');return false;" />
+			<input type="button" name="debug" value="Debug" onclick="alertLog.debug('I was debuged!');return false;" />
+			<input type="button" name="info" value="Info" onclick="alertLog.info('I was infoed!');return false;" />
+			<input type="button" name="warn" value="Warn" onclick="alertLog.warn('I was warned!');return false;" />
+			<input type="button" name="error" value="Error" onclick="alertLog.error('I was errored!');return false;" />
+			<input type="button" name="fatal" value="Fatal" onclick="alertLog.fatal('I was fataled!');return false;" />
+		</fieldset>
+		
+		<fieldset><legend>Mozilla JavaScript Logging</legend>
+			<input type="text" id="alertMessage" value="add alertLog message" onChange="mozLog.trace(document.getElementById('alertMessage').value);"/>
+			<input type="button" name="trace" value="Trace Message" onClick="mozLog.trace(document.getElementById('alertMessage').value);" />
+			<br />
+			<input type="button" name="trace" value="Trace" onclick="mozLog.trace('I was traced!');return false;" />
+			<input type="button" name="debug" value="Debug" onclick="mozLog.debug('I was debuged!');return false;" />
+			<input type="button" name="info" value="Info" onclick="mozLog.info('I was infoed!');return false;" />
+			<input type="button" name="warn" value="Warn" onclick="mozLog.warn('I was warned!');return false;" />
+			<input type="button" name="error" value="Error" onclick="mozLog.error('I was errored!');return false;" />
+			<input type="button" name="fatal" value="Fatal" onclick="mozLog.fatal('I was fataled!');return false;" />
+		</fieldset>
+	</body>
+</html>
