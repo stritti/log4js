@@ -31,7 +31,7 @@
 	<property file="build.properties" />
 	<property environment="env" />
 
-	<property name="version" value="0.2.0-dev" />
+	<property name="version" value="${version}" />
 
 	<property name="src.dir" value="src" />
 	<property name="src.js.dir" value="${src.dir}/js" />
@@ -183,13 +183,14 @@
 	<target name="doc.api" description="generate the API doc" depends="init">
 		<property name="apidoc.dir" value="${dist.dir}/docs/api" />
 
-		<echo>Gererate JSDoc to ${apidoc.dir}</echo>
+		<echo>Gererate JSDoc to dir ${apidoc.dir}</echo>
 		<mkdir dir="${apidoc.dir}" />
 
 		<property name="footer" value="log4js - Logging API for JavaScript" />	
-
+		<property name="logo" value="${basedir}/logo/1.0/exports/1.0_70px.jpg" />	
+			
 		<exec executable="perl">
-			<arg line="${tools.dir}/JSDoc/jsdoc.pl -r &quot;${src.dir}/js&quot; -d &quot;${apidoc.dir}&quot; -project-name &quot;${ant.project.name} ${version}&quot; -page-footer &quot;${footer}&quot;" />
+			<arg line="${tools.dir}/JSDoc/jsdoc.pl -r &quot;${src.dir}/js&quot; -d &quot;${apidoc.dir}&quot; -project-name &quot;${ant.project.name} ${version}&quot; -page-footer &quot;${footer}&quot;  -logo &quot;${logo}&quot;"/>
 		</exec>
 	</target>
 	
@@ -236,17 +237,21 @@
 		</description>
 
 		<!-- for "compile" -->
-		<get dest="${tools.dir}/jsjam/jsjam.pl" usetimestamp="true" ignoreerrors="true" src="http://www.anvilon.com/software/download/jsjam" />
+		<get dest="${tools.dir}/jsjam/jsjam.pl" usetimestamp="true" ignoreerrors="true" 
+			src="http://www.anvilon.com/software/download/jsjam" />
 
-		<get dest="${lib.dir}/JSUnit.zip" usetimestamp="true" ignoreerrors="true" src="http://mesh.dl.sourceforge.net/sourceforge/jsunit/jsunit2_1.zip" verbose="true" />
+		<get dest="${lib.dir}/JSUnit.zip" usetimestamp="true" ignoreerrors="true" 
+			src="http://mesh.dl.sourceforge.net/sourceforge/jsunit/jsunit2_1.zip" verbose="true" />
 		<unzip src="${lib.dir}/JSUnit.zip" dest="${tools.dir}/JSUnit" />
 
-        <get dest="${lib.dir}/jsl.zip" usetimestamp="true" ignoreerrors="true" src="http://www.javascriptlint.com/download/jsl-0.2.1-win32.zip" verbose="true" />
+        <get dest="${lib.dir}/jsl.zip" usetimestamp="true" ignoreerrors="true" 
+        	src="http://www.javascriptlint.com/download/jsl-0.2.1-win32.zip" verbose="true" />
 		<unzip src="${lib.dir}/jsl.zip" dest="${tools.dir}/jsl" />
 		
 
 		<!-- for documentation -->
-		<get dest="${lib.dir}/JSDoc.tgz" usetimestamp="true" ignoreerrors="true" src="http://mesh.dl.sourceforge.net/sourceforge/jsdoc/JSDoc-1.9.6.1.tgz" verbose="true" />
+		<get dest="${lib.dir}/JSDoc.tgz" usetimestamp="true" ignoreerrors="true" 
+			src="http://mesh.dl.sourceforge.net/sourceforge/jsdoc/JSDoc-1.9.9.2.tgz" verbose="true" />
 		<gunzip src="${lib.dir}/JSDoc.tgz" dest="${tools.dir}/JSDoc" />
 <!--
 		<get dest="${lib.dir}/apache-forrest.zip" usetimestamp="true" ignoreerrors="true" src="http://www.artfiles.org/apache.org/forrest/apache-forrest-0.7.zip" />
