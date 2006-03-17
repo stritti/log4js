@@ -49,7 +49,7 @@ var Log4js = {
 	 * @static
 	 * @final
 	 */
-  	version: "0.2-dev",
+  	version: "0.2",
 
 
 	/**
