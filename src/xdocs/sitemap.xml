@@ -18,6 +18,13 @@
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   <map:pipelines>
     <map:pipeline internal-only="false">
+    
+	   <map:match pattern="**rss.xml">
+		    <map:generate src="https://developer.berlios.de/export/rss20_bsnews.php?group_id=5368"/>
+		    <map:transform src="{forrest:stylesheets}/rss2document.xsl"/>
+		    <map:serialize type="xml"/>
+	   </map:match>
+   
       <map:match pattern="**.xml">
         <!-- pdf-tab definitions -->
         <map:match pattern="pdf-tab.xml">

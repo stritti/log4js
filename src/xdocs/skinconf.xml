@@ -30,7 +30,7 @@ which will be used to configure the chosen Forrest skin.
     In other words google will search the @domain for the query string.
   -->
 
-  <search domain="log4js.berlios.de" name="Log4js" provider="google" />
+  <search domain="log4js.berlios.de" name="Log4js" provider="google" box-location="alt" />
 
   <!-- Disable the print link? If enabled, invalid HTML 4.0.1 -->
 
@@ -113,7 +113,7 @@ which will be used to configure the chosen Forrest skin.
   <host-logo>http://developer.berlios.de/bslogo.php?group_id=5368</host-logo>
   
   <!-- relative url of a favicon file, normally favicon.ico -->
-  <favicon-url></favicon-url>
+  <favicon-url>favicon.ico</favicon-url>
 
   <!-- The following are used to construct a copyright statement -->
   <year>2005-2006</year>
