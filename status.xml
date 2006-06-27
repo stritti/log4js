@@ -39,7 +39,26 @@
     </contexts>
     <changes>
         <!-- Add new releases here -->
-       <release version="0.2-dev" date="unreleased">
+       <release version="0.3" date="unreleased">
+            <notes>
+                <section>
+                    <title></title>
+                    <p>
+                    </p>
+                </section>
+            </notes>
+            <action dev="ssr" type="add" context="code" importance="medium"> 
+                FileAppender supports now also Mozilla Browser. 
+                Many thanks for this patch to Nicolas Justin and Gregory Kokanosky of 
+                <a href="http://www.idealx.com">www.idealx.com</a>
+            </action>
+           <action dev="ssr" type="fix" context="code" importance="medium" due-to="Sven.Space"
+           	fixes-bug="008003"> 
+                ConsoleAppender supports now serveral Loggers with several Console.
+            </action>
+       </release>
+
+       <release version="0.2" date="2006-03-17">
             <notes>
                 <section>
                     <title></title>
