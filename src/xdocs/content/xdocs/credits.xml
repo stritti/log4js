@@ -39,8 +39,12 @@
       		Some documentations.</li>
       	<li><a href="http://www.javablog.com/pages/ben.html">Ben Simpson</a>: 
       		Improvements in english docs.</li>
-      	<li><a href="http://www.devspace.com">Christian Gross</a>: Found the sources to be good enought to be used
+      	<li><a href="http://www.devspace.com">Christian Gross</a>: 
+      	    Found the sources to be good enought to be used
       		in his book "Ajax Patterns and Best Practices"</li>
+      	<li><a href="http://www.idealx.com">Nicolas Justin and Gregory Kokanosky</a>:
+      	     patched FileAppender to support now also Mozilla Browser. 
+             Many thanks for this patch.</li>
       </ul>
     </section>
   </body>
