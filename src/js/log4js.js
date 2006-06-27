@@ -30,7 +30,7 @@
  *  log.trace("trace me" );
  * </pre>
  *
- * @version 0.2
+ * @version 0.3
  * @author Stephan Strittmatter - http://jroller.com/page/stritti
  * @author Seth Chisamore - http://www.chisamore.com
  */
@@ -49,7 +49,7 @@ var Log4js = {
 	 * @static
 	 * @final
 	 */
-  	version: "0.2",
+  	version: "0.3",
 
 
 	/**
@@ -79,8 +79,6 @@ var Log4js = {
     	}
 	}
 };
-
-
 
 
 /**
@@ -627,14 +625,14 @@ ConsoleAppender.prototype = {
 		var win = window;
 		
 		if(!this.inline) {
-			window.top.consoleWindow = window.open("", "log4jsconsole", "left=0,top=0,width=700,height=700,scrollbars=no,status=no,resizable=no;toolbar=no");
+			window.top.consoleWindow = window.open("", this.logger.category, "left=0,top=0,width=700,height=700,scrollbars=no,status=no,resizable=no;toolbar=no");
 			window.top.consoleWindow.opener = self;
 			win = window.top.consoleWindow;
 			doc = win.document;
 			doc.open();
 			doc.write("<!DOCTYPE html PUBLIC -//W3C//DTD XHTML 1.0 Transitional//EN ");
 			doc.write("  http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd>\n\n");
-			doc.write("<html><head><title>log4js</title>\n");
+			doc.write("<html><head><title>" + this.logger.category + "</title>\n");
 			doc.write("</head><body style=\"background-color:darkgray\"></body>\n");
 			win.blur();
 			win.focus();
@@ -1135,13 +1133,17 @@ AjaxAppender.prototype = {
 
 /**
  * File Appender writing the logs to a text file.
- * PLEASE NOTE - Only works in IE..uses ActiveX to write file
- *
+ * PLEASE NOTE - Only works in IE and Mozilla 
+ * use ActiveX to write file on IE
+ * use XPCom components  to write file on Mozilla
+ * 
  * @extends Appender 
  * @constructor
  * @param logger log4js instance this appender is attached to
  * @param file file log messages will be written to
  * @author Seth Chisamore
+ * @author Nicolas Justin njustin@idealx.com
+ * @author Gregory Kokanosky gkokanosky@idealx.com
  */
 function FileAppender(logger, file) {
 	// add listener to the logger methods
@@ -1153,11 +1155,19 @@ function FileAppender(logger, file) {
 	 */
 	this.logger = logger;
 	this.layout = new SimpleLayout();
+	this.isIE = true;
 	
-	this.file = file || "C:\\log4js.log";
+	this.file = file || "C:\\log4js.log";	
+	
 	try{
 		this.fso = new ActiveXObject("Scripting.FileSystemObject");
-	} catch(e){}
+	} catch(e){
+		try {
+			netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
+			this.fso =  Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile);
+			this.isIE = false; //mozilla & co
+		} catch (e) {}
+	}
 }
 
 FileAppender.prototype = {
@@ -1167,11 +1177,24 @@ FileAppender.prototype = {
 	 */
 	doAppend: function(loggingEvent) {
 		try {
-			// try opening existing file, create if needed
-			var fileHandle = this.fso.OpenTextFile(this.file, 8, true);        
-			// write out our data
-			fileHandle.WriteLine(this.layout.format(loggingEvent));
-			fileHandle.close();   
+			if( this.isIE ){
+				// try opening existing file, create if needed
+				var fileHandle = this.fso.OpenTextFile(this.file, 8, true);        
+				// write out our data
+				fileHandle.WriteLine(this.layout.format(loggingEvent));
+				fileHandle.close();   
+			} else {
+				netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
+				this.fso.initWithPath(this.file);
+        			if(!this.fso.exists()) //create file if needed
+	            			this.fso.create(0x00, 0600);
+				
+ 				var fileHandle = Components.classes["@mozilla.org/network/file-output-stream;1"].createInstance(Components.interfaces.nsIFileOutputStream);
+        			fileHandle.init( this.fso, 0x04 | 0x08 | 0x10, 064, 0);
+				var line = this.layout.format(loggingEvent);
+        			fileHandle.write(line, line.length); //write data
+        			fileHandle.close();
+			}
 		} catch (e) {}
 	},
 	/*
@@ -1179,11 +1202,17 @@ FileAppender.prototype = {
 	 */
 	doClear: function() {
 		try {
-			var fileHandle = this.fso.GetFile(this.file);
-			fileHandle.Delete();
-		} catch (e) {
-			
-		}
+			if( this.isIE ){
+				var fileHandle = this.fso.GetFile(this.file);
+				fileHandle.Delete();
+			} else {
+				netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
+				this.fso.initWithPath(this.file);
+				if(this.fso.exists()) {
+					this.fso.remove(false);
+				}
+			}
+		} catch (e) {}
 	},
 	/**
 	 * @see Appender#setLayout
