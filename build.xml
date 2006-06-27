@@ -69,7 +69,7 @@
 
 		<mkdir dir="${release.dir}" />
 
-		<zip destfile="${release.dir}/log4js-${version}.zip">
+		<zip destfile="${release.dir}/log4js-${version}.zip" >
 			<fileset dir="${basedir}">
 				<include name="${src.js.dir}/**" />
 				<include name="${example.src.dir}/**" />
