@@ -94,7 +94,11 @@
     <section id="architecture">
       <title>Architecture</title>
 
-      <p><img alt="Architecture of Log4js" src="architecture.png" /></p>
+      <p>The architecture is very close to log4j's architecture. there are only Three
+      main objects: The static Logger, an Appender and a Layout. Appender and Layout 
+      are exchangeable and have only to fullfill the interfaces.
+      
+      	<img alt="Architecture of Log4js" src="architecture.png" /></p>
     </section>
 
     <section id="conclution">

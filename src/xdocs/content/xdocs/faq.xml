@@ -28,8 +28,8 @@
 		<faq id="usage">
 			<question>How can I use Log4js?</question>
 			<answer>
-				<p>Have a look at the <a href="examples.html">examples</a>. You have 
-					only to add log4js.js as script to your HTML pages and 
+				<p>Have a look at the <a href="examples.html">examples</a>. You 
+					have only to add log4js.js as script to your HTML pages and 
 					create a loggin object which you are using then in your 
 					code for logging.</p>
 				<p>For more details about the API, have a look at the <a 
@@ -39,12 +39,14 @@
 		<faq id="license">
 			<question>Under which license is Log4js available?</question>
 			<answer>
-				<p>Log4js is availabel under <a href="ext:log4js/license">Apache 
-					License Version 2.0</a>.</p>
+				<p>Log4js is availabel under <a 
+					href="ext:log4js/license">Apache License Version 
+					2.0</a>.</p>
 			</answer>
 		</faq>
 		<faq id="appender">
-			<question>Why I have to set an Appender? What is an Appender?</question>
+			<question>Why I have to set an Appender? What is an 
+				Appender?</question>
 			<answer>
 				<p>Appenders are special implementations for different logging 
 					behaviours. In some cases you probably want to log to a 
@@ -52,25 +54,75 @@
 					client logs to the server to store them there. </p>
 				<p>log4js has a very flexible for these cirumstances and allows 
 					own implementations for this. These are the appenders.</p>
-				<p>There are already some appenders available within log4js, 
-					have also a look at the <a href="ext:log4js/apidocs">API 
+				<p>There are some useful appenders available within log4js. 
+					Have also a look at the <a href="ext:log4js/apidocs">API 
 					documentation</a>:</p>
 				<ul>
-					<li>AjaxAppender</li>
-					<li>ConsoleAppender</li>
-					<li>JSAlertAppender</li>
-					<li>MetatagAppender</li>
-					<li>FileAppender</li>
-					<li>WindowsEventAppender</li>
-					<li>MozConsoleAppender</li>
+					<li><em>AjaxAppender:</em> Sends the logging content via 
+						XmlHttpRequest to the server to log data on the 
+						server.</li>
+					<li><em>ConsoleAppender:</em> Creates a HTML console 
+						(inline or separate window) to show the logs.</li>
+					<li><em>JSAlertAppender:</em> For some circumstances 
+						useful: Show alert boxes for each log.</li>
+					<li><em>MetatagAppender:</em> Adds the loggs as meta 
+						tags.</li>
+					<li><em>FileAppender:</em> Creates a local file to write 
+						the logs in. Works with Mozilla and Internet 
+						Explorer.</li>
+					<li><em>WindowsEventAppender:</em> Sends the logs to the 
+						Windows System Events. Works only with Internet 
+						Explorer.</li>
+					<li><em>MozJSConsoleAppender:</em> Sends the logs to the 
+						Mozilla JavaScript console</li>
+					<li><em>SafariJSConsoleAppender:</em> Sends the logs to the 
+						Safari JavaScript console</li>
+					<li><em>OperaJSConsoleAppender:</em> Sends the logs to the 
+						Opera JavaScript console</li>
 				</ul>
 				<p>Probably you have also an appender, to share with the 
 					comunitiy?</p>
 			</answer>
 		</faq>
 		<faq id="layout">
-			<question></question>
-			<answer></answer>
+			<question>How do I use Layouts?</question>
+			<answer>
+				<p>The Layouts give you the possibility to format the logs in a 
+					specific way. For example, it is possible to format as HTML 
+					or XML. Some appenders require a specific layout to work 
+					correctly. </p>
+				<p>Following layouts are available:</p>
+				<ul>
+					<li><em>JSONLayout:</em> formats the log entrys as JSON 
+						object, which can be read by different programming 
+						languages. Often it is more useful than XML because of 
+						the smaller footprints.</li>
+					<li><em>XMLLayout:</em> formats the log entries as XML 
+						structure. The structure is very simmilar to the XML 
+						structure of Apachees log4j</li>
+					<li><em>HTMLLayout:</em> formats the log entry as HTML 
+						div-element</li>
+				</ul>
+			</answer>
+		</faq>
+		<faq id="remotelogging">
+			<question>Can I log the data from the client on the 
+				server?</question>
+			<answer>
+				<p> Logging is useful during development. Then the log output 
+					is useful within ConsoleAppender for example. But logging 
+					is much more usefule within production systems, where your 
+					application is out in the wild area. There you can not 
+					debug and the users just report errors. Having no logs it 
+					is difficult to understand what happend in complex 
+					environments. </p>
+				<p> For this circumstances we designed the AJAXAppender! The 
+					AJAXAppender sned all the logs collected on the client to a 
+					specific url on the server. There you can process them 
+					using log4j, log4php or by your own. To improve the 
+					performance a threshold could be defined. The log entries 
+					are send then in blocks. </p>
+			</answer>
 		</faq>
 	</faqsection>
 	<faqsection id="docs">
@@ -84,6 +136,10 @@
 					href="ext:forrest/validation">validate</a>, <a 
 					href="ext:forrest/webapp">develop</a> and render a project 
 					site. </p>
+				<p>It is also possible to write some documentation at our 
+					<a href="ext:log4js/wiki">wiki</a> which is much more
+					userfriendly if you want to write only short things. If there
+					are good articles we will probably move them to the log4js site.</p>
 			</answer>
 		</faq>
 		<!-- More faqs or parts here -->
