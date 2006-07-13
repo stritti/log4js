@@ -56,6 +56,24 @@
            	fixes-bug="008003"> 
                 ConsoleAppender supports now serveral Loggers with several Console.
             </action>
+           <action dev="ssr" type="add" context="code" importance="medium" due-to="Sven.Space"> 
+                ConsoleAppender can set specific accesskey now.
+            </action>
+           <action dev="ssr" type="fix" context="admin" importance="medium" 
+           	fixes-bug="007276"> 
+                Examples fixed to work within the web page. Secific ant task &quote;site&quote;
+                fixed for that. The AJAXappender example is still not working because of no JSP support
+                of the hosting server.
+            </action>
+           <action dev="ssr" type="add" context="admin" importance="medium" fixes-bug="007277"> 
+                Now generating also gzipped TAR archive. Directory log4js-[version] added in the archive.
+            </action>
+            <action dev="ssr" type="add" context="docs" importance="medium" > 
+                FAQs extended.
+            </action>   
+            <action dev="ssr" type="fix" content="code" importance="high" fixes-bug="008065">
+            	AJAXappender fixed for sending several log entries.
+            </action>         
        </release>
 
        <release version="0.2" date="2006-03-17">
