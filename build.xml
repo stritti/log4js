@@ -43,10 +43,6 @@
 	<property name="doc.dir" value="docs" />
 	<property name="xdoc.dir" value="${src.dir}/xdocs" />
 	
-	<!-- FORREST_HOME must be set as an environment variable -->
-	<property name="forrest.home" value="${env.FORREST_HOME}" />
-
-
 	<!-- build properties -->
 	<property name="dist.dir" value="build" />
 	<property name="dist.docs.dir" value="${dist.dir}/docs" />
@@ -54,9 +50,14 @@
 	<!-- example properties -->
 	<property name="example.src.dir" value="examples" />
 	<property name="example.webapp.dir" value="${dist.dir}/webapp" />
-	<property name="example.war.name" value="log4js-example.war" />
+	<property name="example.war.name" value="log4js-example-${version}.war" />
 	<property name="log4j.jar" value="${lib.dir}/log4j.jar" />
 
+	<!-- FORREST_HOME must be set as an environment variable -->
+	<property name="forrest.home" value="${env.FORREST_HOME}" />
+	<property name="project.site-dir" value="${dist.dir}/site" />
+
+	
 	<!-- release properties -->
 	<property name="release.dir" value="release" />
 
@@ -69,7 +70,7 @@
 
 		<mkdir dir="${release.dir}" />
 
-		<zip destfile="${release.dir}/log4js-${version}.zip" >
+		<copy todir="${release.dir}/tmp/log4js-${version}">
 			<fileset dir="${basedir}">
 				<include name="${src.js.dir}/**" />
 				<include name="${example.src.dir}/**" />
@@ -86,27 +87,15 @@
 			<fileset file="INSTALL.txt" />
 			<fileset file="LICENSE.txt" />
 			<fileset file="NOTICE.txt" />
-		</zip>
-		<!--
-    	<tar compression="gzip" destfile="${release.dir}/log4js-${version}.tar.gz" >
-			<fileset dir="${basedir}">
-				<include name="${src.dir}/**" />
-			</fileset>
-			<fileset dir="${basedir}">
-				<include name="${example.src.dir}/**" />
-			</fileset>			
-			<fileset dir="${dist.dir}">
-				<include name="lib/**" />
-				<include name="docs/**" />
-			</fileset>
-			<fileset file="${dist.dir}/${example.war.name}" />
-
-			<fileset file="CHANGELOG.txt" />
-			<fileset file="INSTALL.txt" />
-			<fileset file="LICENSE.txt" />
-			<fileset file="NOTICE.txt" />
-		</tar>     		
--->
+		</copy>
+		
+		<zip destfile="${release.dir}/log4js-${version}.zip" 
+			basedir="${release.dir}/tmp" />
+		
+    	<tar destfile="${release.dir}/log4js-${version}.tar.gz" 
+    		basedir="${release.dir}/tmp" compression="gzip" />
+    		
+		<delete dir="${release.dir}/tmp" />
 	</target>
 
 	<!-- ================================= 
@@ -131,20 +120,22 @@
 	<target name="dist.example" depends="init, compile" description="--> distribution WAR for example">
 		<echo>generate example web archive: ${dist.dir}/${example.war.name}</echo>
 
-		<copy todir="${example.webapp.dir}">
+		<copy todir="${example.webapp.dir}" overwrite="true">
 			<fileset dir="${example.src.dir}">
 				<exclude name="**/web.xml" />
 				<exclude name="**/*.bak" />
 			</fileset>
-			<fileset dir="${src.dir}">
-				<exclude name="**/*.bak" />
+		</copy>
+		<copy todir="${example.webapp.dir}/js" overwrite="true">
+			<fileset dir="${src.js.dir}">
+				<include name="**/*.js" />
 			</fileset>
 		</copy>
-
 		<!-- additional libraries -->
-		<copy todir="${example.webapp.dir}/WEB-INF/lib" file="${log4j.jar}" />
+		<copy todir="${example.webapp.dir}/WEB-INF/lib" file="${log4j.jar}" overwrite="true"/>
 
-		<war destfile="${dist.dir}/${example.war.name}" basedir="${example.src.dir}" webxml="${example.src.dir}/WEB-INF/web.xml" />
+		<war destfile="${dist.dir}/${example.war.name}" basedir="${example.webapp.dir}" 
+			webxml="${example.src.dir}/WEB-INF/web.xml" />
 	</target>
 
 
@@ -153,13 +144,7 @@
          ================================= -->
 	<target name="dist.doc" depends="init, doc" description="--> generate documentation arcive">
 		<echo>generate documentation archive: ${dist.dir}/log4js-doc-${version}.zip</echo>
-		<!--
-		<copy todir="${dist.dir}/docs">
-			<fileset dir="${doc.dir}">
-				<exclude name="*.bak" />
-			</fileset>
-		</copy>
-		-->
+
 		<zip destfile="${dist.dir}/log4js-doc-${version}.zip">
 			<fileset dir="${dist.dir}/docs">
 			</fileset>
@@ -277,15 +262,28 @@
 	<!-- ================================= 
           target for forrest: use site to generate the files        
          ================================= -->
-	<target name="forrest-site" description="Generates static HTML documentation">
-		<ant antfile="${env.FORREST_HOME}/main/forrest.build.xml" target="site" />
+	<target name="site" description="Generates static HTML documentation" depends="doc.api, compile">
+			
+		<exec executable="${env.FORREST_HOME}/bin/forrest.bat" >
+			
+		</exec>
 
 		<mkdir dir="${project.site-dir}/apidocs" />
+
+		<echo>Copy api-doc into the site...</echo>
 		<copy todir="${project.site-dir}/apidocs">
-			<fileset dir="${doc.dir}">
+			<fileset dir="${apidoc.dir}">
 				<exclude name="*.bak" />
 			</fileset>
 		</copy>
+		
+		<echo>Copy example into the site...</echo>
+		<copy tofile="${project.site-dir}/examples.html" 
+			file="${example.src.dir}/index.html" overwrite="true" />
+
+		<copy tofile="${project.site-dir}/js/log4js.js" 
+			file="${src.js.dir}/log4js.js" overwrite="true" />
+			
 	</target>
 
 
