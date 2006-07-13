@@ -47,6 +47,12 @@
 
 	<body>
 		<h1>Log4js <script type="text/javascript">document.write(Log4js.version)</script> Tests</h1>
+		
+		<noscript>
+			<blockquote>	
+			<p>Log4js examples can be used only when JAvaScript is enabled!</p>
+			</blockquote>
+		</noscript>
 		<fieldset><legend>Window Console Logging</legend>
 			<input type="text" id="windowMessage" value="add windowLog message" onchange="windowLog.trace(document.getElementById('windowMessage').value);"/>
 			<input type="button" name="trace" value="Trace Message" onclick="windowLog.trace(document.getElementById('windowMessage').value);" />
@@ -62,8 +68,8 @@
 		</fieldset>
 		
 		<fieldset><legend>Inline Console Logging (toggle on with ALT-D)</legend>
-			<input type="text" id="consoleMessage" value="add consoleLog message" onChange="consoleLog.trace(document.getElementById('consoleMessage').value);"/>
-			<input type="button" name="trace" value="Trace Message" onClick="consoleLog.trace(document.getElementById('consoleMessage').value);" />
+			<input type="text" id="consoleMessage" value="add consoleLog message" onchange="consoleLog.trace(document.getElementById('consoleMessage').value);"/>
+			<input type="button" name="trace" value="Trace Message" onclick="consoleLog.trace(document.getElementById('consoleMessage').value);" />
 			<br />
 			<input type="button" name="trace" value="Trace" onclick="consoleLog.trace('I was traced!');return false;" />
 			<input type="button" name="debug" value="Debug" onclick="consoleLog.debug('I was debuged!');return false;" />
@@ -74,8 +80,8 @@
 		</fieldset>
 		
 		<fieldset><legend>Ajax Logging</legend>
-			<input type="text" id="ajaxMessage" value="add ajaxLog message" onChange="ajaxLog.trace(document.getElementById('ajaxMessage').value);"/>
-			<input type="button" name="trace" value="Trace Message" onClick="ajaxLog.trace(document.getElementById('ajaxMessage').value);" />
+			<input type="text" id="ajaxMessage" value="add ajaxLog message" onchange="ajaxLog.trace(document.getElementById('ajaxMessage').value);"/>
+			<input type="button" name="trace" value="Trace Message" onclick="ajaxLog.trace(document.getElementById('ajaxMessage').value);" />
 			<br />
 			<input type="button" name="trace" value="Trace" onclick="ajaxLog.trace('I was traced!');return false;" />
 			<input type="button" name="debug" value="Debug" onclick="ajaxLog.debug('I was debuged!');return false;" />
@@ -86,8 +92,8 @@
 		</fieldset>
 
 		<fieldset><legend>Local File Logging (Internet Explorer only) (C:\log4js.log)</legend>
-			<input type="text" id="fileMessage" value="add fileLog message" onChange="fileLog.trace(document.getElementById('fileMessage').value);"/>
-			<input type="button" name="trace" value="Trace Message" onClick="fileLog.trace(document.getElementById('fileMessage').value);" />
+			<input type="text" id="fileMessage" value="add fileLog message" onchange="fileLog.trace(document.getElementById('fileMessage').value);"/>
+			<input type="button" name="trace" value="Trace Message" onclick="fileLog.trace(document.getElementById('fileMessage').value);" />
 			<br />
 			<input type="button" name="trace" value="Trace" onclick="fileLog.trace('I was traced!');return false;" />
 			<input type="button" name="debug" value="Debug" onclick="fileLog.debug('I was debuged!');return false;" />
@@ -100,8 +106,8 @@
 		</fieldset>
 		
 		<fieldset><legend>Window Event Logging (Internet Explorer only) (Control Panel > Administrative Tools > Event Viewer)</legend>
-			<input type="text" id="winEventMessage" value="add windowEventLog message" onChange="windowEventLog.trace(document.getElementById('winEventMessage').value);"/>
-			<input type="button" name="trace" value="Trace Message" onClick="windowEventLog.trace(document.getElementById('winEventMessage').value);" />
+			<input type="text" id="winEventMessage" value="add windowEventLog message" onchange="windowEventLog.trace(document.getElementById('winEventMessage').value);"/>
+			<input type="button" name="trace" value="Trace Message" onclick="windowEventLog.trace(document.getElementById('winEventMessage').value);" />
 			<br />
 			<input type="button" name="trace" value="Trace" onclick="windowEventLog.trace('I was traced!');return false;" />
 			<input type="button" name="debug" value="Debug" onclick="windowEventLog.debug('I was debuged!');return false;" />
@@ -112,8 +118,8 @@
 		</fieldset>	
 		
 		<fieldset><legend>Alert Logging</legend>
-			<input type="text" id="alertMessage" value="add alertLog message" onChange="alertLog.trace(document.getElementById('alertMessage').value);"/>
-			<input type="button" name="trace" value="Trace Message" onClick="alertLog.trace(document.getElementById('alertMessage').value);" />
+			<input type="text" id="alertMessage" value="add alertLog message" onchange="alertLog.trace(document.getElementById('alertMessage').value);"/>
+			<input type="button" name="trace" value="Trace Message" onclick="alertLog.trace(document.getElementById('alertMessage').value);" />
 			<br />
 			<input type="button" name="trace" value="Trace" onclick="alertLog.trace('I was traced!');return false;" />
 			<input type="button" name="debug" value="Debug" onclick="alertLog.debug('I was debuged!');return false;" />
@@ -124,8 +130,8 @@
 		</fieldset>
 		
 		<fieldset><legend>Mozilla JavaScript Logging</legend>
-			<input type="text" id="alertMessage" value="add alertLog message" onChange="mozLog.trace(document.getElementById('alertMessage').value);"/>
-			<input type="button" name="trace" value="Trace Message" onClick="mozLog.trace(document.getElementById('alertMessage').value);" />
+			<input type="text" id="alertMessage2" value="add alertLog message" onchange="mozLog.trace(document.getElementById('alertMessage').value);"/>
+			<input type="button" name="trace" value="Trace Message" onclick="mozLog.trace(document.getElementById('alertMessage').value);" />
 			<br />
 			<input type="button" name="trace" value="Trace" onclick="mozLog.trace('I was traced!');return false;" />
 			<input type="button" name="debug" value="Debug" onclick="mozLog.debug('I was debuged!');return false;" />
@@ -136,8 +142,8 @@
 		</fieldset>
 		
 		<fieldset><legend>Opera JavaScript Logging</legend>
-			<input type="text" id="alertMessage" value="add alertLog message" onChange="operaLog.trace(document.getElementById('alertMessage').value);"/>
-			<input type="button" name="trace" value="Trace Message" onClick="operaLog.trace(document.getElementById('alertMessage').value);" />
+			<input type="text" id="alertMessage3" value="add alertLog message" onchange="operaLog.trace(document.getElementById('alertMessage').value);"/>
+			<input type="button" name="trace" value="Trace Message" onclick="operaLog.trace(document.getElementById('alertMessage').value);" />
 			<br />
 			<input type="button" name="trace" value="Trace" onclick="operaLog.trace('I was traced!');return false;" />
 			<input type="button" name="debug" value="Debug" onclick="operaLog.debug('I was debuged!');return false;" />
