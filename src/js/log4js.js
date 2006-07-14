@@ -1133,14 +1133,14 @@ AjaxAppender.prototype = {
 		if(this.currentThreshold >= this.threshold) {
 			//if threshold is reached send the events and reset current threshold
 			this.send();
-			this.currentThreshold = 0;
 		}
 	},
 	
 	/** @see Appender#doClear */
 	doClear: function() {
-		this.threshold = 0;
-		this.send();
+		if(this.currentThreshold > 0) {
+			this.send();
+		}
 	},
 	
 	/** @see Appender#setLayout */
@@ -1164,8 +1164,10 @@ AjaxAppender.prototype = {
 		for(var i = 0; i < this.loggingEventMap.length(); i++) {
 			content +=  this.layout.format(this.loggingEventMap.get(i));
 		} 
-		//clean the list
+		//clean the list and reset the threshold
 		this.loggingEventMap = new ArrayList();
+		this.currentThreshold = 0;
+		
 		content += this.layout.getFooter();
 	
 		this.httpRequest.open("POST", this.loggingUrl, true);
