@@ -50,6 +50,13 @@ var Log4js = {
 	 * @final
 	 */
   	version: "0.3",
+  	
+  	/**
+  	 * default format of date
+  	 * @static
+  	 * @final
+  	 */
+  	DEFAULT_DATE_FORMAT: "yyyy-MM-dd hh:mm:ss",
 
 
 	/**
@@ -304,10 +311,10 @@ Log4js.CustomEvent.prototype = {
  */
 Log4js.LoggingEvent = function(categoryName, level, message, logger) {
 	/**
-	 * @type Date
+	 * @type String
 	 * @private
 	 */
-	this.startTime = new Date();
+	this.startTime = logger.getTimestamp();
 	/**
 	 * @type String
 	 * @private
@@ -359,6 +366,8 @@ Log4js.Logger = function(name) {
 	this.category = name || "";
 	/** level to be logged */
 	this.level = Log4js.Level.FATAL;
+	
+	this.dateformat = Log4js.DEFAULT_DATE_FORMAT;
 	
 	this.onlog = new Log4js.CustomEvent();
 	this.onclear = new Log4js.CustomEvent();
@@ -486,7 +495,24 @@ Log4js.Logger.prototype = {
 	windowError: function(msg, url, line){
 		var message = "Error in (" + (url || window.location) + ") on line "+ line +" with message (" + msg + ")";
 		this.log(message, Log4js.Level.FATAL);	
-	}
+	},
+	
+	/**
+	 * Set the date format of logger
+	 * @param {String} format format String for the date
+	 */
+	setDateFormat: function(format) {
+	 	this.dateformat = format;
+	},
+	 
+	/**
+	 * Generates a timestamp using the format set in {log.dateFormat}.
+	 *
+	 * @return A formatted timestamp with the current date and time.
+	 */
+	getTimestamp: function() {
+	  return Log4js.util.formatDate(new Date(), this.dateformat);
+	} // timestamp()
 };
 
 /**
@@ -605,7 +631,12 @@ function ConsoleAppender(logger, inline) {
 	 * @type boolean
 	 */
 	this.inline = inline || false;
-	
+
+	/**
+	 * @type String
+	 */
+	this.accesskey = "d";
+		
 	if(this.inline) {
 		Log4js.attachEvent(window, 'load', this.initialize.bind(this));
 	}
@@ -616,6 +647,14 @@ ConsoleAppender.prototype = {
 	commandHistory : [],
   	commandIndex : 0,
 
+	/**
+	 * Set the access key to show/hide the inline console (default &quote;d&quote;)
+	 * @param key access key to show/hide the inline console
+	 */	
+	setAccessKey : function(key) {
+		this.accesskey = key;
+	},
+	
 	/**
 	 * @private
 	 */
@@ -734,7 +773,7 @@ ConsoleAppender.prototype = {
 			var accessElement = doc.createElement('button');
 			accessElement.style.position = "absolute";
 			accessElement.style.top = "-100px";
-			accessElement.accessKey = "d";
+			accessElement.accessKey = this.accesskey;
 			accessElement.onclick = this.toggle.bind(this);
 			doc.body.appendChild(accessElement);
 		} else {
@@ -1084,7 +1123,9 @@ AjaxAppender.prototype = {
 		}
 		
 		if(this.currentThreshold >= this.threshold) {
+			//if threshold is reached send the events and reset current threshold
 			this.send();
+			this.currentThreshold = 0;
 		}
 	},
 	
@@ -1115,7 +1156,8 @@ AjaxAppender.prototype = {
 		for(var i = 0; i < this.loggingEventMap.length(); i++) {
 			content +=  this.layout.format(this.loggingEventMap.get(i));
 		} 
-		
+		//clean the list
+		this.loggingEventMap = new ArrayList();
 		content += this.layout.getFooter();
 	
 		this.httpRequest.open("POST", this.loggingUrl, true);
@@ -1893,4 +1935,30 @@ Iterator.prototype = {
 	next: function() {
 		return this.arrayList.get( index++ );
 	}
+};
+
+
+
+// Logging Util package:
+Log4js.util = new Object();
+
+
+// addZero() and formatDate() are courtesy of Mike Golding:
+// http://www.mikezilla.com/exp0015.html
+Log4js.util.addZero = function(vNumber) {
+  return ((vNumber < 10) ? "0" : "") + vNumber;
+}
+
+Log4js.util.formatDate = function(vDate, vFormat) {
+  var vDay = Log4js.util.addZero(vDate.getDate());
+  var vMonth = Log4js.util.addZero(vDate.getMonth()+1);
+  var vYearLong = Log4js.util.addZero(vDate.getFullYear());
+  var vYearShort = Log4js.util.addZero(vDate.getFullYear().toString().substring(3,4));
+  var vYear = (vFormat.indexOf("yyyy")>-1?vYearLong:vYearShort);
+  var vHour  = Log4js.util.addZero(vDate.getHours());
+  var vMinute = Log4js.util.addZero(vDate.getMinutes());
+  var vSecond = Log4js.util.addZero(vDate.getSeconds());
+  var vDateString = vFormat.replace(/dd/g, vDay).replace(/MM/g, vMonth).replace(/y{1,4}/g, vYear);
+  vDateString = vDateString.replace(/hh/g, vHour).replace(/mm/g, vMinute).replace(/ss/g, vSecond);
+  return vDateString
 }
