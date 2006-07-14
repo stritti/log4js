@@ -500,27 +500,28 @@ Log4js.Logger.prototype = {
 	/**
 	 * Set the date format of logger. Following switches are supported:
 	 * <ul>
-	 * <li>yyyy: The year</li>
-	 * <li>MM: the month</li>
-	 * <li>dd: the day of month<li>
-	 * <li>hh: the hour<li>
-	 * <li>mm: minutes</li>
-	 * <li>O: timezone offset</li>
+	 * <li>yyyy - The year</li>
+	 * <li>MM - the month</li>
+	 * <li>dd - the day of month<li>
+	 * <li>hh - the hour<li>
+	 * <li>mm - minutes</li>
+	 * <li>O - timezone offset</li>
 	 * </ul>
 	 * @param {String} format format String for the date
+	 * @see #getTimestamp
 	 */
 	setDateFormat: function(format) {
 	 	this.dateformat = format;
 	},
 	 
 	/**
-	 * Generates a timestamp using the format set in {log.dateFormat}.
-	 *
+	 * Generates a timestamp using the format set in {Log4js.setDateFormat}.
+	 * @see #setDateFormat
 	 * @return A formatted timestamp with the current date and time.
 	 */
 	getTimestamp: function() {
 	  return Log4js.Util.formatDate(new Date(), this.dateformat);
-	} // timestamp()
+	}
 };
 
 /**
