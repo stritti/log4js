@@ -253,8 +253,8 @@ which will be used to configure the chosen Forrest skin.
     <color name="tab-unselected" value="#8CCFE7" link="#0F3660" vlink="#0F3660" hlink="#000066"/>
     <color name="subtab-selected" value="#4a6d8c" link="#0F3660" vlink="#0F3660" hlink="#000066"/>
     <color name="subtab-unselected" value="#4a6d8c" link="#0F3660" vlink="#0F3660" hlink="#000066"/>
-    <color name="heading" value="#294563"/>
-    <color name="subheading" value="#4a6d8c"/>
+    <color name="heading" value="#009ACE" font="#FFFFFF"/>
+    <color name="subheading" value="#009ACE" font="#FFFFFF"/>
     <color name="published" value="#4C6C8F" font="#FFFFFF"/>
     <color name="feedback" value="#4C6C8F" font="#FFFFFF" align="center"/>
     <color name="navstrip" value="#009ACE" font="#ffffff" link="#0F3660" vlink="#0F3660" hlink="#000066"/>
