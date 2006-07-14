@@ -52,11 +52,11 @@ var Log4js = {
   	version: "0.3",
   	
   	/**
-  	 * default format of date
+  	 * default format of date (ISO-8601)
   	 * @static
   	 * @final
   	 */
-  	DEFAULT_DATE_FORMAT: "yyyy-MM-dd hh:mm:ss",
+  	DEFAULT_DATE_FORMAT: "yyyy-MM-ddThh:mm:ssO",
 
 
 	/**
@@ -498,7 +498,15 @@ Log4js.Logger.prototype = {
 	},
 	
 	/**
-	 * Set the date format of logger
+	 * Set the date format of logger. Following switches are supported:
+	 * <ul>
+	 * <li>yyyy: The year</li>
+	 * <li>MM: the month</li>
+	 * <li>dd: the day of month<li>
+	 * <li>hh: the hour<li>
+	 * <li>mm: minutes</li>
+	 * <li>O: timezone offset</li>
+	 * </ul>
 	 * @param {String} format format String for the date
 	 */
 	setDateFormat: function(format) {
@@ -511,7 +519,7 @@ Log4js.Logger.prototype = {
 	 * @return A formatted timestamp with the current date and time.
 	 */
 	getTimestamp: function() {
-	  return Log4js.util.formatDate(new Date(), this.dateformat);
+	  return Log4js.Util.formatDate(new Date(), this.dateformat);
 	} // timestamp()
 };
 
@@ -1940,25 +1948,61 @@ Iterator.prototype = {
 
 
 // Logging Util package:
-Log4js.util = new Object();
+Log4js.Util  = function() {
+};
 
-
-// addZero() and formatDate() are courtesy of Mike Golding:
-// http://www.mikezilla.com/exp0015.html
-Log4js.util.addZero = function(vNumber) {
-  return ((vNumber < 10) ? "0" : "") + vNumber;
-}
-
-Log4js.util.formatDate = function(vDate, vFormat) {
-  var vDay = Log4js.util.addZero(vDate.getDate());
-  var vMonth = Log4js.util.addZero(vDate.getMonth()+1);
-  var vYearLong = Log4js.util.addZero(vDate.getFullYear());
-  var vYearShort = Log4js.util.addZero(vDate.getFullYear().toString().substring(3,4));
-  var vYear = (vFormat.indexOf("yyyy")>-1?vYearLong:vYearShort);
-  var vHour  = Log4js.util.addZero(vDate.getHours());
-  var vMinute = Log4js.util.addZero(vDate.getMinutes());
-  var vSecond = Log4js.util.addZero(vDate.getSeconds());
-  var vDateString = vFormat.replace(/dd/g, vDay).replace(/MM/g, vMonth).replace(/y{1,4}/g, vYear);
-  vDateString = vDateString.replace(/hh/g, vHour).replace(/mm/g, vMinute).replace(/ss/g, vSecond);
-  return vDateString
+Log4js.Util.prototype = {
+	// addZero() and formatDate() are courtesy of Mike Golding:
+	// http://www.mikezilla.com/exp0015.html
+	/**
+	 * Formats the given date by the given pattern.<br />
+	 * Following switches are supported:
+	 * <ul>
+	 * <li>yyyy: The year</li>
+	 * <li>MM: the month</li>
+	 * <li>dd: the day of month<li>
+	 * <li>hh: the hour<li>
+	 * <li>mm: minutes</li>
+	 * <li>O: timezone offset</li>
+	 * </ul>
+	 * @param {Date} vDate the date to format
+	 * @param {String} vFormat the format pattern
+	 * @return {String} formatted date string
+	 */
+	formatDate : function(vDate, vFormat) {
+	  var vDay = addZero(vDate.getDate());
+	  var vMonth = addZero(vDate.getMonth()+1);
+	  var vYearLong = addZero(vDate.getFullYear());
+	  var vYearShort = Log4js.Util.addZero(vDate.getFullYear().toString().substring(3,4));
+	  var vYear = (vFormat.indexOf("yyyy")>-1?vYearLong:vYearShort);
+	  var vHour  = addZero(vDate.getHours());
+	  var vMinute = addZero(vDate.getMinutes());
+	  var vSecond = addZero(vDate.getSeconds());
+	  var vTimeZone = O(vDate);
+	  var vDateString = vFormat.replace(/dd/g, vDay).replace(/MM/g, vMonth).replace(/y{1,4}/g, vYear);
+	  vDateString = vDateString.replace(/hh/g, vHour).replace(/mm/g, vMinute).replace(/ss/g, vSecond);
+	  vDateString = vDateString.replace(/O/g, vTimeZone)
+	  return vDateString
+	},
+		
+	/**
+	 * @private
+	 */
+	addZero : function(vNumber) {
+	  return ((vNumber < 10) ? "0" : "") + vNumber;
+	},
+	
+	/**
+	 * Formates the TimeOffest
+	 * @private
+	 */
+	O : function (date) {
+		// Difference to Greenwich time (GMT) in hours
+		var os = Math.abs(date.getTimezoneOffset());
+		var h = String(Math.floor(os/60));
+		var m = String(os%60);
+		h.length == 1? h = "0"+h:1;
+		m.length == 1? m = "0"+m:1;
+		return date.getTimezoneOffset() < 0 ? "+"+h+m : "-"+h+m;
+	}
 }
