@@ -7,7 +7,9 @@
 		<!-- //
 		   var ajaxLog = new Log4js.getLogger("ajaxTest");
 		   ajaxLog.setLevel(Log4js.Level.ALL);
- 		   ajaxLog.addAppender(new AjaxAppender(ajaxLog, "./log4j.jsp"));
+		   var ajaxAppender = new AjaxAppender(ajaxLog, "./log4j.jsp");
+		   ajaxAppender.setThreshold(5);
+ 		   ajaxLog.addAppender(ajaxAppender);
 
 		   var windowEventLog = new Log4js.getLogger("windowEventTest");
 		   windowEventLog.setLevel(Log4js.Level.ALL);

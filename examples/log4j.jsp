@@ -1,20 +1,14 @@
-<%@ page import="org.apache.log4j.Logger" %>
+
 <%
-// Log4J
-	String category = request.getParameter("log4js.category");
-	String message = request.getParameter("log4js.msg");
-	String level = request.getParameter("log4js.level");
-	String client = request.getParameter("log4js.client");
+	//Test without log4j just write to System out the logs.
 	
-	Logger logger = Logger.getLogger( category);
-	String msg = request.getRemoteAddr() + " - " + client + ": " + message;
-	System.out.println(msg);
-	if("debug".equals(level))
-	{
-		logger.debug(msg);
-	} else {
-		logger.error(msg);
-	}
-	//System.out.println(msg);
+	java.io.BufferedReader reader = request.getReader();
+	
+	String ln = reader.readLine();
+    while(ln != null) {
+   	System.out.println("> " + ln); 
+   	ln = reader.readLine();
+    }
+	
 %>
 <log4js><logged /></log4js>
