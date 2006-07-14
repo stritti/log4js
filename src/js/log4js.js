@@ -1994,6 +1994,7 @@ Log4js.Util.prototype = {
 	
 	/**
 	 * Formates the TimeOffest
+	 * Thanks to http://www.svendtofte.com/code/date_format/
 	 * @private
 	 */
 	O : function (date) {
