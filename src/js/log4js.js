@@ -1946,8 +1946,10 @@ Iterator.prototype = {
 };
 
 
-
-// Logging Util package:
+/**
+ * Logging Util package.
+ * @private
+ */ 
 Log4js.Util  = function() {
 };
 
