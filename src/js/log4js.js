@@ -36,13 +36,6 @@
  */
 
 var Log4js = {
-	/**  
-	 * map of loggers
-	 * @static
-	 * @final
-	 * @private  
-	 */
-	loggerMap: new Map(),
 	
 	/** 
 	 * current version of log4js 
@@ -58,7 +51,14 @@ var Log4js = {
   	 */
   	DEFAULT_DATE_FORMAT: "yyyy-MM-ddThh:mm:ssO",
 
-
+	/**  
+	 * map of loggers
+	 * @static
+	 * @final
+	 * @private  
+	 */
+	loggerMap: null,
+	
 	/**
 	 * Get a logger instance. Instance is cached on categoryName level.
 	 * @param  {String} categoryName name of category to log to.
@@ -66,6 +66,9 @@ var Log4js = {
 	 * @static
 	 */
 	getLogger: function(categoryName) {
+		if(Log4js.loggerMap === null || Log4js.loggerMap === "undefined"){
+			Log4js.loggerMap = new Log4js.Map();
+		}
 		if (!Log4js.loggerMap.contains(categoryName))
 		{
 	   		Log4js.loggerMap.put(categoryName, new Log4js.Logger(categoryName));
@@ -368,6 +371,7 @@ Log4js.Logger = function(name) {
 	this.level = Log4js.Level.FATAL;
 	
 	this.dateformat = Log4js.DEFAULT_DATE_FORMAT;
+	this.dateformatter = new Log4js.DateFormatter();
 	
 	this.onlog = new Log4js.CustomEvent();
 	this.onclear = new Log4js.CustomEvent();
@@ -520,7 +524,7 @@ Log4js.Logger.prototype = {
 	 * @return A formatted timestamp with the current date and time.
 	 */
 	getTimestamp: function() {
-	  return Log4js.Util.formatDate(new Date(), this.dateformat);
+	  return this.dateformatter.formatDate(new Date(), this.dateformat);
 	}
 };
 
@@ -1093,7 +1097,7 @@ function AjaxAppender(logger, loggingUrl) {
 	 * @type Map
 	 * @private
 	 */
-	this.loggingEventMap = new ArrayList();
+	this.loggingEventMap = new Log4js.ArrayList();
 
 	/**
 	 * @type Layout
@@ -1166,7 +1170,7 @@ AjaxAppender.prototype = {
 			content +=  this.layout.format(this.loggingEventMap.get(i));
 		} 
 		//clean the list and reset the threshold
-		this.loggingEventMap = new ArrayList();
+		this.loggingEventMap = new Log4js.ArrayList();
 		this.currentThreshold = 0;
 		
 		content += this.layout.getFooter();
@@ -1791,60 +1795,71 @@ JSONLayout.prototype = {
 	}
 };
 
- /**
-  * Implementtion of java.util.HashMap
-  * @private 
-  */
-function Map(){
-    var keys = new Array();
-    this.contains = function(key){
-       var entry = findEntry(key);
-       return !(entry == null || entry instanceof NullKey);
-    }
-    this.get = function(key) {
-     var entry = findEntry(key);
-     if ( !(entry == null || entry instanceof NullKey) )
+/**
+ * Implementtion of java.HashMap
+ * @private 
+ */
+Log4js.Map = function() {
+	this.keys = new Array();
+};
+
+Log4js.Map.prototype = {
+	/** */
+    contains : function(key){
+       var entry = this.findEntry(key);
+       return !(entry === null || entry instanceof NullKey);
+    },
+    /** */
+    get : function(key) {
+     var entry = this.findEntry(key);
+     if ( !(entry === null || entry instanceof NullKey) )
         return entry.value;
       else
         return null;
-    };
-    this.put = function(key, value) {
-      var entry = findEntry(key);
+    },
+    /** */
+    put : function(key, value) {
+      var entry = this.findEntry(key);
       if (entry){
         entry.value = value;
       } else {
-        addNewEntry(key, value);
+        this.addNewEntry(key, value);
       }
-    };
-    this.remove = function (key){
-      for (var i=0;i<keys.length;i++){
-        var entry = keys[i];
+    },
+    /** */
+    remove : function (key){
+      for (var i=0;i<this.keys.length;i++){
+        var entry = this.keys[i];
         if (entry instanceof NullKey) continue;
         if (entry.key == key){
-            keys[i] = NullKey;
+            this.keys[i] = NullKey;
         }
       }        
-    };
-    this.size = function() {
-    	return keys.length;
-    };
-    function findEntry(key){
-      for (var i=0;i<keys.length;i++){
-        var entry = keys[i];
+    },
+    /** */
+    size : function() {
+    	return this.keys.length;
+    },
+    /** */
+    findEntry: function(key){
+      for (var i=0;i<this.keys.length;i++){
+        var entry = this.keys[i];
         if (entry instanceof NullKey) continue;
         if (entry.key == key){
             return entry
         }
       }
       return null;
-    };
-    function addNewEntry(key, value){
+    },
+    /** */
+    addNewEntry: function(key, value){
         var entry = new Object();
         entry.key = key;
         entry.value = value;
-        keys[keys.length] = entry; 
+        this.keys[this.keys.length] = entry; 
     }
-  }
+};
+
 /**
  * replace the entries of map in key array, removing the former value
  * @private
@@ -1891,22 +1906,22 @@ if(!Function.prototype.bind) {
 }
 
 /**
- * ArrayList like java.util.ArrayList
+ * ArrayList like java.ArrayList
  * @private
  */
-function ArrayList()
+Log4js.ArrayList = function()
 {
   this.array = new Array();
 };
 
-ArrayList.prototype = {
+Log4js.ArrayList.prototype = {
 
 	add: function(obj){
 		this.array[this.array.length] = obj;
 	},
 
 	iterator: function (){
-		return new Iterator(this);
+		return new Log4js.Iterator(this);
 		},
   
 	length: function (){
@@ -1923,7 +1938,7 @@ ArrayList.prototype = {
 			for (var i=0;i<obj.length;i++) {
 				this.add(obj[i]);
 			}
-		} else if (obj instanceof ArrayList) {
+		} else if (obj instanceof Log4js.ArrayList) {
 			for (var j=0;j<obj.length();i++) {
 				this.add(obj.get(j));
 			}
@@ -1935,11 +1950,11 @@ ArrayList.prototype = {
  * Iterator for ArrayList
  * @private
  */
-function Iterator (arrayList){
+Log4js.Iterator = function (arrayList){
 	this.arrayList = arrayList;
 	this.index = 0;
 };
-Iterator.prototype = {
+Log4js.Iterator.prototype = {
 	hasNext: function (){
 		return this.index < this.arrayList.length();
 	},
@@ -1950,13 +1965,13 @@ Iterator.prototype = {
 
 
 /**
- * Logging Util package.
+ * Date Formatter
  * @private
  */ 
-Log4js.Util  = function() {
+Log4js.DateFormatter = function() {
+	return;
 };
-
-Log4js.Util.prototype = {
+Log4js.DateFormatter.prototype = {
 	// addZero() and formatDate() are courtesy of Mike Golding:
 	// http://www.mikezilla.com/exp0015.html
 	/**
@@ -1973,25 +1988,27 @@ Log4js.Util.prototype = {
 	 * @param {Date} vDate the date to format
 	 * @param {String} vFormat the format pattern
 	 * @return {String} formatted date string
+	 * @static
 	 */
 	formatDate : function(vDate, vFormat) {
-	  var vDay = addZero(vDate.getDate());
-	  var vMonth = addZero(vDate.getMonth()+1);
-	  var vYearLong = addZero(vDate.getFullYear());
-	  var vYearShort = Log4js.Util.addZero(vDate.getFullYear().toString().substring(3,4));
+	  var vDay = this.addZero(vDate.getDate());
+	  var vMonth = this.addZero(vDate.getMonth()+1);
+	  var vYearLong = this.addZero(vDate.getFullYear());
+	  var vYearShort = this.addZero(vDate.getFullYear().toString().substring(3,4));
 	  var vYear = (vFormat.indexOf("yyyy")>-1?vYearLong:vYearShort);
-	  var vHour  = addZero(vDate.getHours());
-	  var vMinute = addZero(vDate.getMinutes());
-	  var vSecond = addZero(vDate.getSeconds());
-	  var vTimeZone = O(vDate);
+	  var vHour  = this.addZero(vDate.getHours());
+	  var vMinute = this.addZero(vDate.getMinutes());
+	  var vSecond = this.addZero(vDate.getSeconds());
+	  var vTimeZone = this.O(vDate);
 	  var vDateString = vFormat.replace(/dd/g, vDay).replace(/MM/g, vMonth).replace(/y{1,4}/g, vYear);
 	  vDateString = vDateString.replace(/hh/g, vHour).replace(/mm/g, vMinute).replace(/ss/g, vSecond);
-	  vDateString = vDateString.replace(/O/g, vTimeZone)
-	  return vDateString
+	  vDateString = vDateString.replace(/O/g, vTimeZone);
+	  return vDateString;
 	},
 		
 	/**
 	 * @private
+	 * @static
 	 */
 	addZero : function(vNumber) {
 	  return ((vNumber < 10) ? "0" : "") + vNumber;
