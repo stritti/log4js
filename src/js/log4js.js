@@ -317,7 +317,7 @@ Log4js.LoggingEvent = function(categoryName, level, message, logger) {
 	 * @type String
 	 * @private
 	 */
-	this.startTime = logger.getTimestamp();
+	this.startTime = new Date();
 	/**
 	 * @type String
 	 * @private
@@ -350,6 +350,15 @@ Log4js.LoggingEvent.prototype = {
 	 */
 	getRenderedMessage: function() {
 		return	this.categoryName + "~" + this.startTime.toLocaleString() + " [" + this.level.toString() + "] " + this.message;
+	},
+	
+	/**
+	 * get the timestamp formatted as String.
+	 * @return {String} formatted timestamp
+	 * @see Log4js#setDateFormat()
+	 */
+	getFormattedTimestamp: function() {
+		return this.logger.getFormattedTimestamp(this.startTime);
 	}
 };
 
@@ -520,11 +529,12 @@ Log4js.Logger.prototype = {
 	 
 	/**
 	 * Generates a timestamp using the format set in {Log4js.setDateFormat}.
+	 * @param {Date} date the date to format
 	 * @see #setDateFormat
 	 * @return A formatted timestamp with the current date and time.
 	 */
-	getTimestamp: function() {
-	  return this.dateformatter.formatDate(new Date(), this.dateformat);
+	getFormattedTimestamp: function(date) {
+	  return this.dateformatter.formatDate(date, this.dateformat);
 	}
 };
 
@@ -1651,7 +1661,10 @@ HtmlLayout.prototype = {
 	 * @type String
 	 */
 	format: function(loggingEvent) {
-		return "<div style=\"" + this.getStyle(loggingEvent) + "\">" +loggingEvent.level.toString() + " - " + loggingEvent.message + "</div>\n";
+		return "<div style=\"" + this.getStyle(loggingEvent) + "\">" 
+			+ loggingEvent.getFormattedTimestamp() + " - " 
+			+ loggingEvent.level.toString() + " - " 
+			+ loggingEvent.message + "</div>\n";
 	},
 	/** 
 	 * Returns the content type output by this layout. 
@@ -1722,7 +1735,7 @@ XMLLayout.prototype = {
 		content += loggingEvent.level.toString() + "\" client=\"";
 		content += navigator.userAgent + "\" referer=\"";
 		content += location.href + "\" timestamp=\"";
-		content += loggingEvent.startTime + "\">\n";
+		content += loggingEvent.getFormattedTimestamp() + "\">\n";
 		content += "<log4js:message><![CDATA[" + loggingEvent.message + "]]></log4js:message>\n";	
  		content += "</log4js:event>\n";
         
@@ -1915,23 +1928,33 @@ Log4js.ArrayList = function()
 };
 
 Log4js.ArrayList.prototype = {
-
+	/** 
+	 * add Object to ArraList
+	 * @param {Object} obj Object to be added
+	 */
 	add: function(obj){
 		this.array[this.array.length] = obj;
 	},
-
+	/** */
 	iterator: function (){
 		return new Log4js.Iterator(this);
 		},
-  
+  	/**
+  	 * get size of the ArrayList
+  	 * @return number of elements in the ArraList
+  	 */
 	length: function (){
 		return this.array.length;
 	},
-  
+  	/** 
+  	 * get element of given index
+  	 * @param {int} index of wanted object
+  	 * @return {Object} element of index
+  	 */
 	get: function (index){
 		return this.array[index];
 	},
-  
+  	/** */
 	addAll: function (obj)
 	{
 		if (obj instanceof Array) {
