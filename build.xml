@@ -65,8 +65,8 @@
 	<!-- ================================= 
           target: release              
          ================================= -->
-	<target name="release" depends="dist" description="--> create release">
-		<echo>generate complete distribution archive: ${release.dir}/log4js-${version}.zip</echo>
+	<target name="release" depends="dist, site" description="--> create release">
+		<echo>generate complete distribution archives: ${release.dir}/log4js-${version}.zip</echo>
 
 		<mkdir dir="${release.dir}" />
 
@@ -96,6 +96,10 @@
     		basedir="${release.dir}/tmp" compression="gzip" />
     		
 		<delete dir="${release.dir}/tmp" />
+		
+		<copy todir="${dist.dir}/site" >
+			<fileset dir="${project.site-dir}"></fileset>
+		</copy>
 	</target>
 
 	<!-- ================================= 
