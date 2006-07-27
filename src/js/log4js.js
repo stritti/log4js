@@ -15,17 +15,21 @@
 /**
  * @fileoverview log4js is a library to log in JavaScript in simmilar manner 
  * than in log4j for Java. The API should be nearly the same.
+ * 
+ * This file contains all log4js code and is the only file required for logging.
+ * 
  * <h3>Example:</h3>
  * <pre>
- *  //logging see log4js
- *  var log = new Log4js.getLogger("some-category-name"); 
+ *  var log = new Log4js.getLogger("some-category-name"); //create logger instance
  *  log.setLevel(Log4js.Level.TRACE); //set the Level
  *  log.addAppender(new ConsoleAppender(log, false)); // console that launches in new window
  
  *  // if multiple appenders are set all will log
  *  log.addAppender(new ConsoleAppender(log, true)); // console that is inline in the page
  *  log.addAppender(new FileAppender("C:\\somefile.log")); // file appender logs to C:\\somefile.log
+ * 
  *  ...
+ * 
  *  //call the log
  *  log.trace("trace me" );
  * </pre>
@@ -33,8 +37,9 @@
  * @version 0.3
  * @author Stephan Strittmatter - http://jroller.com/page/stritti
  * @author Seth Chisamore - http://www.chisamore.com
+ * @since 2005-05-20
+ * Website: http://log4js.berlios.de
  */
-
 var Log4js = {
 	
 	/** 
@@ -76,9 +81,10 @@ var Log4js = {
 		return Log4js.loggerMap.get(categoryName); 
 	},
   	/**
-  	 * @param element
-  	 * @param name
-  	 * @param observer
+  	 * attatch an observer function to an elements event
+  	 * @param element element to attach event
+  	 * @param name name of event
+  	 * @param observer observer method to be called
   	 * @private
   	 */
   	attachEvent: function (element, name, observer) {
@@ -94,8 +100,9 @@ var Log4js = {
 /**
  * Log4js.Level Enumeration. Do not use directly. Use static objects instead.
  * @constructor
- * @param {Number} level
- * @param {String} levelString
+ * @param {Number} level number of level
+ * @param {String} levelString String representation of level
+ * @private
  */
 Log4js.Level = function(level, levelStr) {
 	this.level = level;
@@ -314,44 +321,38 @@ Log4js.CustomEvent.prototype = {
  */
 Log4js.LoggingEvent = function(categoryName, level, message, logger) {
 	/**
-	 * @type String
+	 * the timestamp of the Logging Event
+	 * @type Date
 	 * @private
 	 */
 	this.startTime = new Date();
 	/**
+	 * category of event
 	 * @type String
 	 * @private
 	 */
 	this.categoryName = categoryName || ".";
 	/**
+	 * the logging message
 	 * @type String
 	 * @private
 	 */
 	this.message = message || "";
 	/**
+	 * level of log
 	 * @type Log4js.Level
 	 * @private
 	 */
 	this.level = level || Log4js.Level.TRACE;
 	/**
+	 * reference to logger
 	 * @type Log4js.Logger
 	 * @private
 	 */
 	this.logger = logger;
 };
 
-Log4js.LoggingEvent.prototype = {
-
-	/**
-	 * Returns the layouted message line
-	 * @return layouted Message
-	 * @type String
-	 * @deprecated use Layout instead.
-	 */
-	getRenderedMessage: function() {
-		return	this.categoryName + "~" + this.startTime.toLocaleString() + " [" + this.level.toString() + "] " + this.message;
-	},
-	
+Log4js.LoggingEvent.prototype = {	
 	/**
 	 * get the timestamp formatted as String.
 	 * @return {String} formatted timestamp
@@ -404,6 +405,19 @@ Log4js.Logger.prototype = {
 	},
 
 	/**
+	 * set Array of appenders. Previous Appenders are cleared and removed.
+	 * @param {Array} appenders Array of Appenders
+	 */
+	setAppenders: function(appenders) {
+		//clear first all existing appenders
+		for(var i = 0; i < this.appenders.length; i++) {
+			this.appenders[i].doClear();
+		}
+		
+		this.appenders = appenders;
+	},
+	
+	/**
 	 * Set the Loglevel default is LogLEvel.TRACE
 	 * @param level wanted logging level
 	 */
@@ -420,10 +434,11 @@ Log4js.Logger.prototype = {
 	
 	/** clear logging */
 	clear : function () {
-		this.loggingEvents = [];
-		this.onclear.dispatch();
+		try{
+			this.loggingEvents = [];
+			this.onclear.dispatch();
+		} catch(e){}
 	},
-	
 	/** checks if Level Trace is enabled */
 	isTraceEnabled: function() {
 		if (this.level.valueOf() <= Log4js.Level.TRACE.valueOf()) {
@@ -659,6 +674,8 @@ function ConsoleAppender(logger, inline) {
 	 * @type String
 	 */
 	this.accesskey = "d";
+	
+	this.tagPattern = null;
 		
 	if(this.inline) {
 		Log4js.attachEvent(window, 'load', this.initialize.bind(this));
@@ -762,7 +779,7 @@ ConsoleAppender.prototype = {
 		this.tagFilterElement.setAttribute('autocomplete', 'off'); // So Firefox doesn't flip out
 		
 		Log4js.attachEvent(this.tagFilterElement, 'keyup', this.updateTags.bind(this));
-		Log4js.attachEvent(this.tagFilterElement, 'click', function() {this.tagFilterElement.select()}.bind(this));
+		Log4js.attachEvent(this.tagFilterElement, 'click', function() {this.tagFilterElement.select();}.bind(this));
 		
 		// Add outputElement
 		this.outputElement = doc.createElement('div');
@@ -787,7 +804,7 @@ ConsoleAppender.prototype = {
 		this.inputElement.setAttribute('autocomplete', 'off'); // So Firefox doesn't flip out
 	
 		Log4js.attachEvent(this.inputElement, 'keyup', this.handleInput.bind(this));
-		Log4js.attachEvent(this.inputElement, 'click', function() {this.inputElement.select()}.bind(this));
+		Log4js.attachEvent(this.inputElement, 'click', function() {this.inputElement.select();}.bind(this));
 		
 		if(this.inline){
 			window.setInterval(this.repositionWindow.bind(this), 500);
@@ -903,7 +920,8 @@ ConsoleAppender.prototype = {
 			this.initialize();
 		}
 		
-		if (loggingEvent.level.toString().search(new RegExp(this.tagPattern, 'igm')) == -1) {
+		if (this.tagPattern !== null && 
+			loggingEvent.level.toString().search(new RegExp(this.tagPattern, 'igm')) == -1) {
 			return;
 		}
 		
@@ -986,7 +1004,14 @@ ConsoleAppender.prototype = {
 	  	} else {
     		this.commandIndex = 0;
     	}
-	}
+	},
+	
+	/** 
+	 * toString
+	 */
+	 toString: function() {
+	 	return "ConsoleAppender[inline=" + this.inline + "]"; 
+	 }
 };
 
 /**
@@ -1045,7 +1070,13 @@ MetatagAppender.prototype = {
 	 */
 	setLayout: function(layout){
 		this.layout = layout;
-	}
+	},
+	/** 
+	 * toString
+	 */
+	 toString: function() {
+	 	return "MetatagAppender"; 
+	 }
 };
 
 /**
@@ -1068,7 +1099,13 @@ function AjaxAppender(logger, loggingUrl) {
 	// add  listener to the logger methods
 	logger.onlog.addListener(this.doAppend.bind(this));
 	logger.onclear.addListener(this.doClear.bind(this));
-	
+
+	/**
+	 * is still esnding data to server
+	 * @type boolean
+	 * @private
+	 */
+	this.isInProgress = false;	
 	/**
 	 * set reference to calling logger
 	 * @type Log4js.Logger
@@ -1095,41 +1132,17 @@ function AjaxAppender(logger, loggingUrl) {
 	this.threshold = 1;
 	
 	/**
-	 * Current threshold which is incremented by each logging event until
-	 * threshold is reached.
-	 * @type Integer
-	 * @private
-	 */
-	this.currentThreshold=0;
-	
-	/**
 	 * List of LoggingEvents which should be send after threshold is reached.
 	 * @type Map
 	 * @private
 	 */
-	this.loggingEventMap = new Log4js.ArrayList();
+	this.loggingEventMap = new Log4js.FifoBuffer();
 
 	/**
 	 * @type Layout
 	 * @private
 	 */
 	this.layout = new XMLLayout();
-
-	if (window.XMLHttpRequest) { // Mozilla, Safari,...
-		this.httpRequest = new XMLHttpRequest();
-		if (this.httpRequest.overrideMimeType) {
-			this.httpRequest.overrideMimeType(this.layout.getContentType());
-		}
-	} else if (window.ActiveXObject) { // IE
-		try {
-			this.httpRequest = new ActiveXObject("Msxml2.XMLHTTP");
-		} catch (e) {
-			this.httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
-		}
-	}
-	if (!this.httpRequest) {
-		alert('Unfortunatelly your browser does not support AjaxAppender for log4js!');
-	}
 }
 
 AjaxAppender.prototype = {
@@ -1139,23 +1152,27 @@ AjaxAppender.prototype = {
 	 * @see Appender#doAppend
 	 */
 	doAppend: function(loggingEvent) {
+		log4jsLogger.trace("> AjaxAppender.append");
 	
-		if (this.currentThreshold <= this.threshold) {
-			this.loggingEventMap.add(loggingEvent);
-			this.currentThreshold++;
+		if (this.loggingEventMap.length() <= this.threshold || this.isInProgress === true) {
+			this.loggingEventMap.push(loggingEvent);
 		}
 		
-		if(this.currentThreshold >= this.threshold) {
+		if(this.loggingEventMap.length() >= this.threshold && this.isInProgress === false) {
 			//if threshold is reached send the events and reset current threshold
 			this.send();
 		}
+		
+		log4jsLogger.trace("< AjaxAppender.append");
 	},
 	
 	/** @see Appender#doClear */
 	doClear: function() {
-		if(this.currentThreshold > 0) {
+		log4jsLogger.trace("> AjaxAppender.doClear" );
+		if(this.loggingEventMap.length() > 0) {
 			this.send();
 		}
+		log4jsLogger.trace("< AjaxAppender.doClear" );
 	},
 	
 	/** @see Appender#setLayout */
@@ -1167,35 +1184,118 @@ AjaxAppender.prototype = {
 	 * Set the threshold when logs have to be send. Default threshold is 1.
 	 */
 	setThreshold: function(threshold) {
+		log4jsLogger.trace("> AjaxAppender.setThreshold: " + threshold );
 		this.threshold = threshold;
+		log4jsLogger.trace("< AjaxAppender.setThreshold" );
 	},
 	
 	/**
 	 * send the request.
 	 */
 	send: function() {
+		log4jsLogger.trace("> AjaxAppender.send");
+		
+		this.isInProgress = true;
+		
 		var content = this.layout.getHeader();
 		
-		for(var i = 0; i < this.loggingEventMap.length(); i++) {
-			content +=  this.layout.format(this.loggingEventMap.get(i));
+		for(var i = 0; i < this.loggingEventMap.length() && i < this.threshold; i++) {
+			content +=  this.layout.format(this.loggingEventMap.pull());
 		} 
-		//clean the list and reset the threshold
-		this.loggingEventMap = new Log4js.ArrayList();
-		this.currentThreshold = 0;
 		
 		content += this.layout.getFooter();
-	
-		this.httpRequest.open("POST", this.loggingUrl, true);
-		this.httpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		// set the request headers. REFERER will be the top-level
+		
+		var httpRequest = this.getXmlHttpRequest();
+		httpRequest.onreadystatechange = function() {
+			log4jsLogger.trace("> AjaxAppender.onReadyStateChanged");
+			
+			if (httpRequest.readyState != 4) { 
+				log4jsLogger.trace("< AjaxAppender.onReadyStateChanged: readyState != 4");
+				return; 
+			}
+			
+			var success = ((typeof httpRequest.status === "undefined") || httpRequest.status === 0 || (httpRequest.status >= 200 && httpRequest.status < 300));
+			
+			if (success) {
+				log4jsLogger.trace("  AjaxAppender.onReadyStateChanged: success");
+
+				//ready sending data
+				this.isInProgress = false;
+
+			} else {
+				var msg = "  AjaxAppender.onReadyStateChanged: XMLHttpRequest request to URL " + this.loggingUrl + " returned status code " + httpRequest.status;
+				log4jsLogger.trace(msg);
+			}
+			
+			log4jsLogger.trace("< AjaxAppender.onReadyStateChanged: readyState == 4");
+		};
+		
+		httpRequest.open("POST", this.loggingUrl, true);
+		// set the request headers.
+		httpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		//REFERER will be the top-level
 		// URI which may differ from the location of the error if
 		// it occurs in an included .js file
-		this.httpRequest.setRequestHeader("REFERER", location.href);
- 		this.httpRequest.setRequestHeader("Content-length", content.length);
-		this.httpRequest.setRequestHeader("Connection", "close");
-		this.httpRequest.send(content);
-		this.currentThreshold = 0;
-	}
+		httpRequest.setRequestHeader("REFERER", location.href);
+ 		httpRequest.setRequestHeader("Content-length", content.length);
+		httpRequest.setRequestHeader("Connection", "close");
+		httpRequest.send(content);
+		
+		var appender = this;
+		
+		window.setTimeout(function(){
+			log4jsLogger.trace("> timeout");
+			httpRequest.onreadystatechange = function(){};
+			httpRequest.abort();
+			httpRequest = null;
+			appender.isInProgress = false;
+
+			if(appender.loggingEventMap.length() > 0) {
+				appender.send();
+			}
+			log4jsLogger.trace("< timeout");
+		}, 2000);
+		
+		log4jsLogger.trace("> AjaxAppender.send");
+	},
+	
+	/**
+	 * Get the XMLHttpRequest object independent of browser.
+	 * @private
+	 */
+	getXmlHttpRequest: function() {
+		log4jsLogger.trace("> AjaxAppender.getXmlHttpRequest");
+		
+		var httpRequest = false;
+		
+		if (window.XMLHttpRequest) { // Mozilla, Safari, IE7...
+				httpRequest = new XMLHttpRequest();
+			if (httpRequest.overrideMimeType) {
+				httpRequest.overrideMimeType(this.layout.getContentType());
+			}
+		} else if (window.ActiveXObject) { // IE
+			try {
+				httpRequest = new ActiveXObject("Msxml2.XMLHTTP");
+			} catch (e) {
+				httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+		}
+		
+		if (!httpRequest) {
+			log4jsLogger.fatal(
+				"Unfortunatelly your browser does not support AjaxAppender for log4js!");
+		}
+		
+		log4jsLogger.trace("< AjaxAppender.getXmlHttpRequest");
+		return httpRequest;
+	},
+	
+	/** 
+	 * toString
+	 */
+	 toString: function() {
+	 	return "AjaxAppender[loggingUrl=" + this.loggingUrl + ", threshold=" + this.threshold + "]"; 
+	 }
 };
 
 /**
@@ -1286,7 +1386,14 @@ FileAppender.prototype = {
 	 */
 	setLayout: function(layout){
 		this.layout = layout;
-	}
+	},
+	
+	/** 
+	 * toString
+	 */
+	 toString: function() {
+	 	return "FileAppender[file=" + this.file + "]"; 
+	 }
 };
 
 /**
@@ -1356,7 +1463,14 @@ WindowsEventAppender.prototype = {
 	 */
 	setLayout: function(layout){
 		this.layout = layout;
-	} 
+	},
+	
+	/** 
+	 * toString
+	 */
+	 toString: function() {
+	 	return "WindowsEventAppender"; 
+	 } 
 };
 
 /**
@@ -1397,7 +1511,13 @@ JSAlertAppender.prototype = {
 	 */
 	setLayout: function(layout){
 		this.layout = layout;
-	} 
+	}, 
+	/** 
+	 * toString
+	 */
+	 toString: function() {
+	 	return "JSAlertAppender"; 
+	 }	
 };
 
 /**
@@ -1443,6 +1563,14 @@ MozJSConsoleAppender.prototype = {
 	setLayout: function(layout){
 		this.layout = layout;
 	},
+	
+	/** 
+	 * toString
+	 */
+	 toString: function() {
+	 	return "MozJSConsoleAppender"; 
+	 },
+	 
 	/**
 	 * map Log4js.Level to jsConsole Flag
 	 * @private
@@ -1507,7 +1635,14 @@ OperaJSConsoleAppender.prototype = {
 	 */
 	setLayout: function(layout){
 		this.layout = layout;
-	}
+	},
+	
+	/** 
+	 * toString
+	 */
+	 toString: function() {
+	 	return "OperaJSConsoleAppender"; 
+	 }
 };
 
 /**
@@ -1546,7 +1681,14 @@ SafariJSConsoleAppender.prototype = {
 	 */
 	setLayout: function(layout){
 		this.layout = layout;
-	}
+	},
+	
+	/** 
+	 * toString
+	 */
+	 toString: function() {
+	 	return "SafariJSConsoleAppender"; 
+	 }
 };
 
 
@@ -1661,10 +1803,7 @@ HtmlLayout.prototype = {
 	 * @type String
 	 */
 	format: function(loggingEvent) {
-		return "<div style=\"" + this.getStyle(loggingEvent) + "\">" 
-			+ loggingEvent.getFormattedTimestamp() + " - " 
-			+ loggingEvent.level.toString() + " - " 
-			+ loggingEvent.message + "</div>\n";
+		return "<div style=\"" + this.getStyle(loggingEvent) + "\">" + loggingEvent.getFormattedTimestamp() + " - " + loggingEvent.level.toString() + " - " + loggingEvent.message + "</div>\n";
 	},
 	/** 
 	 * Returns the content type output by this layout. 
@@ -1730,14 +1869,14 @@ XMLLayout.prototype = {
 	 * @type String
 	 */
 	format: function(loggingEvent) {
-		var content = "<log4js:event logger=\"";
+		var content = "\t<log4js:event logger=\"";
 		content += loggingEvent.categoryName + "\" level=\"";
 		content += loggingEvent.level.toString() + "\" client=\"";
 		content += navigator.userAgent + "\" referer=\"";
 		content += location.href + "\" timestamp=\"";
-		content += loggingEvent.getFormattedTimestamp() + "\">\n";
+		content += loggingEvent.getFormattedTimestamp() + "\">\n\t\t";
 		content += "<log4js:message><![CDATA[" + loggingEvent.message + "]]></log4js:message>\n";	
- 		content += "</log4js:event>\n";
+ 		content += "\t</log4js:event>\n";
         
       return content;
 	},
@@ -1859,7 +1998,7 @@ Log4js.Map.prototype = {
         var entry = this.keys[i];
         if (entry instanceof NullKey) continue;
         if (entry.key == key){
-            return entry
+            return entry;
         }
       }
       return null;
@@ -1877,8 +2016,7 @@ Log4js.Map.prototype = {
  * replace the entries of map in key array, removing the former value
  * @private
  */
-function NullKey(){
-}
+function NullKey(){}
 new NullKey();
 
 /**
@@ -1966,6 +2104,56 @@ Log4js.ArrayList.prototype = {
 				this.add(obj.get(j));
 			}
 		}
+	},
+	
+	/**
+	 * clone the current ArrayList
+	 */
+	clone: function() {
+		var clonedArray =  new Log4js.ArrayList();
+		for (var i = 0; i < this.array.length; i++) {
+			clonedArray.add( this.get(i));
+		}
+		return clonedArray;
+	}
+};
+
+/**
+ * FIFO buffer
+ * @private
+ */
+Log4js.FifoBuffer = function()
+{
+  this.array = new Array();
+};
+
+Log4js.FifoBuffer.prototype = {
+
+	/**
+	 * @param {Object} obj any object added to buffer
+	 */
+	push : function(obj) {
+        this.array[this.array.length] = obj;
+        return this.array.length;
+	},
+	
+	/**
+	 * @return first putted in Object
+	 */
+	pull : function() {
+		if (this.array.length > 0) {
+			var firstItem = this.array[0];
+			for (var i = 0; i < this.array.length - 1; i++) {
+				this.array[i] = this.array[i + 1];
+			}
+			this.array.length = this.array.length - 1;
+			return firstItem;
+		}
+		return null;
+	},
+	
+	length : function() {
+		return this.array.length;
 	}
 };
 
@@ -2051,4 +2239,12 @@ Log4js.DateFormatter.prototype = {
 		m.length == 1? m = "0"+m:1;
 		return date.getTimezoneOffset() < 0 ? "+"+h+m : "-"+h+m;
 	}
-}
+};
+
+/**
+ * internal Logger to be used
+ * @private
+ */
+var log4jsLogger = Log4js.getLogger("log4js");
+log4jsLogger.addAppender(new ConsoleAppender(log4jsLogger, false));
+log4jsLogger.setLevel(Log4js.Level.ALL);
