@@ -38,7 +38,7 @@ which will be used to configure the chosen Forrest skin.
 
   <!-- Disable the PDF link? -->
 
-  <disable-pdf-link>true</disable-pdf-link>
+  <disable-pdf-link>false</disable-pdf-link>
 
   <!-- Disable the POD link? -->
 
@@ -215,6 +215,9 @@ which will be used to configure the chosen Forrest skin.
   font-family: monospace; } <!--Example:
         To override the colours of links only in the footer.
     --> #footer a { color: #0F3660; } #footer a:visited { color: #009999;
+    
+    li.dir {list-style: square outside; color:blue;}
+    li.file {list-style: none outside; color:green;}
   }</extra-css>
 
   <colors>
@@ -285,7 +288,7 @@ which will be used to configure the chosen Forrest skin.
        Supported text alignments are left, right, justify (default left).
     -->
 
-    <page orientation="portrait" size="letter" text-align="left" />
+    <page orientation="portrait" size="a4" text-align="left" />
 
     <!-- 
        Pattern of the page numbering in the footer - Default is "Page x".
@@ -324,8 +327,7 @@ which will be used to configure the chosen Forrest skin.
     <!--
       Print the URL text next to all links going outside the file
     -->
-
-    <show-external-urls>false</show-external-urls>
+    <show-external-urls>true</show-external-urls>
 
     <!--
       Disable the copyright footer on each page of the PDF.
@@ -333,8 +335,7 @@ which will be used to configure the chosen Forrest skin.
       will be used, as explained below. Otherwise a copyright statement
       will be generated. This latter can be disabled.
     -->
-
-    <disable-copyright-footer>true</disable-copyright-footer>
+    <disable-copyright-footer>false</disable-copyright-footer>
   </pdf>
 
   <!-- 
@@ -359,25 +360,17 @@ which will be used to configure the chosen Forrest skin.
   <credits>
     <credit box-location="alt">
       <name>Built with Apache Forrest</name>
-
       <url>http://forrest.apache.org/</url>
-
       <image>images/built-with-forrest-button.png</image>
-
       <width>88</width>
-
       <height>31</height>
     </credit>
     
     <credit box-location="alt">
       <name>Apache Logging Services</name>
-
       <url>http://logging.apache.org/</url>
-
       <image>http://logging.apache.org/images/ls-logo.jpg</image>
-
       <width>88</width>
-
       <height>31</height>
     </credit>
 
@@ -385,11 +378,11 @@ which will be used to configure the chosen Forrest skin.
      for each page in the PDF, using either "name" or "url" or both.
     -->
 
-    <!--
+
     <credit role="pdf">
-      <name>Built with Apache Forrest</name>
-      <url>http://forrest.apache.org/</url>
+      <name>&copy; Log4js 2006. All rights reserved.</name>
+      <url>http://log4js.berlios.de/</url>      
     </credit>
-    -->
+
   </credits>
 </skinconfig>
