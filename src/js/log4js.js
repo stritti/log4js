@@ -1132,6 +1132,12 @@ function AjaxAppender(logger, loggingUrl) {
 	this.threshold = 1;
 	
 	/**
+	 * timeout when request is aborted.
+	 * @private
+	 */
+	this.timeout = 2000;
+	
+	/**
 	 * List of LoggingEvents which should be send after threshold is reached.
 	 * @type Map
 	 * @private
@@ -1182,11 +1188,21 @@ AjaxAppender.prototype = {
 	
 	/**
 	 * Set the threshold when logs have to be send. Default threshold is 1.
+	 * @praram {int} threshold new threshold
 	 */
 	setThreshold: function(threshold) {
 		log4jsLogger.trace("> AjaxAppender.setThreshold: " + threshold );
 		this.threshold = threshold;
 		log4jsLogger.trace("< AjaxAppender.setThreshold" );
+	},
+	
+	/**
+	 * Set the timeout in milli seconds until sending request is aborted.
+	 * Default is 2000 ms.
+	 * @param {int} milliseconds the new timeout
+	 */
+	setTimeout: function(milliseconds) {
+		this.timeout = milliseconds;
 	},
 	
 	/**
@@ -1254,7 +1270,7 @@ AjaxAppender.prototype = {
 				appender.send();
 			}
 			log4jsLogger.trace("< timeout");
-		}, 2000);
+		}, this.timeout);
 		
 		log4jsLogger.trace("> AjaxAppender.send");
 	},
@@ -2246,5 +2262,5 @@ Log4js.DateFormatter.prototype = {
  * @private
  */
 var log4jsLogger = Log4js.getLogger("log4js");
-log4jsLogger.addAppender(new ConsoleAppender(log4jsLogger, false));
-log4jsLogger.setLevel(Log4js.Level.ALL);
+//log4jsLogger.addAppender(new ConsoleAppender(log4jsLogger, false));
+//log4jsLogger.setLevel(Log4js.Level.ALL);
