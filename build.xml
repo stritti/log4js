@@ -88,6 +88,11 @@
 			<fileset file="LICENSE.txt" />
 			<fileset file="NOTICE.txt" />
 		</copy>
+
+		<echo>Copy users guide to archive...</echo>
+		<copy todir="${release.dir}/tmp/log4js-${version}/docs">
+			<fileset file="${project.site-dir}/docu/users-guide.pdf" />
+		</copy>
 		
 		<zip destfile="${release.dir}/log4js-${version}.zip" 
 			basedir="${release.dir}/tmp" />
