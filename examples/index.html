@@ -58,9 +58,26 @@
 		   appender.setLayout(new PatternLayout("%p-> %m"));
  		   mozLog.addAppender(appender);
  		   
-
  		// -->
  		</script>
+
+<script type="text/javascript">
+<!--
+	function testAjax() {
+		var logger = Log4js.getLogger("testlogger");
+		logger.setLevel(Log4js.Level.ALL);
+		//logger.addAppender(new ConsoleAppender(logger));
+		logger.addAppender(new AjaxAppender(logger, "./log4j.jsp?action=log"));
+
+		for(var i = 0; i <5 ; i++) {		
+			logger.info('an info ' + i);
+			logger.warn('a warning ' + i);
+			logger.error('an error ' + i);
+		}
+	}
+//-->
+</script> 
+
 	</head>
 
 	<body>
@@ -73,6 +90,8 @@
 			<p>Log4js examples can be used only when JavaScript is enabled!</p>
 			</blockquote>
 		</noscript>
+		
+		
 		<fieldset><legend>Window Console Logging</legend>
 			<input type="text" id="windowMessage" value="add windowLog message" onchange="windowLog.trace(document.getElementById('windowMessage').value);"/>
 			<input type="button" name="trace" value="Trace Message" onclick="windowLog.trace(document.getElementById('windowMessage').value);" />
@@ -147,6 +166,10 @@
 			<input type="button" name="warn" value="Warn" onclick="alertLog.warn('I was warned!');return false;" />
 			<input type="button" name="error" value="Error" onclick="alertLog.error('I was errored!');return false;" />
 			<input type="button" name="fatal" value="Fatal" onclick="alertLog.fatal('I was fataled!');return false;" />
+			
+			<br />
+			Sending a bigger number of logs: <input type="button" name="trace" value="ajaxTest" onclick="testAjax();return false;" />
+			
 		</fieldset>
 		
 		<fieldset><legend>Mozilla JavaScript Logging</legend>
@@ -172,5 +195,6 @@
 			<input type="button" name="error" value="Error" onclick="operaLog.error('I was errored!');return false;" />
 			<input type="button" name="fatal" value="Fatal" onclick="operaLog.fatal('I was fataled!');return false;" />
 		</fieldset>
+		
 	</body>
 </html>
