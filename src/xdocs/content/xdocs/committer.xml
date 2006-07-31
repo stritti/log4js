@@ -19,11 +19,14 @@
 "http://forrest.apache.org/dtd/document-v20.dtd">
 <document>
     <header>
-        <title>Comitter</title>
+        <title>Log4js - Comitter</title>
     <authors>
       <person email="stritti@users.berlios.de" id="ssr"
               name="Stephan Strittmatter" />
     </authors>
+   <meta name="robots">ALL</meta>
+  <meta name="description">Log4js - Committer</meta>
+  <meta name="keywords">log4js, logging, javascript, committer</meta>    
     </header>
 
     <body>

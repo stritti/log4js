@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2002-2004 The Apache Software Foundation or its licensors,
+  as applicable.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN"
+"http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+  <header>
+    <title>Log4js - Users Guide</title>
+
+    <authors>
+      <person email="stritti@users.berlios.de" id="ssr"
+              name="Stephan Strittmatter" />
+    </authors>
+    <abstract>
+        <img src="images/project-logo.jpg" alt="Log4js" height="30" ></img>
+        
+         This is the users guide for Log4js. Use this guide to learn how to
+         use Log4js efficient in your projects.
+    </abstract>
+   
+  </header>
+
+    <body>
+
+        <section id="into">
+            <title>Introduction</title>
+
+            <p> <em>Log4js</em> is a very small but usefull JavaScript library 
+                to log events in your scripts. Often it is not useful to use 
+                <code>alert('debug message');</code> spreaded through your 
+                code. On the other hand a debugger like venkman can help you 
+                also only if you debug on your own computer and when you can 
+                use FireFox as browser. </p>
+            <p> But the most problems will occure if you publish your web 
+                application. Probably you have first a team of testers which 
+                tests your software, but they will not have experiences with 
+                debugging JavaScript. </p>
+            <p> <em>Log4js</em> will solve these problems and probably some 
+                more. You simply add Log4js to your scripts and the library 
+                loggs all your events like you configured. The installation and 
+                configuration will be described in the next sections. </p>
+            <p> Using <em>Log4js</em> you need not to modify your complete 
+                scripts if you are going productive as you have if you use the 
+                alert-dialogs. You just configure if you still need logs and 
+                how they should be logged on productive system. Nothing more. 
+                </p>
+        </section>
+        <section id="install">
+            <title>Download and Installation</title>
+            <p> To use <em>Log4js</em> you have to download the library first 
+                from the <a href="ext:log4js/downloads">download section</a> of 
+                the project. The library is available in two different 
+                archives. It is up to you, if you prefere zip archive or tar.gz 
+                archive. The content is the same. </p>
+            <note> Extract the archive to a directory of your choice, but 
+                preserve the directory structure of the archive! </note>
+            <p> After extracting the archive, you will find following directory 
+                structure: </p>
+            <ul>
+                <li class="dir">log4js-{version}
+                    <ul>
+                        <li>docs
+                        <ul>
+                            <li class="dir">api
+                                <ul>
+                                    <li>index.html <em>(the API documentation)</em></li>
+                                </ul>
+                            </li>
+                            <li class="file">users-guide.pdf <em>(this users guide)</em></li>
+                        </ul>    
+                        </li>
+                        <li class="dir">examples</li>
+                        <li class="dir">lib
+                            <ul>
+                                <li class="file">log4js-lib.js <em>(compressed version of Log4js library)</em></li>
+                            </ul>    
+                        </li>
+                        <li class="dir">src
+                            <ul>
+                                <li>js
+                                    <ul>
+                                        <li class="file">log4js.js <em>(uncompressed version of Log4js library)</em></li>
+                                    </ul>
+                                </li>
+                            </ul>    
+                        </li>    
+                    </ul>                        
+                </li>                
+            </ul>
+  
+        </section>
+        <section id="usage">
+            <title>Usage</title>
+            <section id="classdiagramm">
+                <title>Class Diagramm</title>
+                <p>
+                    <img src="images/Log4js-UML.jpg" alt="Class Diagram" 
+                        title="Class Diagram" />
+                </p>
+            </section>
+        </section>
+        <section id="configuration">
+            <title>Configuration</title>
+        </section>
+        <section id="license">
+            <title>License</title>
+            <p>
+            </p>
+        </section>
+
+        <section id="references">
+            <title>references</title>
+            <dl>
+                <dt>Log4js Website: </dt>
+                <dd>http://log4js.berlios.de</dd>
+            </dl>
+           
+        </section>
+    </body>
+</document>

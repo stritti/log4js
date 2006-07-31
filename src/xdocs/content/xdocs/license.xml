@@ -15,11 +15,15 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.2//EN" "http://forrest.apache.org/dtd/document-v12.dtd">
-
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN"
+"http://forrest.apache.org/dtd/document-v20.dtd">
 <document>
  <header>
-  <title>Apache License</title>
+  <title>Log4js - License: Apache License 2.0</title>
+  <meta name="robots">ALL</meta>
+  <meta name="description">Log4js is licensed under the Apache License 2.0</meta>
+  <meta name="keywords">log4js, logging, javascript, apache, license</meta>
+  
  </header>
 
 <body>
@@ -28,7 +32,7 @@
     Apache License. See the files in the top-level of the Log4js
     distribution called LICENSE.txt (copy shown below).
     See full explanation and FAQs regarding the
-    <link href="ext:apache.license">Apache License</link>.
+    <a href="ext:apache.license">Apache License</a>.
   </p>
 <source><![CDATA[
                                  Apache License

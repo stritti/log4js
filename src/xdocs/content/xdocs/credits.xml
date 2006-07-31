@@ -19,11 +19,15 @@
 "http://forrest.apache.org/dtd/document-v20.dtd">
 <document>
   <header>
-    <title>Credits</title>
+    <title>Log4js - Credits</title>
     <authors>
       <person email="stritti@users.berlios.de" id="ssr"
               name="Stephan Strittmatter" />
     </authors>
+   <meta name="robots">ALL</meta>
+  <meta name="description">Log4js - Credits</meta>
+  <meta name="keywords">log4js, logging, javascript, credits</meta>
+  
   </header>
 
   <body>

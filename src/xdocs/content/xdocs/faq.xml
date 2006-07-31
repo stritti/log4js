@@ -18,11 +18,12 @@
 <!DOCTYPE faqs PUBLIC "-//APACHE//DTD FAQ V2.0//EN" 
 	"http://forrest.apache.org/dtd/faq-v20.dtd">
 <faqs>
-	<title>Frequently Asked Questions</title>
+	<title>Log4js - Frequently Asked Questions</title>
 	<authors>
 		<person email="stritti@users.berlios.de" id="ssr" 
 			name="Stephan Strittmatter" />
 	</authors>
+
 	<faqsection id="general">
 		<title>General</title>
 		<faq id="usage">

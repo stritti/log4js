@@ -19,10 +19,14 @@
 "http://forrest.apache.org/dtd/document-v20.dtd">
 <document>
     <header>
-        <title>Related Links</title>
+        <title>Log4js - Related Links</title>
     <authors>
       <person email="stritti@users.berlios.de" id="ssr"  name="Stephan Strittmatter" />
     </authors>
+    <meta name="robots">ALL</meta>
+        <meta name="description">Related Links of Log4js</meta>
+        <meta name="keywords">log4js, logging, javascript, ajax, related links</meta>
+    
     </header>
 
     <body>
@@ -44,10 +48,12 @@
 
 	        <section id="test">
 	            <title>Tools used for testing</title>
-				<note>These tools are not used yet. They are just to remind.</note>
+					<note>These tools are not used yet. They are just to remind.</note>
 	            <ul>
 	                <li>JSUnit for Unit testing: 
 	                	<a href="http://www.edwardh.com/jsunit/">http://www.edwardh.com/jsunit/</a></li>
+	                <li>JSTester JS testing using Javas JUnit framework and JS-script engine Rhino:
+	                  <a href="http://jstester.sourceforge.net/">http://jstester.sourceforge.net/</a></li>
 	                <li>Selenium is a test tool for web applications: 
 	                	<a href="http://www.openqa.org/selenium/index.html">http://www.openqa.org/selenium/index.html</a></li>
 	            </ul>

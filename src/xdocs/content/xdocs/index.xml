@@ -15,101 +15,81 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN"
-"http://forrest.apache.org/dtd/document-v20.dtd">
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" 
+    "http://forrest.apache.org/dtd/document-v20.dtd">
 <document>
-  <header>
-    <title>Welcome to Log4js</title>
-
-    <authors>
-      <person email="stritti@users.berlios.de" id="ssr"
-              name="Stephan Strittmatter" />
-    </authors>
-  </header>
-
-  <body>
-    <section id="overview">
-      <title>Overview</title>
-
-      <p>Log4js is a logging API for JavaScript. The main goal is to have a
-      robust and solid logging API which is very simmilar to the Java logging
-      API <a href="ext:log4j.apache.org">Log4j</a>.</p>
-    </section>
-
-    <section id="toLog">
-      <title>Severals ways to log</title>
-
-      <p>The current available Appenders are:</p>
-
-      <ul>
-        <li>DummyAppender : log nothing.</li>
-
-        <li>WindowAppender : open a new window in the browser and insert log
-        messages in real time.</li>
-
-        <li>WindowsEventAppender : send log messages in the MS Windows event
-        manager.</li>
-
-        <li>FileAppender : write log messages in a local file on the
-        client.</li>
-
-        <li>AjaxAppender : allow to send log messages to a remote server with
-        asynchronous HTTP request.</li>
-
-        <li>MetatagAppender : add log messages as meta data.</li>
-      </ul>
-
-      <p>Many Appender can be used in a same time.</p>
-    </section>
-
-    <section id="usage">
-      <title>Usage</title>
-
-      <p>Log4js is a simple API, which could be included in your scripts:</p>
-
-      <source id="code">
-            	
-            	&lt;script src="log4js.js" type="text/javascript"&gt;&lt;/script&gt;
- 
-                &lt;script type="text/javascript"&gt;
-                &lt;!-- // //initialize the logger with your category 
-                var log = Log4js.getLogger("ajaxTest"); 
-                //set the level of logging 
-                log.setLevel(Log4js.Level.ALL); 
-                //set the Appender to write the log to 
-                log.addAppender(new AjaxAppender(log, "./log4j.jsp")); 
-                // --&gt;
-                &lt;/script&gt;
-                
+    <header>
+        <title>Log4js - The Logging API for JavaScript</title>
+        <authors>
+            <person email="stritti@users.berlios.de" id="ssr" 
+                name="Stephan Strittmatter" />
+        </authors>
+        <meta name="robots">ALL</meta>
+        <meta name="description">Log4js - The Logging API for JavaScript</meta>
+        <meta name="keywords">log4js, logging, javascript, ajax</meta>
+    </header>
+    <body>
+        <section id="overview">
+            <title>Overview</title>
+            <p>Log4js is a logging API for JavaScript. The main goal is to have 
+                a robust and solid logging API which is very simmilar to the 
+                Java logging API <a href="ext:log4j.apache.org">Log4j</a>.</p>
+        </section>
+        <section id="toLog">
+            <title>Severals ways to log</title>
+            <p>The current available Appenders are:</p>
+            <ul>
+                <li>WindowAppender: open a new window in the browser and insert 
+                    log messages in real time.</li>
+                <li>WindowsEventAppender: send log messages in the MS Windows 
+                    event manager.</li>
+                <li>FileAppender: write log messages in a local file on the 
+                    client.</li>
+                <li>AjaxAppender: allow to send log messages to a remote server 
+                    with asynchronous HTTP request.</li>
+                <li>MetatagAppender: add log messages as meta data.</li>
+            </ul>
+            <p>Many Appender can be used in a same time.</p>
+        </section>
+        <section id="usage">
+            <title>Usage</title>
+            <p>Log4js is a simple API, which could be included in your 
+                scripts:</p>
+            <source id="code"> &lt;script src="log4js.js" 
+                type="text/javascript"&gt;&lt;/script&gt; &lt;script 
+                type="text/javascript"&gt; &lt;!-- // //initialize the logger 
+                with your category var log = Log4js.getLogger("ajaxTest"); 
+                //set the level of logging log.setLevel(Log4js.Level.ALL); 
+                //set the Appender to write the log to log.addAppender(new 
+                AjaxAppender(log, "./log4j.jsp")); // --&gt; &lt;/script&gt; 
                 </source>
-
-      <p>Now you can call the log in your logic like follow line:</p>
-
-      <source> 
-            	&lt;input type="button" name="trace" value="Trace" 
-                   onclick="log.trace('I was traced!');return false;" /&gt;
-                 </source>
-    </section>
-
-    <section id="architecture">
-      <title>Architecture</title>
-
-      <p>The architecture is very close to log4j's architecture. there are only Three
-      main objects: The static Logger, an Appender and a Layout. Appender and Layout 
-      are exchangeable and have only to fullfill the interfaces.
-      
-      	<img alt="Architecture of Log4js" src="architecture.png" /></p>
-    </section>
-
-    <section id="conclution">
-      <title>Conclusion</title>
-
-      <p>There are <a href="links.html#other">other libraries</a> in order to
-      get this goal. We are discussing with the authors of another logging
-      APIs in order to gather thier efforts and provide a common framework if
-      possible.</p>
-
-      <p>Log4js is very simple to install and use.</p>
-    </section>
-  </body>
+            <p>Now you can call the log in your logic like follow line:</p>
+            <source> &lt;input type="button" name="trace" value="Trace" 
+                onclick="log.trace('I was traced!');return false;" /&gt; 
+                </source>
+        </section>
+        <section id="architecture">
+            <title>Architecture</title>
+            <p>The architecture is very close to log4j's architecture. There 
+                are only three main objects:</p>
+            <ol>
+                <li>The static Logger,</li>
+                <li>an Appender and</li>
+                <li>a specific Layout.</li>
+            </ol>
+            <p>Appenders and Layouts are exchangeable and have only to fullfill 
+                the interfaces.</p>
+            <p>
+                <img alt="Architecture of Log4js" src="architecture.png" />
+            </p>
+        </section>
+        <section id="conclution">
+            <title>Conclusion</title>
+            <p>There are <a href="links.html#other">other libraries</a> in 
+                order to get this goal. We are discussing with the authors of 
+                another logging APIs in order to gather thier efforts and 
+                provide a common framework if possible.</p>
+            <p>Log4js is very simple to install and use.</p>
+        </section>
+    </body>
 </document>

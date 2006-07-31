@@ -56,13 +56,26 @@ See http://forrest.apache.org/docs/linking.html for more info
 		<!--<whole_site_pdf label="Whole Site PDF" href="wholesite.pdf"/>-->
 	</about>
 
+    <docu label="Documentation" href="docu/" tab="docu">
+      <index label="Users Guide" description="The Log4js Users Guide" 
+          href="users-guide.html"	wholesite="true" />
+      <javadocs label="API Documentation" 
+          description="Documentation of API" 
+          href="ext:log4js/apidocs"/>
+      <!--<whole_pdftab label="Tab as PDF" href="pdf-tab.pdf" />-->
+    </docu>
+    
     <project label="Project" href="project/" tab="project">
       <index description="Welcome to Log4js" href="index.html" label="Index" />
-      <viewsvn label="SVN Repository" description="Subversion Repository" href="viewsvn.html"/>
-      <mailinglist label="Mailing Lists" description="Mailing Lists for Log4js" href="mailinglists.html"/>
-      <javadocs label="API Documentation" description="Documentation of API" href="ext:log4js/apidocs"/>
-      <issuetracker label="Issue Tracker" description="Issue Tracker of Log4js" href="ext:log4js/issuetracker" />
-      <berlios label="BerliOS Hosting" description="Hosting of Project at BerliOS" href="ext:log4js/develop"/>
+      
+      <viewsvn label="SVN Repository" description="Subversion Repository" 
+          href="viewsvn.html"/>
+      <mailinglist label="Mailing Lists" description="Mailing Lists for Log4js" 
+          href="mailinglists.html"/>
+      <issuetracker label="Issue Tracker" description="Issue Tracker of Log4js" 
+          href="ext:log4js/issuetracker" />
+      <berlios label="BerliOS Hosting" description="Hosting of Project at BerliOS" 
+          href="ext:log4js/develop"/>
      </project>
 
     <files>
