@@ -157,7 +157,7 @@ which will be used to configure the chosen Forrest skin.
 
   <!-- Heading types can be clean|underlined|boxed  -->
 
-  <headings type="boxed" />
+  <headings type="underlined" />
 
   <!-- The optional feedback element will be used to construct a
     feedback link in the footer with the page pathname appended:
@@ -207,18 +207,21 @@ which will be used to configure the chosen Forrest skin.
        used in your documentation.
     -->
 
-  <extra-css><!--Example of reason B:
+  <extra-css>
+  	<!--Example of reason B:
         To define the css definition of a new element that you may have used
         in the class attribute of a <p> node. 
         e.g. <p class="quote"/>
-    --> p.quote { margin-left: 2em; padding: .5em; background-color: #f0f0f0;
-  font-family: monospace; } <!--Example:
+    --> 
+    p.quote { margin-left: 2em; padding: .5em; background-color: #f0f0f0; font-family: monospace; } 
+  	<!--Example:
         To override the colours of links only in the footer.
-    --> #footer a { color: #0F3660; } #footer a:visited { color: #009999;
+    --> 
+    #footer a { color: #0F3660; } #footer a:visited { color: #009999;}
     
-    li.dir {list-style: square outside; color:blue;}
-    li.file {list-style: none outside; color:green;}
-  }</extra-css>
+    li.dir {list-style: square outside; }
+    li.file {list-style: none outside; }
+   </extra-css>
 
   <colors>
     <!-- These values are used for the generated CSS files.
