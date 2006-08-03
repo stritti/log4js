@@ -153,7 +153,7 @@ which will be used to configure the chosen Forrest skin.
    Where to show the TOC.
   -->
 
-  <toc location="page" max-depth="2" min-sections="1" />
+  <toc location="page" max-depth="2" min-sections="3" />
 
   <!-- Heading types can be clean|underlined|boxed  -->
 
@@ -221,6 +221,18 @@ which will be used to configure the chosen Forrest skin.
     
     li.dir {list-style: square outside; }
     li.file {list-style: none outside; }
+    
+    .note .label {
+        background-image: url(http://log4js.berlios.de/skin/images/info.png);
+        background-repeat: no-repeat;
+        background-position: right; 
+     }
+     
+    .warning .label {
+        background-image: url(http://log4js.berlios.de/skin/images/warning.png);
+        background-repeat: no-repeat;
+        background-position: right; 
+     }
    </extra-css>
 
   <colors>
@@ -291,7 +303,7 @@ which will be used to configure the chosen Forrest skin.
        Supported text alignments are left, right, justify (default left).
     -->
 
-    <page orientation="portrait" size="a4" text-align="left" />
+    <page orientation="portrait" size="a4" text-align="justify" />
 
     <!-- 
        Pattern of the page numbering in the footer - Default is "Page x".
@@ -306,7 +318,7 @@ which will be used to configure the chosen Forrest skin.
        <page-numbering-format>(1-1)</page-numbering-format> Displays "(x-y)"
     -->
 
-    <page-numbering-format>Page 1</page-numbering-format>
+    <page-numbering-format>Page 1/1</page-numbering-format>
 
     <!--
        Margins can be specified for top, bottom, inner, and outer
@@ -317,7 +329,7 @@ which will be used to configure the chosen Forrest skin.
        Specified below are the default settings.
     -->
 
-    <margins double-sided="false">
+    <margins double-sided="true">
       <top>1in</top>
 
       <bottom>1in</bottom>
