@@ -37,6 +37,7 @@
       <ol>
           <li><a href="users-guide.html">Users Guide</a></li>
           <li><a href="ext:log4js/apidocs" >API-Documentation (JSDoc)</a></li>
+          <li><a href="ext:log4js/wiki" >WIKI</a></li>
       </ol>
 
   </body>

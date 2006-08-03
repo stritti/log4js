@@ -18,20 +18,41 @@
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN"
 "http://forrest.apache.org/dtd/document-v20.dtd">
 <document>
-  <header>
-    <title>Development of Log4js</title>
-
-  <authors>
-      <person email="stritti@users.berlios.de" id="ssr"
-              name="Stephan Strittmatter" />
-  </authors>
-  </header>
+	<header>
+		<title>Development of Log4js</title>
+		<authors>
+			<person email="stritti@users.berlios.de" id="ssr" name="Stephan Strittmatter" />
+		</authors>
+	</header>
 
   <body>
     <section id="overview">
       <title>Overview</title>
+      <p>
+      	TBD
+      </p>
+    </section>
+    <section id="building">
+      <title>Building Project</title>
 
-      <p>TODO...</p>
+      <p>Coming from Java development, the <a href="http://ant.apache.org">Apache Ant</a> 
+      is used building the project. Ant supports several targets which can be invoked.</p>
+      <p>
+      To use Ant it is first required to have installed Java<sup>TM</sup> first.
+      After that, you can download Ant from the download section of the project pages.
+      Please follow the given installation instructions there
+      </p>
+      <table>
+      	<caption>Ant Tasks</caption>
+      	<tr><th>Task</th><th>Description</th></tr>
+      	<tr><td> </td><td> </td></tr>
+      </table>
+    </section>
+    <section id="coding">
+    	<title>Coding Guide</title>
+    	<p>
+    		TBD
+    	</p>
     </section>
   </body>
 </document>

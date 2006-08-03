@@ -53,7 +53,10 @@ See http://forrest.apache.org/docs/linking.html for more info
 		<links label="Links" description="Further Information" 
 			href="links.html" wholesite="true" />
 		<!--<whole_pdftab label="Tab as PDF" href="pdf-tab.pdf" />-->
-		<!--<whole_site_pdf label="Whole Site PDF" href="wholesite.pdf"/>-->
+<!--
+		<all_site label="Full HTML" href="wholesite.html"/>    
+    	<all_sitePDF label="Full PDF" href="wholesite.pdf"/> 
+-->
 	</about>
 
     <docu label="Documentation" href="docu/" tab="docu">

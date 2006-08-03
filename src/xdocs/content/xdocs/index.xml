@@ -27,11 +27,12 @@
         <meta name="robots">ALL</meta>
         <meta name="description">Log4js - The Logging API for JavaScript</meta>
         <meta name="keywords">log4js, logging, javascript, ajax</meta>
+
     </header>
-    <body>
+    <body xml:lang="en">
         <section id="overview">
             <title>Overview</title>
-            <p>Log4js is a logging API for JavaScript. The main goal is to have 
+            <p><em>Log4js</em> is a logging API for JavaScript. The main goal is to have 
                 a robust and solid logging API which is very simmilar to the 
                 Java logging API <a href="ext:log4j.apache.org">Log4j</a>.</p>
         </section>
@@ -45,29 +46,58 @@
                     event manager.</li>
                 <li>FileAppender: write log messages in a local file on the 
                     client.</li>
-                <li>AjaxAppender: allow to send log messages to a remote server 
-                    with asynchronous HTTP request.</li>
+                <li>AjaxAppender: allow to send log messages to the server 
+                    with asynchronous HTTP request. There you can process 
+                    the logging events like you want on server side
+                    (ASP.NET, Java Servlet, JSP, PHP, Ruby, etc.).</li>
                 <li>MetatagAppender: add log messages as meta data.</li>
             </ul>
-            <p>Many Appender can be used in a same time.</p>
+            <p>Many Appender can be used in same time.</p>
         </section>
         <section id="usage">
             <title>Usage</title>
-            <p>Log4js is a simple API, which could be included in your 
+            <p><em>Log4js</em> is a simple API, which could be included in your 
                 scripts:</p>
-            <source id="code"> &lt;script src="log4js.js" 
-                type="text/javascript"&gt;&lt;/script&gt; &lt;script 
-                type="text/javascript"&gt; &lt;!-- // //initialize the logger 
-                with your category var log = Log4js.getLogger("ajaxTest"); 
-                //set the level of logging log.setLevel(Log4js.Level.ALL); 
-                //set the Appender to write the log to log.addAppender(new 
-                AjaxAppender(log, "./log4j.jsp")); // --&gt; &lt;/script&gt; 
-                </source>
+            <source id="code"> 
+            &lt;script src="log4js.js" type="text/javascript"&gt;&lt;/script&gt; 
+            &lt;script type="text/javascript"&gt; 
+            &lt;!-- // 
+            //initialize the logger  with your category 
+            var logger = Log4js.getLogger("ajaxTest"); 
+            //set the level of logging 
+            logger.setLevel(Log4js.Level.ALL); 
+            //set the Appender to write the log to 
+            logger.addAppender(new AjaxAppender(logger, "./log4j.jsp")); 
+            // --&gt; &lt;/script&gt; 
+            </source>
             <p>Now you can call the log in your logic like follow line:</p>
-            <source> &lt;input type="button" name="trace" value="Trace" 
-                onclick="log.trace('I was traced!');return false;" /&gt; 
-                </source>
+            <source> 
+            	&lt;input type="button" name="trace" value="Trace" 
+                	onclick="logger.trace('I was traced!');return false;" /&gt; 
+            </source>
+            <p>For more details have a look at the 
+            	<a href="docu/users-guide.html">users guide</a>.</p>
         </section>
+
+        <section id="browser">
+	      <title>Browser Compatibility</title>
+			<p>
+				<em>Log4js</em> is compatible with almost all current browsers. Some browser could not be tested
+				because of missing hardware (e.g. Mac).
+			</p>
+	      <table>
+	      	<caption>Browser Compatibility Matrix</caption>
+	      	<tr><th>Browser</th>                    <th>Version</th>           <th>Platform</th>        <th>Compatibility</th>       <th>Note</th></tr>
+	      	
+	      	<tr><th>KDE Konqueror</th>              <td>?</td>                 <td>Linux KDE</td>       <td>full compatible</td>     <td>Some Appenders are browser specific and do not work on Konkqueror.</td></tr>
+	      	<tr><th>Microsoft Internet Explorer</th><td>5.0, 6.0</td>          <td>Windows</td>         <td>full compatible</td>     <td>Some Appenders are browser specific and do not work on IE. Some Appenders are IE specific.</td></tr>
+	      	<tr><th>Mozilla FireFox</th>            <td>1.0.5, 2.0 Beta 1</td> <td>Windows</td>         <td>full compatible</td>     <td>Some Appenders are browser specific and do not work on FireFox.</td></tr>
+	      	<tr><th>Mozilla FireFox</th>            <td>1.0.5</td>             <td>Linux</td>           <td>full compatible</td>     <td>Some Appenders are browser specific and do not work on FireFox.</td></tr>
+	      	<tr><th>Opera</th>                      <td>9</td>                 <td>Windows</td>         <td>full compatible</td>     <td>Some Appenders are browser specific and do not work on Opera.</td></tr>
+	      	<tr><th>Safari</th>                     <td>?</td>                 <td>Mac OS</td>          <td>open</td>                <td>Currently no platform available for testing.</td></tr>
+	      </table>
+	    </section>
+	    
         <section id="architecture">
             <title>Architecture</title>
             <p>The architecture is very close to log4j's architecture. There 
@@ -83,13 +113,14 @@
                 <img alt="Architecture of Log4js" src="architecture.png" />
             </p>
         </section>
+
         <section id="conclution">
             <title>Conclusion</title>
             <p>There are <a href="links.html#other">other libraries</a> in 
                 order to get this goal. We are discussing with the authors of 
                 another logging APIs in order to gather thier efforts and 
                 provide a common framework if possible.</p>
-            <p>Log4js is very simple to install and use.</p>
+            <p><em>Log4js</em> is very simple to install and use.</p>
         </section>
     </body>
 </document>
