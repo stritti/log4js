@@ -84,21 +84,25 @@
 	               <li>fvlogger: 
 	               	<a href="http://www.alistapart.com/articles/jslogging">http://www.alistapart.com/articles/jslogging</a></li>
 	               <li>jslib: 
-					<a href="http://www.petrusrex.com/Programmes/jslib.htm">http://www.petrusrex.com/Programmes/jslib.htm</a></li>
+							<a href="http://www.petrusrex.com/Programmes/jslib.htm">http://www.petrusrex.com/Programmes/jslib.htm</a></li>
 	               <li>jsTrace: 
-					<a href="http://www.easy-designs.net/code/jsTrace/">http://www.easy-designs.net/code/jsTrace/</a></li>
+							<a href="http://www.easy-designs.net/code/jsTrace/">http://www.easy-designs.net/code/jsTrace/</a></li>
 	               <li>Logger: 
-					<a href="http://insin.woaf.net/code/javascript/logger.html">http://insin.woaf.net/code/javascript/logger.html</a></li>
+							<a href="http://insin.woaf.net/code/javascript/logger.html">http://insin.woaf.net/code/javascript/logger.html</a></li>
 	               <li>Dan Allen's Scriptsandbox jsError and Logger.js: 
-					<a href="http://mojavelinux.com/wiki/doku.php?id=scriptsandbox#jserror.js__jserror.php">http://mojavelinux.com/wiki/doku.php?id=scriptsandbox#jserror.js__jserror.php</a><br />
-					Dan Allen also wrote the first odeas of MetaTagLogging which are influenced MetatagAppender:
-					<a href="http://www.mojavelinux.com/blog/archives/2005/01/javascript_logging_via_meta/index.php">http://www.mojavelinux.com/blog/archives/2005/01/javascript_logging_via_meta/index.php</a>
-					</li>
+							<a href="http://mojavelinux.com/wiki/doku.php?id=scriptsandbox#jserror.js__jserror.php">http://mojavelinux.com/wiki/doku.php?id=scriptsandbox#jserror.js__jserror.php</a><br />
+							Dan Allen also wrote the first odeas of MetaTagLogging which are influenced MetatagAppender:
+							<a href="http://www.mojavelinux.com/blog/archives/2005/01/javascript_logging_via_meta/index.php">http://www.mojavelinux.com/blog/archives/2005/01/javascript_logging_via_meta/index.php</a>
+						</li>
 	               <li>Eric Spiegelberg's Log4Ajax: 
-					<a href="http://log4ajax.sourceforge.net/">http://log4ajax.sourceforge.net/</a> and associated article: 
-					<a href="http://today.java.net/pub/a/today/2005/12/13/log4ajax.html">http://today.java.net/pub/a/today/2005/12/13/log4ajax.html</a> </li>
+							<a href="http://log4ajax.sourceforge.net/">http://log4ajax.sourceforge.net/</a> and associated article: 
+							<a href="http://today.java.net/pub/a/today/2005/12/13/log4ajax.html">http://today.java.net/pub/a/today/2005/12/13/log4ajax.html</a> 
+						</li>
 
-					<li>Andre's JSLog: <a href="http://www.earthcode.com/ajax/2005/12/jslog.html">http://www.earthcode.com/ajax/2005/12/jslog.html</a></li>
+						<li>Andre's JSLog: <a href="http://www.earthcode.com/ajax/2005/12/jslog.html">http://www.earthcode.com/ajax/2005/12/jslog.html</a></li>
+						<li>Tim Down's log4javascript: <a href="http://log4javascript.sourceforge.net">http://log4javascript.sourceforge.net</a> 
+							which is very simmilar to this project
+						</li>
 				</ul>
             </section>
             

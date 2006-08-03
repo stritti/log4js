@@ -70,7 +70,7 @@
                 the project. The library is available in two different 
                 archives. It is up to you, if you prefere zip archive or tar.gz 
                 archive. The content is the same. </p>
-            <note label="Preserve Directory Structure"> Extract the archive to a 
+            <note label="Preserve Directory Structure"> <icon src="" alt=""></icon>Extract the archive to a 
             	directory of your choice, but 
                 preserve the directory structure of the archive! </note>
             <p> After extracting the archive, you will find following directory 
@@ -299,7 +299,7 @@
 						title="Example of ConsoleApender"/>
 				</p>
 				<p>
-					<strong>Congratulations, now you are ready to use <em>Log4js</em> in your 
+										<strong>Congratulations, now you are ready to use <em>Log4js</em> in your 
 					project!
 					The further sections you need only to read if you require more details
 					how to configure and use <em>Log4js</em>.</strong>
@@ -434,7 +434,8 @@
             	</p>
             	<note label="Share your Extentions">
             		If it is a feature which is usable also by other developers, please share
-            		your extentions by providing patches.
+            		your extentions by providing patches. See also the <a href="/project/index.html">project
+            			development</a> section.
             	</note>
 				<section id="newAppender">
 					<title>New Appender</title>

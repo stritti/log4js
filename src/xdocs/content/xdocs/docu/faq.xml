@@ -29,18 +29,19 @@
 		<faq id="usage">
 			<question>How can I use Log4js?</question>
 			<answer>
-				<p>Have a look at the <a href="examples.html">examples</a>. You 
+				<p>Have a look at the <a href="/examples.html">examples</a>. You 
 					have only to add log4js.js as script to your HTML pages and 
 					create a loggin object which you are using then in your 
 					code for logging.</p>
-				<p>For more details about the API, have a look at the <a 
-					href="apidocs">API documentation</a>.</p>
+				<p>For more details about the API, have a look at the 
+					<a href="users-guide.html">users guide</a> and the <a 
+					href="ext:log4js/apidocs">API documentation</a>.</p>
 			</answer>
 		</faq>
 		<faq id="license">
 			<question>Under which license is Log4js available?</question>
 			<answer>
-				<p>Log4js is availabel under <a 
+				<p>Log4js is licenced under the <a 
 					href="ext:log4js/license">Apache License Version 
 					2.0</a>.</p>
 			</answer>

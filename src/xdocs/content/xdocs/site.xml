@@ -37,10 +37,6 @@ See http://forrest.apache.org/docs/linking.html for more info
 			wholesite="true" />
 		<examples label="Examples" description="Examples of Log4js" 
 			href="examples.html" />
-		<faq label="FAQ" description="Frequently Asked Questions" 
-			href="faq.html" wholesite="true" />
-		<wiki label="Wiki" description="Wiki of project"
-		   href="ext:log4js/wiki" />
 		<license label="License" description="License" 
 			href="license.html" />
 		<downloads label="Downloads" href="ext:log4js/downloads" />
@@ -62,6 +58,10 @@ See http://forrest.apache.org/docs/linking.html for more info
     <docu label="Documentation" href="docu/" tab="docu">
       <index label="Users Guide" description="The Log4js Users Guide" 
           href="users-guide.html"	wholesite="true" />
+	  <faq label="FAQ" description="Frequently Asked Questions" 
+			href="faq.html" wholesite="true" />
+	  <wiki label="Wiki" description="Wiki of project"
+		   href="ext:log4js/wiki" />          
       <javadocs label="API Documentation" 
           description="Documentation of API" 
           href="ext:log4js/apidocs"/>

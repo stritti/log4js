@@ -26,18 +26,19 @@
               name="Stephan Strittmatter" />
   </authors>
          <meta name="robots">ALL</meta>
-        <meta name="description">Log4js - The Logging API for JavaScript</meta>
-        <meta name="keywords">log4js, logging, javascript, ajax</meta>
+        <meta name="description">Log4js - Documentation of the Logging API</meta>
+        <meta name="keywords">log4js, logging, javascript, ajax, documentation</meta>
   
   </header>
 
   <body>
 
-      <p>Find the documentation in this tab:</p>
+      <p>Find the documentation of <em>Log4js</em> here:</p>
       <ol>
           <li><a href="users-guide.html">Users Guide</a></li>
-          <li><a href="ext:log4js/apidocs" >API-Documentation (JSDoc)</a></li>
+          <li><a href="faq.html" >Frequently Asked Questions</a></li>
           <li><a href="ext:log4js/wiki" >WIKI</a></li>
+          <li><a href="ext:log4js/apidocs" >API-Documentation (JSDoc)</a></li>
       </ol>
 
   </body>
