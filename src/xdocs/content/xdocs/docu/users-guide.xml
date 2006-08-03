@@ -296,7 +296,7 @@
 				</p>
 				<p>
 					<img src="images/users-guide/consoleExample.jpg" alt="Example of ConsoleAppender" 
-						title="Example of ConsoleApender" width="600"/>
+						title="Example of ConsoleApender"/>
 				</p>
 				<p>
 					<strong>Congratulations, now you are ready to use <em>Log4js</em> in your 
