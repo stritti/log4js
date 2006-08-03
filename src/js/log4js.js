@@ -80,6 +80,16 @@ var Log4js = {
 		}
 		return Log4js.loggerMap.get(categoryName); 
 	},
+	
+	/**
+	 * Get the default logger instance.
+	 * @return {Logger} instance of default logger
+	 * @static
+	 */
+	getDefaultLogger: function() {
+		return Log4js.getLogger("[default]"); 
+	},
+	
   	/**
   	 * attatch an observer function to an elements event
   	 * @param element element to attach event
