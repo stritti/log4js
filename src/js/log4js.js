@@ -1149,6 +1149,8 @@ function AjaxAppender(logger, loggingUrl) {
 	 * @private
 	 */
 	this.layout = new XMLLayout();
+	
+	this.httpRequest = this.getXmlHttpRequest();
 }
 
 AjaxAppender.prototype = {
@@ -1221,60 +1223,68 @@ AjaxAppender.prototype = {
 		
 		content += this.layout.getFooter();
 		
-		var httpRequest = this.getXmlHttpRequest();
-		httpRequest.onreadystatechange = function() {
-			log4jsLogger.trace("> AjaxAppender.onReadyStateChanged");
-			
-			if (httpRequest.readyState != 4) { 
-				log4jsLogger.trace("< AjaxAppender.onReadyStateChanged: readyState != 4");
-				return; 
-			}
-			
-			var success = ((typeof httpRequest.status === "undefined") || httpRequest.status === 0 || (httpRequest.status >= 200 && httpRequest.status < 300));
-			
-			if (success) {
-				log4jsLogger.trace("  AjaxAppender.onReadyStateChanged: success");
 
-				//ready sending data
-				this.isInProgress = false;
-
-			} else {
-				var msg = "  AjaxAppender.onReadyStateChanged: XMLHttpRequest request to URL " + this.loggingUrl + " returned status code " + httpRequest.status;
-				log4jsLogger.trace(msg);
-			}
-			
-			log4jsLogger.trace("< AjaxAppender.onReadyStateChanged: readyState == 4");
+		var appender = this;
+		
+		this.httpRequest.onreadystatechange = function() {
+			appender.onReadyStateChanged.call(appender);
 		};
 		
-		httpRequest.open("POST", this.loggingUrl, true);
+		this.httpRequest.open("POST", this.loggingUrl, true);
 		// set the request headers.
-		httpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		this.httpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		//REFERER will be the top-level
 		// URI which may differ from the location of the error if
 		// it occurs in an included .js file
-		httpRequest.setRequestHeader("REFERER", location.href);
- 		httpRequest.setRequestHeader("Content-length", content.length);
-		httpRequest.setRequestHeader("Connection", "close");
-		httpRequest.send(content);
+		this.httpRequest.setRequestHeader("REFERER", location.href);
+ 		this.httpRequest.setRequestHeader("Content-length", content.length);
+		this.httpRequest.setRequestHeader("Connection", "close");
+		this.httpRequest.send(content);
 		
 		var appender = this;
 		
 		window.setTimeout(function(){
-			log4jsLogger.trace("> timeout");
-			httpRequest.onreadystatechange = function(){};
-			httpRequest.abort();
-			httpRequest = null;
+			log4jsLogger.trace("> AjaxAppender.timeout");
+			appender.httpRequest.onreadystatechange = function(){};
+			appender.httpRequest.abort();
+			//this.httpRequest = null;
 			appender.isInProgress = false;
 
 			if(appender.loggingEventMap.length() > 0) {
 				appender.send();
 			}
-			log4jsLogger.trace("< timeout");
+			log4jsLogger.trace("< AjaxAppender.timeout");
 		}, this.timeout);
 		
 		log4jsLogger.trace("> AjaxAppender.send");
 	},
 	
+	/**
+	 * @private
+	 */
+	onReadyStateChanged: function() {
+		log4jsLogger.trace("> AjaxAppender.onReadyStateChanged");
+		var req = this.httpRequest;
+		if (this.httpRequest.readyState != 4) { 
+			log4jsLogger.trace("< AjaxAppender.onReadyStateChanged: readyState " + req.readyState + " != 4");
+			return; 
+		}
+		
+		var success = ((typeof req.status === "undefined") || req.status === 0 || (req.status >= 200 && req.status < 300));
+		
+		if (success) {
+			log4jsLogger.trace("  AjaxAppender.onReadyStateChanged: success");
+
+			//ready sending data
+			this.isInProgress = false;
+
+		} else {
+			var msg = "  AjaxAppender.onReadyStateChanged: XMLHttpRequest request to URL " + this.loggingUrl + " returned status code " + httpRequest.status;
+			log4jsLogger.error(msg);
+		}
+		
+		log4jsLogger.trace("< AjaxAppender.onReadyStateChanged: readyState == 4");		
+	},
 	/**
 	 * Get the XMLHttpRequest object independent of browser.
 	 * @private
