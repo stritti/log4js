@@ -401,7 +401,11 @@ Log4js.Logger = function(name) {
 	
 	// if multiple log objects are instanciated this will only log to the log object that is declared last
 	// can't seem to get the attachEvent method to work correctly
-	window.onerror = this.windowError.bind(this);
+	try {
+		window.onerror = this.windowError.bind(this);
+	} catch (e) {
+		//log4jsLogger.fatal(e);
+	}
 };
 
 Log4js.Logger.prototype = {
@@ -1115,7 +1119,8 @@ function AjaxAppender(logger, loggingUrl) {
 	 * @type boolean
 	 * @private
 	 */
-	this.isInProgress = false;	
+	this.isInProgress = false;
+	
 	/**
 	 * set reference to calling logger
 	 * @type Log4js.Logger
@@ -1253,19 +1258,22 @@ AjaxAppender.prototype = {
 		
 		var appender = this;
 		
-		window.setTimeout(function(){
-			log4jsLogger.trace("> AjaxAppender.timeout");
-			appender.httpRequest.onreadystatechange = function(){};
-			appender.httpRequest.abort();
-			//this.httpRequest = null;
-			appender.isInProgress = false;
-
-			if(appender.loggingEventMap.length() > 0) {
-				appender.send();
-			}
-			log4jsLogger.trace("< AjaxAppender.timeout");
-		}, this.timeout);
-		
+		try {
+			window.setTimeout(function(){
+				log4jsLogger.trace("> AjaxAppender.timeout");
+				appender.httpRequest.onreadystatechange = function(){};
+				appender.httpRequest.abort();
+				//this.httpRequest = null;
+				appender.isInProgress = false;
+	
+				if(appender.loggingEventMap.length() > 0) {
+					appender.send();
+				}
+				log4jsLogger.trace("< AjaxAppender.timeout");
+			}, this.timeout);
+		} catch (e) {
+			log4jsLogger.fatal(e);
+		}
 		log4jsLogger.trace("> AjaxAppender.send");
 	},
 	
@@ -1303,18 +1311,22 @@ AjaxAppender.prototype = {
 		log4jsLogger.trace("> AjaxAppender.getXmlHttpRequest");
 		
 		var httpRequest = false;
-		
-		if (window.XMLHttpRequest) { // Mozilla, Safari, IE7...
-				httpRequest = new XMLHttpRequest();
-			if (httpRequest.overrideMimeType) {
-				httpRequest.overrideMimeType(this.layout.getContentType());
+
+		try {		
+			if (window.XMLHttpRequest) { // Mozilla, Safari, IE7...
+					httpRequest = new XMLHttpRequest();
+				if (httpRequest.overrideMimeType) {
+					httpRequest.overrideMimeType(this.layout.getContentType());
+				}
+			} else if (window.ActiveXObject) { // IE
+				try {
+					httpRequest = new ActiveXObject("Msxml2.XMLHTTP");
+				} catch (e) {
+					httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
+				}
 			}
-		} else if (window.ActiveXObject) { // IE
-			try {
-				httpRequest = new ActiveXObject("Msxml2.XMLHTTP");
-			} catch (e) {
-				httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
-			}
+		} catch (e) {
+			httpRequest = false
 		}
 		
 		if (!httpRequest) {
