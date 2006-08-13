@@ -51,7 +51,7 @@
 	<property name="example.src.dir" value="examples" />
 	<property name="example.webapp.dir" value="${dist.dir}/webapp" />
 	<property name="example.war.name" value="log4js-example-${version}.war" />
-	<property name="log4j.jar" value="${lib.dir}/log4j.jar" />
+	<property name="log4j.jar" value="${lib.dir}/log4j-${tools.log4j.version}.jar" />
 
 	<!-- unit tests -->
 	<property name="src.test.dir" value="src/test" />
@@ -241,9 +241,10 @@
 		<unzip src="${lib.dir}/jsunit${tools.jsunit.version}.zip" dest="${tools.dir}/JSUnit" />
 
 		<get dest="${lib.dir}/jstester-${tools.jstester.version}.jar" usetimestamp="true" ignoreerrors="true" src="http://mesh.dl.sourceforge.net/sourceforge/jstester/jstester-${tools.jsunit.version}.zip" verbose="true" />
+		<get dest="${lib.dir}/jstester-${tools.jstester.version}.jar" usetimestamp="true" ignoreerrors="true" src="http://mesh.dl.sourceforge.net/sourceforge/jstester/jstester-${tools.jsunit.version}.zip" verbose="true" />
 
-		<get dest="${lib.dir}/jsl-${tools.jsl.version}-win32.zip" usetimestamp="true" ignoreerrors="true" src="http://www.javascriptlint.com/download/jsl-${tools.jsl.version}-win32.zip" verbose="true" />
-		<unzip src="${lib.dir}/jsl-${tools.jsl.version}-win32.zip.zip" dest="${tools.dir}/jsl" />
+		<get dest="${lib.dir}/js-${tools.js.version}.jar" usetimestamp="true" ignoreerrors="true" src="http://www.ibiblio.org/maven/log4j/jars/js-${tools.js.version}.jar" verbose="true" />
+		<get dest="${lib.dir}/commons-logging-${tools.commons-logging.version}.jar" usetimestamp="true" ignoreerrors="true" src="http://www.ibiblio.org/maven/log4j/jars/commons-logging-${tools.commons-logging.version}.jar" verbose="true" />
 
 
 		<!-- for API documentation -->
