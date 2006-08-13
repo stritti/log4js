@@ -1917,10 +1917,17 @@ XMLLayout.prototype = {
 	 * @type String
 	 */
 	format: function(loggingEvent) {
+		var useragent = "unknown";
+		try {
+			useragent = navigator.userAgent;
+		} catch(e){
+			useragent = "unknown";
+		}
+		
 		var content = "\t<log4js:event logger=\"";
 		content += loggingEvent.categoryName + "\" level=\"";
 		content += loggingEvent.level.toString() + "\" client=\"";
-		content += navigator.userAgent + "\" referer=\"";
+		content += useragent + "\" referer=\"";
 		content += location.href + "\" timestamp=\"";
 		content += loggingEvent.getFormattedTimestamp() + "\">\n\t\t";
 		content += "<log4js:message><![CDATA[" + loggingEvent.message + "]]></log4js:message>\n";	

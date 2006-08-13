@@ -2,6 +2,10 @@ package de.berlios.log4js.js;
 
 public class LoggerTest extends AbstractLog4jsTestCase {
 
+	public LoggerTest(String name) {
+		super(name);
+	}
+
 	public void testBasics() {
 
 		assertNotNull("Log4js");

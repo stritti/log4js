@@ -4,6 +4,10 @@ package de.berlios.log4js.js;
 public class DateFormatterTest extends AbstractLog4jsTestCase {
 
 	
+	public DateFormatterTest(String name) {
+		super(name);
+	}
+
 	public void testFormatDate() {
 		eval("var dateFormatter = new Log4js.DateFormatter();");
 		
