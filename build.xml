@@ -329,7 +329,7 @@
          ================================= -->
 	<target name="test" depends="compile, compile.test" description="--> Unit tests">
 
-		<junit printsummary="yes">
+		<junit printsummary="yes" >
 			<classpath>
 				<pathelement location="${dist.dir}" />
 				<pathelement path="${dist.dir}" />
@@ -341,7 +341,7 @@
 
 			<formatter type="xml" />
 
-			<batchtest>
+			<batchtest todir="${dist.dir}/reports">
 				<fileset dir="${src.test.java.dir}">
 					<include name="**/AllTests.java" />
 				</fileset>
@@ -352,7 +352,7 @@
 		<mkdir dir="${dist.dir}/reports" />
 
 		<junitreport todir="${dist.dir}/reports">
-			<fileset dir=".">
+			<fileset dir="${dist.dir}/reports">
 				<include name="TEST-*.xml" />
 			</fileset>
 			<report format="frames" todir="${dist.dir}/reports" />
