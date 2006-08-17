@@ -9,7 +9,7 @@ public class ConsoleAppenderTest extends AbstractLog4jsTestCase {
 
 	public void testInterface() {
 		eval("var logger = Log4js.getLogger('ajax');");
-		eval("var appender = new Log4js.ConsoleAppender(true);");
+		eval("var appender = new Log4js.ConsoleAppender();");
 		// eval("ajaxAppender.doAppend(" +
 		// "new Log4js.LoggingEvent('categoryName', " +
 		// "Log4js.Level.DEBUG, 'message', ajaxLogger));");
