@@ -23,38 +23,38 @@
 		<!-- //
 		   var ajaxLog = new Log4js.getLogger("ajaxTest");
 		   ajaxLog.setLevel(Log4js.Level.ALL);
-		   var ajaxAppender = new AjaxAppender(ajaxLog, "./log4j.jsp");
+		   var ajaxAppender = new Log4js.AjaxAppender(ajaxLog, "./log4j.jsp");
 		   ajaxAppender.setThreshold(5);
  		   ajaxLog.addAppender(ajaxAppender);
 
 		   var windowEventLog = new Log4js.getLogger("windowEventTest");
 		   windowEventLog.setLevel(Log4js.Level.ALL);
- 		   windowEventLog.addAppender(new WindowsEventAppender(windowEventLog));
+ 		   windowEventLog.addAppender(new Log4js.WindowsEventAppender(windowEventLog));
 
 		   var fileLog = new Log4js.Logger("fileTest");
 		   fileLog.setLevel(Log4js.Level.ALL);
- 		   fileLog.addAppender(new FileAppender(fileLog, "C:\\log4js.log"));
+ 		   fileLog.addAppender(new Log4js.FileAppender(fileLog, "C:\\log4js.log"));
 		   
 		   var consoleLog = new Log4js.Logger("consoleTest");
 		   consoleLog.setLevel(Log4js.Level.ALL);
- 		   consoleLog.addAppender(new ConsoleAppender(consoleLog, true));
+ 		   consoleLog.addAppender(new Log4js.ConsoleAppender(consoleLog, true));
 		   
 		   var windowLog = new Log4js.getLogger("windowTest"); 
 		   windowLog.setLevel(Log4js.Level.ALL);
- 		   windowLog.addAppender(new ConsoleAppender(windowLog)); //to windowLog to seperate windowLog window
+ 		   windowLog.addAppender(new Log4js.ConsoleAppender(windowLog)); //to windowLog to seperate windowLog window
 		   
 		   var alertLog = new Log4js.Logger("alertTest"); 
 		   alertLog.setLevel(Log4js.Level.ALL);
- 		   alertLog.addAppender(new JSAlertAppender(alertLog));
+ 		   alertLog.addAppender(new Log4js.JSAlertAppender(alertLog));
 
  		   var operaLog = new Log4js.Logger("operaTest"); 
 		   operaLog.setLevel(Log4js.Level.ALL);
-		   var operaAppender = new OperaJSConsoleAppender(operaLog);
+		   var operaAppender = new Log4js.OperaJSConsoleAppender(operaLog);
  		   operaLog.addAppender(operaAppender);
  		   
 		   var mozLog = new Log4js.getLogger("mozillaTest"); 
 		   mozLog.setLevel(Log4js.Level.ALL);
-		   var appender = new MozJSConsoleAppender(mozLog);
+		   var appender = new Log4js.MozJSConsoleAppender(mozLog);
 		  //TODO appender.setLayout(new PatternLayout("%p-> %m"));
  		   mozLog.addAppender(appender);
  		   
@@ -66,8 +66,8 @@
 	function testAjax() {
 		var logger = Log4js.getLogger("testlogger");
 		logger.setLevel(Log4js.Level.ALL);
-		//logger.addAppender(new ConsoleAppender(logger));
-		logger.addAppender(new AjaxAppender(logger, "./log4j.jsp?action=log"));
+		//logger.addAppender(new Log4js.ConsoleAppender(logger));
+		logger.addAppender(new Log4js.AjaxAppender(logger, "./log4j.jsp"));
 
 		for(var i = 0; i <5 ; i++) {		
 			logger.info('an info ' + i);
@@ -127,7 +127,10 @@
 			<input type="button" name="info" value="Info" onclick="ajaxLog.info('I was infoed!');return false;" />
 			<input type="button" name="warn" value="Warn" onclick="ajaxLog.warn('I was warned!');return false;" />
 			<input type="button" name="error" value="Error" onclick="ajaxLog.error('I was errored!');return false;" />
-			<input type="button" name="fatal" value="Fatal" onclick="ajaxLog.fatal('I was fataled!');return false;" />
+			<input type="button" name="fatal" value="Fatal" onclick="ajaxLog.fatal('I was fataled!');return false;" />			
+			<br />
+			Sending a bigger number of logs: <input type="button" name="trace" value="ajaxTest" onclick="testAjax();return false;" />
+
 		</fieldset>
 
 		<fieldset><legend>Local File Logging (Internet Explorer only) (C:\log4js.log)</legend>
@@ -166,10 +169,6 @@
 			<input type="button" name="warn" value="Warn" onclick="alertLog.warn('I was warned!');return false;" />
 			<input type="button" name="error" value="Error" onclick="alertLog.error('I was errored!');return false;" />
 			<input type="button" name="fatal" value="Fatal" onclick="alertLog.fatal('I was fataled!');return false;" />
-			
-			<br />
-			Sending a bigger number of logs: <input type="button" name="trace" value="ajaxTest" onclick="testAjax();return false;" />
-			
 		</fieldset>
 		
 		<fieldset><legend>Mozilla JavaScript Logging</legend>
