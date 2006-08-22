@@ -1137,7 +1137,7 @@ Log4js.ConsoleAppender.prototype = (new Log4js.Appender()).extend( {
 Log4js.MetatagAppender = function() {
 	this.currentLine = 0;
 };
-Log4js.MetatagAppender.prototype = new Log4js.Appender {
+Log4js.MetatagAppender.prototype = (new Log4js.Appender()).extend( {
 	/**
 	 * @param loggingEvent event to be logged
 	 * @see Log4js.Appender#doAppend
@@ -1181,7 +1181,7 @@ Log4js.MetatagAppender.prototype = new Log4js.Appender {
 	 toString: function() {
 	 	return "MetatagAppender"; 
 	 }
-};
+});
 
 /**
  * AJAX Appender sending {@link Log4js.LoggingEvent}s asynchron via 
@@ -1456,7 +1456,7 @@ Log4js.FileAppender = function( file) {
 	}
 };
 
-Log4js.FileAppender.prototype = new Log4js.Appender {
+Log4js.FileAppender.prototype = (new Log4js.Appender()).extend( {
 	/**
 	 * @param loggingEvent event to be logged
 	 * @see Log4js.Appender#doAppend
@@ -1513,7 +1513,7 @@ Log4js.FileAppender.prototype = new Log4js.Appender {
 	 toString: function() {
 	 	return "FileAppender[file=" + this.file + "]"; 
 	 }
-};
+});
 
 /**
  * Windows Event Appender writes the logs to the Windows Event log.
@@ -1540,7 +1540,7 @@ Log4js.WindowsEventAppender = function(logger) {
 	} catch(e) {}
 };
 
-Log4js.WindowsEventAppender.prototype = new Log4js.Appender {
+Log4js.WindowsEventAppender.prototype = (new Log4js.Appender()).extend( {
 	/**
 	 * @param loggingEvent event to be logged
 	 * @see Log4js.Appender#doAppend
@@ -1590,7 +1590,7 @@ Log4js.WindowsEventAppender.prototype = new Log4js.Appender {
 	 toString: function() {
 	 	return "WindowsEventAppender"; 
 	 } 
-};
+});
 
 /**
  * JS Alert Appender writes the logs to the JavaScript alert dialog box
@@ -1609,7 +1609,7 @@ Log4js.JSAlertAppender = function() {
 	this.layout = new Log4js.SimpleLayout();
 };
 
-Log4js.JSAlertAppender.prototype = new Log4js.Appender {
+Log4js.JSAlertAppender.prototype = (new Log4js.Appender()).extend( {
 	/** 
 	 * @see Log4js.Appender#doAppend
 	 */
@@ -1635,7 +1635,7 @@ Log4js.JSAlertAppender.prototype = new Log4js.Appender {
 	 toString: function() {
 	 	return "JSAlertAppender"; 
 	 }	
-};
+});
 
 /**
  * Appender writes the logs to the JavaScript console of Mozilla browser
@@ -1653,7 +1653,7 @@ Log4js.MozJSConsoleAppender = function() {
 	this.scriptError = Components.classes["@mozilla.org/scripterror;1"].createInstance(Components.interfaces.nsIScriptError);
 };
 
-Log4js.MozJSConsoleAppender.prototype = new Log4js.Appender {
+Log4js.MozJSConsoleAppender.prototype = (new Log4js.Appender()).extend( {
 	/** 
 	 * @see Log4js.Appender#doAppend
 	 */
@@ -1707,7 +1707,7 @@ Log4js.MozJSConsoleAppender.prototype = new Log4js.Appender {
 		
 		return retval;		
 	}
-};
+});
 
 /**
  * Appender writes the logs to the JavaScript console of Opera browser
@@ -1721,7 +1721,7 @@ Log4js.OperaJSConsoleAppender = function() {
 	this.layout = new Log4js.SimpleLayout();
 };
 
-Log4js.OperaJSConsoleAppender.prototype = new Log4js.Appender {
+Log4js.OperaJSConsoleAppender.prototype = (new Log4js.Appender()).extend( {
 	/** 
 	 * @see Log4js.Appender#doAppend
 	 */
@@ -1747,7 +1747,7 @@ Log4js.OperaJSConsoleAppender.prototype = new Log4js.Appender {
 	 toString: function() {
 	 	return "OperaJSConsoleAppender"; 
 	 }
-};
+});
 
 /**
  * Appender writes the logs to the JavaScript console of Safari browser
@@ -1761,7 +1761,7 @@ Log4js.SafariJSConsoleAppender = function() {
 	this.layout = new Log4js.SimpleLayout();
 };
 
-Log4js.SafariJSConsoleAppender.prototype = new Log4js.Appender {
+Log4js.SafariJSConsoleAppender.prototype = (new Log4js.Appender()).extend( {
 	/** 
 	 * @see Log4js.Appender#doAppend
 	 */
@@ -1787,7 +1787,7 @@ Log4js.SafariJSConsoleAppender.prototype = new Log4js.Appender {
 	 toString: function() {
 	 	return "SafariJSConsoleAppender"; 
 	 }
-};
+});
 
 /**
  * SimpleLayout consists of the level of the log statement, followed by " - " 
@@ -1804,7 +1804,7 @@ Log4js.SimpleLayout = function() {
 	this.LINE_SEP_LEN = 1;
 };
 
-Log4js.SimpleLayout.prototype = new Log4js.Layout {
+Log4js.SimpleLayout.prototype = (new Log4js.Layout()).extend( {
 	/** 
 	 * Implement this method to create your own layout format.
 	 * @param {Log4js.LoggingEvent} loggingEvent loggingEvent to format
@@ -1836,7 +1836,7 @@ Log4js.SimpleLayout.prototype = new Log4js.Layout {
 	getFooter: function() {
 		return "";
 	}
-};
+});
 	
 /**
  * BasicLayout is a simple layout for storing the loggs. The loggs are stored
@@ -1853,7 +1853,7 @@ Log4js.BasicLayout = function() {
 	this.LINE_SEP  = "\n";
 };
 
-Log4js.BasicLayout.prototype = new Log4js.Layout {
+Log4js.BasicLayout.prototype = (new Log4js.Layout()).extend( {
 	/** 
 	 * Implement this method to create your own layout format.
 	 * @param {Log4js.LoggingEvent} loggingEvent loggingEvent to format
@@ -1885,7 +1885,7 @@ Log4js.BasicLayout.prototype = new Log4js.Layout {
 	getFooter: function() {
 		return "";
 	}
-};
+});
 
 /**
  * HtmlLayout write the logs in Html format.
@@ -1896,7 +1896,7 @@ Log4js.BasicLayout.prototype = new Log4js.Layout {
  */
 Log4js.HtmlLayout = function() {return;};
 
-Log4js.HtmlLayout.prototype = new Log4js.Layout {
+Log4js.HtmlLayout.prototype = (new Log4js.Layout()).extend( {
 	/** 
 	 * Implement this method to create your own layout format.
 	 * @param {Log4js.LoggingEvent} loggingEvent loggingEvent to format
@@ -1947,7 +1947,7 @@ Log4js.HtmlLayout.prototype = new Log4js.Layout {
 		}	
 		return style;
 	}
-};
+});
 
 /**
  * XMLLayout write the logs in XML format.
@@ -1962,7 +1962,7 @@ Log4js.HtmlLayout.prototype = new Log4js.Layout {
  * @author Stephan Strittmatter
  */
 Log4js.XMLLayout = function(){return;};
-Log4js.XMLLayout.prototype = new Log4js.Layout {
+Log4js.XMLLayout.prototype = (new Log4js.Layout()).extend( {
 	/** 
 	 * Implement this method to create your own layout format.
 	 * @param {Log4js.LoggingEvent} loggingEvent loggingEvent to format
@@ -2056,7 +2056,7 @@ Log4js.XMLLayout.prototype = new Log4js.Layout {
 	escapeCdata: function(str) {
 		return str.replace(/\]\]>/, "]]>]]&gt;<![CDATA[");
 	}
-};
+});
 
 /**
  * JSONLayout write the logs in JSON format.
@@ -2066,7 +2066,7 @@ Log4js.XMLLayout.prototype = new Log4js.Layout {
  * @author Stephan Strittmatter
  */
 Log4js.JSONLayout = function() {return;};
-Log4js.JSONLayout.prototype = new Log4js.Layout {
+Log4js.JSONLayout.prototype = (new Log4js.Layout()).extend( {
 	/** 
 	 * Implement this method to create your own layout format.
 	 * @param {Log4js.LoggingEvent} loggingEvent loggingEvent to format
@@ -2098,7 +2098,7 @@ Log4js.JSONLayout.prototype = new Log4js.Layout {
 	getFooter: function() {
 		return "";
 	}
-};
+});
 
 /** 
  * PatternLayout 
@@ -2117,7 +2117,7 @@ Log4js.PatternLayout.ISO8601_DATEFORMAT = "yyyy-MM-dd HH:mm:ss,SSS";
 Log4js.PatternLayout.DATETIME_DATEFORMAT = "dd MMM YYYY HH:mm:ss,SSS";
 Log4js.PatternLayout.ABSOLUTETIME_DATEFORMAT = "HH:mm:ss,SSS";
 
-Log4js.PatternLayout.prototype = new Log4js.Layout {
+Log4js.PatternLayout.prototype = (new Log4js.Layout()).extend( {
 	/** 
 	 * Returns the content type output by this layout. 
 	 * @return "text/plain".
@@ -2245,7 +2245,7 @@ Log4js.PatternLayout.prototype = new Log4js.Layout {
 		}
 		return formattedString;
 	}
-};
+});
 
 /**
  * @private
