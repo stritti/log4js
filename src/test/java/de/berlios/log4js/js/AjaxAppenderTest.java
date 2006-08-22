@@ -17,7 +17,7 @@ public class AjaxAppenderTest extends AbstractLog4jsTestCase {
 //				"Log4js.Level.DEBUG, 'message', ajaxLogger));");
 		eval("appender.doClear();");
 		eval("appender.setLayout(new Log4js.SimpleLayout());");
-
+		eval("appender.setLogger(ajaxLogger);");
 	}
 	
 	public void testSetThreshold() {
