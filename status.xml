@@ -42,11 +42,21 @@
        <release version="0.3" date="unreleased">
             <notes>
                 <section>
-                    <title></title>
+                    <title>Improved Version</title>
                     <p>
+                    	Many changes are done since last release. Have a look on the
+                    	action list.
+                    </p>
+                    <p>
+                    	The biggest change is the change of API to have Appender and Layout 
+                    	classes more oject oriented and be part og Log4js object.
+                    	For example instead of 
+                    	<code>new ConsoleAppender()</code> use now 
+                    	<code>new Log4js.ConsoleAppender()</code>.
                     </p>
                 </section>
             </notes>
+            
             <action dev="ssr" type="add" context="code" importance="medium"> 
                 FileAppender supports now also Mozilla Browser. 
                 Many thanks for this patch to Nicolas Justin and Gregory Kokanosky of 
@@ -71,9 +81,22 @@
             <action dev="ssr" type="add" context="docs" importance="medium" > 
                 FAQs extended.
             </action>   
-            <action dev="ssr" type="fix" content="code" importance="high" fixes-bug="008065">
+            <action dev="ssr" type="fix" context="code" importance="high" fixes-bug="008065">
             	AJAXappender fixed for sending several log entries.
             </action>         
+            <action dev="ssr" type="add" context="code" importance="medium">
+            	Unit tests on basis of jsTester added.
+            </action>
+            <action dev="ssr" type="add" context="code" importance="medium" >
+            	PatternLayout implemented.
+            </action>  
+            <action dev="ssr" type="add" context="docs" importance="medium" >
+            	Users Guide created.
+            </action>  
+            <action dev="ssr" type="update" context="code" importance="high" >
+            	Log4js refactored to be more object oriented. Also new hierachical structure
+            	introduced for appenders and layouts to be part of Log4js object.
+            </action>  
        </release>
 
        <release version="0.2" date="2006-03-17">
