@@ -57,10 +57,10 @@
                 </section>
             </notes>
             
-            <action dev="ssr" type="add" context="code" importance="medium"> 
+            <action dev="ssr" type="add" context="code" importance="medium" due-to="Nicolas Justin and Gregory Kokanosky"> 
                 FileAppender supports now also Mozilla Browser. 
                 Many thanks for this patch to Nicolas Justin and Gregory Kokanosky of 
-                <a href="http://www.idealx.com">www.idealx.com</a>
+                <link href="http://www.idealx.com">ttp://www.idealx.com</link>
             </action>
            <action dev="ssr" type="fix" context="code" importance="medium" due-to="Sven.Space"
            	fixes-bug="008003"> 
@@ -82,8 +82,11 @@
                 FAQs extended.
             </action>   
             <action dev="ssr" type="fix" context="code" importance="high" fixes-bug="008065">
-            	AJAXappender fixed for sending several log entries.
-            </action>         
+            	AJAXappender fixed for sending several log entries in respect of response delay.
+            </action>  
+            <action dev="ssr" type="add" context="docs" importance="medium" >
+            	<link href="ext:log4js/wiki">Wiki</link> created for improved community.
+            </action>                     
             <action dev="ssr" type="add" context="code" importance="medium">
             	Unit tests on basis of jsTester added.
             </action>
@@ -91,7 +94,7 @@
             	PatternLayout implemented.
             </action>  
             <action dev="ssr" type="add" context="docs" importance="medium" >
-            	Users Guide created.
+            	Users Guide created and published.
             </action>  
             <action dev="ssr" type="update" context="code" importance="high" >
             	Log4js refactored to be more object oriented. Also new hierachical structure
