@@ -11,7 +11,7 @@ public class AjaxAppenderTest extends AbstractLog4jsTestCase {
 	public void testInterface() {
 		eval("var ajaxLogger = Log4js.getLogger('ajax');");
 		eval("var appender = new Log4js.AjaxAppender(ajaxLogger, '/log4js');");
-		assertExpresionEquals("appender instanceof Log4js.Appender", "true");
+		assertExpressionEquals("appender instanceof Log4js.Appender", "true");
 		//		eval("appender.doAppend(" +
 //				"new Log4js.LoggingEvent('categoryName', " +
 //				"Log4js.Level.DEBUG, 'message', ajaxLogger));");

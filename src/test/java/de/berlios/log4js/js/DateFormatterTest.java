@@ -7,7 +7,7 @@ public class DateFormatterTest extends AbstractLog4jsTestCase {
 	}
 
 	public void testConstant() {
-		assertExpresionEquals("Log4js.DateFormatter.DEFAULT_DATE_FORMAT",
+		assertExpressionEquals("Log4js.DateFormatter.DEFAULT_DATE_FORMAT",
 				"'yyyy-MM-ddThh:mm:ssO'");
 
 		eval("var dateFormatter = new Log4js.DateFormatter();");
@@ -18,7 +18,7 @@ public class DateFormatterTest extends AbstractLog4jsTestCase {
 
 		eval("var testDate = new Date(2006, 00, 02, 03, 04, 06, 07)");
 
-		assertExpresionEquals("dateFormatter.formatDate(testDate, 'yyyy')",
+		assertExpressionEquals("dateFormatter.formatDate(testDate, 'yyyy')",
 				"'2006'");
 	}
 
@@ -27,7 +27,7 @@ public class DateFormatterTest extends AbstractLog4jsTestCase {
 
 		eval("var testDate = new Date(2006, 00, 02, 03, 04, 06, 07)");
 
-		assertExpresionEquals("dateFormatter.formatDate(testDate, 'MM')",
+		assertExpressionEquals("dateFormatter.formatDate(testDate, 'MM')",
 				"'01'");
 	}
 
@@ -37,7 +37,7 @@ public class DateFormatterTest extends AbstractLog4jsTestCase {
 
 		eval("var testDate = new Date(2006, 00, 02, 03, 04, 06, 07)");
 
-		assertExpresionEquals("dateFormatter.formatDate(testDate, 'dd')",
+		assertExpressionEquals("dateFormatter.formatDate(testDate, 'dd')",
 				"'02'");
 	}
 
@@ -47,7 +47,7 @@ public class DateFormatterTest extends AbstractLog4jsTestCase {
 
 		eval("var testDate = new Date(2006, 00, 02, 03, 04, 06, 07)");
 
-		assertExpresionEquals("dateFormatter.formatDate(testDate, 'hh')",
+		assertExpressionEquals("dateFormatter.formatDate(testDate, 'hh')",
 				"'03'");
 	}
 
@@ -56,7 +56,7 @@ public class DateFormatterTest extends AbstractLog4jsTestCase {
 		eval("var dateFormatter = new Log4js.DateFormatter();");
 
 		eval("var testDate = new Date(2006, 00, 02, 03, 04, 06, 07)");
-		assertExpresionEquals("dateFormatter.formatDate(testDate, 'mm')",
+		assertExpressionEquals("dateFormatter.formatDate(testDate, 'mm')",
 				"'04'");
 	}
 
@@ -66,7 +66,7 @@ public class DateFormatterTest extends AbstractLog4jsTestCase {
 
 		eval("var testDate = new Date(2006, 00, 02, 03, 04, 06, 07)");
 
-		assertExpresionEquals("dateFormatter.formatDate(testDate, 'ss')",
+		assertExpressionEquals("dateFormatter.formatDate(testDate, 'ss')",
 				"'06'");
 
 	}
@@ -77,32 +77,32 @@ public class DateFormatterTest extends AbstractLog4jsTestCase {
 
 		eval("var testDate = new Date(2006, 00, 02, 03, 04, 06, 07)");
 
-		assertExpresionEquals("dateFormatter.formatDate(testDate, 'O')",
+		assertExpressionEquals("dateFormatter.formatDate(testDate, 'O')",
 				"'+0100'");
 	}
 
 	public void testFormatDateDefault() {
-		assertExpresionEquals("Log4js.DateFormatter.DEFAULT_DATE_FORMAT",
+		assertExpressionEquals("Log4js.DateFormatter.DEFAULT_DATE_FORMAT",
 				"'yyyy-MM-ddThh:mm:ssO'");
 
 		eval("var dateFormatter = new Log4js.DateFormatter();");
 
 		eval("var testDate = new Date(2006, 00, 02, 03, 04, 06, 07)");
 
-		assertExpresionEquals("dateFormatter.formatDate(testDate, "
+		assertExpressionEquals("dateFormatter.formatDate(testDate, "
 				+ "Log4js.DateFormatter.DEFAULT_DATE_FORMAT)",
 				"'2006-01-02T03:04:06+0100'");
 
 	}
 
 	public void testFormatDate() {
-		assertExpresionEquals("Log4js.DateFormatter.DEFAULT_DATE_FORMAT",
+		assertExpressionEquals("Log4js.DateFormatter.DEFAULT_DATE_FORMAT",
 				"'yyyy-MM-ddThh:mm:ssO'");
 
 		eval("var dateFormatter = new Log4js.DateFormatter();");
 
 		eval("var testDate = new Date(2006, 00, 02, 03, 04, 06, 07)");
-		assertExpresionEquals(
+		assertExpressionEquals(
 				"dateFormatter.formatDate(testDate, 'yyyy-MM-dd hh:mm:ss')",
 				"'2006-01-02 03:04:06'");
 	}
