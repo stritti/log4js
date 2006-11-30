@@ -38,11 +38,4 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.eclipse.wst.common.project.facet.core.nature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>WEB-ROOT</name>
-			<type>2</type>
-			<location>D:/Projekt/ssr/log4js/examples</location>
-		</link>
-	</linkedResources>
 </projectDescription>
