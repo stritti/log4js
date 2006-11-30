@@ -169,8 +169,8 @@
          - - - - - - - - - - - - - - - - - -->
 	<target name="compile" depends="init, jslint">
 		<mkdir dir="${dist.dir}/lib" />
-		<exec executable="perl" output="${dist.dir}/lib/log4js-lib.js">
-			<arg line="-Tw ${tools.dir}/jsjam/jsjam.pl --quiet --keep-globals --keep-identifiers ${src.js.dir}/log4js.js" />
+		<exec executable="perl" output="${dist.dir}/lib/log4js-lib.js" failonerror="false">
+			<arg line="-Tw ${tools.dir}/jsjam.pl --quiet --keep-globals --keep-identifiers ${src.js.dir}/log4js.js" />
 		</exec>
 	</target>
 
@@ -218,7 +218,7 @@
           target: download-dependencies                      
          - - - - - - - - - - - - - - - - - -->
 	<target name="download-dependencies" depends="init">
-		<!--		<setproxy proxyhost="proxy" proxyport="80" />-->
+				<!--setproxy proxyhost="proxy" proxyport="80" /-->
 
 		<description>
 	          To use this Maven-like freedom with respect to dependency setup,
@@ -234,17 +234,18 @@
 		</description>
 
 		<!-- for "compile" -->
-		<get dest="${tools.dir}/jsjam/jsjam.pl" usetimestamp="true" ignoreerrors="true" src="http://www.anvilon.com/software/download/jsjam" />
+		<get dest="${tools.dir}/jsjam.pl" usetimestamp="true" ignoreerrors="true" src="http://www.anvilon.com/software/download/jsjam" />
 
 		<!-- unit testing -->
+		<get dest="${lib.dir}/junit-${tools.junit.version}.jar" usetimestamp="true" ignoreerrors="true" src="http://www.ibiblio.org/maven/junit/jars/junit-${tools.junit.version}.jar" verbose="true" />
+		
 		<get dest="${lib.dir}/jsunit${tools.jsunit.version}.zip" usetimestamp="true" ignoreerrors="true" src="http://mesh.dl.sourceforge.net/sourceforge/jsunit/jsunit${tools.jsunit.version}.zip" verbose="true" />
 		<unzip src="${lib.dir}/jsunit${tools.jsunit.version}.zip" dest="${tools.dir}/JSUnit" />
+		
+		<get dest="${lib.dir}/jstester-${tools.jstester.version}.jar" usetimestamp="true" ignoreerrors="true" src="http://switch.dl.sourceforge.net/sourceforge/jstester/jstester-${tools.jstester.version}.jar" verbose="true" />
 
-		<get dest="${lib.dir}/jstester-${tools.jstester.version}.jar" usetimestamp="true" ignoreerrors="true" src="http://mesh.dl.sourceforge.net/sourceforge/jstester/jstester-${tools.jsunit.version}.zip" verbose="true" />
-		<get dest="${lib.dir}/jstester-${tools.jstester.version}.jar" usetimestamp="true" ignoreerrors="true" src="http://mesh.dl.sourceforge.net/sourceforge/jstester/jstester-${tools.jsunit.version}.zip" verbose="true" />
-
-		<get dest="${lib.dir}/js-${tools.js.version}.jar" usetimestamp="true" ignoreerrors="true" src="http://www.ibiblio.org/maven/log4j/jars/js-${tools.js.version}.jar" verbose="true" />
-		<get dest="${lib.dir}/commons-logging-${tools.commons-logging.version}.jar" usetimestamp="true" ignoreerrors="true" src="http://www.ibiblio.org/maven/log4j/jars/commons-logging-${tools.commons-logging.version}.jar" verbose="true" />
+		<get dest="${lib.dir}/js-${tools.js.version}.jar" usetimestamp="true" ignoreerrors="true" src="http://www.ibiblio.org/maven/rhino/jars/js-${tools.js.version}.jar" verbose="true" />
+		<get dest="${lib.dir}/commons-logging-${tools.commons-logging.version}.jar" usetimestamp="true" ignoreerrors="true" src="http://www.ibiblio.org/maven/commons-logging/jars/commons-logging-${tools.commons-logging.version}.jar" verbose="true" />
 
 
 		<!-- for API documentation -->
