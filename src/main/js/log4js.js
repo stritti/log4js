@@ -1122,7 +1122,7 @@ Log4js.ConsoleAppender.prototype = (new Log4js.Appender()).extend( {
 	 * toString
 	 */
 	 toString: function() {
-	 	return "ConsoleAppender[inline=" + this.inline + "]"; 
+	 	return "Log4js.ConsoleAppender[inline=" + this.inline + "]"; 
 	 }
 }); 
 
@@ -1179,7 +1179,7 @@ Log4js.MetatagAppender.prototype = (new Log4js.Appender()).extend( {
 	 * toString
 	 */
 	 toString: function() {
-	 	return "MetatagAppender"; 
+	 	return "Log4js.MetatagAppender"; 
 	 }
 });
 
@@ -1420,7 +1420,7 @@ Log4js.AjaxAppender.prototype = (new Log4js.Appender()).extend( {
 	 * toString
 	 */
 	 toString: function() {
-	 	return "AjaxAppender[loggingUrl=" + this.loggingUrl + ", threshold=" + this.threshold + "]"; 
+	 	return "Log4js.AjaxAppender[loggingUrl=" + this.loggingUrl + ", threshold=" + this.threshold + "]"; 
 	 }
 });
 
@@ -1511,7 +1511,7 @@ Log4js.FileAppender.prototype = (new Log4js.Appender()).extend( {
 	 * toString
 	 */
 	 toString: function() {
-	 	return "FileAppender[file=" + this.file + "]"; 
+	 	return "Log4js.FileAppender[file=" + this.file + "]"; 
 	 }
 });
 
@@ -1588,7 +1588,7 @@ Log4js.WindowsEventAppender.prototype = (new Log4js.Appender()).extend( {
 	 * toString
 	 */
 	 toString: function() {
-	 	return "WindowsEventAppender"; 
+	 	return "Log4js.WindowsEventAppender"; 
 	 } 
 });
 
@@ -1633,7 +1633,7 @@ Log4js.JSAlertAppender.prototype = (new Log4js.Appender()).extend( {
 	 * toString
 	 */
 	 toString: function() {
-	 	return "JSAlertAppender"; 
+	 	return "Log4js.JSAlertAppender"; 
 	 }	
 });
 
@@ -1679,7 +1679,7 @@ Log4js.MozJSConsoleAppender.prototype = (new Log4js.Appender()).extend( {
 	 * toString
 	 */
 	 toString: function() {
-	 	return "MozJSConsoleAppender"; 
+	 	return "Log4js.MozJSConsoleAppender"; 
 	 },
 	 
 	/**
@@ -1745,7 +1745,7 @@ Log4js.OperaJSConsoleAppender.prototype = (new Log4js.Appender()).extend( {
 	 * toString
 	 */
 	 toString: function() {
-	 	return "OperaJSConsoleAppender"; 
+	 	return "Log4js.OperaJSConsoleAppender"; 
 	 }
 });
 
@@ -1785,7 +1785,7 @@ Log4js.SafariJSConsoleAppender.prototype = (new Log4js.Appender()).extend( {
 	 * toString
 	 */
 	 toString: function() {
-	 	return "SafariJSConsoleAppender"; 
+	 	return "Log4js.SafariJSConsoleAppender"; 
 	 }
 });
 
