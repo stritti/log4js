@@ -89,7 +89,7 @@
 
 
 
-<!ELEMENT log4js:event (log4js:message, log4j:throwable?) >
+<!ELEMENT log4js:event (log4js:message, log4js:throwable?) >
 
 <!-- The timestamp format is application dependent. -->
 <!ATTLIST log4js:event
