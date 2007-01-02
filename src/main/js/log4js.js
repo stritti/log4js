@@ -88,9 +88,6 @@ var Log4js = {
   	version: "0.3",
 
 	applicationStartDate: new Date(),
-	
-	uniqueId: "log4javascript_" + this.applicationStartDate.getTime() + "_" +
-		Math.floor(Math.random() * 100000000),
 		
 	/**  
 	 * Hashtable of loggers
