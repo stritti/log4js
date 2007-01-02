@@ -44,9 +44,10 @@
 	<property name="xdoc.dir" value="${src.dir}/xdocs" />
 
 	<!-- build properties -->
-	<property name="dist.dir" value="build/classes" />
+	<property name="dist.dir" value="build" />
 	<property name="dist.docs.dir" value="${dist.dir}/docs" />
-
+	<property name="dist.reports.dir" value="${dist.dir}/reports" />
+	
 	<!-- example properties -->
 	<property name="example.src.dir" value="examples" />
 	<property name="example.webapp.dir" value="${dist.dir}/webapp" />
@@ -57,7 +58,8 @@
 	<property name="src.test.dir" value="src/test" />
 	<property name="src.test.java.dir" value="${src.test.dir}/java" />
 	<property name="src.test.js.dir" value="${src.test.dir}/js" />
-
+	<property name="classes.test.java.dir" value="${dist.dir}/test/classes" />
+	
 	<!-- FORREST_HOME must be set as an environment variable -->
 	<property name="forrest.home" value="${env.FORREST_HOME}" />
 	<property name="project.site-dir" value="${dist.dir}/site" />
@@ -180,14 +182,14 @@
 	<target name="doc.api" description="generate the API doc" depends="init">
 		<property name="apidoc.dir" value="${dist.dir}/docs/api" />
 
-		<echo>Gererate JSDoc to dir ${apidoc.dir}</echo>
+		<echo>Gererate JSDoc to dir ${apidoc.dir}...</echo>
 		<mkdir dir="${apidoc.dir}" />
 
 		<property name="footer" value="log4js - Logging API for JavaScript" />
 		<property name="logo" value="${basedir}/logo/1.0/exports/1.0_70px.jpg" />
 
 		<exec executable="perl">
-			<arg line="${tools.dir}/JSDoc/jsdoc.pl -r &quot;${src.dir}/js&quot; -d &quot;${apidoc.dir}&quot; -project-name &quot;${ant.project.name} ${version}&quot; -page-footer &quot;${footer}&quot;  -logo &quot;${logo}&quot;" />
+			<arg line="${tools.dir}/JSDoc/JSDoc-${tools.jsdoc.version}/jsdoc.pl -r &quot;${src.dir}/js&quot; -d &quot;${apidoc.dir}&quot; -project-name &quot;${ant.project.name} ${version}&quot; -page-footer &quot;${footer}&quot;  -logo &quot;${logo}&quot;" />
 		</exec>
 	</target>
 
@@ -199,6 +201,8 @@
 		<exec executable="${basedir}/${tools.dir}/jsl/jsl.exe" resultproperty="${jslint.result}">
 			<arg line="conf ${tools.dir}/jsl/jsl.conf process ${src.js.dir}/*.js" />
 		</exec>
+		
+		<echo message="${jslint.result}" />
 	</target>
 
 	<target name="doc" depends="doc.api" description="generate documentation">
@@ -249,9 +253,15 @@
 
 
 		<!-- for API documentation -->
-		<get dest="${lib.dir}/JSDoc-${tools.jsdoc.version}.tgz" usetimestamp="true" ignoreerrors="true" src="http://mesh.dl.sourceforge.net/sourceforge/jsdoc/JSDoc-${tools.jsdoc.version}.tgz" verbose="true" />
+		<get dest="${lib.dir}/JSDoc-${tools.jsdoc.version}.tgz" usetimestamp="true" ignoreerrors="true" src="http://mesh.dl.sourceforge.net/sourceforge/jsdoc/JSDoc-${tools.jsdoc.version}.tgz" verbose="true" />	
+		<mkdir dir="${tools.dir}/JSDoc" />
+		<untar compression="gzip" src="${lib.dir}/JSDoc-${tools.jsdoc.version}.tgz" dest="${tools.dir}/JSDoc" />
 
-		<gunzip src="${lib.dir}/JSDoc-${tools.jsdoc.version}.tgz" dest="${tools.dir}/JSDoc" />
+		<!-- install HTML-Template via CPAN -->
+		<exec executable="perl">
+			<arg line="-MCPAN -e 'install HTML::Template'" />
+		</exec>
+		
 		<!--
 		<get dest="${lib.dir}/apache-forrest.zip" usetimestamp="true" ignoreerrors="true" src="http://www.artfiles.org/apache.org/forrest/apache-forrest-0.7.zip" />
 		<unzip src="${lib.dir}/apache-forrest.zip" dest="${tools.dir}/apache-forrest" />
@@ -282,6 +292,11 @@
 
 		</exec>
 
+		<echo>Copy robots.txt into the site...</echo>
+		<copy todir="${project.site-dir}" file="src/xdocs/content/xdocs/robots.txt">
+		
+		</copy>
+			
 		<mkdir dir="${project.site-dir}/apidocs" />
 
 		<echo>Copy api-doc into the site...</echo>
@@ -290,7 +305,7 @@
 				<exclude name="*.bak" />
 			</fileset>
 		</copy>
-
+		
 		<echo>Copy example into the site...</echo>
 		<copy tofile="${project.site-dir}/examples.html" file="${example.src.dir}/index.html" overwrite="true" />
 
@@ -317,7 +332,8 @@
           target: compile.test              
          ================================= -->
 	<target name="compile.test" depends="init" description="--> compiles test clases">
-		<javac srcdir="${src.test.java.dir}" destdir="${dist.dir}">
+		<mkdir dir="${classes.test.java.dir}" />
+		<javac srcdir="${src.test.java.dir}" destdir="${classes.test.java.dir}">
 			<classpath>
 				<fileset dir="${lib.dir}">
 					<include name="*.jar" />
@@ -330,11 +346,13 @@
           target: test              
          ================================= -->
 	<target name="test" depends="compile, compile.test" description="--> Unit tests">
-
+		<mkdir dir="${dist.reports.dir}" />
+		
 		<junit printsummary="yes" >
 			<classpath>
 				<pathelement location="${dist.dir}" />
-				<pathelement path="${dist.dir}" />
+				<pathelement path="${dist.dir}/classes" />
+				<pathelement path="${classes.test.java.dir}" />
 				<pathelement path="${src.js.dir}" />
 				<fileset dir="${lib.dir}">
 					<include name="*.jar" />
@@ -342,22 +360,20 @@
 			</classpath>
 
 			<formatter type="xml" />
-
-			<batchtest todir="${dist.dir}/reports">
+			
+			<batchtest todir="${dist.reports.dir}">
 				<fileset dir="${src.test.java.dir}">
-					<include name="**/AllTests.java" />
+					<include name="**/*Test.java" />
 				</fileset>
 			</batchtest>
 		</junit>
 
 		<!-- Create html output from the reports -->
-		<mkdir dir="${dist.dir}/reports" />
-
-		<junitreport todir="${dist.dir}/reports">
-			<fileset dir="${dist.dir}/reports">
+		<junitreport todir="${dist.reports.dir}">
+			<fileset dir="${dist.reports.dir}">
 				<include name="TEST-*.xml" />
 			</fileset>
-			<report format="frames" todir="${dist.dir}/reports" />
+			<report format="frames" todir="${dist.reports.dir}" />
 		</junitreport>
 	</target>
 </project>
