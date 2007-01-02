@@ -108,7 +108,7 @@
 		</fieldset>
 		
 		<fieldset><legend>Inline Console Logging (toggle on with ALT-D; on FireFox 2.0 use: SHIFT+ALT+D)</legend>
-			<input type="checkbox" onchange="consoleLog.getAppender().toggle();"> show/hide console.
+			<input type="checkbox" onchange="consoleLog.getAppender().toggle();" /> show/hide console.
 			<input type="text" id="consoleMessage" value="add consoleLog message" onchange="consoleLog.trace(document.getElementById('consoleMessage').value);"/>
 			<input type="button" name="trace" value="Trace Message" onclick="consoleLog.trace(document.getElementById('consoleMessage').value);" />
 			<br />
@@ -149,7 +149,7 @@
 			<input type="button" name="clear" value="Clear Log" onclick="fileLog.clear();return false;" />
 		</fieldset>
 		
-		<fieldset><legend>Window Event Logging (Internet Explorer only) (Control Panel > Administrative Tools > Event Viewer)</legend>
+		<fieldset><legend>Window Event Logging (Internet Explorer only) (Control Panel &gt; Administrative Tools &gt; Event Viewer)</legend>
 			<input type="text" id="winEventMessage" value="add windowEventLog message" onchange="windowEventLog.trace(document.getElementById('winEventMessage').value);"/>
 			<input type="button" name="trace" value="Trace Message" onclick="windowEventLog.trace(document.getElementById('winEventMessage').value);" />
 			<br />
