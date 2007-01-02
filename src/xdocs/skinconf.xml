@@ -84,7 +84,7 @@ which will be used to configure the chosen Forrest skin.
 
   <project-name>Log4js</project-name>
 
-  <project-description>Logging API for JavaScript</project-description>
+  <project-description>Logging Framework for JavaScript</project-description>
 
   <project-url>http://log4js.berlios.de/</project-url>
 
