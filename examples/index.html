@@ -82,9 +82,10 @@
 
 	<body>
 		<h1>Log4js <script type="text/javascript">document.write(Log4js.version)</script> Tests</h1>
-		<p><a href="http://log4js.berlios.de">Log4js</a> is a JavaScript implementation of logging. Simmilar to the Java implementation Log4j.</p>
-		<p>Some loggers could cause a JavaScript exception on this page. This could habben because of the browser do
-			not support a feature.</p>
+		<p><a href="http://log4js.berlios.de">Log4js</a> is a JavaScript 
+			implementation of logging. Similar to the Java implementation Log4j.</p>
+		<p style="color:red">Some loggers could cause a JavaScript exception on this page. This 
+			could happen because the browser do not support all features.</p>
 		<noscript>
 			<blockquote>	
 			<p>Log4js examples can be used only when JavaScript is enabled!</p>
@@ -106,7 +107,8 @@
 			<input type="button" name="test" value="Test window.error" onclick="badObject.badMethod;" />
 		</fieldset>
 		
-		<fieldset><legend>Inline Console Logging (toggle on with ALT-D)</legend>
+		<fieldset><legend>Inline Console Logging (toggle on with ALT-D; on FireFox 2.0 use: SHIFT+ALT+D)</legend>
+			<input type="checkbox" onchange="consoleLog.getAppender().toggle();"> show/hide console.
 			<input type="text" id="consoleMessage" value="add consoleLog message" onchange="consoleLog.trace(document.getElementById('consoleMessage').value);"/>
 			<input type="button" name="trace" value="Trace Message" onclick="consoleLog.trace(document.getElementById('consoleMessage').value);" />
 			<br />
