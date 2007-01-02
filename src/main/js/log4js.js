@@ -12,8 +12,11 @@
  * limitations under the License.
  */
 
+/*jsl:option explicit*/
+
 /**
  * @private
+ * @ignore
  */
 if(!Object.prototype.extend) {
 	Object.extend = function(destination, source) {
@@ -21,15 +24,16 @@ if(!Object.prototype.extend) {
 	    destination[property] = source[property];
 	  }
 	  return destination;
-	}
+	};
 	
 	Object.prototype.extend = function(object) {
 	  return Object.extend.apply(this, [this, object]);
-	}
+	};
 }
 
 /**
  * @private
+ * @ignore
  */
 if(!Function.prototype.bind) {
 	/**
@@ -83,6 +87,11 @@ var Log4js = {
 	 */
   	version: "0.3",
 
+	applicationStartDate: new Date(),
+	
+	uniqueId: "log4javascript_" + this.applicationStartDate.getTime() + "_" +
+		Math.floor(Math.random() * 100000000),
+		
 	/**  
 	 * Hashtable of loggers
 	 * @static
@@ -101,7 +110,7 @@ var Log4js = {
 		
 		// Use default logger if categoryName is not specified or invalid
 		if (!(typeof categoryName == "string")) {
-			categoryName = "[root]";
+			categoryName = "[default]";
 		}
 
 		// Create the logger for this name if it doesn't already exist
@@ -439,8 +448,9 @@ Log4js.Logger = function(name) {
 	/** appender to write in */
 	this.appenders.push(new Log4js.Appender(this));
 	
-	// if multiple log objects are instanciated this will only log to the log object that is declared last
-	// can't seem to get the attachEvent method to work correctly
+	// if multiple log objects are instanciated this will only log to the log 
+	// object that is declared last can't seem to get the attachEvent method to 
+	// work correctly
 	try {
 		window.onerror = this.windowError.bind(this);
 	} catch (e) {
@@ -493,7 +503,8 @@ Log4js.Logger.prototype = {
 	 * @private
 	 */
 	log: function(logLevel, message, exception) {
-		var loggingEvent = new Log4js.LoggingEvent(this.category, logLevel, message, exception, this);
+		var loggingEvent = new Log4js.LoggingEvent(this.category, logLevel, 
+			message, exception, this);
 		this.loggingEvents.push(loggingEvent);
 		this.onlog.dispatch(loggingEvent);
 	},
@@ -756,7 +767,8 @@ Log4js.Layout.prototype = {
  * Console Appender writes the logs to a console.  If "useWindow" is
  * set to "true" the console launches in another window otherwise
  * the window is inline on the page and toggled on and off with "Alt-D".
-
+ * Note: At FireFox 2.0 the keystroke is little different now: "SHIFT+ALT+D".
+ *
  * @constructor
  * @extends Log4js.Appender
  * @param {Log4js.Logger} logger log4js instance this appender is attached to
@@ -816,7 +828,8 @@ Log4js.ConsoleAppender.prototype = (new Log4js.Appender()).extend( {
 		var win = window;
 		
 		if(!this.inline) {
-			window.top.consoleWindow = window.open("", this.logger.category, "left=0,top=0,width=700,height=700,scrollbars=no,status=no,resizable=no;toolbar=no");
+			window.top.consoleWindow = window.open("", this.logger.category, 
+				"left=0,top=0,width=700,height=700,scrollbars=no,status=no,resizable=no;toolbar=no");
 			window.top.consoleWindow.opener = self;
 			win = window.top.consoleWindow;
 			doc = win.document;
@@ -1317,7 +1330,7 @@ Log4js.AjaxAppender.prototype = (new Log4js.Appender()).extend( {
 		
 
 		var appender = this;
-		if(this.httpRequest == null){
+		if(this.httpRequest === null){
 			this.httpRequest = this.getXmlHttpRequest();
 		}
 		this.httpRequest.onreadystatechange = function() {
@@ -1376,7 +1389,7 @@ Log4js.AjaxAppender.prototype = (new Log4js.Appender()).extend( {
 			this.isInProgress = false;
 
 		} else {
-			var msg = "  AjaxAppender.onReadyStateChanged: XMLHttpRequest request to URL " + this.loggingUrl + " returned status code " + httpRequest.status;
+			var msg = "  AjaxAppender.onReadyStateChanged: XMLHttpRequest request to URL " + this.loggingUrl + " returned status code " + this.httpRequest.status;
 			log4jsLogger.error(msg);
 		}
 		
@@ -1463,9 +1476,10 @@ Log4js.FileAppender.prototype = (new Log4js.Appender()).extend( {
 	 */
 	doAppend: function(loggingEvent) {
 		try {
+			var fileHandle = null;
 			if( this.isIE ){
 				// try opening existing file, create if needed
-				var fileHandle = this.fso.OpenTextFile(this.file, 8, true);        
+				fileHandle = this.fso.OpenTextFile(this.file, 8, true);        
 				// write out our data
 				fileHandle.WriteLine(this.layout.format(loggingEvent));
 				fileHandle.close();   
@@ -1475,11 +1489,11 @@ Log4js.FileAppender.prototype = (new Log4js.Appender()).extend( {
         			if(!this.fso.exists()) //create file if needed
 	            			this.fso.create(0x00, 0600);
 				
- 				var fileHandle = Components.classes["@mozilla.org/network/file-output-stream;1"].createInstance(Components.interfaces.nsIFileOutputStream);
-        			fileHandle.init( this.fso, 0x04 | 0x08 | 0x10, 064, 0);
+ 				fileHandle = Components.classes["@mozilla.org/network/file-output-stream;1"].createInstance(Components.interfaces.nsIFileOutputStream);
+        		fileHandle.init( this.fso, 0x04 | 0x08 | 0x10, 064, 0);
 				var line = this.layout.format(loggingEvent);
-        			fileHandle.write(line, line.length); //write data
-        			fileHandle.close();
+        		fileHandle.write(line, line.length); //write data
+        		fileHandle.close();
 			}
 		} catch (e) {}
 	},
@@ -1599,7 +1613,7 @@ Log4js.WindowsEventAppender.prototype = (new Log4js.Appender()).extend( {
  * @param logger log4js instance this appender is attached to
  * @author S&eacute;bastien LECACHEUR
  */
-Log4js.JSAlertAppender = function() {
+Log4js.JSAlertAppender = function(logger) {
 
 	/**
 	 * set reference to calling logger
@@ -2179,20 +2193,20 @@ Log4js.PatternLayout.prototype = (new Log4js.Layout()).extend( {
 						}
 						break;
 					case "d":
-						var dateFormat = log4javascript.PatternLayout.ISO8601_DATEFORMAT;
+						var dateFormat = Log4js.PatternLayout.ISO8601_DATEFORMAT;
 						if (specifier) {
 							dateFormat = specifier;
 							// Pick up special cases
 							if (dateFormat == "ISO8601") {
-								dateFormat = log4javascript.PatternLayout.ISO8601_DATEFORMAT;
+								dateFormat = Log4js.PatternLayout.ISO8601_DATEFORMAT;
 							} else if (dateFormat == "ABSOLUTE") {
-								dateFormat = log4javascript.PatternLayout.ABSOLUTETIME_DATEFORMAT;
+								dateFormat = Log4js.PatternLayout.ABSOLUTETIME_DATEFORMAT;
 							} else if (dateFormat == "DATE") {
-								dateFormat = log4javascript.PatternLayout.DATETIME_DATEFORMAT;
+								dateFormat = Log4js.PatternLayout.DATETIME_DATEFORMAT;
 							}
 						}
 						// Format the date
-						replacement = (new SimpleDateFormat(dateFormat)).format(loggingEvent.timeStamp);
+						replacement = (new Log4js.SimpleDateFormat(dateFormat)).format(loggingEvent.timeStamp);
 						break;
 					case "m":
 						replacement = loggingEvent.message;
@@ -2204,7 +2218,7 @@ Log4js.PatternLayout.prototype = (new Log4js.Layout()).extend( {
 						replacement = loggingEvent.level.name;
 						break;
 					case "r":
-						replacement = "" + loggingEvent.timeStamp.getDifference(applicationStartDate);
+						replacement = "" + loggingEvent.timeStamp.getDifference(Log4js.applicationStartDate);
 						break;
 					case "%":
 						replacement = "%";
@@ -2249,6 +2263,7 @@ Log4js.PatternLayout.prototype = (new Log4js.Layout()).extend( {
 
 /**
  * @private
+ * @ignore
  */
 if (!Array.prototype.push) {
 	/**
@@ -2310,20 +2325,22 @@ Log4js.FifoBuffer.prototype = {
 
 /**
  * Date Formatter
+ * addZero() and formatDate() are courtesy of Mike Golding:
+ * http://www.mikezilla.com/exp0015.html
  * @private
  */ 
 Log4js.DateFormatter = function() {
 	return;
 };
-  	/**
-  	 * default format of date (ISO-8601)
-  	 * @static
-  	 * @final
-  	 */
-	Log4js.DateFormatter.DEFAULT_DATE_FORMAT = "yyyy-MM-ddThh:mm:ssO";
+/**
+ * default format of date (ISO-8601)
+ * @static
+ * @final
+ */
+Log4js.DateFormatter.DEFAULT_DATE_FORMAT = "yyyy-MM-ddThh:mm:ssO";
+
+
 Log4js.DateFormatter.prototype = {
-	// addZero() and formatDate() are courtesy of Mike Golding:
-	// http://www.mikezilla.com/exp0015.html
 	/**
 	 * Formats the given date by the given pattern.<br />
 	 * Following switches are supported:

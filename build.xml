@@ -23,9 +23,10 @@
                    
      Stephan Strittmatter                                                               
      ====================================================================== -->
-<project name="log4js" default="dist" basedir=".">
+<project name="Log4js" default="dist" basedir=".">
 	<description>
-	  Logging library for JavaScript which is using almost same API than log4j
+	  	ANT build file for Log4js, the logging library for JavaScript which is 
+		using almost same API than log4j.
 	</description>
 	<!-- The build.properties file defines the parth to local jar files -->
 	<property file="build.properties" />
@@ -133,7 +134,7 @@
           target: dist.example              
          ================================= -->
 	<target name="dist.example" depends="init, compile" description="--> distribution WAR for example">
-		<echo>generate example web archive: ${dist.dir}/${example.war.name}</echo>
+		<echo level="info">Generate example web archive: ${dist.dir}/${example.war.name}</echo>
 
 		<copy todir="${example.webapp.dir}" overwrite="true">
 			<fileset dir="${example.src.dir}">
@@ -157,7 +158,7 @@
           target: dist.doc              
          ================================= -->
 	<target name="dist.doc" depends="init, doc" description="--> generate documentation arcive">
-		<echo>generate documentation archive: ${dist.dir}/log4js-doc-${version}.zip</echo>
+		<echo level="info">Generate documentation archive: ${dist.dir}/log4js-doc-${version}.zip</echo>
 
 		<zip destfile="${dist.dir}/log4js-doc-${version}.zip">
 			<fileset dir="${dist.dir}/docs">
@@ -182,10 +183,10 @@
 	<target name="doc.api" description="generate the API doc" depends="init">
 		<property name="apidoc.dir" value="${dist.dir}/docs/api" />
 
-		<echo>Gererate JSDoc to dir ${apidoc.dir}...</echo>
+		<echo level="info">Gererate JSDoc to directory ${apidoc.dir}...</echo>
 		<mkdir dir="${apidoc.dir}" />
 
-		<property name="footer" value="log4js - Logging API for JavaScript" />
+		<property name="footer" value="Log4js - Logging API for JavaScript" />
 		<property name="logo" value="${basedir}/logo/1.0/exports/1.0_70px.jpg" />
 
 		<exec executable="perl">
@@ -237,7 +238,7 @@
 	             C:>myproject\ant download-dependencies dist
 		</description>
 
-		<!-- for "compile" -->
+		<!-- for compression of JavaScript -->
 		<get dest="${tools.dir}/jsjam.pl" usetimestamp="true" ignoreerrors="true" src="http://www.anvilon.com/software/download/jsjam" />
 
 		<!-- unit testing -->
@@ -248,7 +249,7 @@
 		
 		<get dest="${lib.dir}/jstester-${tools.jstester.version}.jar" usetimestamp="true" ignoreerrors="true" src="http://switch.dl.sourceforge.net/sourceforge/jstester/jstester-${tools.jstester.version}.jar" verbose="true" />
 
-		<get dest="${lib.dir}/js-${tools.js.version}.jar" usetimestamp="true" ignoreerrors="true" src="http://www.ibiblio.org/maven/rhino/jars/js-${tools.js.version}.jar" verbose="true" />
+		<get dest="${lib.dir}/js-${tools.rhino.version}.jar" usetimestamp="true" ignoreerrors="true" src="http://www.ibiblio.org/maven/rhino/jars/js-${tools.rhino.version}.jar" verbose="true" />
 		<get dest="${lib.dir}/commons-logging-${tools.commons-logging.version}.jar" usetimestamp="true" ignoreerrors="true" src="http://www.ibiblio.org/maven/commons-logging/jars/commons-logging-${tools.commons-logging.version}.jar" verbose="true" />
 
 
@@ -262,6 +263,9 @@
 			<arg line="-MCPAN -e 'install HTML::Template'" />
 		</exec>
 		
+		<!-- JavaScript Lint -->
+		<get dest="${lib.dir}/jsl-${tools.jsl.version}-win32.zip" usetimestamp="true" ignoreerrors="true" src="http://www.javascriptlint.com/download/jsl-${tools.jsl.version}-win32.zip" />
+		<unzip src="${lib.dir}/jsl-${tools.jsl.version}-win32.zip" dest="${tools.dir}/jsl" />
 		<!--
 		<get dest="${lib.dir}/apache-forrest.zip" usetimestamp="true" ignoreerrors="true" src="http://www.artfiles.org/apache.org/forrest/apache-forrest-0.7.zip" />
 		<unzip src="${lib.dir}/apache-forrest.zip" dest="${tools.dir}/apache-forrest" />
