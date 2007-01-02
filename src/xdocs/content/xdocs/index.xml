@@ -19,22 +19,22 @@
     "http://forrest.apache.org/dtd/document-v20.dtd">
 <document>
     <header>
-        <title>Log4js - The Logging API for JavaScript</title>
+        <title>Log4js - The Logging Framework for JavaScript</title>
         <authors>
             <person email="stritti@users.berlios.de" id="ssr" 
                 name="Stephan Strittmatter" />
         </authors>
         <meta name="robots">ALL</meta>
-        <meta name="description">Log4js - The Logging API for JavaScript</meta>
+        <meta name="description">Log4js - The Logging Framework for JavaScript</meta>
         <meta name="keywords">log4js, logging, javascript, ajax</meta>
 
     </header>
     <body xml:lang="en">
         <section id="overview">
             <title>Overview</title>
-            <p><em>Log4js</em> is a logging API for JavaScript. The main goal is to have 
-                a robust and solid logging API which is very simmilar to the 
-                Java logging API <a href="ext:log4j.apache.org">Log4j</a>.</p>
+            <p><em>Log4js</em> is a logging framework for JavaScript. The main goal 
+            	is to have a robust and solid logging API which is very simmilar to the 
+                Java logging framework <a href="ext:log4j.apache.org">Log4j</a>.</p>
         </section>
         <section id="toLog">
             <title>Severals ways to log</title>
@@ -85,11 +85,11 @@
 				<em>Log4js</em> is compatible with almost all current browsers. Some browser could not be tested
 				because of missing hardware (e.g. Mac).
 			</p>
-	      <table>
+	      <table >
 	      	<caption>Browser Compatibility Matrix</caption>
 	      	<tr><th>Browser</th>                    <th>Version</th>           <th>Platform</th>        <th>Compatibility</th>       <th>Note</th></tr>
 	      	
-	      	<tr><th>KDE Konqueror</th>              <td>3.5.2</td>             <td>Linux KDE</td>       <td>full compatible</td>     <td>Some Appenders are browser specific and do not work on Konkqueror.</td></tr>
+	      	<tr><th>KDE Konqueror</th>              <td>3.5.2</td>             <td>Linux KDE</td>       <td>full compatible</td>     <td>Some Appenders are browser specific and do not work on Konqueror.</td></tr>
 	      	<tr><th>Microsoft Internet Explorer</th><td>5.0, 6.0</td>          <td>Windows</td>         <td>full compatible</td>     <td>Some Appenders are browser specific and do not work on IE. Some Appenders are IE specific.</td></tr>
 	      	<tr><th>Mozilla FireFox</th>            <td>1.0.x, 2.0 Beta 1</td> <td>Windows</td>         <td>full compatible</td>     <td>Some Appenders are browser specific and do not work on FireFox.</td></tr>
 	      	<tr><th>Mozilla FireFox</th>            <td>1.0.x</td>             <td>Linux</td>           <td>full compatible</td>     <td>Some Appenders are browser specific and do not work on FireFox.</td></tr>
@@ -117,9 +117,9 @@
         <section id="conclution">
             <title>Conclusion</title>
             <p>There are <a href="links.html#other">other libraries</a> in 
-                order to get this goal. We are discussing with the authors of 
+                order to reach this goal. We are discussing with the authors of 
                 another logging APIs in order to gather thier efforts and 
-                provide a common framework if possible.</p>
+                provide a common framework - if possible.</p>
             <p><em>Log4js</em> is very simple to install and use.</p>
         </section>
     </body>
