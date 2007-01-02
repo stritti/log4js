@@ -10,10 +10,10 @@ public class AllTests {
 		//$JUnit-BEGIN$
 		suite.addTestSuite(ConsoleAppenderTest.class);
 		suite.addTestSuite(AjaxAppenderTest.class);
+		suite.addTestSuite(PatternLayoutTest.class);
 		suite.addTestSuite(LoggerTest.class);
 		suite.addTestSuite(DateFormatterTest.class);
 		suite.addTestSuite(BasicLayoutTest.class);
-		suite.addTestSuite(PatternLayoutTest.class);
 		//$JUnit-END$
 		return suite;
 	}
