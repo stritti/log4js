@@ -199,7 +199,7 @@
           target: jslint              
          ================================= -->
 	<target name="jslint" depends="init" description="--> verify syntax of JavaScripts">
-		<exec executable="${basedir}/${tools.dir}/jsl/jsl.exe" resultproperty="${jslint.result}">
+		<exec executable="${basedir}/${tools.dir}/jsl/jsl-${tools.jsl.version}/jsl.exe" resultproperty="${jslint.result}">
 			<arg line="conf ${tools.dir}/jsl/jsl.conf process ${src.js.dir}/*.js" />
 		</exec>
 		
