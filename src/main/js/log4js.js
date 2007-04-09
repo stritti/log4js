@@ -140,6 +140,27 @@ var Log4js = {
     	} else if (element.attachEvent) {
 			element.attachEvent('on' + name, observer);
     	}
+	},
+	
+	/**
+	 * Load a JS-script dynamically.
+	 * @param {String} src
+	 */
+	$import: function(src){
+		var documentScripts = document.getElementsByTagName("script");
+	
+		for (index = 0; index < documentScripts.length; ++index)
+		{
+			var documentScript = documentScripts[index];
+			if (documentScript.src == src) {
+				return false;
+			}
+		}
+		
+		var script = document.createElement('script');
+		script.type = 'text/javascript';
+		script.src = src;
+		document.getElementsByTagName('head')[0].appendChild(script); 
 	}
 };
 
@@ -1798,6 +1819,65 @@ Log4js.SafariJSConsoleAppender.prototype = (new Log4js.Appender()).extend( {
 	 */
 	 toString: function() {
 	 	return "Log4js.SafariJSConsoleAppender"; 
+	 }
+});
+
+/**
+ * JavaScript Console Appender which is browser independent.
+ * It checks internally for the current browser and adds delegate to
+ * specific JavaScript Console Appender of the browser.
+ * 
+ * @author Stephan Strittmatter
+ * @since 1.0
+ */
+Log4js.JSConsoleAppender = function() {
+	/**
+	 * Delegate for browser specific implementation
+	 * @type Log4js.Appender
+	 * @private
+	 */
+	this.consoleDelegate = null;
+	
+	
+	if (window.console) {
+		this.consoleDelegate = new Log4js.SafariJSConsoleAppender(); 
+	}
+    else if (window.opera) {
+		this.consoleDelegate = new Log4js.OperaJSConsoleAppender(); 
+	}
+	else if(netscape) {
+		this.consoleDelegate = new Log4js.MozJSConsoleAppender(); 
+	}
+    else {
+       //@todo
+    }
+};
+
+Log4js.JSConsoleAppender.prototype = (new Log4js.Appender()).extend( {
+	/** 
+	 * @see Log4js.Appender#doAppend
+	 */
+	doAppend: function(loggingEvent) {
+		this.consoleDelegate.doAppend(loggingEvent);
+	},
+	/** 
+	 * @see Log4js.Appender#doClear
+	 */
+	doClear: function() {
+		this.consoleDelegate.doClear();
+	},
+	/**
+	 * @see Log4js.Appender#setLayout
+	 */
+	setLayout: function(layout){
+		this.consoleDelegate.setLayout(layout);
+	},
+	
+	/** 
+	 * toString
+	 */
+	 toString: function() {
+	 	return "Log4js.JSConsoleAppender: " + this.consoleDelegate.toString(); 
 	 }
 });
 
