@@ -92,6 +92,7 @@ footer, searchbar, css etc.  As input, it takes XML of the form:
 				src="{$root}skin/getMenu.js"></script>
 	        <script type="text/javascript" language="javascript" 
 				src="{$root}skin/fontsize.js"></script>
+
 <!--+
   |favicon
   +-->
@@ -127,6 +128,7 @@ footer, searchbar, css etc.  As input, it takes XML of the form:
   |topstrip with logos and search box 
   +-->
     <div id="top">
+	
 <!--breadcrumbs org location-->
 <xsl:if test="not ($config/trail/@location)">
 <xsl:comment>+
@@ -139,7 +141,25 @@ footer, searchbar, css etc.  As input, it takes XML of the form:
 <xsl:comment>+
     |header
     +</xsl:comment>
-    <div class="header">          
+    <div class="header">  
+		<div class="ad" style="float: left; padding-left: 270px;">
+		<script type="text/javascript"><xsl:comment>
+			google_ad_client = "pub-2184810574476423";
+			google_ad_width = 468;
+			google_ad_height = 60;
+			google_ad_format = "468x60_as";
+			google_ad_type = "text_image";
+			//2007-04-24: log4js
+			google_ad_channel = "0813063002";
+			google_color_border = "FFFFFF";
+			google_color_bg = "FFFFFF";
+			google_color_link = "009ACE";
+			google_color_text = "000000";
+			google_color_url = "000066";
+			//</xsl:comment>
+		</script>
+		<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+	   </div>     
 <xsl:comment>+
     |start group logo
     +</xsl:comment> 
@@ -274,16 +294,41 @@ footer, searchbar, css etc.  As input, it takes XML of the form:
     <xsl:if test="div[@id='menu']/ul/li">
       <xsl:call-template name="menu"/>
     </xsl:if>
+	
 <xsl:comment>+
     |start content
     +</xsl:comment>
-    <xsl:apply-templates select="div[@id='content']"/>
+
+    	<xsl:apply-templates select="div[@id='content']"/>
+
 <xsl:comment>+
     |end content
-    +</xsl:comment>    
+    +</xsl:comment> 
+
+   
+	 	<div id="adStripe" class="ad" >
+		  <script type="text/javascript"><xsl:comment>
+			google_ad_client = "pub-2184810574476423";
+			google_ad_width = 160;
+			google_ad_height = 600;
+			google_ad_format = "160x600_as";
+			google_ad_type = "text_image";
+			//2007-04-24: log4js
+			google_ad_channel = "0813063002";
+			google_color_border = "FFFFFF";
+			google_color_bg = "FFFFFF";
+			google_color_link = "009ACE";
+			google_color_text = "000000";
+			google_color_url = "000066";
+			//</xsl:comment>
+		  </script>
+		  <script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+	    </div>
+	
     <div class="clearboth">&#160;</div>
 
   </div>
+
 <!--+
   |bottomstrip with footer
   +-->
@@ -366,7 +411,9 @@ footer, searchbar, css etc.  As input, it takes XML of the form:
     </div>
 
 
-<xsl:comment> Google-Analytics Tag </xsl:comment>
+<xsl:comment>+
+    | Google-Analytics 
+	+</xsl:comment>
 
 <script src="http://www.google-analytics.com/urchin.js" type="text/javascript"></script>
 <script type="text/javascript">
@@ -374,7 +421,9 @@ _uacct = "UA-327996-5";
 urchinTracker();
 </script>
 
-<xsl:comment> Google-Analytics Tag </xsl:comment>
+<xsl:comment>+
+    | end Google-Analytics
+	+</xsl:comment>
 
       </body>
     </html>

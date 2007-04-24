@@ -15,19 +15,17 @@
 * limitations under the License.
 */
 body {
-  font-family: Georgia, Palatino, serif;
+  font-family: Verdana, Palatino, serif;
   font-size: 12pt;
   background: white;
 }
 
-#tabs,
-#menu,
-#content .toc {
+#ad, #trail, #pdflink, #tabs, #menu, #content .toc {
   display: none;
 }
 
 #content {
-  width: auto;
+  width: 750px;
   padding: 0;
   float: none !important;
   color: black;

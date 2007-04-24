@@ -387,6 +387,8 @@ img.cornersmall {
     margin: 0;
     font : small Verdana, Helvetica, sans-serif;
     font-size : 80%;
+	position: relative;
+	width: auto;
 }
 
 #content ul {
