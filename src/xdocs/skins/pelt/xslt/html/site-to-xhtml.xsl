@@ -142,7 +142,7 @@ footer, searchbar, css etc.  As input, it takes XML of the form:
     |header
     +</xsl:comment>
     <div class="header">  
-		<div class="ad" style="float: left; padding-left: 270px;">
+		<div id="adHeader" class="ad" style="float: left; padding-left: 270px;">
 		<script type="text/javascript"><xsl:comment>
 			google_ad_client = "pub-2184810574476423";
 			google_ad_width = 468;
@@ -295,18 +295,7 @@ footer, searchbar, css etc.  As input, it takes XML of the form:
       <xsl:call-template name="menu"/>
     </xsl:if>
 	
-<xsl:comment>+
-    |start content
-    +</xsl:comment>
-
-    	<xsl:apply-templates select="div[@id='content']"/>
-
-<xsl:comment>+
-    |end content
-    +</xsl:comment> 
-
-   
-	 	<div id="adStripe" class="ad" >
+	  	<div id="adStripe" class="ad" >
 		  <script type="text/javascript"><xsl:comment>
 			google_ad_client = "pub-2184810574476423";
 			google_ad_width = 160;
@@ -324,6 +313,16 @@ footer, searchbar, css etc.  As input, it takes XML of the form:
 		  </script>
 		  <script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
 	    </div>
+		
+<xsl:comment>+
+    |start content
+    +</xsl:comment>
+		
+    	<xsl:apply-templates select="div[@id='content']"/>
+
+<xsl:comment>+
+    |end content
+    +</xsl:comment> 
 	
     <div class="clearboth">&#160;</div>
 

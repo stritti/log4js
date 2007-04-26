@@ -20,7 +20,7 @@ body {
   background: white;
 }
 
-#ad, #trail, #pdflink, #tabs, #menu, #content .toc {
+.ad, .trail, .pdflink, #tabs, #menu, #content .toc {
   display: none;
 }
 

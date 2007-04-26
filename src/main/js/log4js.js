@@ -16,6 +16,8 @@
 /*jsl:option explicit*/
 
 /**
+ * Object extention (OO) methods if no prototype avaliable.
+ * 
  * @private
  * @ignore
  */
@@ -33,13 +35,14 @@ if(!Object.prototype.extend) {
 }
 
 /**
+ * Define bind if no prototype available.
  * @private
  * @ignore
  */
 if(!Function.prototype.bind) {
 	/**
-	 * Functions taken from Prototype library,  didn't want to require for just 
-	 * few functions.
+	 * Functions taken from Prototype library,  
+	 * didn't want to require for just few functions.
 	 * More info at {@link http://prototype.conio.net/}
 	 * @private
 	 */	
@@ -82,16 +85,21 @@ if(!Function.prototype.bind) {
 var Log4js = {
 	
 	/** 
-	 * current version of log4js 
+	 * Current version of log4js. 
 	 * @static
 	 * @final
 	 */
-  	version: "0.3",
+  	version: "0.3-dev",
 
+	/**  
+	 * Date of logger initialized.
+	 * @static
+	 * @final
+	 */
 	applicationStartDate: new Date(),
 		
 	/**  
-	 * Hashtable of loggers
+	 * Hashtable of loggers.
 	 * @static
 	 * @final
 	 * @private  
@@ -128,16 +136,17 @@ var Log4js = {
 	},
 	
   	/**
-  	 * attatch an observer function to an elements event
+  	 * Attatch an observer function to an elements event browser independent.
+  	 * 
   	 * @param element element to attach event
   	 * @param name name of event
   	 * @param observer observer method to be called
   	 * @private
   	 */
   	attachEvent: function (element, name, observer) {
-		if (element.addEventListener) {
+		if (element.addEventListener) { //DOM event model
 			element.addEventListener(name, observer, false);
-    	} else if (element.attachEvent) {
+    	} else if (element.attachEvent) { //M$ event model
 			element.attachEvent('on' + name, observer);
     	}
 	},
@@ -1679,14 +1688,14 @@ Log4js.JSAlertAppender.prototype = (new Log4js.Appender()).extend( {
  * @param logger log4js instance this appender is attached to
  * @author Stephan Strittmatter
  */
-Log4js.MozJSConsoleAppender = function() {
+Log4js.MozillaJSConsoleAppender = function() {
 	this.layout = new Log4js.SimpleLayout();
 	netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
 	this.jsConsole = Components.classes["@mozilla.org/consoleservice;1"].getService(Components.interfaces.nsIConsoleService);
 	this.scriptError = Components.classes["@mozilla.org/scripterror;1"].createInstance(Components.interfaces.nsIScriptError);
 };
 
-Log4js.MozJSConsoleAppender.prototype = (new Log4js.Appender()).extend( {
+Log4js.MozillaJSConsoleAppender.prototype = (new Log4js.Appender()).extend( {
 	/** 
 	 * @see Log4js.Appender#doAppend
 	 */
@@ -1696,6 +1705,7 @@ Log4js.MozJSConsoleAppender.prototype = (new Log4js.Appender()).extend( {
 		this.jsConsole.logMessage(this.scriptError);
 	},
 	/** 
+	 * Not supported by this appender.
 	 * @see Log4js.Appender#doClear
 	 */
 	doClear: function() {
@@ -1712,11 +1722,17 @@ Log4js.MozJSConsoleAppender.prototype = (new Log4js.Appender()).extend( {
 	 * toString
 	 */
 	 toString: function() {
-	 	return "Log4js.MozJSConsoleAppender"; 
+	 	return "Log4js.MozillaJSConsoleAppender"; 
 	 },
 	 
 	/**
-	 * map Log4js.Level to jsConsole Flag
+	 * Map Log4js.Level to jsConsole Flags:
+	 * <ul>
+	 * <li>nsIScriptError.errorFlag (0) = Level.Error</li>
+	 * <li>nsIScriptError.warningFlag (1)= Log4js.Level.WARN</li>
+	 * <li>nsIScriptError.exceptionFlag (2) = Log4js.Level.FATAL</li>
+	 * <li>nsIScriptError.strictFlag (4) = unused</li>
+	 * </ul>
 	 * @private
 	 */	
 	getFlag: function(loggingEvent)
@@ -1736,7 +1752,6 @@ Log4js.MozJSConsoleAppender.prototype = (new Log4js.Appender()).extend( {
 				retval = 1;//nsIScriptError.warningFlag = 1
 				break;
 		}
-		//nsIScriptError.strictFlag = 4
 		
 		return retval;		
 	}
@@ -1830,14 +1845,13 @@ Log4js.SafariJSConsoleAppender.prototype = (new Log4js.Appender()).extend( {
  * @author Stephan Strittmatter
  * @since 1.0
  */
-Log4js.JSConsoleAppender = function() {
+Log4js.BrowserConsoleAppender = function() {
 	/**
 	 * Delegate for browser specific implementation
 	 * @type Log4js.Appender
 	 * @private
 	 */
 	this.consoleDelegate = null;
-	
 	
 	if (window.console) {
 		this.consoleDelegate = new Log4js.SafariJSConsoleAppender(); 
@@ -1853,7 +1867,7 @@ Log4js.JSConsoleAppender = function() {
     }
 };
 
-Log4js.JSConsoleAppender.prototype = (new Log4js.Appender()).extend( {
+Log4js.BrowserConsoleAppender.prototype = (new Log4js.Appender()).extend( {
 	/** 
 	 * @see Log4js.Appender#doAppend
 	 */

@@ -387,7 +387,7 @@ img.cornersmall {
     margin: 0;
     font : small Verdana, Helvetica, sans-serif;
     font-size : 80%;
-	position: relative;
+	position: static;
 	width: auto;
 }
 
@@ -587,3 +587,10 @@ p.instruction {
   list-style-position: outside;
   margin-left: 2em;
 } 
+
+#adStripe {
+	display: inline;
+	position: relative;
+	float: right;
+	padding: 20px;
+}

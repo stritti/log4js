@@ -118,7 +118,7 @@
             <title>Conclusion</title>
             <p>There are <a href="links.html#other">other libraries</a> in 
                 order to reach this goal. We are discussing with the authors of 
-                another logging APIs in order to gather thier efforts and 
+                other logging APIs in order to gather their efforts and 
                 provide a common framework - if possible.</p>
             <p><em>Log4js</em> is very simple to install and use.</p>
         </section>
