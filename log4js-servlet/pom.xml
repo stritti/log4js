@@ -6,7 +6,7 @@
   <packaging>war</packaging>
   <version>1.0-SNAPSHOT</version>
   <name>Log4js Servlet</name>
-  <url>http://maven.apache.org</url>
+  <url>http://log4js.berlios.de</url>
   <dependencies>
     <dependency>
    		<groupId>javax.servlet</groupId>
