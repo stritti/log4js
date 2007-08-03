@@ -122,7 +122,7 @@
 	<!-- ================================= 
           target: distribute              
          ================================= -->
-	<target name="dist" depends="dist.api, dist.doc, dist.war, dist.example" description="--> generate complete distribution">
+	<target name="dist" depends="dist.api, dist.doc, dist.example" description="--> generate complete distribution">
 
 	</target>
 
@@ -388,37 +388,5 @@
 		</junitreport>
 	</target>
 
-	<!-- ================================= 
-          target: dist.war              
-         ================================= -->
-	<target name="dist.war" depends="init" description="--> distribute war archiv">
-		<mkdir dir="${classes.java.dir}"/>
-		<mkdir dir="${war.dir}" />
-		<mkdir dir="${war.dir}/WEB-INF" />
-		<mkdir dir="${war.dir}/WEB-INF/lib" />
-		<mkdir dir="${war.dir}/WEB-INF/classes" />
-		
-		<javac srcdir="${src.dir}/java" destdir="${classes.java.dir}" classpath="${classpath}" debug="on">
-			<classpath>
-				<fileset dir="${lib.dir}">
-					<include name="*.jar" />
-				</fileset>
-			</classpath>
-		</javac>
-		
-		<copy todir="${war.dir}/WEB-INF/classes">
-			<fileset dir="${classes.java.dir}" />
-   		</copy>
-		<copy todir="${war.dir}/WEB-INF/lib">
-			<fileset dir="${lib.dir}">
-				<include name="*.jar" />
-				<exclude name="servlet-api*.jar"/>
-			</fileset>
-   		</copy>
-		
-		<war basedir="${war.dir}"
-			destfile="${dist.dir}/log4js.war" webxml="${src.dir}/java/WEB-INF/web.xml" />
-
-	</target>
 
 </project>
