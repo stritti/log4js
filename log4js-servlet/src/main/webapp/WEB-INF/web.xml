@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+
+<!--
+	*
+	* Licensed under the Apache License, Version 2.0 (the "License");
+	* you may not use this file except in compliance with the License.
+	* You may obtain a copy of the License at
+	*
+	*      http://www.apache.org/licenses/LICENSE-2.0
+	*
+	* Unless required by applicable law or agreed to in writing, software
+	* distributed under the License is distributed on an "AS IS" BASIS,
+	* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	* See the License for the specific language governing permissions and
+	* limitations under the License.
+	*
+-->
+
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_3.xsd"
+	version="2.3">
+
+	<display-name>Log4js</display-name>
+
+
+	<context-param>
+		<param-name>javax.faces.CONFIG_FILES</param-name>
+		<param-value>/WEB-INF/PDPORfaces-config.xml</param-value>
+		<description>
+			Comma separated list of URIs of (additional) faces config
+			files. (e.g. /WEB-INF/my-config.xml) See JSF 1.0 PRD2,
+			10.3.2
+		</description>
+	</context-param>
+	
+	<servlet>
+	    <servlet-name>Log4js Servlet</servlet-name>
+	    <servlet-class>de.berlios.log4js.servlet.Log4jsServlet</servlet-class>
+		<init-param>
+			<param-name>logger</param-name>
+			<param-value>xxx</param-value>
+		</init-param>	    
+	</servlet>
+	<servlet-mapping>
+	    <servlet-name>Log4js Servlet</servlet-name>
+	    <url-pattern>/log4js/*</url-pattern>
+	</servlet-mapping>
+	
+</web-app>
