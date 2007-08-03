@@ -89,7 +89,7 @@ var Log4js = {
 	 * @static
 	 * @final
 	 */
-  	version: "0.3-dev",
+  	version: "1.0-RC1",
 
 	/**  
 	 * Date of logger initialized.
@@ -838,6 +838,7 @@ Log4js.ConsoleAppender.prototype = (new Log4js.Appender()).extend( {
 
 	commandHistory : [],
   	commandIndex : 0,
+  	popupBlocker : true,
 
 	/**
 	 * Set the access key to show/hide the inline console (default &quote;d&quote;)
@@ -858,16 +859,23 @@ Log4js.ConsoleAppender.prototype = (new Log4js.Appender()).extend( {
 		if(!this.inline) {
 			window.top.consoleWindow = window.open("", this.logger.category, 
 				"left=0,top=0,width=700,height=700,scrollbars=no,status=no,resizable=no;toolbar=no");
-			window.top.consoleWindow.opener = self;
-			win = window.top.consoleWindow;
-			doc = win.document;
-			doc.open();
-			doc.write("<!DOCTYPE html PUBLIC -//W3C//DTD XHTML 1.0 Transitional//EN ");
-			doc.write("  http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd>\n\n");
-			doc.write("<html><head><title>" + this.logger.category + "</title>\n");
-			doc.write("</head><body style=\"background-color:darkgray\"></body>\n");
-			win.blur();
-			win.focus();
+				
+			if (!window.top.consoleWindow) { 
+				this.popupBlocker=true; 
+				alert("Popup window manager blocking the log4js popup window to display.\n\n" 
+					+ "Please disabled this to properly see logged events.");  
+			} else {	
+				window.top.consoleWindow.opener = self;
+				win = window.top.consoleWindow;
+				doc = win.document;
+				doc.open();
+				doc.write("<!DOCTYPE html PUBLIC -//W3C//DTD XHTML 1.0 Transitional//EN ");
+				doc.write("  http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd>\n\n");
+				doc.write("<html><head><title>" + this.logger.category + "</title>\n");
+				doc.write("</head><body style=\"background-color:darkgray\"></body>\n");
+				win.blur();
+				win.focus();
+			}
 		}
 		
 		this.docReference = doc;
@@ -1071,6 +1079,11 @@ Log4js.ConsoleAppender.prototype = (new Log4js.Appender()).extend( {
 		
 		if ((!this.inline) && (!this.winReference || this.winReference.closed)) {
 			this.initialize();
+		}
+		
+		if(this.popupBlocker=true) {
+			//popup blocked, we return in this case
+			return;
 		}
 		
 		if (this.tagPattern !== null && 
@@ -1374,7 +1387,7 @@ Log4js.AjaxAppender.prototype = (new Log4js.Appender()).extend( {
 		this.httpRequest.setRequestHeader("REFERER", location.href);
  		this.httpRequest.setRequestHeader("Content-length", content.length);
 		this.httpRequest.setRequestHeader("Connection", "close");
-		this.httpRequest.send(content);
+		this.httpRequest.send("<log4js>" + content + "</log4js>");
 		
 		appender = this;
 		
