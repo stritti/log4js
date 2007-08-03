@@ -58,7 +58,7 @@
 	<property name="servlet-api.jar" value="${lib.dir}/servlet-api-${tools.servlet-api.version}.jar" />
 
 	<!-- unit tests -->
-	<property name="src.test.dir" value="src/test" />
+	<property name="src.test.dir" value="log4js/src/test" />
 	<property name="src.test.java.dir" value="${src.test.dir}/java" />
 	<property name="src.test.js.dir" value="${src.test.dir}/js" />
 	<property name="classes.java.dir" value="${dist.dir}/classes" />
