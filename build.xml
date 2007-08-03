@@ -34,7 +34,7 @@
 
 	<property name="version" value="${version}" />
 
-	<property name="src.dir" value="src/main" />
+	<property name="src.dir" value="log4js/src/main" />
 	<property name="src.js.dir" value="${src.dir}/js" />
 
 	<property name="lib.dir" value="lib" />
@@ -48,18 +48,23 @@
 	<property name="dist.dir" value="build" />
 	<property name="dist.docs.dir" value="${dist.dir}/docs" />
 	<property name="dist.reports.dir" value="${dist.dir}/reports" />
-	
+
 	<!-- example properties -->
-	<property name="example.src.dir" value="examples" />
+	<property name="example.src.dir" value="log4js-examples/src/main/examples" />
 	<property name="example.webapp.dir" value="${dist.dir}/webapp" />
 	<property name="example.war.name" value="log4js-example-${version}.war" />
 	<property name="log4j.jar" value="${lib.dir}/log4j-${tools.log4j.version}.jar" />
+	
+	<property name="servlet-api.jar" value="${lib.dir}/servlet-api-${tools.servlet-api.version}.jar" />
 
 	<!-- unit tests -->
 	<property name="src.test.dir" value="src/test" />
 	<property name="src.test.java.dir" value="${src.test.dir}/java" />
 	<property name="src.test.js.dir" value="${src.test.dir}/js" />
+	<property name="classes.java.dir" value="${dist.dir}/classes" />
 	<property name="classes.test.java.dir" value="${dist.dir}/test/classes" />
+
+	<property name="war.dir" value="${dist.dir}/war" />
 	
 	<!-- FORREST_HOME must be set as an environment variable -->
 	<property name="forrest.home" value="${env.FORREST_HOME}" />
@@ -117,7 +122,7 @@
 	<!-- ================================= 
           target: distribute              
          ================================= -->
-	<target name="dist" depends="dist.api, dist.doc, dist.example" description="--> generate complete distribution">
+	<target name="dist" depends="dist.api, dist.doc, dist.war, dist.example" description="--> generate complete distribution">
 
 	</target>
 
@@ -187,7 +192,7 @@
 		<mkdir dir="${apidoc.dir}" />
 
 		<property name="footer" value="Log4js - Logging API for JavaScript" />
-		<property name="logo" value="${basedir}/logo/1.0/exports/1.0_70px.jpg" />
+		<property name="logo" value="${basedir}/log4js-site/logo/1.0/exports/1.0_70px.jpg" />
 
 		<exec executable="perl">
 			<arg line="${tools.dir}/JSDoc/JSDoc-${tools.jsdoc.version}/jsdoc.pl -r &quot;${src.dir}/js&quot; -d &quot;${apidoc.dir}&quot; -project-name &quot;${ant.project.name} ${version}&quot; -page-footer &quot;${footer}&quot;  -logo &quot;${logo}&quot;" />
@@ -202,7 +207,7 @@
 		<exec executable="${basedir}/${tools.dir}/jsl/jsl-${tools.jsl.version}/jsl.exe" resultproperty="${jslint.result}">
 			<arg line="conf ${tools.dir}/jsl/jsl.conf process ${src.js.dir}/*.js" />
 		</exec>
-		
+
 		<echo message="${jslint.result}" />
 	</target>
 
@@ -223,7 +228,7 @@
           target: download-dependencies                      
          - - - - - - - - - - - - - - - - - -->
 	<target name="download-dependencies" depends="init">
-				<!--setproxy proxyhost="proxy" proxyport="80" /-->
+		<!--setproxy proxyhost="proxy" proxyport="80" /-->
 
 		<description>
 	          To use this Maven-like freedom with respect to dependency setup,
@@ -243,10 +248,10 @@
 
 		<!-- unit testing -->
 		<get dest="${lib.dir}/junit-${tools.junit.version}.jar" usetimestamp="true" ignoreerrors="true" src="http://www.ibiblio.org/maven/junit/jars/junit-${tools.junit.version}.jar" verbose="true" />
-		
+
 		<get dest="${lib.dir}/jsunit${tools.jsunit.version}.zip" usetimestamp="true" ignoreerrors="true" src="http://mesh.dl.sourceforge.net/sourceforge/jsunit/jsunit${tools.jsunit.version}.zip" verbose="true" />
 		<unzip src="${lib.dir}/jsunit${tools.jsunit.version}.zip" dest="${tools.dir}/JSUnit" />
-		
+
 		<get dest="${lib.dir}/jstester-${tools.jstester.version}.jar" usetimestamp="true" ignoreerrors="true" src="http://switch.dl.sourceforge.net/sourceforge/jstester/jstester-${tools.jstester.version}.jar" verbose="true" />
 
 		<get dest="${lib.dir}/js-${tools.rhino.version}.jar" usetimestamp="true" ignoreerrors="true" src="http://www.ibiblio.org/maven/rhino/jars/js-${tools.rhino.version}.jar" verbose="true" />
@@ -254,7 +259,7 @@
 
 
 		<!-- for API documentation -->
-		<get dest="${lib.dir}/JSDoc-${tools.jsdoc.version}.tgz" usetimestamp="true" ignoreerrors="true" src="http://mesh.dl.sourceforge.net/sourceforge/jsdoc/JSDoc-${tools.jsdoc.version}.tgz" verbose="true" />	
+		<get dest="${lib.dir}/JSDoc-${tools.jsdoc.version}.tgz" usetimestamp="true" ignoreerrors="true" src="http://mesh.dl.sourceforge.net/sourceforge/jsdoc/JSDoc-${tools.jsdoc.version}.tgz" verbose="true" />
 		<mkdir dir="${tools.dir}/JSDoc" />
 		<untar compression="gzip" src="${lib.dir}/JSDoc-${tools.jsdoc.version}.tgz" dest="${tools.dir}/JSDoc" />
 
@@ -262,7 +267,7 @@
 		<exec executable="perl">
 			<arg line="-MCPAN -e 'install HTML::Template'" />
 		</exec>
-		
+
 		<!-- JavaScript Lint -->
 		<get dest="${lib.dir}/jsl-${tools.jsl.version}-win32.zip" usetimestamp="true" ignoreerrors="true" src="http://www.javascriptlint.com/download/jsl-${tools.jsl.version}-win32.zip" />
 		<unzip src="${lib.dir}/jsl-${tools.jsl.version}-win32.zip" dest="${tools.dir}/jsl" />
@@ -274,8 +279,9 @@
 		<!--
 		<get dest="${lib.dir}/velocity.zip" usetimestamp="true" ignoreerrors="true" src="http://www.apache.org/dist/jakarta/velocity/velocity-1.4/velocity-1.4.zip" />
 -->
-		<!-- for examples -->
+		<!-- for examples and servlet-->
 		<get dest="${log4j.jar}" usetimestamp="true" ignoreerrors="true" src="http://www.ibiblio.org/maven/log4j/jars/log4j-${tools.log4j.version}.jar" verbose="true" />
+		<get dest="${servlet-api.jar}" usetimestamp="true" ignoreerrors="true" src="http://www.ibiblio.org/maven/javax.servlet/jars/servlet-api-${tools.servlet-api.version}.jar" verbose="true" />
 	</target>
 
 
@@ -292,15 +298,16 @@
          ================================= -->
 	<target name="site" description="Generates static HTML documentation" depends="doc.api, compile">
 
-		<exec executable="${env.FORREST_HOME}/bin/forrest.bat">
+		
+		<exec executable="${env.FORREST_HOME}/bin/forrest.bat" dir="log4js-site">
 
 		</exec>
 
 		<echo>Copy robots.txt into the site...</echo>
-		<copy todir="${project.site-dir}" file="src/xdocs/content/xdocs/robots.txt">
-		
+		<copy todir="${project.site-dir}" file="log4js-site/xdocs/content/xdocs/robots.txt">
+
 		</copy>
-			
+
 		<mkdir dir="${project.site-dir}/apidocs" />
 
 		<echo>Copy api-doc into the site...</echo>
@@ -309,7 +316,7 @@
 				<exclude name="*.bak" />
 			</fileset>
 		</copy>
-		
+
 		<echo>Copy example into the site...</echo>
 		<copy tofile="${project.site-dir}/examples.html" file="${example.src.dir}/index.html" overwrite="true" />
 
@@ -351,8 +358,8 @@
          ================================= -->
 	<target name="test" depends="compile, compile.test" description="--> Unit tests">
 		<mkdir dir="${dist.reports.dir}" />
-		
-		<junit printsummary="yes" >
+
+		<junit printsummary="yes">
 			<classpath>
 				<pathelement location="${dist.dir}" />
 				<pathelement path="${dist.dir}/classes" />
@@ -364,7 +371,7 @@
 			</classpath>
 
 			<formatter type="xml" />
-			
+
 			<batchtest todir="${dist.reports.dir}">
 				<fileset dir="${src.test.java.dir}">
 					<include name="**/*Test.java" />
@@ -380,4 +387,38 @@
 			<report format="frames" todir="${dist.reports.dir}" />
 		</junitreport>
 	</target>
+
+	<!-- ================================= 
+          target: dist.war              
+         ================================= -->
+	<target name="dist.war" depends="init" description="--> distribute war archiv">
+		<mkdir dir="${classes.java.dir}"/>
+		<mkdir dir="${war.dir}" />
+		<mkdir dir="${war.dir}/WEB-INF" />
+		<mkdir dir="${war.dir}/WEB-INF/lib" />
+		<mkdir dir="${war.dir}/WEB-INF/classes" />
+		
+		<javac srcdir="${src.dir}/java" destdir="${classes.java.dir}" classpath="${classpath}" debug="on">
+			<classpath>
+				<fileset dir="${lib.dir}">
+					<include name="*.jar" />
+				</fileset>
+			</classpath>
+		</javac>
+		
+		<copy todir="${war.dir}/WEB-INF/classes">
+			<fileset dir="${classes.java.dir}" />
+   		</copy>
+		<copy todir="${war.dir}/WEB-INF/lib">
+			<fileset dir="${lib.dir}">
+				<include name="*.jar" />
+				<exclude name="servlet-api*.jar"/>
+			</fileset>
+   		</copy>
+		
+		<war basedir="${war.dir}"
+			destfile="${dist.dir}/log4js.war" webxml="${src.dir}/java/WEB-INF/web.xml" />
+
+	</target>
+
 </project>
