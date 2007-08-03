@@ -1081,7 +1081,7 @@ Log4js.ConsoleAppender.prototype = (new Log4js.Appender()).extend( {
 			this.initialize();
 		}
 		
-		if(this.popupBlocker=true) {
+		if(this.popupBlocker) {
 			//popup blocked, we return in this case
 			return;
 		}
