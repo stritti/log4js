@@ -792,10 +792,10 @@ Log4js.Layout.prototype = {
 };
 
 /**
- * Console Appender writes the logs to a console.  If "useWindow" is
- * set to "true" the console launches in another window otherwise
+ * Console Appender writes the logs to a console.  If "inline" is
+ * set to "false" the console launches in another window otherwise
  * the window is inline on the page and toggled on and off with "Alt-D".
- * Note: At FireFox 2.0 the keystroke is little different now: "SHIFT+ALT+D".
+ * Note: At FireFox &gb; 2.0 the keystroke is little different now: "SHIFT+ALT+D".
  *
  * @constructor
  * @extends Log4js.Appender
@@ -816,7 +816,7 @@ Log4js.ConsoleAppender = function(inline) {
 	 * @type boolean
 	 * @private
 	 */
-	this.inline = inline || false;
+	this.inline = inline || true;
 
 	/**
 	 * @type String
@@ -860,11 +860,11 @@ Log4js.ConsoleAppender.prototype = (new Log4js.Appender()).extend( {
 			window.top.consoleWindow = window.open("", this.logger.category, 
 				"left=0,top=0,width=700,height=700,scrollbars=no,status=no,resizable=no;toolbar=no");
 				
-			if (!window.top.consoleWindow) { 
+			/*if (!window.top.consoleWindow) { 
 				this.popupBlocker=true; 
 				alert("Popup window manager blocking the log4js popup window to display.\n\n" 
 					+ "Please disabled this to properly see logged events.");  
-			} else {	
+			} else*/ {	
 				window.top.consoleWindow.opener = self;
 				win = window.top.consoleWindow;
 				doc = win.document;
@@ -1077,7 +1077,7 @@ Log4js.ConsoleAppender.prototype = (new Log4js.Appender()).extend( {
 	 */
 	doAppend : function(loggingEvent) {
 		
-		if ((!this.inline) && (!this.winReference || this.winReference.closed)) {
+		if ((!this.popupBlocker) && (!this.inline) && (!this.winReference || this.winReference.closed)) {
 			this.initialize();
 		}
 		
@@ -1266,7 +1266,7 @@ Log4js.AjaxAppender= function(loggingUrl) {
 	 * @type String
 	 * @private
 	 */
-	this.loggingUrl = loggingUrl || "log4js.jsp";
+	this.loggingUrl = loggingUrl || "logging.log4js";
 	
 	/**
 	 * @type Integer
@@ -1380,14 +1380,15 @@ Log4js.AjaxAppender.prototype = (new Log4js.Appender()).extend( {
 		
 		this.httpRequest.open("POST", this.loggingUrl, true);
 		// set the request headers.
-		this.httpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		//this.httpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		this.httpRequest.setRequestHeader("Content-type", this.layout.getContentType());
 		//REFERER will be the top-level
 		// URI which may differ from the location of the error if
 		// it occurs in an included .js file
 		this.httpRequest.setRequestHeader("REFERER", location.href);
  		this.httpRequest.setRequestHeader("Content-length", content.length);
 		this.httpRequest.setRequestHeader("Connection", "close");
-		this.httpRequest.send("<log4js>" + content + "</log4js>");
+		this.httpRequest.send( content );
 		
 		appender = this;
 		
@@ -1579,15 +1580,8 @@ Log4js.FileAppender.prototype = (new Log4js.Appender()).extend( {
  * @param logger log4js instance this appender is attached to
  * @author Seth Chisamore
  */
-Log4js.WindowsEventAppender = function(logger) {
-	// add  listener to the logger methods
-	logger.onlog.addListener(this.doAppend.bind(this));
-	logger.onclear.addListener(this.doClear.bind(this));
-	/**
-	 * set reference to calling logger
-	 * @type Log4js.Logger
-	 */
-	this.logger = logger;
+Log4js.WindowsEventAppender = function() {
+	
 	this.layout = new Log4js.SimpleLayout();
 	
 	try {
@@ -1654,13 +1648,8 @@ Log4js.WindowsEventAppender.prototype = (new Log4js.Appender()).extend( {
  * @param logger log4js instance this appender is attached to
  * @author S&eacute;bastien LECACHEUR
  */
-Log4js.JSAlertAppender = function(logger) {
+Log4js.JSAlertAppender = function() {
 
-	/**
-	 * set reference to calling logger
-	 * @type Log4js.Logger
-	 */
-	this.logger = logger;
 	this.layout = new Log4js.SimpleLayout();
 };
 
