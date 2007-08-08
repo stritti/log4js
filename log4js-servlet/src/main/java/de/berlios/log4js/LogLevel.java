@@ -30,23 +30,19 @@ public enum LogLevel {
     if ("DEBUG".equals(attribute)) {
       return LogLevel.DEBUG;
     }
-
-    if ("INFO".equals(attribute)) {
+    else if ("INFO".equals(attribute)) {
       return LogLevel.INFO;
     }
-
-    if ("WARN".equals(attribute)) {
+    else if ("WARN".equals(attribute)) {
       return LogLevel.WARN;
     }
-    if ("ERROR".equals(attribute)) {
+    else if ("ERROR".equals(attribute)) {
       return LogLevel.ERROR;
     }
-
-    if ("FATAL".equals(attribute)) {
+    else if ("FATAL".equals(attribute)) {
       return LogLevel.FATAL;
     }
-
-    if ("TRACE".equals(attribute)) {
+    else if ("TRACE".equals(attribute)) {
       return LogLevel.TRACE;
     }
 

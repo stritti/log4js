@@ -31,7 +31,7 @@ import org.xml.sax.SAXException;
 
 import com.sun.org.apache.xerces.internal.dom.DeferredElementImpl;
 
-import de.berlios.log4js.Log4jsEvent;
+import de.berlios.log4js.LoggingEvent;
 import de.berlios.log4js.LogLevel;
 
 /**
@@ -42,9 +42,12 @@ import de.berlios.log4js.LogLevel;
  *
  * @history 02.08.2007   Stephan Strittmatter   created
  */
-public class XmlEventParser {
+public class XmlEventParser implements EventParser {
 
-  public List<Log4jsEvent> parse(String xml) throws ParserConfigurationException, SAXException,
+  /**
+   * @see de.berlios.log4js.parser.EventParser#parse(java.lang.String)
+   */
+  public List<LoggingEvent> parse(String xml) throws ParserConfigurationException, SAXException,
       IOException {
 
     InputStream is = new ByteArrayInputStream(xml.getBytes());
@@ -52,15 +55,9 @@ public class XmlEventParser {
   }
 
   /**
-   * Parses the given String for XML to extract the parameter and assign them to 
-   * the members.
-   *
-   * @param event
-   * @throws ParserConfigurationException 
-   * @throws IOException 
-   * @throws SAXException 
+   * @see de.berlios.log4js.parser.EventParser#parse(java.io.InputStream)
    */
-  public List<Log4jsEvent> parse(InputStream is) throws ParserConfigurationException, SAXException,
+  public List<LoggingEvent> parse(InputStream is) throws ParserConfigurationException, SAXException,
       IOException {
 
     DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -71,7 +68,7 @@ public class XmlEventParser {
     Document document = builder.parse(is);
 
     Element root = document.getDocumentElement();
-    List<Log4jsEvent> eventList = new ArrayList<Log4jsEvent>();
+    List<LoggingEvent> eventList = new ArrayList<LoggingEvent>();
 
     int eventCount = root.getChildNodes().getLength();
     for (int i = 0; i < eventCount; i++) {
@@ -80,26 +77,26 @@ public class XmlEventParser {
 
         DeferredElementImpl eventNode = (DeferredElementImpl) node;
 
-        Log4jsEvent event = new Log4jsEvent();
+        LoggingEvent loggingEvent = new LoggingEvent();
 
-        event.setCategoryName(eventNode.getAttribute("logger"));
-        event.setLogLevel(LogLevel.getLogLevel(eventNode.getAttribute("level")));
-        event.setUserAgent(eventNode.getAttribute("client"));
-        event.setReferer(eventNode.getAttribute("referer"));
-        event.setTimestamp(eventNode.getAttribute("timestamp"));
+        loggingEvent.setCategoryName(eventNode.getAttribute("logger"));
+        loggingEvent.setLogLevel(LogLevel.getLogLevel(eventNode.getAttribute("level")));
+        loggingEvent.setUserAgent(eventNode.getAttribute("client"));
+        loggingEvent.setReferer(eventNode.getAttribute("referer"));
+        loggingEvent.setTimestamp(eventNode.getAttribute("timestamp"));
 
         NodeList nodes = eventNode.getChildNodes();
 
         for (int j = 0; j < nodes.getLength(); j++) {
           Node n = nodes.item(j);
           if ("log4js:message".equals(n.getNodeName())) {
-            event.setMessage(n.getTextContent());
+            loggingEvent.setMessage(n.getTextContent());
           }
           else if ("log4js:exception".equals(n.getNodeName())) {
-            event.setException(n.getTextContent());
+            loggingEvent.setException(n.getTextContent());
           }
         }
-        eventList.add(event);
+        eventList.add(loggingEvent);
       }
     }
 

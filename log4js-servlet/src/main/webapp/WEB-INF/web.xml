@@ -22,29 +22,48 @@
 	version="2.3">
 
 	<display-name>Log4js</display-name>
-
-
-	<context-param>
-		<param-name>javax.faces.CONFIG_FILES</param-name>
-		<param-value>/WEB-INF/PDPORfaces-config.xml</param-value>
-		<description>
-			Comma separated list of URIs of (additional) faces config
-			files. (e.g. /WEB-INF/my-config.xml) See JSF 1.0 PRD2,
-			10.3.2
-		</description>
-	</context-param>
 	
 	<servlet>
 	    <servlet-name>Log4js Servlet</servlet-name>
-	    <servlet-class>de.berlios.log4js.servlet.Log4jsServlet</servlet-class>
+	    <servlet-class>de.berlios.log4js.Log4jsServlet</servlet-class>
+
 		<init-param>
-			<param-name>logger</param-name>
-			<param-value>xxx</param-value>
-		</init-param>	    
+			<param-name>logging.adapter</param-name>
+			<param-value>de.berlios.log4js.adapter.Log4jAdapter</param-value>
+			<description>
+				Adapter which adapts the specific logging implementation like Java logging or Log4j.
+				This adapter has to implement the interface de.berlios.log4js.adapter.Adapter.
+				E.g.: de.berlios.log4js.adapter.JavaLoggingAdapter, 
+				de.berlios.log4js.adapter.Log4jAdapter
+			</description>
+		</init-param>
+				
+		<init-param>
+			<param-name>parser.text/xml</param-name>
+			<param-value>de.berlios.log4js.parser.XmlEventParser</param-value>
+			<description>Parser implementation for XML data.</description>
+		</init-param>
+	
+		<init-param>
+			<param-name>parser.text/json</param-name>
+			<param-value>de.berlios.log4js.parser.JsonEventParser</param-value>
+			<description>Parser implementation for JSON data.</description>
+		</init-param>    
 	</servlet>
+	
 	<servlet-mapping>
 	    <servlet-name>Log4js Servlet</servlet-name>
 	    <url-pattern>/log4js/*</url-pattern>
 	</servlet-mapping>
+
+	<servlet-mapping>
+	    <servlet-name>Log4js Servlet</servlet-name>
+	    <url-pattern>/log4js</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+	    <servlet-name>Log4js Servlet</servlet-name>
+	    <url-pattern>*.log4js</url-pattern>
+	</servlet-mapping>		
 	
 </web-app>

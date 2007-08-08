@@ -21,11 +21,16 @@ import java.io.Serializable;
  * @author Stephan Strittmatter
  * @created 02.08.2007
  */
-public class Log4jsEvent implements Serializable {
+public class LoggingEvent implements Serializable {
+
+  /**
+   * <Brief description (possible values, meaning, ...)>
+   */
+  private static final long serialVersionUID = 1L;
 
   String categoryName;
 
-  LogLevel logLevel;
+  de.berlios.log4js.LogLevel logLevel;
 
   String userAgent;
 
@@ -37,7 +42,7 @@ public class Log4jsEvent implements Serializable {
 
   String exception;
 
-  public Log4jsEvent() {
+  public LoggingEvent() {
 
   }
 

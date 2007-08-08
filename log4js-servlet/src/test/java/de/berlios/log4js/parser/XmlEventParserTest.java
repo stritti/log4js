@@ -18,15 +18,18 @@ import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import junit.framework.TestCase;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
-import de.berlios.log4js.parser.XmlEventParser;
+import de.berlios.log4js.LoggingEvent;
+import de.berlios.log4js.LogLevel;
 
-public class XmlEventParserTest {
+public class XmlEventParserTest extends TestCase {
 
   @Before
   public void setUp() throws Exception {
@@ -61,22 +64,22 @@ public class XmlEventParserTest {
     content += "<log4js:exception><![CDATA[" + "Exceptionsation 2" + "]]></log4js:exception>\n";
     content += "\t</log4js:event></log4js>\n";
 
-    XmlEventParser parser = new XmlEventParser();
+    EventParser parser = new XmlEventParser();
 
-    List<Log4jsEvent> actual = parser.parse(content);
+    List<LoggingEvent> actual = parser.parse(content);
     Assert.assertEquals(2, actual.size());
 
-    Log4jsEvent event = actual.get(0);
-    Assert.assertEquals("category", event.getCategoryName());
+    LoggingEvent loggingEvent = actual.get(0);
+    Assert.assertEquals("category", loggingEvent.getCategoryName());
 
-    Assert.assertEquals("Exceptionsation", event.getException());
-    Assert.assertEquals(LogLevel.ERROR, event.getLogLevel());
+    Assert.assertEquals("Exceptionsation", loggingEvent.getException());
+    Assert.assertEquals(LogLevel.ERROR, loggingEvent.getLogLevel());
 
-    event = actual.get(1);
-    Assert.assertEquals("category 2", event.getCategoryName());
+    loggingEvent = actual.get(1);
+    Assert.assertEquals("category 2", loggingEvent.getCategoryName());
 
-    Assert.assertEquals("Exceptionsation 2", event.getException());
-    Assert.assertEquals(LogLevel.INFO, event.getLogLevel());
+    Assert.assertEquals("Exceptionsation 2", loggingEvent.getException());
+    Assert.assertEquals(LogLevel.INFO, loggingEvent.getLogLevel());
   }
 
 }
