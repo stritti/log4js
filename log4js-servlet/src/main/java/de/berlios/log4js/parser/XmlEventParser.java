@@ -29,78 +29,76 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import com.sun.org.apache.xerces.internal.dom.DeferredElementImpl;
-
-import de.berlios.log4js.LoggingEvent;
 import de.berlios.log4js.LogLevel;
+import de.berlios.log4js.LoggingEvent;
 
 /**
  * Parser to parse XML of log4js events.
- *
+ * 
  * @author Stephan Strittmatter
  * @created 02.08.2007
- *
- * @history 02.08.2007   Stephan Strittmatter   created
+ * 
+ * @history 02.08.2007 Stephan Strittmatter created
  */
 public class XmlEventParser implements EventParser {
 
-  /**
-   * @see de.berlios.log4js.parser.EventParser#parse(java.lang.String)
-   */
-  public List<LoggingEvent> parse(String xml) throws ParserConfigurationException, SAXException,
-      IOException {
+	/**
+	 * @see de.berlios.log4js.parser.EventParser#parse(java.lang.String)
+	 */
+	public List<LoggingEvent> parse(String xml)
+			throws ParserConfigurationException, SAXException, IOException {
 
-    InputStream is = new ByteArrayInputStream(xml.getBytes());
-    return parse(is);
-  }
+		InputStream is = new ByteArrayInputStream(xml.getBytes());
+		return parse(is);
+	}
 
-  /**
-   * @see de.berlios.log4js.parser.EventParser#parse(java.io.InputStream)
-   */
-  public List<LoggingEvent> parse(InputStream is) throws ParserConfigurationException, SAXException,
-      IOException {
+	/**
+	 * @see de.berlios.log4js.parser.EventParser#parse(java.io.InputStream)
+	 */
+	public List<LoggingEvent> parse(InputStream is)
+			throws ParserConfigurationException, SAXException, IOException {
 
-    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-    factory.setValidating(false);
-    factory.setIgnoringComments(true);
-    factory.setIgnoringElementContentWhitespace(true);
-    DocumentBuilder builder = factory.newDocumentBuilder();
-    Document document = builder.parse(is);
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		factory.setValidating(false);
+		factory.setIgnoringComments(true);
+		factory.setIgnoringElementContentWhitespace(true);
+		DocumentBuilder builder = factory.newDocumentBuilder();
+		Document document = builder.parse(is);
 
-    Element root = document.getDocumentElement();
-    List<LoggingEvent> eventList = new ArrayList<LoggingEvent>();
+		Element root = document.getDocumentElement();
+		List<LoggingEvent> eventList = new ArrayList<LoggingEvent>();
 
-    int eventCount = root.getChildNodes().getLength();
-    for (int i = 0; i < eventCount; i++) {
-      Node node = root.getChildNodes().item(i);
-      if (node instanceof DeferredElementImpl) {
+		int eventCount = root.getChildNodes().getLength();
+		for (int i = 0; i < eventCount; i++) {
+			Node node = root.getChildNodes().item(i);
+			if (node instanceof Element) {
 
-        DeferredElementImpl eventNode = (DeferredElementImpl) node;
+				Element eventNode = (Element) node;
 
-        LoggingEvent loggingEvent = new LoggingEvent();
+				LoggingEvent loggingEvent = new LoggingEvent();
 
-        loggingEvent.setCategoryName(eventNode.getAttribute("logger"));
-        loggingEvent.setLogLevel(LogLevel.getLogLevel(eventNode.getAttribute("level")));
-        loggingEvent.setUserAgent(eventNode.getAttribute("client"));
-        loggingEvent.setReferer(eventNode.getAttribute("referer"));
-        loggingEvent.setTimestamp(eventNode.getAttribute("timestamp"));
+				loggingEvent.setCategoryName(eventNode.getAttribute("logger"));
+				loggingEvent.setLogLevel(LogLevel.getLogLevel(eventNode
+						.getAttribute("level")));
+				loggingEvent.setUserAgent(eventNode.getAttribute("client"));
+				loggingEvent.setReferer(eventNode.getAttribute("referer"));
+				loggingEvent.setTimestamp(eventNode.getAttribute("timestamp"));
 
-        NodeList nodes = eventNode.getChildNodes();
+				NodeList nodes = eventNode.getChildNodes();
 
-        for (int j = 0; j < nodes.getLength(); j++) {
-          Node n = nodes.item(j);
-          if ("log4js:message".equals(n.getNodeName())) {
-            loggingEvent.setMessage(n.getTextContent());
-          }
-          else if ("log4js:exception".equals(n.getNodeName())) {
-            loggingEvent.setException(n.getTextContent());
-          }
-        }
-        eventList.add(loggingEvent);
-      }
-    }
+				for (int j = 0; j < nodes.getLength(); j++) {
+					Node n = nodes.item(j);
+					if ("log4js:message".equals(n.getNodeName())) {
+						loggingEvent.setMessage(n.getTextContent());
+					} else if ("log4js:exception".equals(n.getNodeName())) {
+						loggingEvent.setException(n.getTextContent());
+					}
+				}
+				eventList.add(loggingEvent);
+			}
+		}
 
-    return eventList;
-  }
+		return eventList;
+	}
 
 }
