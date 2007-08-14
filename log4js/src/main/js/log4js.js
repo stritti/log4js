@@ -119,10 +119,11 @@ var Log4js = {
 			categoryName = "[default]";
 		}
 
-		// Create the logger for this name if it doesn't already exist
 		if (!Log4js.loggers[categoryName]) {
+			// Create the logger for this name if it doesn't already exist
 			Log4js.loggers[categoryName] = new Log4js.Logger(categoryName);
 		}
+		
 		return Log4js.loggers[categoryName];
 	},
 	
@@ -149,13 +150,13 @@ var Log4js = {
     	} else if (element.attachEvent) { //M$ event model
 			element.attachEvent('on' + name, observer);
     	}
-	},
+	}
 	
 	/**
 	 * Load a JS-script dynamically.
 	 * @param {String} src
 	 */
-	$import: function(src){
+/*	$import: function (src) {
 		var documentScripts = document.getElementsByTagName("script");
 	
 		for (index = 0; index < documentScripts.length; ++index)
@@ -170,7 +171,10 @@ var Log4js = {
 		script.type = 'text/javascript';
 		script.src = src;
 		document.getElementsByTagName('head')[0].appendChild(script); 
+		
+		return true;
 	}
+	*/
 };
 
 
@@ -482,7 +486,7 @@ Log4js.Logger = function(name) {
 	try {
 		window.onerror = this.windowError.bind(this);
 	} catch (e) {
-		//log4jsLogger.fatal(e);
+		log4jsLogger.fatal(e);
 	}
 };
 
@@ -788,6 +792,14 @@ Log4js.Layout.prototype = {
 	 */
 	getFooter: function() {
 		return null;
+	},
+	
+	/**
+	 * @return Separator between events
+	 * @type String
+	 */
+	getSeparator: function() {
+		return "";
 	}
 };
 
@@ -799,13 +811,12 @@ Log4js.Layout.prototype = {
  *
  * @constructor
  * @extends Log4js.Appender
- * @param {Log4js.Logger} logger log4js instance this appender is attached to
- * @param {boolean} inline boolean value that indicates whether the console be placed inline, default is to launch in new window
+ * @param {boolean} isInline boolean value that indicates whether the console be placed inline, default is to launch in new window
  *
  * @author Corey Johnson - original console code in Lumberjack (http://gleepglop.com/javascripts/logger/)
  * @author Seth Chisamore - adapted for use as a log4js appender
  */
-Log4js.ConsoleAppender = function(inline) {
+Log4js.ConsoleAppender = function(isInline) {
 	
 	/**
 	 * @type Log4js.Layout
@@ -816,7 +827,7 @@ Log4js.ConsoleAppender = function(inline) {
 	 * @type boolean
 	 * @private
 	 */
-	this.inline = inline || true;
+	this.inline = isInline;
 
 	/**
 	 * @type String
@@ -828,6 +839,22 @@ Log4js.ConsoleAppender = function(inline) {
 	 * @private
 	 */
 	this.tagPattern = null;
+	
+	this.commandHistory = [];
+  	this.commandIndex = 0;
+  	
+  	/**
+  	 * true if popup is blocked.
+  	 */
+  	this.popupBlocker = false;
+  	
+  	/**
+  	 * current output div-element.
+  	 */
+  	this.outputElement = null;
+  	
+  	this.docReference = null;
+	this.winReference = null;		
 		
 	if(this.inline) {
 		Log4js.attachEvent(window, 'load', this.initialize.bind(this));
@@ -835,10 +862,6 @@ Log4js.ConsoleAppender = function(inline) {
 };
 
 Log4js.ConsoleAppender.prototype = (new Log4js.Appender()).extend( {  
-
-	commandHistory : [],
-  	commandIndex : 0,
-  	popupBlocker : true,
 
 	/**
 	 * Set the access key to show/hide the inline console (default &quote;d&quote;)
@@ -853,40 +876,43 @@ Log4js.ConsoleAppender.prototype = (new Log4js.Appender()).extend( {
 	 */
   	initialize : function() {
 		
-		var doc = document;	
-		var win = window;
-		
 		if(!this.inline) {
+			var doc = null;	
+			var win = null;
 			window.top.consoleWindow = window.open("", this.logger.category, 
 				"left=0,top=0,width=700,height=700,scrollbars=no,status=no,resizable=no;toolbar=no");
-				
-			/*if (!window.top.consoleWindow) { 
+			window.top.consoleWindow.opener = self;
+			win = window.top.consoleWindow;
+								
+			if (!win) { 
 				this.popupBlocker=true; 
 				alert("Popup window manager blocking the log4js popup window to display.\n\n" 
 					+ "Please disabled this to properly see logged events.");  
-			} else*/ {	
-				window.top.consoleWindow.opener = self;
-				win = window.top.consoleWindow;
+			} else {	
+
 				doc = win.document;
 				doc.open();
 				doc.write("<!DOCTYPE html PUBLIC -//W3C//DTD XHTML 1.0 Transitional//EN ");
 				doc.write("  http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd>\n\n");
-				doc.write("<html><head><title>" + this.logger.category + "</title>\n");
+				doc.write("<html><head><title>Log4js - " + this.logger.category + "</title>\n");
 				doc.write("</head><body style=\"background-color:darkgray\"></body>\n");
 				win.blur();
 				win.focus();
 			}
+			
+			this.docReference = doc;
+			this.winReference = win;
+		} else {
+			this.docReference = document;
+			this.winReference = window;			
 		}
-		
-		this.docReference = doc;
-		this.winReference = win;
-		
+				
 		this.outputCount = 0;
 		this.tagPattern = ".*";
 	  
 		// I hate writing javascript in HTML... but what's a better alternative
-		this.logElement = doc.createElement('div');
-		doc.body.appendChild(this.logElement);
+		this.logElement = this.docReference.createElement('div');
+		this.docReference.body.appendChild(this.logElement);
 		this.logElement.style.display = 'none';
 		
 		this.logElement.style.position = "absolute";
@@ -901,16 +927,16 @@ Log4js.ConsoleAppender.prototype = (new Log4js.Appender()).extend( {
 		this.logElement.style.zIndex = 2000; 
 	
 		// Add toolbarElement
-		this.toolbarElement = doc.createElement('div');
+		this.toolbarElement = this.docReference.createElement('div');
 		this.logElement.appendChild(this.toolbarElement);     
 		this.toolbarElement.style.padding = "0 0 0 2px";
 	
 		// Add buttons        
-		this.buttonsContainerElement = doc.createElement('span');
+		this.buttonsContainerElement = this.docReference.createElement('span');
 		this.toolbarElement.appendChild(this.buttonsContainerElement); 
 	
 		if(this.inline) {
-			var closeButton = doc.createElement('button');
+			var closeButton = this.docReference.createElement('button');
 			closeButton.style.cssFloat = "right";
 			closeButton.style.styleFloat = "right"; // IE dom bug...doesn't understand cssFloat
 			closeButton.style.color = "black";
@@ -919,7 +945,7 @@ Log4js.ConsoleAppender.prototype = (new Log4js.Appender()).extend( {
 			this.buttonsContainerElement.appendChild(closeButton);
 		}
 		
-		var clearButton = doc.createElement('button');
+		var clearButton = this.docReference.createElement('button');
 		clearButton.style.cssFloat = "right";
 		clearButton.style.styleFloat = "right"; // IE dom bug...doesn't understand cssFloat
 		clearButton.style.color = "black";
@@ -927,13 +953,21 @@ Log4js.ConsoleAppender.prototype = (new Log4js.Appender()).extend( {
 		clearButton.onclick = this.logger.clear.bind(this.logger);
 		this.buttonsContainerElement.appendChild(clearButton);
 	
+		//Add CategoryName
+//		var categoryNameElement = this.docReference.createElement('span');
+//		this.toolbarElement.appendChild(categoryNameElement);
+//		categoryNameElement.style.cssFloat = 'left';
+//		categoryNameElement.appendChild(this.docReference.createTextNode("Log4js - " + this.logger.category));
+		
 		//Add Level Filter
-		this.tagFilterContainerElement = doc.createElement('span');
+		this.tagFilterContainerElement = this.docReference.createElement('span');
 		this.toolbarElement.appendChild(this.tagFilterContainerElement);
 		this.tagFilterContainerElement.style.cssFloat = 'left';
-		this.tagFilterContainerElement.appendChild(doc.createTextNode("Level Filter"));
 		
-		this.tagFilterElement = doc.createElement('input');
+		this.tagFilterContainerElement.appendChild(this.docReference.createTextNode("Log4js - " + this.logger.category));
+		this.tagFilterContainerElement.appendChild(this.docReference.createTextNode(" | Level Filter: "));
+		
+		this.tagFilterElement = this.docReference.createElement('input');
 		this.tagFilterContainerElement.appendChild(this.tagFilterElement);
 		this.tagFilterElement.style.width = '200px';                    
 		this.tagFilterElement.value = this.tagPattern;    
@@ -943,7 +977,7 @@ Log4js.ConsoleAppender.prototype = (new Log4js.Appender()).extend( {
 		Log4js.attachEvent(this.tagFilterElement, 'click', function() {this.tagFilterElement.select();}.bind(this));
 		
 		// Add outputElement
-		this.outputElement = doc.createElement('div');
+		this.outputElement = this.docReference.createElement('div');
 		this.logElement.appendChild(this.outputElement);  
 		this.outputElement.style.overflow = "auto";              
 		this.outputElement.style.clear = "both";
@@ -951,11 +985,11 @@ Log4js.ConsoleAppender.prototype = (new Log4js.Appender()).extend( {
 		this.outputElement.style.width = "100%";
 		this.outputElement.style.backgroundColor = 'black'; 
 			  
-		this.inputContainerElement = doc.createElement('div');
+		this.inputContainerElement = this.docReference.createElement('div');
 		this.inputContainerElement.style.width = "100%";
 		this.logElement.appendChild(this.inputContainerElement);      
 		
-		this.inputElement = doc.createElement('input');
+		this.inputElement = this.docReference.createElement('input');
 		this.inputContainerElement.appendChild(this.inputElement);  
 		this.inputElement.style.width = '100%';
 		this.inputElement.style.borderWidth = '0px'; // Inputs with 100% width always seem to be too large (I HATE THEM) they only work if the border, margin and padding are 0
@@ -971,12 +1005,12 @@ Log4js.ConsoleAppender.prototype = (new Log4js.Appender()).extend( {
 			window.setInterval(this.repositionWindow.bind(this), 500);
 			this.repositionWindow();	
 			// Allow acess key link          
-			var accessElement = doc.createElement('button');
+			var accessElement = this.docReference.createElement('button');
 			accessElement.style.position = "absolute";
 			accessElement.style.top = "-100px";
 			accessElement.accessKey = this.accesskey;
 			accessElement.onclick = this.toggle.bind(this);
-			doc.body.appendChild(accessElement);
+			this.docReference.body.appendChild(accessElement);
 		} else {
 			this.show();
 		}
@@ -984,12 +1018,15 @@ Log4js.ConsoleAppender.prototype = (new Log4js.Appender()).extend( {
 	/**
 	 * shows/hide an element
 	 * @private
+	 * @return true if shown
 	 */
 	toggle : function() {
 		if (this.logElement.style.display == 'none') {
 		 	this.show();
+		 	return true;
 		} else {
 			this.hide();
+			return false;
 		}
 	}, 
 	/**
@@ -1077,13 +1114,13 @@ Log4js.ConsoleAppender.prototype = (new Log4js.Appender()).extend( {
 	 */
 	doAppend : function(loggingEvent) {
 		
-		if ((!this.popupBlocker) && (!this.inline) && (!this.winReference || this.winReference.closed)) {
-			this.initialize();
-		}
-		
 		if(this.popupBlocker) {
 			//popup blocked, we return in this case
 			return;
+		}
+		
+		if ((!this.inline) && (!this.winReference || this.winReference.closed)) {
+			this.initialize();
 		}
 		
 		if (this.tagPattern !== null && 
@@ -1115,12 +1152,6 @@ Log4js.ConsoleAppender.prototype = (new Log4js.Appender()).extend( {
 	 */
 	doClear : function() {
 		this.outputElement.innerHTML = "";
-	},
-	/**
-	 * @see Log4js.Appender#setLayout
-	 */
-	setLayout: function(layout){
-		this.layout = layout;
 	},
 	/**
 	 * @private
@@ -1216,19 +1247,7 @@ Log4js.MetatagAppender.prototype = (new Log4js.Appender()).extend( {
 			this.currentLine += 1;
 		}
 	},
-	/**
-	 * do nothing
-	 * @see Log4js.Appender#doClear
-	 */	
-	doClear: function() {
-		return;
-	},
-	/**
-	 * @see Log4js.Appender#setLayout
-	 */
-	setLayout: function(layout){
-		this.layout = layout;
-	},
+
 	/** 
 	 * toString
 	 */
@@ -1253,7 +1272,7 @@ Log4js.MetatagAppender.prototype = (new Log4js.Appender()).extend( {
  * @param {String} loggingUrl url where appender will post log messages to
  * @author Stephan Strittmatter
  */
-Log4js.AjaxAppender= function(loggingUrl) {
+Log4js.AjaxAppender = function(loggingUrl) {
 
 	/**
 	 * is still esnding data to server
@@ -1329,11 +1348,6 @@ Log4js.AjaxAppender.prototype = (new Log4js.Appender()).extend( {
 		log4jsLogger.trace("< AjaxAppender.doClear" );
 	},
 	
-	/** @see Appender#setLayout */
-	setLayout: function(layout){
-		this.layout = layout;
-	},
-	
 	/**
 	 * Set the threshold when logs have to be send. Default threshold is 1.
 	 * @praram {int} threshold new threshold
@@ -1357,58 +1371,62 @@ Log4js.AjaxAppender.prototype = (new Log4js.Appender()).extend( {
 	 * send the request.
 	 */
 	send: function() {
-		log4jsLogger.trace("> AjaxAppender.send");
-		
-		this.isInProgress = true;
-		
-		var content = this.layout.getHeader();
-		
-		for(var i = 0; i < this.loggingEventMap.length() && i < this.threshold; i++) {
-			content +=  this.layout.format(this.loggingEventMap.pull());
-		} 
-		
-		content += this.layout.getFooter();
-		
-
-		var appender = this;
-		if(this.httpRequest === null){
-			this.httpRequest = this.getXmlHttpRequest();
-		}
-		this.httpRequest.onreadystatechange = function() {
-			appender.onReadyStateChanged.call(appender);
-		};
-		
-		this.httpRequest.open("POST", this.loggingUrl, true);
-		// set the request headers.
-		//this.httpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		this.httpRequest.setRequestHeader("Content-type", this.layout.getContentType());
-		//REFERER will be the top-level
-		// URI which may differ from the location of the error if
-		// it occurs in an included .js file
-		this.httpRequest.setRequestHeader("REFERER", location.href);
- 		this.httpRequest.setRequestHeader("Content-length", content.length);
-		this.httpRequest.setRequestHeader("Connection", "close");
-		this.httpRequest.send( content );
-		
-		appender = this;
-		
-		try {
-			window.setTimeout(function(){
-				log4jsLogger.trace("> AjaxAppender.timeout");
-				appender.httpRequest.onreadystatechange = function(){return;};
-				appender.httpRequest.abort();
-				//this.httpRequest = null;
-				appender.isInProgress = false;
+		if(this.loggingEventMap.length() >0) {
+			
+			log4jsLogger.trace("> AjaxAppender.send");
+			
+			
+			this.isInProgress = true;
+			var a = [];
 	
-				if(appender.loggingEventMap.length() > 0) {
-					appender.send();
-				}
-				log4jsLogger.trace("< AjaxAppender.timeout");
-			}, this.timeout);
-		} catch (e) {
-			log4jsLogger.fatal(e);
+			for(var i = 0; i < this.loggingEventMap.length() && i < this.threshold; i++) {
+				a.push(this.layout.format(this.loggingEventMap.pull()));
+			} 
+					
+			var content = this.layout.getHeader();	
+			content += a.join(this.layout.getSeparator());
+			content += this.layout.getFooter();
+			
+			var appender = this;
+			if(this.httpRequest === null){
+				this.httpRequest = this.getXmlHttpRequest();
+			}
+			this.httpRequest.onreadystatechange = function() {
+				appender.onReadyStateChanged.call(appender);
+			};
+			
+			this.httpRequest.open("POST", this.loggingUrl, true);
+			// set the request headers.
+			//this.httpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			this.httpRequest.setRequestHeader("Content-type", this.layout.getContentType());
+			//REFERER will be the top-level
+			// URI which may differ from the location of the error if
+			// it occurs in an included .js file
+			this.httpRequest.setRequestHeader("REFERER", location.href);
+	 		this.httpRequest.setRequestHeader("Content-length", content.length);
+			this.httpRequest.setRequestHeader("Connection", "close");
+			this.httpRequest.send( content );
+			
+			appender = this;
+			
+			try {
+				window.setTimeout(function(){
+					log4jsLogger.trace("> AjaxAppender.timeout");
+					appender.httpRequest.onreadystatechange = function(){return;};
+					appender.httpRequest.abort();
+					//this.httpRequest = null;
+					appender.isInProgress = false;
+		
+					if(appender.loggingEventMap.length() > 0) {
+						appender.send();
+					}
+					log4jsLogger.trace("< AjaxAppender.timeout");
+				}, this.timeout);
+			} catch (e) {
+				log4jsLogger.fatal(e);
+			}
+			log4jsLogger.trace("> AjaxAppender.send");
 		}
-		log4jsLogger.trace("> AjaxAppender.send");
 	},
 	
 	/**
@@ -1493,21 +1511,24 @@ Log4js.AjaxAppender.prototype = (new Log4js.Appender()).extend( {
  * @author Nicolas Justin njustin@idealx.com
  * @author Gregory Kokanosky gkokanosky@idealx.com
  */
-Log4js.FileAppender = function( file) {
+Log4js.FileAppender = function(file) {
 
 	this.layout = new Log4js.SimpleLayout();
-	this.isIE = true;
+	this.isIE = 'undefined';
 	
-	this.file = file || "C:\\log4js.log";	
+	this.file = file || "log4js.log";	
 	
 	try{
 		this.fso = new ActiveXObject("Scripting.FileSystemObject");
+		this.isIE = true;
 	} catch(e){
 		try {
 			netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
 			this.fso =  Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile);
 			this.isIE = false; //mozilla & co
-		} catch (e) {}
+		} catch (e) {
+			log4jsLogger.error(e);
+		}
 	}
 };
 
@@ -1519,7 +1540,11 @@ Log4js.FileAppender.prototype = (new Log4js.Appender()).extend( {
 	doAppend: function(loggingEvent) {
 		try {
 			var fileHandle = null;
-			if( this.isIE ){
+			
+			if( this.isIE === 'undefined') {
+				log4jsLogger.error("Unsupported ")
+			}
+			else if( this.isIE ){
 				// try opening existing file, create if needed
 				fileHandle = this.fso.OpenTextFile(this.file, 8, true);        
 				// write out our data
@@ -1528,8 +1553,10 @@ Log4js.FileAppender.prototype = (new Log4js.Appender()).extend( {
 			} else {
 				netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
 				this.fso.initWithPath(this.file);
-        			if(!this.fso.exists()) //create file if needed
-	            			this.fso.create(0x00, 0600);
+    			if(!this.fso.exists()) {
+    				//create file if needed
+            		this.fso.create(0x00, 0600);
+    			}
 				
  				fileHandle = Components.classes["@mozilla.org/network/file-output-stream;1"].createInstance(Components.interfaces.nsIFileOutputStream);
         		fileHandle.init( this.fso, 0x04 | 0x08 | 0x10, 064, 0);
@@ -1537,7 +1564,9 @@ Log4js.FileAppender.prototype = (new Log4js.Appender()).extend( {
         		fileHandle.write(line, line.length); //write data
         		fileHandle.close();
 			}
-		} catch (e) {}
+		} catch (e) {
+			log4jsLogger.error(e);
+		}
 	},
 	/*
 	 * @see Log4js.Appender#doClear
@@ -1554,13 +1583,9 @@ Log4js.FileAppender.prototype = (new Log4js.Appender()).extend( {
 					this.fso.remove(false);
 				}
 			}
-		} catch (e) {}
-	},
-	/**
-	 * @see Log4js.Appender#setLayout
-	 */
-	setLayout: function(layout){
-		this.layout = layout;
+		} catch (e) {
+			log4jsLogger.error(e);
+		}
 	},
 	
 	/** 
@@ -1586,7 +1611,9 @@ Log4js.WindowsEventAppender = function() {
 	
 	try {
 		this.shell = new ActiveXObject("WScript.Shell");
-	} catch(e) {}
+	} catch(e) {
+		log4jsLogger.error(e);
+	}
 };
 
 Log4js.WindowsEventAppender.prototype = (new Log4js.Appender()).extend( {
@@ -1617,20 +1644,8 @@ Log4js.WindowsEventAppender.prototype = (new Log4js.Appender()).extend( {
 		try {
 			this.shell.LogEvent(winLevel, this.level.format(loggingEvent));
 		} catch(e) {
-				
+			log4jsLogger.error(e);
 		}
-	},
-	/**
-	 * @see Log4js.Appender#doClear
-	 */
-	doClear: function() {
-		return;
-	},
-	/**
-	 * @see Log4js.Appender#setLayout
-	 */
-	setLayout: function(layout){
-		this.layout = layout;
 	},
 	
 	/** 
@@ -1660,19 +1675,7 @@ Log4js.JSAlertAppender.prototype = (new Log4js.Appender()).extend( {
 	doAppend: function(loggingEvent) {
 		alert(this.layout.getHeader() + this.layout.format(loggingEvent) + this.layout.getFooter());
 	},
-	/** 
-	 * @see Log4js.Appender#doClear
-	 */
-	doClear: function() {
-		return;
-	},
 	
-	/**
-	 * @see Log4js.Appender#setLayout
-	 */
-	setLayout: function(layout){
-		this.layout = layout;
-	}, 
 	/** 
 	 * toString
 	 */
@@ -1692,9 +1695,13 @@ Log4js.JSAlertAppender.prototype = (new Log4js.Appender()).extend( {
  */
 Log4js.MozillaJSConsoleAppender = function() {
 	this.layout = new Log4js.SimpleLayout();
-	netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
-	this.jsConsole = Components.classes["@mozilla.org/consoleservice;1"].getService(Components.interfaces.nsIConsoleService);
-	this.scriptError = Components.classes["@mozilla.org/scripterror;1"].createInstance(Components.interfaces.nsIScriptError);
+	try {
+		netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
+		this.jsConsole = Components.classes["@mozilla.org/consoleservice;1"].getService(Components.interfaces.nsIConsoleService);
+		this.scriptError = Components.classes["@mozilla.org/scripterror;1"].createInstance(Components.interfaces.nsIScriptError);
+	} catch (e) {
+		log4jsLogger.error(e);
+	}
 };
 
 Log4js.MozillaJSConsoleAppender.prototype = (new Log4js.Appender()).extend( {
@@ -1702,22 +1709,13 @@ Log4js.MozillaJSConsoleAppender.prototype = (new Log4js.Appender()).extend( {
 	 * @see Log4js.Appender#doAppend
 	 */
 	doAppend: function(loggingEvent) {
-		netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
-		this.scriptError.init(this.layout.format(loggingEvent), null, null, null, null, this.getFlag(loggingEvent), loggingEvent.categoryName);
-		this.jsConsole.logMessage(this.scriptError);
-	},
-	/** 
-	 * Not supported by this appender.
-	 * @see Log4js.Appender#doClear
-	 */
-	doClear: function() {
-		return;
-	},
-	/**
-	 * @see Log4js.Appender#setLayout
-	 */
-	setLayout: function(layout){
-		this.layout = layout;
+		try {
+			netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
+			this.scriptError.init(this.layout.format(loggingEvent), null, null, null, null, this.getFlag(loggingEvent), loggingEvent.categoryName);
+			this.jsConsole.logMessage(this.scriptError);
+		} catch (e) {
+			log4jsLogger.error(e);
+		}
 	},
 	
 	/** 
@@ -1778,18 +1776,6 @@ Log4js.OperaJSConsoleAppender.prototype = (new Log4js.Appender()).extend( {
 	doAppend: function(loggingEvent) {
 		opera.postError(this.layout.format(loggingEvent));
 	},
-	/** 
-	 * @see Log4js.Appender#doClear
-	 */
-	doClear: function() {
-		return;
-	},
-	/**
-	 * @see Log4js.Appender#setLayout
-	 */
-	setLayout: function(layout){
-		this.layout = layout;
-	},
 	
 	/** 
 	 * toString
@@ -1817,18 +1803,6 @@ Log4js.SafariJSConsoleAppender.prototype = (new Log4js.Appender()).extend( {
 	 */
 	doAppend: function(loggingEvent) {
 		window.console.log(this.layout.format(loggingEvent));
-	},
-	/** 
-	 * @see Log4js.Appender#doClear
-	 */
-	doClear: function() {
-		return;
-	},
-	/**
-	 * @see Log4js.Appender#setLayout
-	 */
-	setLayout: function(layout){
-		this.layout = layout;
 	},
 	
 	/** 
@@ -1866,6 +1840,7 @@ Log4js.BrowserConsoleAppender = function() {
 	}
     else {
        //@todo
+       log4jsLogger.error("Unsupported Browser");
     }
 };
 
@@ -1893,7 +1868,7 @@ Log4js.BrowserConsoleAppender.prototype = (new Log4js.Appender()).extend( {
 	 * toString
 	 */
 	 toString: function() {
-	 	return "Log4js.JSConsoleAppender: " + this.consoleDelegate.toString(); 
+	 	return "Log4js.BrowserConsoleAppender: " + this.consoleDelegate.toString(); 
 	 }
 });
 
@@ -2092,18 +2067,18 @@ Log4js.XMLLayout.prototype = (new Log4js.Layout()).extend( {
 			referer = "unknown";
 		}
 				
-		var content = "\t<log4js:event logger=\"";
+		var content = "<log4js:event logger=\"";
 		content += loggingEvent.categoryName + "\" level=\"";
 		content += loggingEvent.level.toString() + "\" client=\"";
 		content += useragent + "\" referer=\"";
 		content += referer + "\" timestamp=\"";
-		content += loggingEvent.getFormattedTimestamp() + "\">\n\t\t";
-		content += "<log4js:message><![CDATA[" + this.escapeCdata(loggingEvent.message) + "]]></log4js:message>\n";	
+		content += loggingEvent.getFormattedTimestamp() + "\">\n";
+		content += "\t<log4js:message><![CDATA[" + this.escapeCdata(loggingEvent.message) + "]]></log4js:message>\n";	
  		
  		if (loggingEvent.exception) {
-			content += "<log4js:exception><![CDATA[" + this.formatException(loggingEvent.exception) + "]]></log4js:exception>\n";
+			content += "\t<log4js:exception><![CDATA[" + this.formatException(loggingEvent.exception) + "]]></log4js:exception>\n";
 		}
- 		content += "\t</log4js:event>\n";
+ 		content += "</log4js:event>\n";
         
       return content;
 	},
@@ -2129,6 +2104,10 @@ Log4js.XMLLayout.prototype = (new Log4js.Layout()).extend( {
 	 */
 	getFooter: function() {
 		return "</log4js:eventSet>\n";
+	},
+	
+	getSeparator: function() {
+		return "\n";
 	},
 	
 	/**
@@ -2173,7 +2152,9 @@ Log4js.XMLLayout.prototype = (new Log4js.Layout()).extend( {
  * @extends Log4js.Layout
  * @author Stephan Strittmatter
  */
-Log4js.JSONLayout = function() {return;};
+Log4js.JSONLayout = function() {
+	this.df = new Log4js.DateFormatter();
+};
 Log4js.JSONLayout.prototype = (new Log4js.Layout()).extend( {
 	/** 
 	 * Implement this method to create your own layout format.
@@ -2181,8 +2162,34 @@ Log4js.JSONLayout.prototype = (new Log4js.Layout()).extend( {
 	 * @return formatted String
 	 * @type String
 	 */
-	format: function(loggingEvent) {        
-        return JSON.stringify(loggingEvent);
+	format: function(loggingEvent) {
+		
+				var useragent = "unknown";
+		try {
+			useragent = navigator.userAgent;
+		} catch(e){
+			useragent = "unknown";
+		}
+		
+		var referer = "unknown";
+		try {
+			referer = location.href;
+		} catch(e){
+			referer = "unknown";
+		}
+		
+		var jsonString = "{\n \"LoggingEvent\": {\n";
+		
+		jsonString += "\t\"categoryName\": \"" +  loggingEvent.categoryName + "\",\n";
+		jsonString += "\t\"level\": \"" +  loggingEvent.level.toString() + "\",\n";
+		jsonString += "\t\"message\": \"" +  loggingEvent.message + "\",\n"; 
+		jsonString += "\t\"referer\": \"" + referer + "\",\n"; 
+		jsonString += "\t\"userAgent\": \"" + useragent + "\",\n"; 
+		jsonString += "\t\"startTime\": \"" +  this.df.formatDate(loggingEvent.startTime, "yyyy-MM-ddThh:mm:ssZ") + "\"\n";
+		jsonString += "\t\"exception\": \"" +  loggingEvent.exception + "\",\n"; 
+		jsonString += "}}";      
+        
+        return jsonString;
 	},
 	/** 
 	 * Returns the content type output by this layout. 
@@ -2197,14 +2204,18 @@ Log4js.JSONLayout.prototype = (new Log4js.Layout()).extend( {
 	 * @type String
 	 */
 	getHeader: function() {
-		return "";
+		return "{\"Log4js\": [\n";
 	},
 	/** 
 	 * @return Returns the footer for the layout format. The base class returns null.
 	 * @type String
 	 */
 	getFooter: function() {
-		return "";
+		return "\n]}";
+	},
+	
+	getSeparator: function() {
+		return ",\n";
 	}
 });
 
@@ -2497,5 +2508,5 @@ Log4js.DateFormatter.prototype = {
  * @private
  */
 var log4jsLogger = Log4js.getLogger("log4js");
-//log4jsLogger.addAppender(new ConsoleAppender(log4jsLogger, false));
-//log4jsLogger.setLevel(Log4js.Level.ALL);
+log4jsLogger.addAppender(new Log4js.ConsoleAppender());
+log4jsLogger.setLevel(Log4js.Level.ALL);
