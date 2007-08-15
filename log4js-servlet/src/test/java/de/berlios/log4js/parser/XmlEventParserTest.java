@@ -13,10 +13,7 @@
  */
 package de.berlios.log4js.parser;
 
-import java.io.IOException;
 import java.util.List;
-
-import javax.xml.parsers.ParserConfigurationException;
 
 import junit.framework.TestCase;
 
@@ -24,10 +21,9 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.xml.sax.SAXException;
 
-import de.berlios.log4js.LoggingEvent;
 import de.berlios.log4js.LogLevel;
+import de.berlios.log4js.LoggingEvent;
 
 public class XmlEventParserTest extends TestCase {
 
@@ -42,7 +38,7 @@ public class XmlEventParserTest extends TestCase {
   }
 
   @Test
-  public void testParse() throws ParserConfigurationException, SAXException, IOException {
+  public void testParse() throws ParseException {
 
     String content = "<log4js>\t<log4js:event logger=\"";
     content += "category" + "\" level=\"";
@@ -56,7 +52,7 @@ public class XmlEventParserTest extends TestCase {
 
     content += "\t<log4js:event logger=\"";
     content += "category 2" + "\" level=\"";
-    content += "INFO" + "\" client=\"";
+    content += "INFO" + "\" useragent=\"";
     content += "Modzilla 2" + "\" referer=\"";
     content += "www.google.com 2" + "\" timestamp=\"";
     content += "TODAY 2" + "\">\n\t\t";

@@ -16,6 +16,7 @@ package de.berlios.log4js.parser;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,8 +46,7 @@ public class XmlEventParser implements EventParser {
 	/**
 	 * @see de.berlios.log4js.parser.EventParser#parse(java.lang.String)
 	 */
-	public List<LoggingEvent> parse(String xml)
-			throws ParserConfigurationException, SAXException, IOException {
+	public List<LoggingEvent> parse(String xml) throws ParseException {
 
 		InputStream is = new ByteArrayInputStream(xml.getBytes());
 		return parse(is);
@@ -55,15 +55,24 @@ public class XmlEventParser implements EventParser {
 	/**
 	 * @see de.berlios.log4js.parser.EventParser#parse(java.io.InputStream)
 	 */
-	public List<LoggingEvent> parse(InputStream is)
-			throws ParserConfigurationException, SAXException, IOException {
+	public List<LoggingEvent> parse(InputStream is) throws ParseException {
 
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		factory.setValidating(false);
 		factory.setIgnoringComments(true);
 		factory.setIgnoringElementContentWhitespace(true);
-		DocumentBuilder builder = factory.newDocumentBuilder();
-		Document document = builder.parse(is);
+		Document document;
+
+		try {
+			DocumentBuilder builder = factory.newDocumentBuilder();
+			document = builder.parse(is);
+		} catch (ParserConfigurationException e) {
+			throw new ParseException(e);
+		} catch (SAXException e) {
+			throw new ParseException(e);
+		} catch (IOException e) {
+			throw new ParseException(e);
+		}
 
 		Element root = document.getDocumentElement();
 		List<LoggingEvent> eventList = new ArrayList<LoggingEvent>();
@@ -80,7 +89,7 @@ public class XmlEventParser implements EventParser {
 				loggingEvent.setCategoryName(eventNode.getAttribute("logger"));
 				loggingEvent.setLogLevel(LogLevel.getLogLevel(eventNode
 						.getAttribute("level")));
-				loggingEvent.setUserAgent(eventNode.getAttribute("client"));
+				loggingEvent.setUserAgent(eventNode.getAttribute("useragent"));
 				loggingEvent.setReferer(eventNode.getAttribute("referer"));
 				loggingEvent.setTimestamp(eventNode.getAttribute("timestamp"));
 
@@ -99,6 +108,32 @@ public class XmlEventParser implements EventParser {
 		}
 
 		return eventList;
+	}
+
+	public String getResponseHeader() {
+		StringWriter sw = new StringWriter();
+
+		sw.append("<?xml version=\"1.0\"?>\n\n");
+		sw.append("<log4js xmlns:log4js=\"http://log4js.berlios.de/log4js\">");
+
+		return sw.toString();
+	}
+
+	public String getResponse(String state, String message) {
+		StringWriter sw = new StringWriter();
+		sw.append("<?xml version=\"1.0\"?>\n\n");
+		sw.append("<log4js xmlns:log4js=\"http://log4js.berlios.de/log4js\">");
+
+		if (message == null) {
+			sw.append("<log4js:response state=\"").append(state).append("\"/>");
+		} else {
+			sw.append("<log4js:response state=\"").append(state).append("\"/>")
+					.append(message).append("</log4js:response>");
+		}
+
+		sw.append("</log4js>");
+
+		return sw.toString();
 	}
 
 }

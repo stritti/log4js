@@ -35,8 +35,7 @@ public interface EventParser {
    * @throws IOException 
    * @throws SAXException 
    */
-  List<LoggingEvent> parse(String xml) throws ParserConfigurationException, SAXException,
-      IOException;
+  List<LoggingEvent> parse(String xml) throws ParseException;
 
   /**
    * Parses the given input stream for XML to extract the parameter and assign them to 
@@ -48,7 +47,10 @@ public interface EventParser {
    * @throws IOException 
    * @throws SAXException 
    */
-  List<LoggingEvent> parse(InputStream is) throws ParserConfigurationException, SAXException,
-      IOException;
+  List<LoggingEvent> parse(InputStream is) throws ParseException;
+  
+  String getResponseHeader();
+  
+  String getResponse(String state, String message);
 
 }

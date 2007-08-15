@@ -15,61 +15,98 @@ package de.berlios.log4js.parser;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
+import net.sf.json.util.JSONStringer;
 
 import org.xml.sax.SAXException;
 
+import de.berlios.log4js.LogLevel;
 import de.berlios.log4js.LoggingEvent;
 
 /**
  * Parser to parse JSON of log4js events.
- *
+ * 
  * @author Stephan Strittmatter
  * @created 02.08.2007
- *
- * @history 02.08.2007   Stephan Strittmatter   created
+ * 
+ * @history 02.08.2007 Stephan Strittmatter created
  */
 public class JsonEventParser implements EventParser {
 
-  /**
-   * @see de.berlios.log4js.parser.EventParser#parse(java.lang.String)
-   */
-  public List<LoggingEvent> parse(String input) throws ParserConfigurationException, SAXException,
-      IOException {
+	/**
+	 * @see de.berlios.log4js.parser.EventParser#parse(java.lang.String)
+	 */
+	public List<LoggingEvent> parse(String input) throws ParseException {
 
-    JSONObject json = new JSONObject(input);
+		List<LoggingEvent> eventList = new ArrayList<LoggingEvent>();
 
-    JSONSerializer serializer = new JSONSerializer();
+		JSONObject json = JSONObject.fromObject(input);
+		JSONArray root = (JSONArray) json.get("Log4js");
+		Iterator<JSONObject> eventIterator = root.iterator();
 
-    Object jsonResult = serializer.toJava(json);
+		while (eventIterator.hasNext()) {
+			JSONObject elem = (JSONObject) (eventIterator.next())
+					.get("LoggingEvent");
+			LoggingEvent event = new LoggingEvent();
+			event.setCategoryName(elem.getString("logger"));
+			event.setException(elem.getString("exception"));
+			event.setLogLevel(LogLevel.valueOf(elem.getString("level")));
+			event.setMessage(elem.getString("message"));
+			event.setReferer(elem.getString("referer"));
+			event.setUserAgent(elem.getString("useragent"));
+			event.setTimestamp(elem.getString("timestamp"));
 
-    return null;
-  }
+			eventList.add(event);
 
-  /**
-   * @see de.berlios.log4js.parser.EventParser#parse(java.io.InputStream)
-   */
-  public List<LoggingEvent> parse(InputStream is) throws ParserConfigurationException, SAXException,
-      IOException {
+		}
+		return eventList;
+	}
 
-    List<LoggingEvent> result = parse(slurp(is));
+	/**
+	 * @see de.berlios.log4js.parser.EventParser#parse(java.io.InputStream)
+	 */
+	public List<LoggingEvent> parse(InputStream is) throws ParseException {
 
-    return result;
-  }
+		List<LoggingEvent> result;
+		try {
+			result = parse(inputStreamToString(is));
+		} catch (IOException e) {
+			throw new ParseException(e);
+		}
 
-  protected static String slurp(InputStream in) throws IOException {
+		return result;
+	}
 
-    StringBuilder out = new StringBuilder();
-    byte[] b = new byte[4096];
-    for (int n; (n = in.read(b)) != -1;) {
-      out.append(new String(b, 0, n));
-    }
-    return out.toString();
-  }
+	protected static String inputStreamToString(InputStream in)
+			throws IOException {
+
+		StringBuilder out = new StringBuilder();
+		byte[] b = new byte[4096];
+		for (int n; (n = in.read(b)) != -1;) {
+			out.append(new String(b, 0, n));
+		}
+		return out.toString();
+	}
+
+	public String getResponseHeader() {
+		return null;
+	}
+
+	public String getResponse(String state, String message) {
+
+		JSONObject json = new JSONObject();
+		json.put("state", state);
+		json.put("response", message);
+
+		return json.toString();
+	}
 
 }

@@ -51,5 +51,14 @@ public class Log4jsServletTest extends TestCase {
 
     servlet.doPost(null, null);
   }
+  
+  @Test
+  public void testGetAdapter() {
+	  
+  }
 
+  @Test
+  public void testGetParser() {
+	  
+  }
 }
