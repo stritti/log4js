@@ -11,5 +11,4 @@ public class JavaLoggingAdapterTest {
 		fail("Not yet implemented");
 	}
 
-
 }
