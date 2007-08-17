@@ -39,7 +39,7 @@
     </contexts>
     <changes>
         <!-- Add new releases here -->
-       <release version="0.3" date="unreleased">
+       <release version="1.0-RC1" date="2007-08-17">
             <notes>
                 <section>
                     <title>Improved Version</title>
@@ -101,6 +101,9 @@
             	Log4js refactored to be more object oriented. Also new hierarchical structure
             	introduced for appenders and layouts to be part of Log4js object.
             </action>  
+            <action dev="ssr" type="update" context="admin" importance="medium" >
+            	Refactored structure of the project.
+            </action>  			
        </release>
 
        <release version="0.2" date="2006-03-17">
