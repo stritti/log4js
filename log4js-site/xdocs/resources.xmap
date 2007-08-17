@@ -1,0 +1,418 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2002-2004 The Apache Software Foundation or its licensors,
+  as applicable.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!-- ===============================================
+Pipelines for resources (css, images, javascript etc).
+
+
+Generates  :  CSS, images (possibly from SVG), javascript.
+Example URL:  http://localhost:8888/images/project-logo.gif
+Used by    :  sitemap.xmap
+Uses       :  resources/*, skins/*/{css,images}
+
+$Revision: 1.13 $
+==================================================== -->
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+   <map:components>
+      <map:generators default="file" >
+        <map:generator name="asciiart-svg"
+                       src="org.apache.cocoon.generation.asciiart.AsciiArtSVGGenerator"/>
+        <map:generator name="text" 
+                       src="org.apache.cocoon.generation.TextGenerator">
+    <parameter name="localizable" value="true"/>
+   </map:generator>
+      </map:generators>               
+      <map:serializers default="html">
+         <map:serializer name="svg2jpeg" mime-type="image/jpeg" src="org.apache.cocoon.serialization.SVGSerializer">
+            <parameter name="quality" type="float" value="1.0" />
+         </map:serializer>
+         <map:serializer mime-type="image/png" 
+                         name="svg2png" 
+                         src="org.apache.cocoon.serialization.SVGSerializer" >
+            <!--<parameter name="background_color" type="color" value="#ff00ff"/>-->
+            <!-- <parameter name="gamma" type="float" value="0.48"/> -->
+            <parameter name="gamma" type="float" value="0"/>
+         </map:serializer>                
+         <map:serializer name="text"   mime-type="text/plain"  src="org.apache.cocoon.serialization.TextSerializer"/>
+      </map:serializers>
+      <map:transformers default="xslt">
+       <map:transformer name="pattern" 
+                        src="org.apache.cocoon.transformation.PatternTransformer">
+        <parameter name="groups" value="true"/>
+       </map:transformer>
+      </map:transformers>
+      
+      <map:readers default="resource" />
+      <map:matchers default="wildcard" />
+   </map:components>
+
+   <map:resources>
+      <map:resource name="skin-read">
+            <map:select type="exists">
+              <!-- First location: project skin dir -->
+               <map:when test="{project:skins-dir}{forrest:skin}/{path}/{name}.css">
+		         <map:call resource="read-linked-text">
+		           <map:parameter name="path" value="{project:skins-dir}{forrest:skin}/{path}/{name}.css" />
+		         </map:call>
+               </map:when>
+               <map:when test="{project:skins-dir}{forrest:skin}/{path}/{name}.{ext}">
+                  <map:read src="{project:skins-dir}{forrest:skin}/{path}/{name}.{ext}" mime-type="{mime-type}" />
+               </map:when>
+               <map:when test="{project:skins-dir}{forrest:skin}/{path}/{name}.css.xslt">
+                  <map:call resource="pipe-text-resource">
+                    <map:parameter name="path" value="{project:skins-dir}{forrest:skin}/{path}/{name}.css.xslt" />
+                    <map:parameter name="mime-type" value="text/css" />
+                  </map:call>
+               </map:when>
+               <map:when test="{project:skins-dir}{forrest:skin}/{path}/{name}.svg.xslt">
+                  <map:call resource="pipe-transformed-svg2png-resource">
+                    <map:parameter name="path" value="{project:skins-dir}{forrest:skin}/{path}/{name}.svg.xslt" />
+                  </map:call>
+               </map:when>
+               
+              <!-- Second location: forrest skin dir -->
+
+               <map:when test="{forrest:context}/skins/{forrest:skin}/{path}/{name}.css">
+		         <map:call resource="read-linked-text">
+		           <map:parameter name="path" value="{forrest:context}/skins/{forrest:skin}/{path}/{name}.css" />
+		         </map:call>
+               </map:when>
+               <map:when test="{forrest:context}/skins/{forrest:skin}/{path}/{name}.{ext}">
+                  <map:read src="{forrest:context}/skins/{forrest:skin}/{path}/{name}.{ext}" mime-type="{mime-type}" />
+               </map:when>
+               <map:when test="{forrest:context}/skins/{forrest:skin}/{path}/{name}.css.xslt">
+                  <map:call resource="pipe-text-resource">
+                    <map:parameter name="path" value="{forrest:context}/skins/{forrest:skin}/{path}/{name}.css.xslt" />
+                    <map:parameter name="mime-type" value="text/css" />
+                  </map:call>
+               </map:when>
+               <map:when test="{forrest:context}/skins/{forrest:skin}/{path}/{name}.svg.xslt">
+                  <map:call resource="pipe-transformed-svg2png-resource">
+                    <map:parameter name="path" value="{forrest:context}/skins/{forrest:skin}/{path}/{name}.svg.xslt" />
+                  </map:call>
+               </map:when>
+               
+              <!-- Third location: forrest common skin dir -->
+               <map:when test="{forrest:context}/skins/common/{path}/{name}.css">
+		         <map:call resource="read-linked-text">
+		           <map:parameter name="path" value="{forrest:context}/skins/common/{path}/{name}.css" />
+		         </map:call>
+               </map:when>
+               <map:when test="{forrest:context}/skins/common/{path}/{name}.{ext}">
+                  <map:read src="{forrest:context}/skins/common/{path}/{name}.{ext}" mime-type="{mime-type}" />
+               </map:when>
+               <map:when test="{forrest:context}/skins/common/{path}/{name}.css.xslt">
+                  <map:call resource="pipe-text-resource">
+                    <map:parameter name="path" value="{forrest:context}/skins/common/{path}/{name}.css.xslt" />
+                    <map:parameter name="mime-type" value="text/css" />
+                  </map:call>
+               </map:when>
+               <map:when test="{forrest:context}/skins/common/{path}/{name}.svg.xslt">
+                  <map:call resource="pipe-transformed-svg2png-resource">
+                    <map:parameter name="path" value="{forrest:context}/skins/common/{path}/{name}.svg.xslt" />
+                  </map:call>
+               </map:when>
+               <map:otherwise>
+                   <!-- this should always fail; it is used so the error has the correct filename and extension -->
+                  <map:read src=".../{path}/{name}.{ext}" mime-type="{mime-type}" />
+               </map:otherwise>
+            </map:select>
+      </map:resource>
+
+       <map:resource name="read-svg2png-corner-resource">
+            <map:select type="exists">
+               <map:when test="{project:skins-dir}{forrest:skin}/{path}/{name}.svg.xslt">
+                  <map:call resource="pipe-transformed-svg2png-corner-resource">
+                    <map:parameter name="path" value="{project:skins-dir}{forrest:skin}/{path}/{name}.svg.xslt" />
+                    <map:parameter name="orientation-tb" value="{orientation-tb}"/>
+                    <map:parameter name="orientation-lr" value="{orientation-lr}"/>
+                    <map:parameter name="size" value="{size}"/>   
+                    <map:parameter name="bg-color-name" value="{bg-color-name}"/>
+                    <map:parameter name="stroke-color-name" value="{stroke-color-name}"/>
+                    <map:parameter name="fg-color-name" value="{fg-color-name}"/>   
+                  </map:call>
+               </map:when>
+               <map:when test="{forrest:context}/skins/{forrest:skin}/{path}/{name}.svg.xslt">
+                  <map:call resource="pipe-transformed-svg2png-corner-resource">
+                    <map:parameter name="path" value="{forrest:context}/skins/{forrest:skin}/{path}/{name}.svg.xslt" />
+                    <map:parameter name="orientation-tb" value="{orientation-tb}"/>
+                    <map:parameter name="orientation-lr" value="{orientation-lr}"/>
+                    <map:parameter name="size" value="{size}"/>   
+                    <map:parameter name="bg-color-name" value="{bg-color-name}"/>
+                    <map:parameter name="stroke-color-name" value="{stroke-color-name}"/>
+                    <map:parameter name="fg-color-name" value="{fg-color-name}"/>   
+                  </map:call>
+               </map:when>
+               <map:otherwise>
+                  <map:call resource="pipe-svg2png-corner-resource">
+                    <map:parameter name="path" value="{forrest:context}/skins/common/{path}/{name}.svg.xslt" />
+                    <map:parameter name="orientation-tb" value="{orientation-tb}"/>
+                    <map:parameter name="orientation-lr" value="{orientation-lr}"/>
+                    <map:parameter name="size" value="{size}"/>   
+                    <map:parameter name="bg-color-name" value="{bg-color-name}"/>
+                    <map:parameter name="stroke-color-name" value="{stroke-color-name}"/>
+                    <map:parameter name="fg-color-name" value="{fg-color-name}"/>   
+                  </map:call>
+               </map:otherwise>
+            </map:select>
+      </map:resource>
+      
+      <map:resource name="pipe-text-resource">
+        <map:call resource="generate-transformed-resource">
+           <map:parameter name="path" value="{path}" />
+         </map:call>
+         <map:serialize type="text" mime-type="{mime-type}"/>
+      </map:resource>
+
+      <map:resource name="pipe-aggregate-svg2png-resource">
+         <map:call resource="generate-aggregate-resource">
+           <map:parameter name="path" value="{path}" />
+         </map:call>
+         <map:call resource="transform-project2text"/>
+         <map:transform src="{forrest:stylesheets}/extract-svg.xsl"/>
+         <map:serialize type="svg2png" />
+      </map:resource>
+
+      <map:resource name="pipe-transformed-svg2png-resource">
+         <map:call resource="generate-transformed-resource">
+           <map:parameter name="path" value="{path}" />
+         </map:call>
+         <map:call resource="transform-project2text"/>
+         <map:serialize type="svg2png" />
+      </map:resource>
+
+      <map:resource name="pipe-svg2png-corner-resource">
+        <map:generate src="cocoon://skinconf.xml" />
+        <map:transform src="{path}">
+            <map:parameter name="orientation-tb" 
+                         value="{orientation-tb}"/>
+            <map:parameter name="orientation-lr" 
+                         value="{orientation-lr}"/>
+            <map:parameter name="size" 
+                         value="{size}"/>
+            <map:parameter name="bg-color-name" 
+                         value="{bg-color-name}"/>
+            <map:parameter name="stroke-color-name" 
+                         value="{stroke-color-name}"/>
+            <map:parameter name="fg-color-name" 
+                         value="{fg-color-name}"/>            
+        </map:transform>
+        <map:call resource="transform-project2text"/>
+        <map:serialize type="svg2png" />
+      </map:resource>
+      
+      <map:resource name="generate-aggregate-resource">
+        <map:aggregate element="resource">
+          <map:part src="cocoon://skinconf.xml" />
+          <map:part src="{path}"/>
+        </map:aggregate>
+      </map:resource>
+      
+      <map:resource name="generate-transformed-resource">
+        <map:generate src="cocoon://skinconf.xml" />
+        <map:transform src="{path}"/>
+      </map:resource>
+      
+      <map:resource name="transform-project2text">
+         <map:transform src="{forrest:stylesheets}/project2text.xsl"/>
+      </map:resource>
+      
+      <map:resource name="read-linked-text">
+        <map:generate type="text" src="{path}" />
+        <map:transform type="pattern" src="resources/chaperon/grammars/link.xlex"/>
+        <map:transform src="resources/chaperon/stylesheets/pattern2link.xsl"/>                  
+        <map:serialize type="text" mime-type="text/css"/>
+      </map:resource>
+
+   </map:resources>
+   
+   <map:pipelines>
+       <map:pipeline>
+         <map:match pattern="**skin/**.js">
+            <map:call resource="skin-read">
+               <map:parameter name="path" value="scripts" />
+               <map:parameter name="name" value="{2}" />
+               <map:parameter name="ext" value="js" />
+               <map:parameter name="mime-type" value="application/x-javascript" />
+            </map:call>
+         </map:match>
+
+         <!-- @deprecated -->
+         <map:match pattern="**.js">
+            <map:read src="resources/scripts/{1}.js" mime-type="application/x-javascript" />
+         </map:match>
+
+         <map:match pattern="**skin/**.css">
+            <map:call resource="skin-read">
+               <map:parameter name="path" value="css" />
+               <map:parameter name="name" value="{2}" />
+               <map:parameter name="ext" value="css" />
+               <map:parameter name="mime-type" value="text/css" />
+            </map:call>
+         </map:match>
+
+         <!-- @deprecated -->
+         <map:match pattern="**.css">
+            <map:read src="resources/css/{1}.css" mime-type="text/css" />
+         </map:match>
+
+         <!-- special case corner generator pipeline -->
+         <map:match pattern="skin/images**/*c-*-*-*-1*-2*-3*.png">
+            <map:call resource="read-svg2png-corner-resource">
+               <map:parameter name="path" value="images/{1}" />
+               <map:parameter name="name" value="{2}c" />
+               <map:parameter name="orientation-tb" value="{3}"/>
+               <map:parameter name="orientation-lr" value="{4}"/>
+               <map:parameter name="size" value="{5}"/>    
+               <map:parameter name="bg-color-name" value="{6}"/>
+               <map:parameter name="stroke-color-name" value="{7}"/>
+               <map:parameter name="fg-color-name" value="{8}"/>    
+            </map:call>
+         </map:match>
+         
+         <map:match pattern="skin/images**/*.*">
+            <map:call resource="skin-read">
+               <map:parameter name="path" value="images/{1}" />
+               <map:parameter name="name" value="{2}" />
+               <map:parameter name="ext" value="{3}" />
+               <map:parameter name="mime-type" value="image/{3}" />
+            </map:call>
+         </map:match>
+
+         <!-- handles images local to a contributor directory -->
+         <map:match pattern="**my-images/**.*">
+            <map:read src="{project:content.xdocs}{1}my-images/{2}.{3}" mime-type="image/{3}" />
+         </map:match>
+
+        <map:match type="regexp" pattern="^(.*?)([^/]*).svg$">
+          <map:generate src="{project:content.xdocs}/{1}{2}.svg"/>
+          <map:serialize type="xml"/>
+        </map:match>
+
+         <map:match pattern="images/**.png">
+            <map:select type="exists">
+               <map:when test="{project:content.xdocs}/images/{1}.svg">
+                  <map:call resource="pipe-aggregate-svg2png-resource">
+                    <map:parameter name="path" value="{project:content.xdocs}/images/{1}.svg" />
+                  </map:call>
+               </map:when>
+               <map:when test="{project:resources.images}/{1}.svg">
+                  <map:call resource="pipe-aggregate-svg2png-resource">
+                    <map:parameter name="path" value="{project:resources.images}/{1}.svg" />
+                  </map:call>
+               </map:when>
+               <map:when test="resources/images/{1}.svg">
+                  <map:call resource="pipe-aggregate-svg2png-resource">
+                    <map:parameter name="path" value="resources/images/{1}.svg" />
+                  </map:call>
+               </map:when>
+               <map:when test="{project:content.xdocs}/images/{1}.png">
+                  <map:read src="{project:content.xdocs}/images/{1}.png" mime-type="image/png" />
+               </map:when>
+               <map:when test="resources/images/{1}.png">
+                  <map:read src="resources/images/{1}.png" mime-type="image/png" />
+               </map:when>
+               <map:when test="{project:resources.images}/{1}.png">
+                  <map:read src="{project:resources.images}/{1}.png" mime-type="image/png" />
+               </map:when>
+               <map:otherwise>
+                 <!-- needed for compatibility for the standard resources/images that are now
+                      in the common skin -->
+                 <map:call resource="skin-read">
+                   <map:parameter name="path" value="images" />
+                   <map:parameter name="name" value="{1}" />
+                   <map:parameter name="ext" value="png" />
+                   <map:parameter name="mime-type" value="image/png" />
+                 </map:call>
+               </map:otherwise>
+            </map:select>
+         </map:match>
+         
+         <map:match pattern="images/**.*">
+            <map:select type="exists">
+               <map:when test="{project:content.xdocs}/images/{1}.{2}">
+                  <map:read src="{project:content.xdocs}/images/{1}.{2}" mime-type="image/{2}" />
+               </map:when>
+               <map:when test="resources/images/{1}.{2}">
+                  <map:read src="resources/images/{1}.{2}" mime-type="image/{2}" />
+               </map:when>
+               <map:when test="{project:resources.images}/{1}.{2}">
+                  <map:read src="{project:resources.images}/{1}.{2}" mime-type="image/{2}" />
+               </map:when>
+               <map:otherwise>
+                 <!-- needed for compatibility for the standard resources/images that are now
+                      in the common skin -->
+                 <map:call resource="skin-read">
+                   <map:parameter name="path" value="images" />
+                   <map:parameter name="name" value="{1}" />
+                   <map:parameter name="ext" value="{2}" />
+                   <map:parameter name="mime-type" value="image/{2}" />
+                 </map:call>
+               </map:otherwise>
+            </map:select>
+         </map:match>
+
+         <map:match pattern="**/images/**.*">
+            <map:select type="exists">
+               <map:when test="{project:content.xdocs}/{1}/images/{2}.{3}">
+                  <map:read src="{project:content.xdocs}/{1}/images/{2}.{3}" mime-type="image/{3}" />
+               </map:when>
+               <map:when test="resources/images/{2}.{3}">
+                  <map:read src="resources/images/{2}.{3}" mime-type="image/{3}" />
+               </map:when>
+               <map:otherwise>
+                  <map:read src="{project:resources.images}/{2}.{3}" mime-type="image/{3}" />
+               </map:otherwise>
+            </map:select>
+         </map:match>
+
+         <map:match pattern="**.png">
+            <map:select type="exists">
+               <map:when test="{project:content.xdocs}/{1}.svg">
+                  <map:call resource="pipe-aggregate-svg2png-resource">
+                    <map:parameter name="path" value="{project:content.xdocs}/{1}.svg" />
+                  </map:call>
+               </map:when>
+               <map:when test="{project:content.xdocs}/{1}.aart">
+                  <map:generate type="asciiart-svg" src="{project:content.xdocs}/{1}.aart" />
+                  <map:call resource="transform-project2text"/>
+                  <map:serialize type="svg2png" />
+               </map:when>
+               <map:otherwise>
+                  <map:read src="{project:content.xdocs}/{1}.png" mime-type="image/png" />
+               </map:otherwise>
+            </map:select>
+         </map:match>
+
+         <map:match pattern="**.ico">
+            <map:select type="exists">
+               <map:when test="{project:content.xdocs}/{1}.ico">
+                  <map:read src="{project:content.xdocs}/{1}.ico" mime-type="image/x-icon" />
+               </map:when>
+               <map:otherwise>
+                 <map:call resource="skin-read">
+                   <map:parameter name="path" value="images" />
+                   <map:parameter name="name" value="{1}" />
+                   <map:parameter name="ext" value="ico" />
+                   <map:parameter name="mime-type" value="image/x-icon" />
+                 </map:call>
+               </map:otherwise>
+            </map:select>
+         </map:match>
+      </map:pipeline>
+   </map:pipelines>
+</map:sitemap>
