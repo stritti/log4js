@@ -63,35 +63,19 @@
 	<!-- ================================= 
           target: release              
          ================================= -->
-	<target name="release" depends="dist" description="--> create release">
-		<echo>generate complete distribution archives: ${release.dir}/log4js-${version}.zip</echo>
+	<target name="release" depends="dist, install" description="--> create release">
+		<echo>generate distribution archives</echo>
 
 		<mkdir dir="${release.dir}" />
 
-		<copy todir="${release.dir}/tmp/log4js-${version}">
-			<fileset dir="${basedir}">
-				<include name="${src.js.dir}/**" />
-				<include name="${example.src.dir}/**" />
+		<copy todir="${release.dir}/">
+
+			<fileset file="${dist.dir}/*.war" >
+
 			</fileset>
-
-			<fileset dir="${dist.dir}">
-				<include name="lib/**" />
-				<include name="docs/**" />
-			</fileset>
-
-			<fileset file="${dist.dir}/${example.war.name}" />
-
-			<fileset file="CHANGELOG.txt" />
-			<fileset file="INSTALL.txt" />
-			<fileset file="LICENSE.txt" />
-			<fileset file="NOTICE.txt" />
 		</copy>
 
-		<zip destfile="${release.dir}/log4js-${version}.zip" basedir="${release.dir}/tmp" />
-
-		<tar destfile="${release.dir}/log4js-${version}.tar.gz" basedir="${release.dir}/tmp" compression="gzip" />
-
-		<delete dir="${release.dir}/tmp" />
+	
 
 	</target>
 
