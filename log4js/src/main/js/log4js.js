@@ -354,7 +354,7 @@ Log4js.CustomEvent.prototype = {
  	 * @param method method to be removed
  	 */ 
 	removeListener : function(method) {
-		var foundIndexes = this._findListenerIndexes(method);
+		var foundIndexes = this.findListenerIndexes(method);
 
 		for(var i = 0; i < foundIndexes.length; i++) {
 			this.listeners.splice(foundIndexes[i], 1);
@@ -379,7 +379,7 @@ Log4js.CustomEvent.prototype = {
 	 * @private
 	 * @param method
 	 */
-	_findListenerIndexes : function(method) {
+	findListenerIndexes : function(method) {
 		var indexes = [];
 		for(var i = 0; i < this.listeners.length; i++) {			
 			if (this.listeners[i] == method) {
@@ -555,7 +555,10 @@ Log4js.Logger.prototype = {
 		}
 		return false;
 	},
-	/** logging trace messages */
+	/** 
+	 * Trace messages 
+	 * @param message {Object} message to be logged
+	 */
 	trace: function(message) {
 		if (this.isTraceEnabled()) {
 			this.log(Log4js.Level.TRACE, message, null);
@@ -569,7 +572,7 @@ Log4js.Logger.prototype = {
 		return false;
 	},
 	/** 
-	 * Logging debug messages 
+	 * Debug messages 
 	 * @param message {Object} message to be logged
 	 */
 	debug: function(message) {
@@ -578,7 +581,7 @@ Log4js.Logger.prototype = {
 		}
 	},
 	/**
-	 * Logging debug messages 
+	 * Debug messages 
 	 * @param {Object} message  message to be logged
 	 * @param {Throwable} throwable 
 	 */
@@ -594,13 +597,20 @@ Log4js.Logger.prototype = {
 		}
 		return false;
 	},
-	/** logging info messages */
+	/** 
+	 * logging info messages 
+	 * @param {Object} message  message to be logged
+	 */
 	info: function(message) {
 		if (this.isInfoEnabled()) {
 			this.log(Log4js.Level.INFO, message, null);
 		}
 	},
-	/** logging info messages */
+	/** 
+	 * logging info messages 
+	 * @param {Object} message  message to be logged
+	 * @param {Throwable} throwable  
+	 */
 	info: function(message, throwable) {
 		if (this.isInfoEnabled()) {
 			this.log(Log4js.Level.INFO, message, throwable);
@@ -822,7 +832,7 @@ Log4js.ConsoleAppender = function(isInline) {
 	 * @type Log4js.Layout
 	 * @private
 	 */
-	this.layout = new Log4js.SimpleLayout();
+	this.layout = new Log4js.PatternLayout(Log4js.PatternLayout.TTCC_CONVERSION_PATTERN);
 	/**
 	 * @type boolean
 	 * @private
@@ -880,13 +890,13 @@ Log4js.ConsoleAppender.prototype = (new Log4js.Appender()).extend( {
 			var doc = null;	
 			var win = null;
 			window.top.consoleWindow = window.open("", this.logger.category, 
-				"left=0,top=0,width=700,height=700,scrollbars=no,status=no,resizable=no;toolbar=no");
+				"left=0,top=0,width=700,height=700,scrollbars=no,status=no,resizable=yes;toolbar=no");
 			window.top.consoleWindow.opener = self;
 			win = window.top.consoleWindow;
 								
 			if (!win) { 
 				this.popupBlocker=true; 
-				alert("Popup window manager blocking the log4js popup window to display.\n\n" 
+				alert("Popup window manager blocking the Log4js popup window to bedisplayed.\n\n" 
 					+ "Please disabled this to properly see logged events.");  
 			} else {	
 
@@ -953,13 +963,8 @@ Log4js.ConsoleAppender.prototype = (new Log4js.Appender()).extend( {
 		clearButton.onclick = this.logger.clear.bind(this.logger);
 		this.buttonsContainerElement.appendChild(clearButton);
 	
-		//Add CategoryName
-//		var categoryNameElement = this.docReference.createElement('span');
-//		this.toolbarElement.appendChild(categoryNameElement);
-//		categoryNameElement.style.cssFloat = 'left';
-//		categoryNameElement.appendChild(this.docReference.createTextNode("Log4js - " + this.logger.category));
-		
-		//Add Level Filter
+
+		//Add CategoryName and  Level Filter
 		this.tagFilterContainerElement = this.docReference.createElement('span');
 		this.toolbarElement.appendChild(this.tagFilterContainerElement);
 		this.tagFilterContainerElement.style.cssFloat = 'left';
@@ -2069,7 +2074,7 @@ Log4js.XMLLayout.prototype = (new Log4js.Layout()).extend( {
 				
 		var content = "<log4js:event logger=\"";
 		content += loggingEvent.categoryName + "\" level=\"";
-		content += loggingEvent.level.toString() + "\" client=\"";
+		content += loggingEvent.level.toString() + "\" useragent=\"";
 		content += useragent + "\" referer=\"";
 		content += referer + "\" timestamp=\"";
 		content += loggingEvent.getFormattedTimestamp() + "\">\n";
@@ -2180,13 +2185,13 @@ Log4js.JSONLayout.prototype = (new Log4js.Layout()).extend( {
 		
 		var jsonString = "{\n \"LoggingEvent\": {\n";
 		
-		jsonString += "\t\"categoryName\": \"" +  loggingEvent.categoryName + "\",\n";
+		jsonString += "\t\"logger\": \"" +  loggingEvent.categoryName + "\",\n";
 		jsonString += "\t\"level\": \"" +  loggingEvent.level.toString() + "\",\n";
 		jsonString += "\t\"message\": \"" +  loggingEvent.message + "\",\n"; 
 		jsonString += "\t\"referer\": \"" + referer + "\",\n"; 
-		jsonString += "\t\"userAgent\": \"" + useragent + "\",\n"; 
-		jsonString += "\t\"startTime\": \"" +  this.df.formatDate(loggingEvent.startTime, "yyyy-MM-ddThh:mm:ssZ") + "\"\n";
-		jsonString += "\t\"exception\": \"" +  loggingEvent.exception + "\",\n"; 
+		jsonString += "\t\"useragent\": \"" + useragent + "\",\n"; 
+		jsonString += "\t\"timestamp\": \"" +  this.df.formatDate(loggingEvent.startTime, "yyyy-MM-ddThh:mm:ssZ") + "\",\n";
+		jsonString += "\t\"exception\": \"" +  loggingEvent.exception + "\"\n"; 
 		jsonString += "}}";      
         
         return jsonString;
@@ -2284,10 +2289,10 @@ Log4js.PatternLayout.prototype = (new Log4js.Layout()).extend( {
 				var replacement = "";
 				switch(conversionCharacter) {
 					case "c":
-						var loggerName = loggingEvent.logger.name;
+						var loggerName = loggingEvent.categoryName;
 						if (specifier) {
 							var precision = parseInt(specifier, 10);
-							var loggerNameBits = loggingEvent.logger.name.split(".");
+							var loggerNameBits = loggingEvent.categoryName.split(".");
 							if (precision >= loggerNameBits.length) {
 								replacement = loggerName;
 							} else {
@@ -2311,7 +2316,7 @@ Log4js.PatternLayout.prototype = (new Log4js.Layout()).extend( {
 							}
 						}
 						// Format the date
-						replacement = (new Log4js.SimpleDateFormat(dateFormat)).format(loggingEvent.timeStamp);
+						replacement = (new Log4js.SimpleDateFormat(dateFormat)).format(loggingEvent.startTime);
 						break;
 					case "m":
 						replacement = loggingEvent.message;
@@ -2320,10 +2325,10 @@ Log4js.PatternLayout.prototype = (new Log4js.Layout()).extend( {
 						replacement = "\n";
 						break;
 					case "p":
-						replacement = loggingEvent.level.name;
+						replacement = loggingEvent.level.toString();
 						break;
 					case "r":
-						replacement = "" + loggingEvent.timeStamp.getDifference(Log4js.applicationStartDate);
+						replacement = "" + loggingEvent.startTime.toLocaleTimeString(); //TODO: .getDifference(Log4js.applicationStartDate);
 						break;
 					case "%":
 						replacement = "%";
@@ -2507,6 +2512,6 @@ Log4js.DateFormatter.prototype = {
  * internal Logger to be used
  * @private
  */
-var log4jsLogger = Log4js.getLogger("log4js");
+var log4jsLogger = Log4js.getLogger("Log4js");
 log4jsLogger.addAppender(new Log4js.ConsoleAppender());
 log4jsLogger.setLevel(Log4js.Level.ALL);

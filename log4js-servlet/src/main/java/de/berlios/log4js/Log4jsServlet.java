@@ -43,18 +43,24 @@ public class Log4jsServlet extends HttpServlet {
 
 	private Map<String, EventParser> parserList = new HashMap<String, EventParser>();
 
+	/**
+	 * After common initialization also initialize the adapter for the logging.
+	 */
 	public void init() throws ServletException {
-		
+
 		super.init();
 
 		try {
 			this.adapter = getAdapter();
 		} catch (InstantiationException e) {
 			log(e.getLocalizedMessage(), e);
+			throw new ServletException(e);
 		} catch (IllegalAccessException e) {
 			log(e.getLocalizedMessage(), e);
+			throw new ServletException(e);
 		} catch (ClassNotFoundException e) {
 			log(e.getLocalizedMessage(), e);
+			throw new ServletException(e);
 		}
 	}
 
@@ -66,15 +72,16 @@ public class Log4jsServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
-		InputStream is = request.getInputStream();
-		ServletOutputStream servletoutputstream = response.getOutputStream();
+		final InputStream is = request.getInputStream();
+		final ServletOutputStream sos = response.getOutputStream();
 
 		final String contentType = request.getContentType();
 
 		response.setContentType(contentType);
 
 		try {
-			EventParser parser = getParser(contentType);
+			final EventParser parser = getParser(contentType);
+
 			if (parser != null) {
 				List<LoggingEvent> loggingEvents = parser.parse(is);
 
@@ -83,52 +90,38 @@ public class Log4jsServlet extends HttpServlet {
 					this.adapter.logEvent(iter.next());
 				}
 
-				servletoutputstream.write(parser.getResponse("OK", null)
-						.getBytes());
+				sos.write(parser.getResponse("OK", null).getBytes());
 			} else {
-				servletoutputstream
-						.write(("<log4js:response state=\"Error\"/>No parser configured for content type"
-								+ contentType + "</log4js:response>")
-								.getBytes());
+				sos.write("<log4js:response state=\"Error\"/>".getBytes());
+				sos.write("No parser configured for content type".getBytes());
+				sos.write((contentType + "</log4js:response>").getBytes());
 			}
 		} catch (Exception e) {
-			servletoutputstream.write("<?xml version=\"1.0\"?>\n\n".getBytes());
-			servletoutputstream
+			sos.write("<?xml version=\"1.0\"?>\n\n".getBytes());
+			sos
 					.write("<log4js xmlns:log4js=\"http://log4js.berlios.de/log4js\">"
 							.getBytes());
 
-			servletoutputstream.write(("<log4js:response state=\"ERROR\">: "
+			sos.write(("<log4js:response state=\"ERROR\">: "
 					+ e.getLocalizedMessage() + "</log4js:response>")
 					.getBytes());
-			servletoutputstream
-					.write("<log4js:stacktrace><![CDATA[".getBytes());
+			sos.write("<log4js:stacktrace><![CDATA[".getBytes());
 			StackTraceElement[] stacks = e.getStackTrace();
 			for (int i = 0; i < stacks.length; i++) {
-				servletoutputstream.write(stacks[i].toString().getBytes());
-				servletoutputstream.write('\n');
+				sos.write(stacks[i].toString().getBytes());
+				sos.write('\n');
 			}
 
-			servletoutputstream.write(("]]></log4js:stacktrace>").getBytes());
-			servletoutputstream.write(("</log4js>").getBytes());
+			sos.write(("]]></log4js:stacktrace>").getBytes());
+			sos.write(("</log4js>").getBytes());
 
 		}
 
-		servletoutputstream.close();
-
-	}
-
-	protected Adapter getAdapter() throws InstantiationException,
-			IllegalAccessException, ClassNotFoundException {
-
-		String a = this.getServletConfig().getInitParameter("logging.adapter");
-
-		Class<Adapter> c = (Class<Adapter>) Class.forName(a);
-		Adapter adapter = c.newInstance();
-
-		return adapter;
+		sos.close();
 	}
 
 	/**
+	 * Normally we do it by GET, but we pass it.
 	 * 
 	 * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest,
 	 *      javax.servlet.http.HttpServletResponse)
@@ -163,10 +156,32 @@ public class Log4jsServlet extends HttpServlet {
 	}
 
 	/**
-	 * Get parser for the content type.
+	 * Get the specific logging adapter, which is configured by servlets init
+	 * parameters.
+	 * 
+	 * @return Instance of adapter.
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 * @throws ClassNotFoundException
+	 */
+	protected Adapter getAdapter() throws InstantiationException,
+			IllegalAccessException, ClassNotFoundException {
+
+		String a = this.getServletConfig().getInitParameter("logging.adapter");
+
+		Class<Adapter> c = (Class<Adapter>) Class.forName(a);
+		Adapter adapter = c.newInstance();
+
+		return adapter;
+	}
+
+	/**
+	 * Get parser for the content type. The parser transferes the given string
+	 * to an object processed by the servlets adapter.
 	 * 
 	 * @param contentType
-	 * @return
+	 *            the mime type of the content.
+	 * @return the event parser for the content type.
 	 * @throws ClassNotFoundException
 	 * @throws InstantiationException
 	 * @throws IllegalAccessException

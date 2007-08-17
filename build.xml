@@ -303,6 +303,9 @@
 
 		</exec>
 
+		<copy todir="${project.site-dir}">
+			<fileset dir="log4js-site/build/site"></fileset>
+		</copy>
 		<echo>Copy robots.txt into the site...</echo>
 		<copy todir="${project.site-dir}" file="log4js-site/xdocs/content/xdocs/robots.txt">
 

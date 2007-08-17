@@ -34,22 +34,23 @@ import de.berlios.log4js.LoggingEvent;
 /**
  * Adapter to log using Apache Log4j logging
  * 
- *
  * @author Stephan Strittmatter
  * @created 02.08.2007
  */
 public class Log4jAdapter implements Adapter {
 
-  /**
+  private Logger logger;
+
+/**
    * @see de.berlios.log4js.adapter.Adapter#logEvent(de.berlios.log4js.LoggingEvent)
    */
   public void logEvent(LoggingEvent loggingEvent) {
 
     String msg;
 
-    Logger logger = Logger.getLogger(loggingEvent.getCategoryName());
-
-    if (loggingEvent.getException() != null) {
+    this.logger = Logger.getLogger(loggingEvent.getCategoryName());
+    
+	if (loggingEvent.getException() != null) {
       msg = loggingEvent.getMessage() + " -- EXCEPTION:\t" + loggingEvent.getException();
     }
     else {
@@ -58,28 +59,27 @@ public class Log4jAdapter implements Adapter {
 
     switch (loggingEvent.getLogLevel()) {
       case ERROR:
-
-        logger.log(Level.ERROR, msg);
+        this.logger.log(Level.ERROR, msg );
         break;
 
       case DEBUG:
-        logger.log(Level.DEBUG, msg);
+        this.logger.log(Level.DEBUG, msg);
         break;
 
       case FATAL:
-        logger.log(Level.FATAL, msg);
+        this.logger.log(Level.FATAL, msg);
         break;
 
       case INFO:
-        logger.log(Level.INFO, msg);
+        this.logger.log(Level.INFO, msg);
         break;
 
       case TRACE:
-        logger.log(Level.TRACE, msg);
+        this.logger.log(Level.TRACE, msg);
         break;
 
       case WARN:
-        logger.log(Level.WARN, msg);
+        this.logger.log(Level.WARN, msg);
         break;
 
       default:
