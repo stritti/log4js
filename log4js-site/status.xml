@@ -101,6 +101,10 @@
             	Log4js refactored to be more object oriented. Also new hierarchical structure
             	introduced for appenders and layouts to be part of Log4js object.
             </action>  
+            <action dev="ssr" type="add" context="code" importance="high" >
+            	Log4js-servlet created to handle AJAX send logging events on server using
+				Log4j or Java Logging.
+            </action>  			
             <action dev="ssr" type="update" context="admin" importance="medium" >
             	Refactored structure of the project.
             </action>  			
