@@ -49,7 +49,7 @@
                 <li>AjaxAppender: allow to send log messages to the server 
                     with asynchronous HTTP request. There you can process 
                     the logging events like you want on server side
-                    (ASP.NET, Java Servlet, JSP, PHP, Ruby, etc.).</br>
+                    (ASP.NET, Java Servlet, JSP, PHP, Ruby, etc.).<br />
 					There is also a servlet for receiving these events tolog by 
 					Log4j or Java logging in the download section.</li>
                 <li>MetatagAppender: add log messages as meta data.</li>
