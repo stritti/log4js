@@ -67,7 +67,7 @@
             //set the level of logging 
             logger.setLevel(Log4js.Level.ALL); 
             //set the Appender to write the log to 
-            logger.addAppender(new AjaxAppender(logger, "./log4j.jsp")); 
+            logger.addAppender(new AjaxAppender("./log4j.jsp")); 
             // --&gt; &lt;/script&gt; 
             </source>
             <p>Now you can call the log in your logic like follow line:</p>
@@ -91,9 +91,9 @@
 	      	
 	      	<tr><th>KDE Konqueror</th>              <td>3.5.2</td>             <td>Linux KDE</td>       <td>full compatible</td>     <td>Some Appenders are browser specific and do not work on Konqueror.</td></tr>
 	      	<tr><th>Microsoft Internet Explorer</th><td>5.0, 6.0</td>          <td>Windows</td>         <td>full compatible</td>     <td>Some Appenders are browser specific and do not work on IE. Some Appenders are IE specific.</td></tr>
-	      	<tr><th>Mozilla FireFox</th>            <td>1.0.x, 2.0 Beta 1</td> <td>Windows</td>         <td>full compatible</td>     <td>Some Appenders are browser specific and do not work on FireFox.</td></tr>
+	      	<tr><th>Mozilla FireFox</th>            <td>1.0.x, 2.0.x</td>      <td>Windows</td>         <td>full compatible</td>     <td>Some Appenders are browser specific and do not work on FireFox.</td></tr>
 	      	<tr><th>Mozilla FireFox</th>            <td>1.0.x</td>             <td>Linux</td>           <td>full compatible</td>     <td>Some Appenders are browser specific and do not work on FireFox.</td></tr>
-	      	<tr><th>Opera</th>                      <td>8, 9</td>                 <td>Windows</td>         <td>full compatible</td>     <td>Some Appenders are browser specific and do not work on Opera.</td></tr>
+	      	<tr><th>Opera</th>                      <td>8, 9</td>              <td>Windows</td>         <td>full compatible</td>     <td>Some Appenders are browser specific and do not work on Opera.</td></tr>
 	      	<tr><th>Safari</th>                     <td>?</td>                 <td>Mac OS</td>          <td>open</td>                <td>Currently no platform available for testing.</td></tr>
 	      </table>
 	    </section>

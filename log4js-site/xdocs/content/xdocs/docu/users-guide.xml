@@ -70,7 +70,7 @@
                 the project. The library is available in two different 
                 archives. It is up to you, if you prefere zip archive or tar.gz 
                 archive. The content is the same. </p>
-            <note label="Preserve Directory Structure"> <icon src="" alt=""></icon>Extract the archive to a 
+            <note label="Preserve Directory Structure">Extract the archive to a 
             	directory of your choice, but 
                 preserve the directory structure of the archive! </note>
             <p> After extracting the archive, you will find following directory 
@@ -181,7 +181,7 @@
             <title>Configuration</title>
             
             <p>
-            	Now there are already logs in the scripts but the events are not shown. The
+            	Currently there are already logs in the scripts but the events are not shown. The
             	logger has to be configured for that now.
             </p>
              <section id="loglevel">
@@ -239,7 +239,7 @@
             	
                 <title>Define Appender</title>
                 <p>
-                    After defining the log level, we have to set up an Appender.
+                    After defining the log level, we have to set up an appender.
                     An appender is required to define, how the logging events are 
                     processed. Where they should be shown or stored etc.
                 </p>
@@ -256,7 +256,7 @@
                 	  The inline console is hidden by default and can be activated by pressing <code>ALT+D</code>.
                 	  The <code>ConsoleAppender</code> can be added by following line as inline console:
                 	  <br /><br />
-                		<code>myLogger.addAppender(new ConsoleAppender(myLogger, true);</code>
+                		<code>myLogger.addAppender( new ConsoleAppender(true) );</code>
                 	  <br /><br />
                 </p>
                 <p>
@@ -278,7 +278,7 @@
    <script src="js/log4js.js" type="text/javascript"></script>
    <script><!--
        myLogger.setLevel(Log4js.Level.ALL);
-       myLogger.addAppender(new ConsoleAppender(myLogger, true);
+       myLogger.addAppender(new ConsoleAppender(true);
    //--></script>
   </head>
   <body>
@@ -291,15 +291,16 @@
   </html>]]>
   </source>
 				<p>
-					If you open the console by pressing <code>ALT + D</code> you will find
-					the logged events like in the image below.
+					If you open the console by pressing <code>ALT + D</code> 
+					(in Firefox > 2.0 press <code>SHIFT+ALT+D</code>
+					you will find the logged events like in the image below.
 				</p>
 				<p>
 					<img src="images/users-guide/consoleExample.jpg" alt="Example of ConsoleAppender" 
 						title="Example of ConsoleApender"/>
 				</p>
 				<p>
-										<strong>Congratulations, now you are ready to use <em>Log4js</em> in your 
+					<strong>Congratulations, now you are ready to use <em>Log4js</em> in your 
 					project!
 					The further sections you need only to read if you require more details
 					how to configure and use <em>Log4js</em>.</strong>
@@ -326,7 +327,7 @@
                 
                 <section id="classdiagramm">
             	
-                <title>Class Diagramm</title>
+                <title>Class Diagram</title>
                 <p>
                 	The class diagram below, will provide a short overview about the logger,
                 	its appenders and the layout classes and their dependencies.
@@ -340,12 +341,12 @@
             	<title>Usage of AjaxAppender</title>
             	<p>
             		<em>Log4js</em> supports also sending the logging events via
-            		<code>XmlHttpRequest</code> asynchronus to the server. This appender
+            		<code>XmlHttpRequest</code> asynchronous to the server. This appender
             		give you the most flexibility in productive systems to log JavaScript
             		methods. As you have no access to the browsers in live systems, you 
-            		can enable the AjaxAppender to send the logs asynchronus to the server.
+            		can enable the AjaxAppender to send the logs asynchronous to the server.
             		On the server the logs can be processed for example using a simple
-            		jsp file like in the examples to store them via log4js.
+            		JSP file like in the examples to store them via log4js.
             	</p>
             	<p>
             		The AjaxAppender requires an URL to send the logs to. Because of
@@ -354,7 +355,7 @@
             	<source>
    var ajaxLog = new Log4js.getLogger("ajaxTest");
    ajaxLog.setLevel(Log4js.Level.ALL);
-   var ajaxAppender = new AjaxAppender(ajaxLog, "./log4j.jsp");
+   var ajaxAppender = new AjaxAppender("./log4j.jsp");
    ajaxAppender.setThreshold(5);
    ajaxLog.addAppender(ajaxAppender);
             	</source>
@@ -367,7 +368,7 @@
             <p>
             	By default the AjaxAppender uses the XMLLayout, which transforms the
             	logging events to XML. But it is also possible to set another layout
-            	like JSONLayout or HTMLLayout if you prefere.
+            	like JSONLayout or HTMLLayout if you prefer.
             </p>
             <p>
             	The XMLLayout uses a format like following example:
@@ -382,25 +383,25 @@
       &lt;/log4js:event&gt;
       &lt;log4js:event logger="ajaxTest" level="DEBUG" 
          client="Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.8.1b1) Gecko/20060710 Firefox/2.0b1" 
-         referer="http://localhost:8080/log4js-example-0.3/" 
+         referer="http://localhost:8080/log4js-example/" 
          timestamp="2006-08-02T17:40:32+0200"&gt;
               &lt;log4js:message>&lt;![CDATA[I was debuged!]]&gt;&lt;/log4js:message&gt;
       &lt;/log4js:event&gt;
       &lt;log4js:event logger="ajaxTest" level="INFO" 
          client="Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.8.1b1) Gecko/20060710 Firefox/2.0b1" 
-         referer="http://localhost:8080/log4js-example-0.3/" 
+         referer="http://log4js.berlios.de/log4js/" 
          timestamp="2006-08-02T17:40:33+0200"&gt;
-              &lt;log4js:message>&lt;![CDATA[I was infoed!]]&gt;&lt;/log4js:message&gt;
+              &lt;log4js:message>&lt;![CDATA[I was informed!]]&gt;&lt;/log4js:message&gt;
       &lt;/log4js:event&gt;
   &lt;/log4js:eventSet>
             </source>
             <note>
-            	This format is very simmilar to the XML format of log4j. A DTD will be provided
+            	This format is very similar to the XML format of log4j. A DTD will be provided
             	in one of the next versions.
             </note>
             <p>
             	In contrast to the XML format of log4j <em>Log4js</em> provides also the id of the
-            	client browser and the referer url to identify the sources. On the other hand some
+            	client browser and the referer URL to identify the sources. On the other hand some
             	advanced features like <code>NDC</code> are not supported currently in <em>Log4js</em>.
             </p>
             </section>
@@ -409,7 +410,7 @@
             	<title>Performance</title>
             	<p>
             		To improve the performance of your software, it is a good idea to surround
-            		your logging statemens with appropriate isXXXEnabled() methods to evaluate
+            		your logging statements with appropriate isXXXEnabled() methods to evaluate
             		before logging if the required logging level is enabled:
             	</p>
             	<source>
@@ -434,23 +435,9 @@
             	</p>
             	<note label="Share your Extentions">
             		If it is a feature which is usable also by other developers, please share
-            		your extentions by providing patches. See also the <a href="/project/index.html">project
+            		your extensions by providing patches. See also the <a href="/project/index.html">project
             			development</a> section.
             	</note>
-				<section id="newAppender">
-					<title>New Appender</title>
-					<p>
-
-					</p>
-					
-				</section>      
-				<section id="newLayout">
-					<title>New Layout</title>
-					<p>
-
-					</p>
-					
-				</section>       	
             </section>
             
         </section>
