@@ -2076,7 +2076,7 @@ Log4js.XMLLayout.prototype = (new Log4js.Layout()).extend( {
 		content += loggingEvent.categoryName + "\" level=\"";
 		content += loggingEvent.level.toString() + "\" useragent=\"";
 		content += useragent + "\" referer=\"";
-		content+=referer.replace(/&/g, "&amp;")+"\" timestamp=\"";
+		content += referer.replace(/&/g, "&amp;") + "\" timestamp=\"";
 		content += loggingEvent.getFormattedTimestamp() + "\">\n";
 		content += "\t<log4js:message><![CDATA[" + this.escapeCdata(loggingEvent.message) + "]]></log4js:message>\n";	
  		
