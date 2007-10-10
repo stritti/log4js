@@ -38,7 +38,21 @@
         <context id="build" title="Changes to Build"/>
     </contexts>
     <changes>
-        <!-- Add new releases here -->
+       <!-- Add new releases here -->
+      <release version="1.0" date="undefined">
+            <notes>
+                <section>
+                    <title>Consolidated Version</title>
+                    <p>
+                    	Only bugs reported for 1.0-RC1 are fixed within this release.
+                    </p>
+                </section>
+            </notes>
+            
+            <action dev="ssr" type="fix" context="code" importance="medium" due-to="softadm" fixes-bug="012114"> 
+                AjaxAppender does not XML-quote referer.
+            </action> 			
+       </release>		   
        <release version="1.0-RC1" date="2007-08-17">
             <notes>
                 <section>
