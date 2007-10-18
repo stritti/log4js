@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+ 
+       http://www.apache.org/licenses/LICENSE-2.0
+ 
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+ 
+-->
+<!-- 
+	XSD of log4js.
+	
+	@version 1.0
+	@author Stephan Strittmatter - http://jroller.com/page/stritti
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<xs:import namespace="http://www.w3.org/XML/1998/namespace"/>
+	<xs:element name="log4js">
+		<xs:annotation>
+			<xs:documentation>Root element</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="eventSet" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="response" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>XML response for AJAXAppender</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="version" default="1.0">
+				<xs:simpleType>
+					<xs:restriction base="xs:NMTOKEN">
+						<xs:enumeration value="0.2"/>
+						<xs:enumeration value="0.3"/>
+						<xs:enumeration value="1.0"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="param">
+		<xs:complexType>
+			<xs:attribute name="name" type="xs:anySimpleType" use="required"/>
+			<xs:attribute name="value" type="xs:anySimpleType" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="priority">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="param" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="class" type="xs:anySimpleType"/>
+			<xs:attribute name="value" type="xs:anySimpleType" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="level">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="param" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="class" type="xs:anySimpleType"/>
+			<xs:attribute name="value" type="xs:anySimpleType" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="eventSet">
+		<xs:annotation>
+			<xs:documentation>Set of logging events</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="event" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="includesLocationInfo" default="true">
+				<xs:simpleType>
+					<xs:restriction base="xs:NMTOKEN">
+						<xs:enumeration value="true"/>
+						<xs:enumeration value="false"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="event">
+		<xs:annotation>
+			<xs:documentation>Logging event</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="message"/>
+				<xs:element ref="throwable" minOccurs="0"/>
+			</xs:sequence>
+			<xs:attribute name="logger" type="xs:anySimpleType" use="required"/>
+			<xs:attribute name="level" type="xs:anySimpleType" use="required"/>
+			<xs:attribute name="timestamp" type="xs:anySimpleType" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="message">
+		<xs:annotation>
+			<xs:documentation>Message within event</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="true"/>
+	</xs:element>
+	<xs:element name="throwable">
+		<xs:annotation>
+			<xs:documentation>Possible exception within event</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="true"/>
+	</xs:element>
+	<xs:element name="locationInfo">
+		<xs:complexType/>
+	</xs:element>
+	<xs:simpleType name="ST_response">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:element name="response">
+		<xs:annotation>
+			<xs:documentation>XML respnse on AJAXAppender</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="ST_response">
+					<xs:attribute name="state" use="required">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="OK"/>
+								<xs:enumeration value="Error"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
