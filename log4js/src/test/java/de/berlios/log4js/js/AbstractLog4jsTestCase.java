@@ -13,6 +13,9 @@
  */
 package de.berlios.log4js.js;
 
+import org.junit.After;
+import org.junit.Before;
+
 import net.sf.jstester.JsTestCase;
 
 public abstract class AbstractLog4jsTestCase extends JsTestCase {
@@ -20,6 +23,7 @@ public abstract class AbstractLog4jsTestCase extends JsTestCase {
 		super(name);
 	}
 
+	@Before 
 	protected void setUp() throws Exception {
 		// don't forget to call super.setUp()
 		// or the JsTester won't be initialized
@@ -27,6 +31,7 @@ public abstract class AbstractLog4jsTestCase extends JsTestCase {
 		eval(loadScript("log4js.js"));
 	}
 
+	@After
 	protected void tearDown() throws Exception {
 		super.tearDown();
 	}

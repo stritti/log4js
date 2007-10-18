@@ -13,6 +13,8 @@
  */
 package de.berlios.log4js.js;
 
+import org.junit.Test;
+
 public class ConsoleAppenderTest extends AbstractLog4jsTestCase {
 
 	public ConsoleAppenderTest(String name) {
@@ -20,19 +22,21 @@ public class ConsoleAppenderTest extends AbstractLog4jsTestCase {
 
 	}
 
+	@Test
 	public void testInterface() {
 		eval("var logger = Log4js.getLogger('ajax');");
 		eval("var appender = new Log4js.ConsoleAppender();");
 		// eval("ajaxAppender.doAppend(" +
 		// "new Log4js.LoggingEvent('categoryName', " +
 		// "Log4js.Level.DEBUG, 'message', ajaxLogger));");
-		eval("appender.doClear();");
+		//eval("appender.doClear();");
 		eval("appender.setLayout(new Log4js.SimpleLayout());");
 		eval("appender.setLogger(logger);");
 		
 		eval("appender.setAccessKey('d');");
 	}
 
+	@Test
 	public void testWindow() {
 
 		eval("var logger = new Log4js.getLogger('windowTest'); ");

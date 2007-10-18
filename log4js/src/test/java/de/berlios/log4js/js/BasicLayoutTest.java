@@ -13,6 +13,8 @@
  */
 package de.berlios.log4js.js;
 
+import org.junit.Test;
+
 
 public class BasicLayoutTest extends AbstractLog4jsTestCase {
 
@@ -21,12 +23,14 @@ public class BasicLayoutTest extends AbstractLog4jsTestCase {
 
 	}
 
+	@Test
 	public void testLayoutInterface() {
 		eval("var logger = Log4js.getLogger('test');");
 		eval("var layout = new Log4js.BasicLayout();");
 		eval("layout.format(new Log4js.LoggingEvent('categoryName', Log4js.Level.DEBUG, 'message', 'exception', logger));");
 	}
 	
+	@Test
 	public void testFormat(){
 		eval("var logger = Log4js.getLogger('test');");
 		eval("var layout = new Log4js.BasicLayout();");

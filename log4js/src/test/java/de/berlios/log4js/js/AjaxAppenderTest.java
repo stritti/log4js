@@ -28,7 +28,7 @@ public class AjaxAppenderTest extends AbstractLog4jsTestCase {
 		//		eval("appender.doAppend(" +
 //				"new Log4js.LoggingEvent('categoryName', " +
 //				"Log4js.Level.DEBUG, 'message', ajaxLogger));");
-		eval("appender.doClear();");
+//		eval("appender.doClear();");
 		eval("appender.setLayout(new Log4js.SimpleLayout());");
 		eval("appender.setLogger(ajaxLogger);");
 	}

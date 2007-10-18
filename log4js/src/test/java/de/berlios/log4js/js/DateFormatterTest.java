@@ -13,12 +13,15 @@
  */
 package de.berlios.log4js.js;
 
+import org.junit.Test;
+
 public class DateFormatterTest extends AbstractLog4jsTestCase {
 
 	public DateFormatterTest(String name) {
 		super(name);
 	}
 
+	@Test
 	public void testConstant() {
 		assertExpressionEquals("Log4js.DateFormatter.DEFAULT_DATE_FORMAT",
 				"'yyyy-MM-ddThh:mm:ssO'");
@@ -26,6 +29,7 @@ public class DateFormatterTest extends AbstractLog4jsTestCase {
 		eval("var dateFormatter = new Log4js.DateFormatter();");
 	}
 
+	@Test
 	public void testFormatDateYear() {
 		eval("var dateFormatter = new Log4js.DateFormatter();");
 
@@ -35,6 +39,7 @@ public class DateFormatterTest extends AbstractLog4jsTestCase {
 				"'2006'");
 	}
 
+	@Test
 	public void testFormatDateMonth() {
 		eval("var dateFormatter = new Log4js.DateFormatter();");
 
@@ -44,6 +49,7 @@ public class DateFormatterTest extends AbstractLog4jsTestCase {
 				"'01'");
 	}
 
+	@Test
 	public void testFormatDateDay() {
 
 		eval("var dateFormatter = new Log4js.DateFormatter();");
@@ -54,6 +60,7 @@ public class DateFormatterTest extends AbstractLog4jsTestCase {
 				"'02'");
 	}
 
+	@Test
 	public void testFormatDateHour() {
 
 		eval("var dateFormatter = new Log4js.DateFormatter();");
@@ -64,6 +71,7 @@ public class DateFormatterTest extends AbstractLog4jsTestCase {
 				"'03'");
 	}
 
+	@Test
 	public void testFormatDateMinute() {
 
 		eval("var dateFormatter = new Log4js.DateFormatter();");
@@ -73,6 +81,7 @@ public class DateFormatterTest extends AbstractLog4jsTestCase {
 				"'04'");
 	}
 
+	@Test
 	public void testFormatDateSeconds() {
 
 		eval("var dateFormatter = new Log4js.DateFormatter();");
@@ -84,6 +93,7 @@ public class DateFormatterTest extends AbstractLog4jsTestCase {
 
 	}
 
+	@Test
 	public void testFormatDateTimezoneOffset() {
 
 		eval("var dateFormatter = new Log4js.DateFormatter();");
@@ -94,6 +104,7 @@ public class DateFormatterTest extends AbstractLog4jsTestCase {
 				"'+0100'");
 	}
 
+	@Test
 	public void testFormatDateDefault() {
 		assertExpressionEquals("Log4js.DateFormatter.DEFAULT_DATE_FORMAT",
 				"'yyyy-MM-ddThh:mm:ssO'");
@@ -108,6 +119,7 @@ public class DateFormatterTest extends AbstractLog4jsTestCase {
 
 	}
 
+	@Test
 	public void testFormatDate() {
 		assertExpressionEquals("Log4js.DateFormatter.DEFAULT_DATE_FORMAT",
 				"'yyyy-MM-ddThh:mm:ssO'");

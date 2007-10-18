@@ -13,18 +13,22 @@
  */
 package de.berlios.log4js.js;
 
+import org.junit.Test;
+
 public class LoggerTest extends AbstractLog4jsTestCase {
 
 	public LoggerTest(String name) {
 		super(name);
 	}
 
+	@Test
 	public void testBasics() {
 
 		assertNotNull("Log4js");
-		assertExpressionEquals("Log4js.version", "'0.3'");
+		assertExpressionEquals("Version String check", "Log4js.version", "'1.0'");
 	}
 	
+	@Test
 	public void testGetDefaultLogger() {
 
 		assertExpressionEquals("Log4js.getDefaultLogger().toString()",
@@ -33,6 +37,7 @@ public class LoggerTest extends AbstractLog4jsTestCase {
 				"Log4js.getDefaultLogger().toString()");
 	}
 	
+	@Test
 	public void testGetLogger() {
 		assertNotNull("Log4js.getLogger('category')");
 		assertExpressionEquals("Log4js.getLogger('category').toString()",
