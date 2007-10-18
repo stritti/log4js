@@ -51,8 +51,13 @@
             
             <action dev="ssr" type="fix" context="code" importance="medium" due-to="softadm" fixes-bug="012114"> 
                 AjaxAppender does not XML-quote referer.
-            </action> 			
-       </release>		   
+            </action> 	
+            <action dev="ssr" type="fix" context="docs" importance="medium" due-to="softadm" fixes-bug="012148"> 
+                XSD added to project for sending XML-Messages.
+				DTD will be set deprecated.
+            </action>
+       </release>	
+	   	   
        <release version="1.0-RC1" date="2007-08-17">
             <notes>
                 <section>
