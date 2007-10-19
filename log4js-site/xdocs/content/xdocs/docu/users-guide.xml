@@ -396,8 +396,9 @@
   &lt;/log4js:eventSet>
             </source>
             <note>
-            	This format is very similar to the XML format of log4j. A DTD will be provided
-            	in one of the next versions.
+            	This format is very similar to the XML format of log4j. 
+				The <a href="/log4js/log4js.xsd">log4js.xsd</a> defines the 
+				<code>eventSet</code> and the server <code>response</code>. 
             </note>
             <p>
             	In contrast to the XML format of log4j <em>Log4js</em> provides also the id of the
