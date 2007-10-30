@@ -28,6 +28,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import de.berlios.log4js.adapter.Adapter;
 import de.berlios.log4js.parser.EventParser;
+import de.berlios.log4js.parser.ParseException;
+import de.berlios.log4js.parser.XmlEventParser;
 
 /**
  * Servlet to log the Log4js events send by AJAXAppender.
@@ -79,42 +81,43 @@ public class Log4jsServlet extends HttpServlet {
 
 		response.setContentType(contentType);
 
+		EventParser parser;
 		try {
-			final EventParser parser = getParser(contentType);
-
+			parser = getParser(contentType);
 			if (parser != null) {
-				List<LoggingEvent> loggingEvents = parser.parse(is);
+				try {
+					List<LoggingEvent> loggingEvents = parser.parse(is);
+					Iterator<LoggingEvent> iter = loggingEvents.iterator();
+					while (iter.hasNext()) {
+						this.adapter.logEvent(iter.next());
+					}
 
-				Iterator<LoggingEvent> iter = loggingEvents.iterator();
-				while (iter.hasNext()) {
-					this.adapter.logEvent(iter.next());
+					sos.write(parser.getResponse("OK", null, null).getBytes());
+				} catch (ParseException e) {
+					sos.write(parser.getResponse("ERROR", e.getMessage(), e)
+							.getBytes());
 				}
 
-				sos.write(parser.getResponse("OK", null).getBytes());
 			} else {
 				sos.write("<log4js:response state=\"Error\"/>".getBytes());
 				sos.write("No parser configured for content type".getBytes());
 				sos.write((contentType + "</log4js:response>").getBytes());
 			}
-		} catch (Exception e) {
-			sos.write("<?xml version=\"1.0\"?>\n\n".getBytes());
+		} catch (ClassNotFoundException e) {
+			parser = new XmlEventParser();
 			sos
-					.write("<log4js xmlns:log4js=\"http://log4js.berlios.de/log4js\">"
+					.write(parser.getResponse("ERROR", e.getMessage(), e)
 							.getBytes());
-
-			sos.write(("<log4js:response state=\"ERROR\">: "
-					+ e.getLocalizedMessage() + "</log4js:response>")
-					.getBytes());
-			sos.write("<log4js:stacktrace><![CDATA[".getBytes());
-			StackTraceElement[] stacks = e.getStackTrace();
-			for (int i = 0; i < stacks.length; i++) {
-				sos.write(stacks[i].toString().getBytes());
-				sos.write('\n');
-			}
-
-			sos.write(("]]></log4js:stacktrace>").getBytes());
-			sos.write(("</log4js>").getBytes());
-
+		} catch (InstantiationException e) {
+			parser = new XmlEventParser();
+			sos
+					.write(parser.getResponse("ERROR", e.getMessage(), e)
+							.getBytes());
+		} catch (IllegalAccessException e) {
+			parser = new XmlEventParser();
+			sos
+					.write(parser.getResponse("ERROR", e.getMessage(), e)
+							.getBytes());
 		}
 
 		sos.close();

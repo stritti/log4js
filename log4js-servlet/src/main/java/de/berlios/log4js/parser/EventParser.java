@@ -51,6 +51,6 @@ public interface EventParser {
   
   String getResponseHeader();
   
-  String getResponse(String state, String message);
+  String getResponse(String state, String message, Throwable throwable);
 
 }

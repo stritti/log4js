@@ -100,12 +100,15 @@ public class JsonEventParser implements EventParser {
 		return null;
 	}
 
-	public String getResponse(String state, String message) {
+	public String getResponse(String state, String message, Throwable throwable) {
 
 		JSONObject json = new JSONObject();
 		json.put("state", state);
 		json.put("response", message);
-
+		
+		if(throwable != null) {
+			json.put("stacktrace", throwable.getStackTrace());
+		}
 		return json.toString();
 	}
 
