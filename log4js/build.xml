@@ -281,7 +281,7 @@
 	<!-- ================================= 
           target: test              
          ================================= -->
-	<target name="test" depends="compile, compile.test, jslint" description="--> Unit tests">
+	<target name="test" depends="compile, compile.test, jslint, test.xml" description="--> Unit tests">
 		<mkdir dir="${dist.reports.dir}" />
 
 		<junit printsummary="yes">
