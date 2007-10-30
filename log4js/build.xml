@@ -331,16 +331,6 @@
 
 			<fileset dir="${src.test.dir}/resources/" includes="*.xml" />
 		</schemavalidate>
-<!--
 
-		<xmlvalidate failonerror="no" lenient="yes" warn="yes">
-			<fileset dir="${src.test.dir}/resources/" includes="*.xml" />
-
-			<attribute name="http://apache.org/xml/features/validation/schema" value="true" />
-			<attribute name="http://xml.org/sax/features/namespaces" value="true" />
-			<property name="http://apache.org/xml/properties/schema/external-noNamespaceSchemaLocation" value="${xsd.file}" />
-			<property name="http://apache.org/xml/properties/schema/external-schemaLocation" value="${xsd.file}" />
-		</xmlvalidate>
--->
 	</target>
 </project>
