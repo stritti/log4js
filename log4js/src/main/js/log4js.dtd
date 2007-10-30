@@ -17,6 +17,7 @@
 <!-- 
 	@version 0.3
 	@author Stephan Strittmatter - http://jroller.com/page/stritti
+	@deprecated will be supported no longer. Use log4js.xsd instead.
 -->
 
 

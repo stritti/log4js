@@ -89,7 +89,7 @@ var Log4js = {
 	 * @static
 	 * @final
 	 */
-  	version: "1.0-RC1",
+  	version: "1.0",
 
 	/**  
 	 * Date of logger initialized.
@@ -370,7 +370,7 @@ Log4js.CustomEvent.prototype = {
 				this.listeners[i](handler);
 			}
 			catch (e) {
-				alert("Could not run the listener " + this.listeners[i] + ". \n" + e);
+				log4jsLogger.warn("Could not run the listener " + this.listeners[i] + ". \n" + e);
 			}
 		}
 	},
@@ -486,7 +486,7 @@ Log4js.Logger = function(name) {
 	try {
 		window.onerror = this.windowError.bind(this);
 	} catch (e) {
-		log4jsLogger.fatal(e);
+		//log4jsLogger.fatal(e);
 	}
 };
 

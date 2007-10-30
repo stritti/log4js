@@ -1,5 +1,5 @@
 <log4js:response state="Error"
-	xmlns:log4js="http://log4js.berlios.de/2007/log4js"
+	xmlns:log4js="http://log4js.berlios.de/2007/log4js/"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://log4js.berlios.de/2007/log4js/ log4js.xsd">
 	<log4js:message>All right!</log4js:message>
