@@ -59,8 +59,8 @@
 
 	<!-- release properties -->
 	<property name="release.dir" value="../release" />
-	
-	<property name="project.site.dir" value="${basedir}/../log4js-site"/>
+
+	<property name="project.site.dir" value="${basedir}/../log4js-site" />
 
 
 	<!-- ================================= 
@@ -112,7 +112,7 @@
 		<copy todir="${release.dir}/site/apidocs">
 			<fileset dir="${dist.dir}/docs/api">
 			</fileset>
-		</copy>		
+		</copy>
 	</target>
 
 	<!-- ================================= 
@@ -146,7 +146,7 @@
 	<!-- - - - - - - - - - - - - - - - - - 
           target: compile                      
          - - - - - - - - - - - - - - - - - -->
-	<target name="compile" depends="init, jslint">
+	<target name="compile" depends="init">
 		<mkdir dir="${dist.dir}/lib" />
 		<exec executable="perl" output="${dist.dir}/lib/log4js-lib.js" failonerror="false">
 			<arg line="-Tw ${tools.dir}/jsjam.pl --quiet --keep-globals --keep-identifiers ${src.js.dir}/log4js.js" />
@@ -159,7 +159,7 @@
          ================================= -->
 	<target name="doc" depends="doc.api" description="generate documentation">
 	</target>
-	
+
 	<!-- ================================= 
           target: doc.api              
          ================================= -->
@@ -174,7 +174,7 @@
 
 		<property name="line" value="${tools.dir}/JSDoc/JSDoc-${tools.jsdoc.version}/jsdoc.pl -r &quot;${basedir}/${src.js.dir}/&quot; -d &quot;${apidoc.dir}&quot; -project-name &quot;${ant.project.name} ${version}&quot; -page-footer &quot;${footer}&quot;  -logo &quot;${logo}&quot;" />
 		<echo level="info">${line}</echo>
-		
+
 		<exec executable="perl">
 			<arg line="${line}" />
 		</exec>
@@ -250,8 +250,8 @@
 
 		<!-- JavaScript Lint -->
 		<get dest="${lib.dir}/jsl-${tools.jsl.version}-win32.zip" usetimestamp="true" ignoreerrors="true" src="http://www.javascriptlint.com/download/jsl-${tools.jsl.version}-win32.zip" />
-		<unzip src="${lib.dir}/jsl-${tools.jsl.version}-win32.zip" dest="${tools.dir}/jsl" />		
-	
+		<unzip src="${lib.dir}/jsl-${tools.jsl.version}-win32.zip" dest="${tools.dir}/jsl" />
+
 	</target>
 
 
@@ -281,7 +281,7 @@
 	<!-- ================================= 
           target: test              
          ================================= -->
-	<target name="test" depends="compile, compile.test" description="--> Unit tests">
+	<target name="test" depends="compile, compile.test, jslint" description="--> Unit tests">
 		<mkdir dir="${dist.reports.dir}" />
 
 		<junit printsummary="yes">
@@ -314,4 +314,32 @@
 	</target>
 
 
+	<!-- - - - - - - - - - - - - - - - - - 
+          target: test.xml                      
+         - - - - - - - - - - - - - - - - - -->
+	<target name="test.xml">
+		<pathconvert dirsep="/" property="xsd.file">
+			<path>
+				<pathelement location="${src.dir}/resources/log4js.xsd" />
+			</path>
+		</pathconvert>
+
+		<schemavalidate warn="yes" failonerror="no" fullchecking="yes" lenient="yes">
+			<schema namespace="http://log4js.berlios.de/2007/log4js/"
+		          file="${xsd.file}" />
+
+			<fileset dir="${src.test.dir}/resources/" includes="*.xml" />
+		</schemavalidate>
+<!--
+
+		<xmlvalidate failonerror="no" lenient="yes" warn="yes">
+			<fileset dir="${src.test.dir}/resources/" includes="*.xml" />
+
+			<attribute name="http://apache.org/xml/features/validation/schema" value="true" />
+			<attribute name="http://xml.org/sax/features/namespaces" value="true" />
+			<property name="http://apache.org/xml/properties/schema/external-noNamespaceSchemaLocation" value="${xsd.file}" />
+			<property name="http://apache.org/xml/properties/schema/external-schemaLocation" value="${xsd.file}" />
+		</xmlvalidate>
+-->
+	</target>
 </project>

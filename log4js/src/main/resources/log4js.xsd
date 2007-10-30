@@ -20,123 +20,164 @@
 	@version 1.0
 	@author Stephan Strittmatter - http://jroller.com/page/stritti
 -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
-	<xs:import namespace="http://www.w3.org/XML/1998/namespace"/>
-	<xs:element name="log4js">
-		<xs:annotation>
-			<xs:documentation>Root element</xs:documentation>
-		</xs:annotation>
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element ref="eventSet" minOccurs="0" maxOccurs="unbounded"/>
-				<xs:element ref="response" minOccurs="0">
-					<xs:annotation>
-						<xs:documentation>XML response for AJAXAppender</xs:documentation>
-					</xs:annotation>
-				</xs:element>
-			</xs:sequence>
-			<xs:attribute name="version" default="1.0">
-				<xs:simpleType>
-					<xs:restriction base="xs:NMTOKEN">
-						<xs:enumeration value="0.2"/>
-						<xs:enumeration value="0.3"/>
-						<xs:enumeration value="1.0"/>
-					</xs:restriction>
-				</xs:simpleType>
-			</xs:attribute>
-		</xs:complexType>
-	</xs:element>
-	<xs:element name="param">
-		<xs:complexType>
-			<xs:attribute name="name" type="xs:anySimpleType" use="required"/>
-			<xs:attribute name="value" type="xs:anySimpleType" use="required"/>
-		</xs:complexType>
-	</xs:element>
-	<xs:element name="priority">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element ref="param" minOccurs="0" maxOccurs="unbounded"/>
-			</xs:sequence>
-			<xs:attribute name="class" type="xs:anySimpleType"/>
-			<xs:attribute name="value" type="xs:anySimpleType" use="required"/>
-		</xs:complexType>
-	</xs:element>
-	<xs:element name="level">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element ref="param" minOccurs="0" maxOccurs="unbounded"/>
-			</xs:sequence>
-			<xs:attribute name="class" type="xs:anySimpleType"/>
-			<xs:attribute name="value" type="xs:anySimpleType" use="required"/>
-		</xs:complexType>
-	</xs:element>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://log4js.berlios.de/2007/log4js/" xmlns:log4js="http://log4js.berlios.de/2007/log4js/">
 	<xs:element name="eventSet">
 		<xs:annotation>
 			<xs:documentation>Set of logging events</xs:documentation>
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element ref="event" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="event" minOccurs="0"
+					maxOccurs="unbounded" type="log4js:eventType">
+				</xs:element>
 			</xs:sequence>
-			<xs:attribute name="includesLocationInfo" default="true">
-				<xs:simpleType>
-					<xs:restriction base="xs:NMTOKEN">
-						<xs:enumeration value="true"/>
-						<xs:enumeration value="false"/>
-					</xs:restriction>
-				</xs:simpleType>
-			</xs:attribute>
 		</xs:complexType>
-	</xs:element>
-	<xs:element name="event">
+ </xs:element>
+
+	<xs:element name="response">
 		<xs:annotation>
-			<xs:documentation>Logging event</xs:documentation>
+			<xs:documentation>
+				XML response on AJAXAppender containing a mandatory
+				state and optional message and exception informations.
+			</xs:documentation>
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element ref="message"/>
-				<xs:element ref="throwable" minOccurs="0"/>
+				<xs:element name="message" type="xs:string"
+					maxOccurs="1" minOccurs="0">
+				</xs:element>
+				<xs:element name="throwable" type="log4js:throwableType" maxOccurs="1" minOccurs="0"></xs:element>
 			</xs:sequence>
-			<xs:attribute name="logger" type="xs:anySimpleType" use="required"/>
-			<xs:attribute name="level" type="xs:anySimpleType" use="required"/>
-			<xs:attribute name="timestamp" type="xs:anySimpleType" use="required"/>
+			<xs:attribute name="state" use="required"
+				type="log4js:stateType" />
 		</xs:complexType>
 	</xs:element>
-	<xs:element name="message">
-		<xs:annotation>
-			<xs:documentation>Message within event</xs:documentation>
-		</xs:annotation>
-		<xs:complexType mixed="true"/>
-	</xs:element>
-	<xs:element name="throwable">
-		<xs:annotation>
-			<xs:documentation>Possible exception within event</xs:documentation>
-		</xs:annotation>
-		<xs:complexType mixed="true"/>
-	</xs:element>
-	<xs:element name="locationInfo">
-		<xs:complexType/>
-	</xs:element>
-	<xs:simpleType name="ST_response">
-		<xs:restriction base="xs:string"/>
+
+
+	<xs:simpleType name="levelType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="INFO"></xs:enumeration>
+			<xs:enumeration value="DEBUG"></xs:enumeration>
+			<xs:enumeration value="WARN"></xs:enumeration>
+			<xs:enumeration value="ERROR"></xs:enumeration>
+			<xs:enumeration value="TRACE"></xs:enumeration>
+			<xs:enumeration value="FATAL"></xs:enumeration>
+		</xs:restriction>
 	</xs:simpleType>
-	<xs:element name="response">
-		<xs:annotation>
-			<xs:documentation>XML respnse on AJAXAppender</xs:documentation>
-		</xs:annotation>
-		<xs:complexType>
-			<xs:simpleContent>
-				<xs:extension base="ST_response">
-					<xs:attribute name="state" use="required">
-						<xs:simpleType>
-							<xs:restriction base="xs:string">
-								<xs:enumeration value="OK"/>
-								<xs:enumeration value="Error"/>
-							</xs:restriction>
-						</xs:simpleType>
-					</xs:attribute>
-				</xs:extension>
-			</xs:simpleContent>
+	
+	<xs:simpleType name="stateType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="OK"></xs:enumeration>
+			<xs:enumeration value="Error"></xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+		
+		<xs:complexType name="eventType">
+        <xs:annotation>
+        	<xs:documentation>
+        		A loggin event, which consist of a mandatory message and
+        		an optional exception information.
+        	</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+				<xs:element name="message" type="xs:string"
+					maxOccurs="1" minOccurs="1">
+				</xs:element>
+				<xs:element name="throwable" type="log4js:throwableType"
+					maxOccurs="1" minOccurs="0">
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="logger" type="xs:string" use="required" />
+			<xs:attribute name="level" type="log4js:levelType"
+				use="required" />
+			<xs:attribute name="timestamp" type="xs:dateTime"
+				use="required" />
+			<xs:attribute name="client" type="xs:string"></xs:attribute>
+			<xs:attribute name="referer" type="xs:string"></xs:attribute>
 		</xs:complexType>
-	</xs:element>
+
+		<xs:complexType name="throwableType">
+        <xs:annotation>
+        	<xs:documentation>
+        		This type describes a JAVAscript or JAVA exception and
+        		is used to transfer extra exception informations to the
+        		server. It is also used to send back a JAVA stack trace
+        		from teh servlet to the webbrowser.
+        	</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+				<xs:element name="message" type="xs:string"
+					maxOccurs="1" minOccurs="1">
+                <xs:annotation>
+                	<xs:documentation>
+                		The mandatory message describing the cause of
+                		the exception.
+                	</xs:documentation>
+                </xs:annotation>
+				</xs:element>
+				<xs:element name="description" type="xs:string"
+					maxOccurs="1" minOccurs="0">
+                <xs:annotation>
+                	<xs:documentation>
+                		An optional long description of the cause of the
+                		exception. This element is mostly used for
+                		JAVAscript exceptions.
+                	</xs:documentation>
+                </xs:annotation>
+				</xs:element>
+				<xs:element name="stacktrace" type="log4js:stacktraceType" minOccurs="0" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>
+							The stack trace of the exception.
+						</xs:documentation>
+					</xs:annotation></xs:element>
+			</xs:sequence>
+			<xs:attribute name="class" type="xs:string" use="optional"></xs:attribute>
+		</xs:complexType>
+
+		<xs:complexType name="locationType">
+        <xs:annotation>
+        	<xs:documentation>
+        		The location where an exception has occurred. All
+        		informations are optional, because only a limited subset
+        		of information may be available in an individual
+        		programming language.
+        	</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="fileName" type="xs:string"
+				use="optional">
+            <xs:annotation>
+            	<xs:documentation>
+            		The name of the file in which the exception
+            		occurred.
+            	</xs:documentation>
+            </xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="lineNumber" type="xs:int" use="optional">
+				<xs:annotation>
+					<xs:documentation>
+						The line number at which the exception occurred.
+					</xs:documentation>
+				</xs:annotation></xs:attribute>
+			<xs:attribute name="class" type="xs:string"
+				use="optional">
+            <xs:annotation>
+            	<xs:documentation>
+            		The JAVA class at which the exception occurred.
+            	</xs:documentation>
+            </xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="method" type="xs:string" use="optional">
+				<xs:annotation>
+					<xs:documentation>
+						The method where the exception occurred.
+					</xs:documentation>
+				</xs:annotation></xs:attribute>
+		</xs:complexType>
+
+		<xs:complexType name="stacktraceType">
+			<xs:sequence>
+				<xs:element name="location" type="log4js:locationType" minOccurs="0" maxOccurs="unbounded"></xs:element>
+			</xs:sequence>
+		</xs:complexType>
 </xs:schema>
