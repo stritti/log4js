@@ -378,19 +378,19 @@
       &lt;log4js:event logger="ajaxTest" level="TRACE" 
          client="Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.8.1b1) Gecko/20060710 Firefox/2.0b1" 
          referer="http://localhost:8080/log4js-example-0.3/" 
-         timestamp="2006-08-02T17:40:32+0200"&gt;
+         timestamp="2006-08-02T17:40:32+02:00"&gt;
               &lt;log4js:message>&lt;![CDATA[I was traced!]]&gt;&lt;/log4js:message&gt;
       &lt;/log4js:event&gt;
       &lt;log4js:event logger="ajaxTest" level="DEBUG" 
          client="Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.8.1b1) Gecko/20060710 Firefox/2.0b1" 
          referer="http://localhost:8080/log4js-example/" 
-         timestamp="2006-08-02T17:40:32+0200"&gt;
+         timestamp="2006-08-02T17:40:32+02:00"&gt;
               &lt;log4js:message>&lt;![CDATA[I was debuged!]]&gt;&lt;/log4js:message&gt;
       &lt;/log4js:event&gt;
       &lt;log4js:event logger="ajaxTest" level="INFO" 
          client="Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.8.1b1) Gecko/20060710 Firefox/2.0b1" 
          referer="http://log4js.berlios.de/log4js/" 
-         timestamp="2006-08-02T17:40:33+0200"&gt;
+         timestamp="2006-08-02T17:40:33+02:00"&gt;
               &lt;log4js:message>&lt;![CDATA[I was informed!]]&gt;&lt;/log4js:message&gt;
       &lt;/log4js:event&gt;
   &lt;/log4js:eventSet>
