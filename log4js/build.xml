@@ -315,7 +315,8 @@
 
 
 	<!-- - - - - - - - - - - - - - - - - - 
-          target: test.xml                      
+          target: test.xml
+          Validate the test XML-Messages against the xsd.                   
          - - - - - - - - - - - - - - - - - -->
 	<target name="test.xml">
 		<pathconvert dirsep="/" property="xsd.file">
