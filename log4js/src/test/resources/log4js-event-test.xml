@@ -6,6 +6,16 @@
 		referer="http://localhost:8080/log4js-example-0.3/"
 		timestamp="2006-08-02T17:40:32+02:00">
 		<log4js:message><![CDATA[I was traced!]]></log4js:message>
+		<log4js:throwable>
+			<log4js:message>Exception</log4js:message>
+			<log4js:stacktrace>
+				<log4js:location class="this.is.my.class"
+					fileName="class.java" lineNumber="43" method="aMethod" />
+				<log4js:location class="this.is.another.classx"
+					fileName="classx.java" lineNumber="57" method="callAMethod" />
+			</log4js:stacktrace>
+
+		</log4js:throwable>
 	</log4js:event>
 	<log4js:event logger="ajaxTest" level="DEBUG"
 		client="Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.8.1b1) Gecko/20060710 Firefox/2.0b1"
