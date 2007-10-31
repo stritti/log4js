@@ -2081,7 +2081,7 @@ Log4js.XMLLayout.prototype = (new Log4js.Layout()).extend( {
 		content += "\t<log4js:message><![CDATA[" + this.escapeCdata(loggingEvent.message) + "]]></log4js:message>\n";	
  		
  		if (loggingEvent.exception) {
-			content += "\t<log4js:exception><![CDATA[" + this.formatException(loggingEvent.exception) + "]]></log4js:exception>\n";
+			content += this.formatException(loggingEvent.exception) ;
 		}
  		content += "</log4js:event>\n";
         
@@ -2101,7 +2101,7 @@ Log4js.XMLLayout.prototype = (new Log4js.Layout()).extend( {
 	 */
 	getHeader: function() {
 		return "<log4js:eventSet version=\"" + Log4js.version + 
-			"\" xmlns:log4js=\"http://log4js.berlios.de/log4js/\">\n";
+			"\" xmlns:log4js=\"http://log4js.berlios.de/2007/log4js/\">\n";
 	},
 	/** 
 	 * @return Returns the footer for the layout format. The base class returns null.
@@ -2123,18 +2123,18 @@ Log4js.XMLLayout.prototype = (new Log4js.Layout()).extend( {
 	 */
 	formatException: function(ex) {
 		if (ex) {
-			var exStr = "";
+			var exStr = "\t<log4js:throwable>"; 
 			if (ex.message) {
-				exStr += ex.message;
-			} else if (ex.description) {
-				exStr += ex.description;
+				exStr +=  "\t\t<log4js:message><![CDATA[" + this.escapeCdata(ex.message) + "]]></log4js:message>\n";	
+			} 
+			if (ex.description) {
+				exStr +=  "\t\t<log4js:description><![CDATA[" + this.escapeCdata(ex.description) + "]]></log4js:description>\n";	
 			}
-			if (ex.lineNumber) {
-				exStr += " on line number " + ex.lineNumber;
-			}
-			if (ex.fileName) {
-				exStr += " in file " + ex.fileName;
-			}
+			
+			exStr +=  "\t\t<log4js:stacktrace>";
+			exStr +=  "\t\t\t<log4js:location fileName=\""+ex.fileName+"\" lineNumber=\""+ex.lineNumber+"\" />";
+			exStr +=  "\t\t</log4js:stacktrace>";
+			exStr = "\t</log4js:throwable>";
 			return exStr;
 		}
 		return null;
