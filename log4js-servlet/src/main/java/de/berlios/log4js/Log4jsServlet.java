@@ -167,6 +167,7 @@ public class Log4jsServlet extends HttpServlet {
 	 * @throws IllegalAccessException
 	 * @throws ClassNotFoundException
 	 */
+	@SuppressWarnings("unchecked")
 	protected Adapter getAdapter() throws InstantiationException,
 			IllegalAccessException, ClassNotFoundException {
 
@@ -189,6 +190,7 @@ public class Log4jsServlet extends HttpServlet {
 	 * @throws InstantiationException
 	 * @throws IllegalAccessException
 	 */
+	@SuppressWarnings("unchecked")
 	protected EventParser getParser(String contentType)
 			throws ClassNotFoundException, InstantiationException,
 			IllegalAccessException {

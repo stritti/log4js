@@ -86,20 +86,36 @@ public class XmlEventParser implements EventParser {
 
 				LoggingEvent loggingEvent = new LoggingEvent();
 
-				loggingEvent.setCategoryName(eventNode.getAttribute("logger"));
+				loggingEvent.setCategoryName(eventNode.getAttribute("logger")
+						.trim());
 				loggingEvent.setLogLevel(LogLevel.getLogLevel(eventNode
-						.getAttribute("level")));
-				loggingEvent.setUserAgent(eventNode.getAttribute("useragent"));
-				loggingEvent.setReferer(eventNode.getAttribute("referer"));
-				loggingEvent.setTimestamp(eventNode.getAttribute("timestamp"));
+						.getAttribute("level").trim()));
+				loggingEvent.setUserAgent(eventNode.getAttribute("useragent")
+						.trim());
+				loggingEvent.setReferer(eventNode.getAttribute("referer")
+						.trim());
+				loggingEvent.setTimestamp(eventNode.getAttribute("timestamp")
+						.trim());
 
 				NodeList nodes = eventNode.getChildNodes();
 
 				for (int j = 0; j < nodes.getLength(); j++) {
 					Node n = nodes.item(j);
 					if ("log4js:message".equals(n.getNodeName())) {
-						loggingEvent.setMessage(n.getTextContent());
-					} else if ("log4js:exception".equals(n.getNodeName())) {
+						loggingEvent.setMessage(n.getTextContent().trim());
+					} else if ("log4js:throwable".equals(n.getNodeName())) {
+						NodeList throwableNodeList = n.getChildNodes();
+
+						for (int k = 0; k < throwableNodeList.getLength(); k++) {
+							Node thro = throwableNodeList.item(k);
+							if ("log4js:message".equals(thro.getNodeName())) {
+								loggingEvent.setException(thro.getTextContent()
+										.trim());
+							} else if ("log4js:stacktrace".equals(n
+									.getNodeName())) {
+
+							}
+						}
 						loggingEvent.setException(n.getTextContent());
 					}
 				}
@@ -114,7 +130,8 @@ public class XmlEventParser implements EventParser {
 		StringWriter sw = new StringWriter();
 
 		sw.append("<?xml version=\"1.0\"?>\n\n");
-		sw.append("<log4js:response xmlns:log4js=\"http://log4js.berlios.de/log4js\" ");
+		sw
+				.append("<log4js:response xmlns:log4js=\"http://log4js.berlios.de/log4js\" ");
 
 		return sw.toString();
 	}
@@ -123,23 +140,29 @@ public class XmlEventParser implements EventParser {
 		StringWriter sw = new StringWriter();
 		sw.append(getResponseHeader());
 		sw.append("state=\"").append(state).append("\">");
-		
-		if (message != null) {		
-			sw.append("<log4js:message>").append(message).append("</log4js:message>");
+
+		if (message != null) {
+			sw.append("<log4js:message>").append(message).append(
+					"</log4js:message>");
 		}
-		
-		if(throwable != null) {
+
+		if (throwable != null) {
 			sw.append("<log4js:throwable>");
-			sw.append("<log4js:message>").append(throwable.getMessage()).append("</log4js:message");
+			sw.append("<log4js:message>").append(throwable.getMessage())
+					.append("</log4js:message");
 			sw.append("<log4js:description />");
-			
+
 			sw.append("<log4js:stacktrace>");
 			for (int i = 0; i < throwable.getStackTrace().length; i++) {
 				StackTraceElement trace = throwable.getStackTrace()[i];
-				sw.append("<log4js:location class=\"").append(trace.getClassName()).append("\" ");
-				sw.append(" fileName=\"").append(trace.getFileName()).append("\" ");
-				sw.append(" lineNumber=\"").append(""+trace.getLineNumber()).append("\" ");
-				sw.append(" method=\"").append(trace.getMethodName()).append("\"/>");
+				sw.append("<log4js:location class=\"").append(
+						trace.getClassName()).append("\" ");
+				sw.append(" fileName=\"").append(trace.getFileName()).append(
+						"\" ");
+				sw.append(" lineNumber=\"").append("" + trace.getLineNumber())
+						.append("\" ");
+				sw.append(" method=\"").append(trace.getMethodName()).append(
+						"\"/>");
 			}
 			sw.append("</log4js:stacktrace>");
 		}

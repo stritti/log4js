@@ -32,60 +32,61 @@ import org.apache.log4j.Logger;
 import de.berlios.log4js.LoggingEvent;
 
 /**
- * Adapter to log using Apache Log4j logging
+ * Adapter to log using Apache Log4j logging.
  * 
  * @author Stephan Strittmatter
  * @created 02.08.2007
  */
 public class Log4jAdapter implements Adapter {
 
-  private Logger logger;
+	private Logger logger;
 
-/**
-   * @see de.berlios.log4js.adapter.Adapter#logEvent(de.berlios.log4js.LoggingEvent)
-   */
-  public void logEvent(LoggingEvent loggingEvent) {
+	/**
+	 * @see de.berlios.log4js.adapter.Adapter#logEvent(de.berlios.log4js.LoggingEvent)
+	 */
+	public void logEvent(LoggingEvent loggingEvent) {
 
-    String msg;
+		String msg;
 
-    this.logger = Logger.getLogger(loggingEvent.getCategoryName());
-    
-	if (loggingEvent.getException() != null) {
-      msg = loggingEvent.getMessage() + " -- EXCEPTION:\t" + loggingEvent.getException();
-    }
-    else {
-      msg = loggingEvent.getMessage();
-    }
+		this.logger = Logger.getLogger(loggingEvent.getCategoryName());
 
-    switch (loggingEvent.getLogLevel()) {
-      case ERROR:
-        this.logger.log(Level.ERROR, msg );
-        break;
+		if (loggingEvent.getException() != null) {
+			msg = loggingEvent.getMessage() + " -- EXCEPTION:\t"
+					+ loggingEvent.getException();
+		} else {
+			msg = loggingEvent.getMessage();
+		}
 
-      case DEBUG:
-        this.logger.log(Level.DEBUG, msg);
-        break;
+		switch (loggingEvent.getLogLevel()) {
+		case ERROR:
+			this.logger.log(Level.ERROR, msg);
+			break;
 
-      case FATAL:
-        this.logger.log(Level.FATAL, msg);
-        break;
+		case DEBUG:
+			this.logger.log(Level.DEBUG, msg);
+			break;
 
-      case INFO:
-        this.logger.log(Level.INFO, msg);
-        break;
+		case FATAL:
+			this.logger.log(Level.FATAL, msg);
+			break;
 
-      case TRACE:
-        this.logger.log(Level.TRACE, msg);
-        break;
+		case INFO:
+			this.logger.log(Level.INFO, msg);
+			break;
 
-      case WARN:
-        this.logger.log(Level.WARN, msg);
-        break;
+		case TRACE:
+			this.logger.log(Level.TRACE, msg);
+			break;
 
-      default:
-        throw new IllegalArgumentException(loggingEvent.getLogLevel() + " not supported");
-    }
+		case WARN:
+			this.logger.log(Level.WARN, msg);
+			break;
 
-  }
+		default:
+			throw new IllegalArgumentException(loggingEvent.getLogLevel()
+					+ " not supported");
+		}
+
+	}
 
 }

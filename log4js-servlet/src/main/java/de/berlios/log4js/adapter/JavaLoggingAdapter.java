@@ -19,60 +19,61 @@ import java.util.logging.Logger;
 import de.berlios.log4js.LoggingEvent;
 
 /**
- * Adapter to log using Java logging
+ * Adapter to log using Java logging.
  * 
  * TODO log also userAgent
- *
+ * 
  * @author Stephan Strittmatter
  * @created 02.08.2007
  */
 public class JavaLoggingAdapter implements Adapter {
 
-  /**
-   * @see de.berlios.log4js.adapter.Adapter#logEvent(de.berlios.log4js.LoggingEvent)
-   */
-  public void logEvent(LoggingEvent loggingEvent) {
+	/**
+	 * @see de.berlios.log4js.adapter.Adapter#logEvent(de.berlios.log4js.LoggingEvent)
+	 */
+	public void logEvent(LoggingEvent loggingEvent) {
 
-    String msg;
+		String msg;
 
-    Logger logger = Logger.getLogger(loggingEvent.getCategoryName());
+		Logger logger = Logger.getLogger(loggingEvent.getCategoryName());
 
-    if (loggingEvent.getException() != null) {
-      msg = loggingEvent.getMessage() + " -- EXCEPTION:\t" + loggingEvent.getException();
-    }
-    else {
-      msg = loggingEvent.getMessage();
-    }
+		if (loggingEvent.getException() != null) {
+			msg = loggingEvent.getMessage() + " -- EXCEPTION:\t"
+					+ loggingEvent.getException();
+		} else {
+			msg = loggingEvent.getMessage();
+		}
 
-    switch (loggingEvent.getLogLevel()) {
-      case ERROR:
-        logger.log(Level.SEVERE, msg);
-        break;
+		switch (loggingEvent.getLogLevel()) {
+		case ERROR:
+			logger.log(Level.SEVERE, msg);
+			break;
 
-      case DEBUG:
-        logger.log(Level.FINER, msg);
-        break;
+		case DEBUG:
+			logger.log(Level.FINER, msg);
+			break;
 
-      case FATAL:
-        logger.log(Level.SEVERE, msg);
-        break;
+		case FATAL:
+			logger.log(Level.SEVERE, msg);
+			break;
 
-      case INFO:
-        logger.log(Level.FINE, msg);
-        break;
+		case INFO:
+			logger.log(Level.FINE, msg);
+			break;
 
-      case TRACE:
-        logger.log(Level.FINEST, msg);
-        break;
+		case TRACE:
+			logger.log(Level.FINEST, msg);
+			break;
 
-      case WARN:
-        logger.log(Level.WARNING, msg);
-        break;
+		case WARN:
+			logger.log(Level.WARNING, msg);
+			break;
 
-      default:
-        throw new IllegalArgumentException(loggingEvent.getLogLevel() + " not supported");
-    }
+		default:
+			throw new IllegalArgumentException(loggingEvent.getLogLevel()
+					+ " not supported");
+		}
 
-  }
+	}
 
 }

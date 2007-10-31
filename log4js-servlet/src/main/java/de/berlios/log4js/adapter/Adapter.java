@@ -29,6 +29,6 @@ public interface Adapter {
    *
    * @param event Event send by Log4js
    */
-  public void logEvent(LoggingEvent event);
+  void logEvent(LoggingEvent event);
 
 }

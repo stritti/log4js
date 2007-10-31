@@ -24,6 +24,7 @@ import org.junit.Test;
 
 import de.berlios.log4js.LogLevel;
 import de.berlios.log4js.LoggingEvent;
+import de.berlios.log4js.TestUtil;
 
 public class XmlEventParserTest extends TestCase {
 
@@ -40,41 +41,25 @@ public class XmlEventParserTest extends TestCase {
   @Test
   public void testParse() throws ParseException {
 
-    String content = "<log4js>\t<log4js:event logger=\"";
-    content += "category" + "\" level=\"";
-    content += "ERROR" + "\" client=\"";
-    content += "Modzilla" + "\" referer=\"";
-    content += "www.google.com" + "\" timestamp=\"";
-    content += "TODAY" + "\">\n\t\t";
-    content += "<log4js:message><![CDATA[" + "Hello log4js" + "]]></log4js:message>\n";
-    content += "<log4js:exception><![CDATA[" + "Exceptionsation" + "]]></log4js:exception>\n";
-    content += "\t</log4js:event>\n";
-
-    content += "\t<log4js:event logger=\"";
-    content += "category 2" + "\" level=\"";
-    content += "INFO" + "\" useragent=\"";
-    content += "Modzilla 2" + "\" referer=\"";
-    content += "www.google.com 2" + "\" timestamp=\"";
-    content += "TODAY 2" + "\">\n\t\t";
-    content += "<log4js:message><![CDATA[" + "Hello log4js 2" + "]]></log4js:message>\n";
-    content += "<log4js:exception><![CDATA[" + "Exceptionsation 2" + "]]></log4js:exception>\n";
-    content += "\t</log4js:event></log4js>\n";
-
+    String content = TestUtil.fileToString("src/test/resources/log4js-event-test.xml");
     EventParser parser = new XmlEventParser();
 
     List<LoggingEvent> actual = parser.parse(content);
-    Assert.assertEquals(2, actual.size());
+    Assert.assertEquals(3, actual.size());
 
     LoggingEvent loggingEvent = actual.get(0);
-    Assert.assertEquals("category", loggingEvent.getCategoryName());
-
-    Assert.assertEquals("Exceptionsation", loggingEvent.getException());
-    Assert.assertEquals(LogLevel.ERROR, loggingEvent.getLogLevel());
+    Assert.assertEquals("ajaxTest", loggingEvent.getCategoryName());
+    Assert.assertEquals(LogLevel.TRACE, loggingEvent.getLogLevel());
+    Assert.assertEquals("Exception", loggingEvent.getException());
+    
+    
 
     loggingEvent = actual.get(1);
-    Assert.assertEquals("category 2", loggingEvent.getCategoryName());
-
-    Assert.assertEquals("Exceptionsation 2", loggingEvent.getException());
+    Assert.assertEquals("ajaxTest", loggingEvent.getCategoryName());
+    Assert.assertEquals(LogLevel.DEBUG, loggingEvent.getLogLevel());
+    Assert.assertEquals("I was debuged!", loggingEvent.getMessage());
+    
+    
     Assert.assertEquals(LogLevel.INFO, loggingEvent.getLogLevel());
   }
 

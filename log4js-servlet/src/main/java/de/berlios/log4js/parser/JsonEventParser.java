@@ -19,15 +19,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.xml.parsers.ParserConfigurationException;
-
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-import net.sf.json.JSONSerializer;
-import net.sf.json.util.JSONStringer;
-
-import org.xml.sax.SAXException;
-
 import de.berlios.log4js.LogLevel;
 import de.berlios.log4js.LoggingEvent;
 
@@ -44,6 +37,7 @@ public class JsonEventParser implements EventParser {
 	/**
 	 * @see de.berlios.log4js.parser.EventParser#parse(java.lang.String)
 	 */
+	@SuppressWarnings("unchecked")
 	public List<LoggingEvent> parse(String input) throws ParseException {
 
 		List<LoggingEvent> eventList = new ArrayList<LoggingEvent>();

@@ -17,110 +17,185 @@ import java.io.Serializable;
 
 /**
  * Java representation of Log4js logging event.
- *
+ * 
  * @author Stephan Strittmatter
  * @created 02.08.2007
  */
 public class LoggingEvent implements Serializable {
 
-  /**
-   * <Brief description (possible values, meaning, ...)>
-   */
-  private static final long serialVersionUID = 1L;
+	/** The category name. */
+	private String categoryName;
 
-  String categoryName;
+	/** The log level. */
+	private LogLevel logLevel;
 
-  de.berlios.log4js.LogLevel logLevel;
+	/** The user agent. */
+	private String userAgent;
 
-  String userAgent;
+	/** The referer. */
+	private String referer;
 
-  String referer;
+	/** The timestamp. */
+	private String timestamp;
 
-  String timestamp;
+	/** The message. */
+	private String message;
 
-  String message;
+	/** The exception. */
+	private String exception;
 
-  String exception;
+	/**
+	 * The Constructor.
+	 */
+	public LoggingEvent() {
 
-  public LoggingEvent() {
+	}
 
-  }
+	/**
+	 * Gets the category name.
+	 * 
+	 * @return the category name
+	 */
+	public final String getCategoryName() {
 
-  public String getCategoryName() {
+		return this.categoryName;
+	}
 
-    return categoryName;
-  }
+	/**
+	 * Gets the log level.
+	 * 
+	 * @return the log level
+	 */
+	public final LogLevel getLogLevel() {
 
-  public LogLevel getLogLevel() {
+		return this.logLevel;
+	}
 
-    return logLevel;
-  }
+	/**
+	 * Gets the user agent.
+	 * 
+	 * @return the user agent
+	 */
+	public final String getUserAgent() {
 
-  public String getUserAgent() {
+		return this.userAgent;
+	}
 
-    return userAgent;
-  }
+	/**
+	 * Gets the referer.
+	 * 
+	 * @return the referer
+	 */
+	public final String getReferer() {
 
-  public String getReferer() {
+		return this.referer;
+	}
 
-    return referer;
-  }
+	/**
+	 * Gets the timestamp.
+	 * 
+	 * @return the timestamp
+	 */
+	public final String getTimestamp() {
 
-  public String getTimestamp() {
+		return this.timestamp;
+	}
 
-    return timestamp;
-  }
+	/**
+	 * Gets the message.
+	 * 
+	 * @return the message
+	 */
+	public final String getMessage() {
 
-  public String getMessage() {
+		return this.message;
+	}
 
-    return message;
-  }
+	/**
+	 * Gets the exception.
+	 * 
+	 * @return the exception
+	 */
+	public final String getException() {
 
-  public String getException() {
+		return this.exception;
+	}
 
-    return exception;
-  }
+	/**
+	 * Sets the category name.
+	 * 
+	 * @param categoryName
+	 *            the category name
+	 */
+	public final void setCategoryName(final String categoryName) {
 
-  
-  public void setCategoryName(String categoryName) {
-  
-    this.categoryName = categoryName;
-  }
+		this.categoryName = categoryName;
+	}
 
-  
-  public void setLogLevel(LogLevel logLevel) {
-  
-    this.logLevel = logLevel;
-  }
+	/**
+	 * Sets the log level.
+	 * 
+	 * @param logLevel
+	 *            the log level
+	 */
+	public final void setLogLevel(final LogLevel logLevel) {
 
-  
-  public void setUserAgent(String userAgent) {
-  
-    this.userAgent = userAgent;
-  }
+		this.logLevel = logLevel;
+	}
 
-  
-  public void setReferer(String referer) {
-  
-    this.referer = referer;
-  }
+	/**
+	 * Sets the user agent.
+	 * 
+	 * @param userAgent
+	 *            the user agent
+	 */
+	public final void setUserAgent(final String userAgent) {
 
-  
-  public void setTimestamp(String timestamp) {
-  
-    this.timestamp = timestamp;
-  }
+		this.userAgent = userAgent;
+	}
 
-  
-  public void setMessage(String message) {
-  
-    this.message = message;
-  }
+	/**
+	 * Sets the referer.
+	 * 
+	 * @param referer
+	 *            the referer
+	 */
+	public final void setReferer(final String referer) {
 
-  
-  public void setException(String exception) {
-  
-    this.exception = exception;
-  }
+		this.referer = referer;
+	}
+
+	/**
+	 * Sets the timestamp.
+	 * 
+	 * @param timestamp
+	 *            the timestamp
+	 */
+	public final void setTimestamp(final String timestamp) {
+
+		this.timestamp = timestamp;
+	}
+
+	/**
+	 * Sets the message.
+	 * 
+	 * @param message
+	 *            the message
+	 */
+	public final void setMessage(final String message) {
+
+		this.message = message;
+	}
+
+	/**
+	 * Sets the exception.
+	 * 
+	 * @param exception
+	 *            the exception
+	 */
+	public final void setException(final String exception) {
+
+		this.exception = exception;
+	}
 
 }
