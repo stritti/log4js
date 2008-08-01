@@ -175,9 +175,11 @@
 		<property name="line" value="${tools.dir}/JSDoc/JSDoc-${tools.jsdoc.version}/jsdoc.pl -r &quot;${basedir}/${src.js.dir}/&quot; -d &quot;${apidoc.dir}&quot; -project-name &quot;${ant.project.name} ${version}&quot; -page-footer &quot;${footer}&quot;  -logo &quot;${logo}&quot;" />
 		<echo level="info">${line}</echo>
 
-		<exec executable="perl">
+		<exec executable="perl" errorproperty="jsdoc.failed">
 			<arg line="${line}" />
 		</exec>
+		
+		<!-- call: perl -MCPAN -e 'install HTML::Template' -->
 	</target>
 
 
