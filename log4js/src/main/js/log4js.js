@@ -12,50 +12,10 @@
  * limitations under the License.
  */
 
-
 /*jsl:option explicit*/
 
 /**
- * Object extention (OO) methods if no prototype avaliable.
- * 
- * @private
- * @ignore
- */
-if(!Object.prototype.extend) {
-	Object.extend = function(destination, source) {
-	  for (property in source) {
-	    destination[property] = source[property];
-	  }
-	  return destination;
-	};
-	
-	Object.prototype.extend = function(object) {
-	  return Object.extend.apply(this, [this, object]);
-	};
-}
-
-/**
- * Define bind if no prototype available.
- * @private
- * @ignore
- */
-if(!Function.prototype.bind) {
-	/**
-	 * Functions taken from Prototype library,  
-	 * didn't want to require for just few functions.
-	 * More info at {@link http://prototype.conio.net/}
-	 * @private
-	 */	
-	Function.prototype.bind = function(object) {
-	  var __method = this;
-	  return function() {
-		return __method.apply(object, arguments);
-	  };
-	};
-}
-
-/**
- * @fileoverview log4js is a library to log in JavaScript in simmilar manner 
+ * @fileoverview log4js is a library to log in JavaScript in similar manner 
  * than in log4j for Java. The API should be nearly the same.
  * 
  * This file contains all log4js code and is the only file required for logging.
@@ -67,7 +27,7 @@ if(!Function.prototype.bind) {
  *  log.addAppender(new ConsoleAppender(log, false)); // console that launches in new window
  
  *  // if multiple appenders are set all will log
- *  log.addAppender(new ConsoleAppender(log, true)); // console that is inline in the page
+ *  log.addAppender(new ConsoleAppender(log, true)); // console that is in-line in the page
  *  log.addAppender(new FileAppender("C:\\somefile.log")); // file appender logs to C:\\somefile.log
  * 
  *  ...
@@ -137,7 +97,7 @@ var Log4js = {
 	},
 	
   	/**
-  	 * Attatch an observer function to an elements event browser independent.
+  	 * Atatch an observer function to an elements event browser independent.
   	 * 
   	 * @param element element to attach event
   	 * @param name name of event
@@ -177,6 +137,30 @@ var Log4js = {
 	*/
 };
 
+/**
+ * Internal object extension (OO) methods.
+ * 
+ * @private
+ * @ignore
+ */
+Log4js.extend = function(destination, source) {
+  for (property in source) {
+    destination[property] = source[property];
+  }
+  return destination;
+}
+    
+/**
+ * Functions taken from Prototype library,  
+ * didn't want to require for just few functions.
+ * More info at {@link http://prototype.conio.net/}
+ * @private
+ */	
+Log4js.bind = function(fn, object) {
+  return function() {
+        return fn.apply(object, arguments);
+  };
+};
 
 /**
  * Log4js.Level Enumeration. Do not use directly. Use static objects instead.
@@ -480,7 +464,7 @@ Log4js.Logger = function(name) {
 	/** appender to write in */
 	this.appenders.push(new Log4js.Appender(this));
 	
-	// if multiple log objects are instanciated this will only log to the log 
+	// if multiple log objects are instantiated this will only log to the log 
 	// object that is declared last can't seem to get the attachEvent method to 
 	// work correctly
 	try {
@@ -756,8 +740,8 @@ Log4js.Appender.prototype = {
 	 */
 	setLogger: function(logger){
 		// add listener to the logger methods
-		logger.onlog.addListener(this.doAppend.bind(this));
-		logger.onclear.addListener(this.doClear.bind(this));
+		logger.onlog.addListener(Log4js.bind(this.doAppend, this));
+		logger.onclear.addListener(Log4js.bind(this.doClear, this));
 	
 		this.logger = logger;
 	}
@@ -867,11 +851,11 @@ Log4js.ConsoleAppender = function(isInline) {
 	this.winReference = null;		
 		
 	if(this.inline) {
-		Log4js.attachEvent(window, 'load', this.initialize.bind(this));
+		Log4js.attachEvent(window, 'load', Log4js.bind(this.initialize, this));
 	}
 };
 
-Log4js.ConsoleAppender.prototype = (new Log4js.Appender()).extend( {  
+Log4js.ConsoleAppender.prototype = Log4js.extend(new Log4js.Appender(), {  
 
 	/**
 	 * Set the access key to show/hide the inline console (default &quote;d&quote;)
@@ -951,7 +935,7 @@ Log4js.ConsoleAppender.prototype = (new Log4js.Appender()).extend( {
 			closeButton.style.styleFloat = "right"; // IE dom bug...doesn't understand cssFloat
 			closeButton.style.color = "black";
 			closeButton.innerHTML = "close";
-			closeButton.onclick = this.toggle.bind(this);
+			closeButton.onclick = Log4js.bind(this.toggle, this);
 			this.buttonsContainerElement.appendChild(closeButton);
 		}
 		
@@ -960,7 +944,7 @@ Log4js.ConsoleAppender.prototype = (new Log4js.Appender()).extend( {
 		clearButton.style.styleFloat = "right"; // IE dom bug...doesn't understand cssFloat
 		clearButton.style.color = "black";
 		clearButton.innerHTML = "clear";
-		clearButton.onclick = this.logger.clear.bind(this.logger);
+		clearButton.onclick = Log4js.bind(this.logger.clear, this.logger);
 		this.buttonsContainerElement.appendChild(clearButton);
 	
 
@@ -978,8 +962,8 @@ Log4js.ConsoleAppender.prototype = (new Log4js.Appender()).extend( {
 		this.tagFilterElement.value = this.tagPattern;    
 		this.tagFilterElement.setAttribute('autocomplete', 'off'); // So Firefox doesn't flip out
 		
-		Log4js.attachEvent(this.tagFilterElement, 'keyup', this.updateTags.bind(this));
-		Log4js.attachEvent(this.tagFilterElement, 'click', function() {this.tagFilterElement.select();}.bind(this));
+		Log4js.attachEvent(this.tagFilterElement, 'keyup', Log4js.bind(this.updateTags, this));
+		Log4js.attachEvent(this.tagFilterElement, 'click', Log4js.bind( function() {this.tagFilterElement.select();}, this));
 		
 		// Add outputElement
 		this.outputElement = this.docReference.createElement('div');
@@ -1003,18 +987,18 @@ Log4js.ConsoleAppender.prototype = (new Log4js.Appender()).extend( {
 		this.inputElement.value = 'Type command here'; 
 		this.inputElement.setAttribute('autocomplete', 'off'); // So Firefox doesn't flip out
 	
-		Log4js.attachEvent(this.inputElement, 'keyup', this.handleInput.bind(this));
-		Log4js.attachEvent(this.inputElement, 'click', function() {this.inputElement.select();}.bind(this));
+		Log4js.attachEvent(this.inputElement, 'keyup', Log4js.bind(this.handleInput, this));
+		Log4js.attachEvent(this.inputElement, 'click', Log4js.bind( function() {this.inputElement.select();}, this));
 		
 		if(this.inline){
-			window.setInterval(this.repositionWindow.bind(this), 500);
+			window.setInterval(Log4js.bind(this.repositionWindow, this), 500);
 			this.repositionWindow();	
 			// Allow acess key link          
 			var accessElement = this.docReference.createElement('button');
 			accessElement.style.position = "absolute";
 			accessElement.style.top = "-100px";
 			accessElement.accessKey = this.accesskey;
-			accessElement.onclick = this.toggle.bind(this);
+			accessElement.onclick = Log4js.bind(this.toggle, this);
 			this.docReference.body.appendChild(accessElement);
 		} else {
 			this.show();
@@ -1227,7 +1211,7 @@ Log4js.ConsoleAppender.prototype = (new Log4js.Appender()).extend( {
 Log4js.MetatagAppender = function() {
 	this.currentLine = 0;
 };
-Log4js.MetatagAppender.prototype = (new Log4js.Appender()).extend( {
+Log4js.MetatagAppender.prototype = Log4js.extend(new Log4js.Appender(), {  
 	/**
 	 * @param loggingEvent event to be logged
 	 * @see Log4js.Appender#doAppend
@@ -1323,7 +1307,7 @@ Log4js.AjaxAppender = function(loggingUrl) {
 	this.httpRequest = null;
 };
 
-Log4js.AjaxAppender.prototype = (new Log4js.Appender()).extend( {
+Log4js.AjaxAppender.prototype = Log4js.extend(new Log4js.Appender(), {  
 	/**
 	 * sends the logs to the server
 	 * @param loggingEvent event to be logged
@@ -1537,7 +1521,7 @@ Log4js.FileAppender = function(file) {
 	}
 };
 
-Log4js.FileAppender.prototype = (new Log4js.Appender()).extend( {
+Log4js.FileAppender.prototype = Log4js.extend(new Log4js.Appender(), {  
 	/**
 	 * @param loggingEvent event to be logged
 	 * @see Log4js.Appender#doAppend
@@ -1621,7 +1605,7 @@ Log4js.WindowsEventAppender = function() {
 	}
 };
 
-Log4js.WindowsEventAppender.prototype = (new Log4js.Appender()).extend( {
+Log4js.WindowsEventAppender.prototype = Log4js.extend(new Log4js.Appender(), {  
 	/**
 	 * @param loggingEvent event to be logged
 	 * @see Log4js.Appender#doAppend
@@ -1673,7 +1657,7 @@ Log4js.JSAlertAppender = function() {
 	this.layout = new Log4js.SimpleLayout();
 };
 
-Log4js.JSAlertAppender.prototype = (new Log4js.Appender()).extend( {
+Log4js.JSAlertAppender.prototype = Log4js.extend(new Log4js.Appender(), {  
 	/** 
 	 * @see Log4js.Appender#doAppend
 	 */
@@ -1709,7 +1693,7 @@ Log4js.MozillaJSConsoleAppender = function() {
 	}
 };
 
-Log4js.MozillaJSConsoleAppender.prototype = (new Log4js.Appender()).extend( {
+Log4js.MozillaJSConsoleAppender.prototype = Log4js.extend(new Log4js.Appender(), {  
 	/** 
 	 * @see Log4js.Appender#doAppend
 	 */
@@ -1774,7 +1758,7 @@ Log4js.OperaJSConsoleAppender = function() {
 	this.layout = new Log4js.SimpleLayout();
 };
 
-Log4js.OperaJSConsoleAppender.prototype = (new Log4js.Appender()).extend( {
+Log4js.OperaJSConsoleAppender.prototype = Log4js.extend(new Log4js.Appender(), {  
 	/** 
 	 * @see Log4js.Appender#doAppend
 	 */
@@ -1802,7 +1786,7 @@ Log4js.SafariJSConsoleAppender = function() {
 	this.layout = new Log4js.SimpleLayout();
 };
 
-Log4js.SafariJSConsoleAppender.prototype = (new Log4js.Appender()).extend( {
+Log4js.SafariJSConsoleAppender.prototype = Log4js.extend(new Log4js.Appender(), {  
 	/** 
 	 * @see Log4js.Appender#doAppend
 	 */
@@ -1849,7 +1833,7 @@ Log4js.BrowserConsoleAppender = function() {
     }
 };
 
-Log4js.BrowserConsoleAppender.prototype = (new Log4js.Appender()).extend( {
+Log4js.BrowserConsoleAppender.prototype = Log4js.extend(new Log4js.Appender(), {  
 	/** 
 	 * @see Log4js.Appender#doAppend
 	 */
@@ -1892,7 +1876,7 @@ Log4js.SimpleLayout = function() {
 	this.LINE_SEP_LEN = 1;
 };
 
-Log4js.SimpleLayout.prototype = (new Log4js.Layout()).extend( {
+Log4js.SimpleLayout.prototype = Log4js.extend(new Log4js.Layout(), {
 	/** 
 	 * Implement this method to create your own layout format.
 	 * @param {Log4js.LoggingEvent} loggingEvent loggingEvent to format
@@ -1941,7 +1925,7 @@ Log4js.BasicLayout = function() {
 	this.LINE_SEP  = "\n";
 };
 
-Log4js.BasicLayout.prototype = (new Log4js.Layout()).extend( {
+Log4js.BasicLayout.prototype = Log4js.extend(new Log4js.Layout(), {
 	/** 
 	 * Implement this method to create your own layout format.
 	 * @param {Log4js.LoggingEvent} loggingEvent loggingEvent to format
@@ -1984,7 +1968,7 @@ Log4js.BasicLayout.prototype = (new Log4js.Layout()).extend( {
  */
 Log4js.HtmlLayout = function() {return;};
 
-Log4js.HtmlLayout.prototype = (new Log4js.Layout()).extend( {
+Log4js.HtmlLayout.prototype = Log4js.extend(new Log4js.Layout(), {
 	/** 
 	 * Implement this method to create your own layout format.
 	 * @param {Log4js.LoggingEvent} loggingEvent loggingEvent to format
@@ -2050,7 +2034,7 @@ Log4js.HtmlLayout.prototype = (new Log4js.Layout()).extend( {
  * @author Stephan Strittmatter
  */
 Log4js.XMLLayout = function(){return;};
-Log4js.XMLLayout.prototype = (new Log4js.Layout()).extend( {
+Log4js.XMLLayout.prototype = Log4js.extend(new Log4js.Layout(), {
 	/** 
 	 * Implement this method to create your own layout format.
 	 * @param {Log4js.LoggingEvent} loggingEvent loggingEvent to format
@@ -2160,7 +2144,7 @@ Log4js.XMLLayout.prototype = (new Log4js.Layout()).extend( {
 Log4js.JSONLayout = function() {
 	this.df = new Log4js.DateFormatter();
 };
-Log4js.JSONLayout.prototype = (new Log4js.Layout()).extend( {
+Log4js.JSONLayout.prototype = Log4js.extend(new Log4js.Layout(), {
 	/** 
 	 * Implement this method to create your own layout format.
 	 * @param {Log4js.LoggingEvent} loggingEvent loggingEvent to format
@@ -2241,7 +2225,7 @@ Log4js.PatternLayout.ISO8601_DATEFORMAT = "yyyy-MM-dd HH:mm:ss,SSS";
 Log4js.PatternLayout.DATETIME_DATEFORMAT = "dd MMM YYYY HH:mm:ss,SSS";
 Log4js.PatternLayout.ABSOLUTETIME_DATEFORMAT = "HH:mm:ss,SSS";
 
-Log4js.PatternLayout.prototype = (new Log4js.Layout()).extend( {
+Log4js.PatternLayout.prototype = Log4js.extend(new Log4js.Layout(), {
 	/** 
 	 * Returns the content type output by this layout. 
 	 * @return "text/plain".
