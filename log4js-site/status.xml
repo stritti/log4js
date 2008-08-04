@@ -39,7 +39,7 @@
     </contexts>
     <changes>
        <!-- Add new releases here -->
-      <release version="1.0" date="undefined">
+      <release version="1.0" date="2008-08-04">
             <notes>
                 <section>
                     <title>Consolidated Version</title>
@@ -48,13 +48,16 @@
                     </p>
                 </section>
             </notes>
-            
+           <action dev="ssr" type="fix" context="code" importance="medium" due-to="Harlan"
+           	fixes-bug="14274"> 
+                Prototype overwrites refactored to Log4js-methods.
+            </action>            
             <action dev="ssr" type="fix" context="code" importance="medium" due-to="softadm" fixes-bug="012114"> 
                 AjaxAppender does not XML-quote referer.
             </action> 	
             <action dev="ssr" type="fix" context="docs" importance="medium" due-to="softadm" fixes-bug="012148"> 
                 XSD added to project for sending XML-Messages.
-				DTD will be set deprecated.
+		DTD set deprecated.
             </action>
        </release>	
 	   	   
