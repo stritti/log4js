@@ -49,7 +49,7 @@
                 </section>
             </notes>
            <action dev="ssr" type="fix" context="code" importance="medium" due-to="Harlan"
-           	fixes-bug="14274"> 
+           	fixes-bug="014274"> 
                 Prototype overwrites refactored to Log4js-methods.
             </action>            
             <action dev="ssr" type="fix" context="code" importance="medium" due-to="softadm" fixes-bug="012114"> 
