@@ -6,11 +6,11 @@
        type = group by the type attribute -->
   <property name="projectInfo.changes.sort" value="type"/>
   
-  <!-- Indicate if the committers list should be included. Values are true
-       or false. -->
-  <property name="projectInfo.changes.includeCommitterList" value="true"/>
+  <!-- Indicate if the committers list should be included. Values are true or false. -->
+  <property name="projectInfo.changes.includeCommitterList" value="true" />
   
-  <!-- Indicate if the contributors list should be included. Values are true
-       or false. -->
-  <property name="projectInfo.changes.includeContributorList" value="true"/>
+  <!-- Indicate if the contributors list should be included. Values are true or false. -->
+  <property name="projectInfo.changes.includeContributorList" value="true" />
+
+  <property name="projectInfo.url" value="http://log4js.berlios.de/" />
 </properties>
