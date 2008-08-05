@@ -2038,7 +2038,7 @@ Log4js.HtmlLayout.prototype = Log4js.extend(new Log4js.Layout(), {
  * </log4js:event>
  * </pre>
  * @constructor
- * @extends Layout
+ * @extends Log4js.Layout
  * @author Stephan Strittmatter
  */
 Log4js.XMLLayout = function(){return;};
