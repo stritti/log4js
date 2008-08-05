@@ -39,6 +39,21 @@
     </contexts>
     <changes>
        <!-- Add new releases here -->
+      <release version="1.1" date="undefined">
+            <notes>
+                <section>
+                    <title>...</title>
+                    <p>
+                    	...
+                    </p>
+                </section>
+            </notes>
+           <action dev="ssr" type="fix" context="code" importance="medium" due-to="Harlan"fixes-bug="014323"> 
+               Naming of ConsoleAppender categories in IE fixed.
+            </action>            
+ 
+       </release>	
+       
       <release version="1.0" date="2008-08-04">
             <notes>
                 <section>
@@ -48,16 +63,14 @@
                     </p>
                 </section>
             </notes>
-           <action dev="ssr" type="fix" context="code" importance="medium" due-to="Harlan"
-           	fixes-bug="014274"> 
+           <action dev="ssr" type="fix" context="code" importance="medium" due-to="Harlan" fixes-bug="014274"> 
                 Prototype overwrites refactored to Log4js-methods.
             </action>            
             <action dev="ssr" type="fix" context="code" importance="medium" due-to="softadm" fixes-bug="012114"> 
                 AjaxAppender does not XML-quote referer.
             </action> 	
             <action dev="ssr" type="fix" context="docs" importance="medium" due-to="softadm" fixes-bug="012148"> 
-                XSD added to project for sending XML-Messages.
-		DTD set deprecated.
+                XSD added to project for sending XML-Messages. DTD set to depricate.
             </action>
        </release>	
 	   	   
@@ -66,8 +79,7 @@
                 <section>
                     <title>Improved Version</title>
                     <p>
-                    	Many changes are done since last release. Have a look on the
-                    	action list.
+                    	Many changes are done since last release. Have a look on the action list.
                     </p>
                     <p>
                     	The biggest change is the change of API to have Appender and Layout 
