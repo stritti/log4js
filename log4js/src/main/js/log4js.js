@@ -1813,7 +1813,8 @@ Log4js.SafariJSConsoleAppender.prototype = Log4js.extend(new Log4js.Appender(), 
  * JavaScript Console Appender which is browser independent.
  * It checks internally for the current browser and adds delegate to
  * specific JavaScript Console Appender of the browser.
- * 
+ *
+ * @constructor
  * @author Stephan Strittmatter
  * @since 1.0
  */
@@ -2217,6 +2218,10 @@ Log4js.JSONLayout.prototype = Log4js.extend(new Log4js.Layout(), {
 
 /** 
  * PatternLayout 
+ *
+ * @constructor
+ * @extends Log4js.Layout
+ * @author Stephan Strittmatter
  */
 Log4js.PatternLayout = function(pattern) {
 	if (pattern) {
