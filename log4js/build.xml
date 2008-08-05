@@ -179,7 +179,32 @@
 			<arg line="${line}" />
 		</exec>
 		
-		<!-- call: perl -MCPAN -e 'install HTML::Template' -->
+		<!--
+		Installation
+			
+			If you get an error message right away that looks something like
+			
+			                  Can't locate HTML/Template.pm in @INC ......
+			                
+			
+			then you will need to install the HTML::Template Perl module. Luckily, this is a very trivial operation thanks to the CPAN. In a Linux/Unix/POSIX-style operating system, open a terminal and run the following command as root:
+			
+			                  # perl -MCPAN -e 'install HTML::Template'
+			               
+			
+			If you're running Windows and ActivePerl, open a command prompt window and enter the following command:
+			
+			                  C:\> ppm
+			               
+			
+			This will start the Perl Package Manager; at the PPM prompt, enter the following two commands (PPM> is the PPM prompt):
+			
+			                  PPM> install HTML-Template
+			                  PPM> quit
+			               
+			
+			JSDoc should run without problems now. 
+		-->
 	</target>
 
 
