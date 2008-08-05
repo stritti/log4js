@@ -864,27 +864,27 @@ Log4js.ConsoleAppender.prototype = Log4js.extend(new Log4js.Appender(), {
 	setAccessKey : function(key) {
 		this.accesskey = key;
 	},
-	
+
 	/**
 	 * @private
 	 */
   	initialize : function() {
 		
 		if(!this.inline) {
-			var doc = null;	
-			var win = null;
-			window.top.consoleWindow = window.open("", this.logger.category, 
-				"left=0,top=0,width=700,height=700,scrollbars=no,status=no,resizable=yes;toolbar=no");
+
+			var winName = this.makeWinName(this.logger.category);
+
+			window.top.consoleWindow = window.open("", winName, 
+				"left=0,top=0,width=700,height=700,scrollbars=no,status=no,resizable=yes;toolbar=no");            
 			window.top.consoleWindow.opener = self;
-			win = window.top.consoleWindow;
+			var win = window.top.consoleWindow;
 								
 			if (!win) { 
 				this.popupBlocker=true; 
 				alert("Popup window manager blocking the Log4js popup window to bedisplayed.\n\n" 
 					+ "Please disabled this to properly see logged events.");  
 			} else {	
-
-				doc = win.document;
+				var doc = win.document;
 				doc.open();
 				doc.write("<!DOCTYPE html PUBLIC -//W3C//DTD XHTML 1.0 Transitional//EN ");
 				doc.write("  http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd>\n\n");
@@ -1041,7 +1041,7 @@ Log4js.ConsoleAppender.prototype = Log4js.extend(new Log4js.Appender(), {
 
 		// If we are at the bottom of the window, then keep scrolling with the output			
 		var shouldScroll = (this.outputElement.scrollTop + (2 * this.outputElement.clientHeight)) >= this.outputElement.scrollHeight;
-		
+                
 		this.outputCount++;
 	  	style = (style ? style += ';' : '');	  	
 	  	style += 'padding:1px;margin:0 0 5px 0';	     
@@ -1052,9 +1052,9 @@ Log4js.ConsoleAppender.prototype = Log4js.extend(new Log4js.Appender(), {
 	  	
 	  	message = message || "undefined";
 	  	message = message.toString();
-	  	
+                
 	  	this.outputElement.innerHTML += "<pre style='" + style + "'>" + message + "</pre>";
-	  	
+                
 	  	if (shouldScroll) {				
 			this.outputElement.scrollTop = this.outputElement.scrollHeight;
 		}
@@ -1191,7 +1191,14 @@ Log4js.ConsoleAppender.prototype = Log4js.extend(new Log4js.Appender(), {
     		this.commandIndex = 0;
     	}
 	},
-	
+
+	/**
+	 * @private
+	 */
+	makeWinName: function(category) {
+		return category.replace(/[^\d\w]/g, "_");
+	},
+                
 	/** 
 	 * toString
 	 */
