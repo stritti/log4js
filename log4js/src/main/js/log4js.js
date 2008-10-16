@@ -1833,7 +1833,7 @@ Log4js.BrowserConsoleAppender = function() {
 		this.consoleDelegate = new Log4js.OperaJSConsoleAppender(); 
 	}
 	else if(netscape) {
-		this.consoleDelegate = new Log4js.MozJSConsoleAppender(); 
+		this.consoleDelegate = new Log4js.MozillaJSConsoleAppender(); 
 	}
     else {
        //@todo
