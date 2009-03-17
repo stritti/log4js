@@ -296,6 +296,8 @@ footer, searchbar, css etc.  As input, it takes XML of the form:
     </xsl:if>
 	
 	  	<div id="adStripe" class="ad" >
+	  	  <script type="text/javascript" src="http://www.ohloh.net/p/93288/widgets/project_users.js"></script>
+	  	  <br />
 		  <script type="text/javascript"><xsl:comment>
 			google_ad_client = "pub-2184810574476423";
 			google_ad_width = 160;
@@ -389,6 +391,7 @@ footer, searchbar, css etc.  As input, it takes XML of the form:
                   </xsl:if>
                 </xsl:for-each>
               </xsl:if>
+              <script type="text/javascript" src="http://www.ohloh.net/p/93288/widgets/project_partner_badge.js"></script>
             </div>
           </xsl:if>
           <xsl:if test="$config/host-logo and not($config/host-logo = '')">
