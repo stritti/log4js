@@ -36,10 +36,11 @@
  *  log.trace("trace me" );
  * </pre>
  *
- * @version 0.3
+ * @version 1.0
  * @author Stephan Strittmatter - http://jroller.com/page/stritti
  * @author Seth Chisamore - http://www.chisamore.com
  * @since 2005-05-20
+ * @static
  * Website: http://log4js.berlios.de
  */
 var Log4js = {
@@ -137,18 +138,23 @@ var Log4js = {
 	*/
 };
 
+/** 
+ * @namespace 
+ * @constructor
+ */
+Log4js = function(){};
+
 /**
  * Internal object extension (OO) methods.
  * 
  * @private
- * @ignore
  */
 Log4js.extend = function(destination, source) {
   for (property in source) {
     destination[property] = source[property];
   }
   return destination;
-}
+};
     
 /**
  * Functions taken from Prototype library,  
@@ -754,7 +760,7 @@ Log4js.Appender.prototype = {
  * @constructor
  * @author Stephan Strittmatter
  */
-Log4js.Layout = function(){return;};
+Log4js.Layout = function(){};
 Log4js.Layout.prototype = {
 	/** 
 	 * Implement this method to create your own layout format.
@@ -1538,7 +1544,7 @@ Log4js.FileAppender.prototype = Log4js.extend(new Log4js.Appender(), {
 			var fileHandle = null;
 			
 			if( this.isIE === 'undefined') {
-				log4jsLogger.error("Unsupported ")
+				log4jsLogger.error("Unsupported");
 			}
 			else if( this.isIE ){
 				// try opening existing file, create if needed
@@ -1815,6 +1821,7 @@ Log4js.SafariJSConsoleAppender.prototype = Log4js.extend(new Log4js.Appender(), 
  * specific JavaScript Console Appender of the browser.
  *
  * @constructor
+ * @extends Log4js.Appender 
  * @author Stephan Strittmatter
  * @since 1.0
  */
@@ -1876,7 +1883,6 @@ Log4js.BrowserConsoleAppender.prototype = Log4js.extend(new Log4js.Appender(), {
  *
  * @constructor
  * @extends Log4js.Layout
- * @extends Layout
  * @author Stephan Strittmatter
  */
 Log4js.SimpleLayout = function() {
@@ -2375,8 +2381,7 @@ if (!Array.prototype.push) {
 	/**
 	 * Functions taken from Prototype library, didn't want to require for just few 
 	 * functions.
-	 * More info at {@link http://
-	 * prototype.conio.net/}
+	 * More info at {@link http://prototype.conio.net/}
 	 * @private
 	 */
 	Array.prototype.push = function() {
@@ -2390,6 +2395,7 @@ if (!Array.prototype.push) {
 
 /**
  * FIFO buffer
+ * @constructor
  * @private
  */
 Log4js.FifoBuffer = function()
@@ -2433,7 +2439,7 @@ Log4js.FifoBuffer.prototype = {
  * Date Formatter
  * addZero() and formatDate() are courtesy of Mike Golding:
  * http://www.mikezilla.com/exp0015.html
- * @private
+ * @constructor
  */ 
 Log4js.DateFormatter = function() {
 	return;
