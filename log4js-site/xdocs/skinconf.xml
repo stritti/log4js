@@ -116,7 +116,7 @@ which will be used to configure the chosen Forrest skin.
   <favicon-url>favicon.ico</favicon-url>
 
   <!-- The following are used to construct a copyright statement -->
-  <year>2005-2006</year>
+  <year>2005-2009</year>
   <vendor>Stephan Strittmatter</vendor>
 
   <!-- The optional copyright-link URL will be used as a link in the
@@ -395,7 +395,7 @@ which will be used to configure the chosen Forrest skin.
 
 
     <credit role="pdf">
-      <name>&copy; Log4js 2006. All rights reserved.</name>
+      <name>&copy; Log4js 2009. All rights reserved.</name>
       <url>http://log4js.berlios.de/</url>      
     </credit>
 
