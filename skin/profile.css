@@ -1,0 +1,185 @@
+
+
+/* ==================== aural ============================ */
+
+@media aural {
+  h1, h2, h3, h4, h5, h6 { voice-family: paul, male; stress: 20; richness: 90 }
+  h1 { pitch: x-low; pitch-range: 90 }
+  h2 { pitch: x-low; pitch-range: 80 }
+  h3 { pitch: low; pitch-range: 70 }
+  h4 { pitch: medium; pitch-range: 60 }
+  h5 { pitch: medium; pitch-range: 50 }
+  h6 { pitch: medium; pitch-range: 40 }
+  li, dt, dd { pitch: medium; richness: 60 }
+  dt { stress: 80 }
+  pre, code, tt { pitch: medium; pitch-range: 0; stress: 0; richness: 80 }
+  em { pitch: medium; pitch-range: 60; stress: 60; richness: 50 }
+  strong { pitch: medium; pitch-range: 60; stress: 90; richness: 90 }
+  dfn { pitch: high; pitch-range: 60; stress: 60 }
+  s, strike { richness: 0 }
+  i { pitch: medium; pitch-range: 60; stress: 60; richness: 50 }
+  b { pitch: medium; pitch-range: 60; stress: 90; richness: 90 }
+  u { richness: 0 }
+  
+  :link { voice-family: harry, male }
+  :visited { voice-family: betty, female }
+  :active { voice-family: betty, female; pitch-range: 80; pitch: x-high }
+}
+  
+a.external  {
+  padding: 0 20px 0px 0px;
+	display:inline;
+  background-repeat: no-repeat;
+	background-position: center right;
+	background-image: url(images/external-link.gif);
+}
+  
+#main .breadtrail {
+background: #cedfef; 
+color: #0F3660;
+}
+#main .breadtrail a:link {  color: #0F3660;  }
+#main .breadtrail a:visited { color: #0F3660; }
+#main .breadtrail a:hover { color: #000066; }
+#top .breadtrail {
+background: #cedfef; 
+color: #0F3660;
+}
+#top .breadtrail a:link {  color: #0F3660;  }
+#top .breadtrail a:visited { color: #0F3660; }
+#top .breadtrail a:hover { color: #000066; }    
+
+#top          { background-color: #ffffff;}  
+ 
+#top .header .current { background-color: #009ACE;} 
+#top .header .current a:link {  color: #0F3660;  }
+#top .header .current a:visited { color: #0F3660; }
+#top .header .current a:hover { color: #000066; }
+ 
+#tabs li      { background-color: #8CCFE7 ;} 
+#tabs li a:link {  color: #0F3660;  }
+#tabs li a:visited { color: #0F3660; }
+#tabs li a:hover { color: #000066; }
+
+#level2tabs a.selected      { background-color: #4a6d8c ;} 
+#level2tabs a:link {  color: #0F3660;  }
+#level2tabs a:visited { color: #0F3660; }
+#level2tabs a:hover { color: #000066; }
+
+#level2tabs { background-color: #4a6d8c;}
+#level2tabs a.unselected:link {  color: #0F3660;  }
+#level2tabs a.unselected:visited { color: #0F3660; }
+#level2tabs a.unselected:hover { color: #000066; }
+
+.heading { background-color: #009ACE;} 
+
+.boxed { background-color: #009ACE;} 
+.underlined_5 	{border-bottom: solid 5px #009ACE;}
+.underlined_10 	{border-bottom: solid 10px #009ACE;}
+table caption { 
+background-color: #009ACE; 
+color: #FFFFFF;
+}
+
+#publishedStrip { 
+color: #FFFFFF;
+background: #4C6C8F; 
+}
+    
+#feedback {
+color: #FFFFFF;
+background: #4C6C8F;
+text-align: center;
+}
+#feedback #feedbackto {
+color: #FFFFFF;
+}   
+
+#publishedStrip { 
+color: #ffffff;
+background: #009ACE; 
+}
+
+#menu      { background-color: #009ACE;} 
+#menu  {  color: #cedfef;} 
+#menu a:link {  color: #ffffff;} 
+#menu a:visited {  color: #ffffff;} 
+#menu a:hover {  
+background-color: #009ACE;
+color: #ffcf00;} 
+
+#menu .menupagetitle  { background-color: #FFA239;
+  color: #000000;}
+
+#menu           { border-color: #294563;}
+#menu .menupagetitle  { border-color: #294563;}
+#menu .menupageitemgroup  { border-color: #294563;}
+ 
+#menu .menupageitemgroup     { 
+background-color: #4a6d8c;
+}
+#menu .menupageitem {
+color: #000000;
+} 
+#menu .menupageitem a:link {  color: #0000ff;} 
+#menu .menupageitem a:visited {  color: #009999;} 
+#menu .menupageitem a:hover {  
+background-color: #4a6d8c;
+color: #6587ff;
+}
+ 
+#top .searchbox { 
+background-color: #009ACE ;
+color: #000000; 
+} 
+
+body{ 
+background-color: #ffffff;
+color: #000000;
+} 
+a:link { color:#0F3660} 
+a:visited { color:#009999} 
+a:hover { color:#000066} 
+
+ 
+.ForrestTable      { background-color: #7099C5;} 
+ 
+.ForrestTable td   { background-color: #f0f0ff;} 
+ 
+.highlight        { background-color: #ffff00;} 
+ 
+.fixme        { border-color: #cc6600;} 
+ 
+.note         { border-color: #006699;} 
+ 
+.warning         { border-color: #990000;} 
+ 
+.code         { border-color: #CFDCED;} 
+ 
+#footer       { background-color: #cedfef;} 
+
+#menu h1 {
+color: #000000;
+background-color: #cfdced;
+}   
+/* extra-css */
+  	 
+    p.quote { margin-left: 2em; padding: .5em; background-color: #f0f0f0; font-family: monospace; } 
+  	 
+    #footer a { color: #0F3660; } #footer a:visited { color: #009999;}
+    
+    li.dir {list-style: square outside; }
+    li.file {list-style: none outside; }
+    
+    .note .label {
+        background-image: url(http://log4js.berlios.de/skin/images/info.png);
+        background-repeat: no-repeat;
+        background-position: right; 
+     }
+     
+    .warning .label {
+        background-image: url(http://log4js.berlios.de/skin/images/warning.png);
+        background-repeat: no-repeat;
+        background-position: right; 
+     }
+   

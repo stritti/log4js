@@ -1,0 +1,2801 @@
+<!doctype html public "-//W3C//DTD HTML 4.0 Frameset//EN""http://www.w3.org/TR/REC-html40/frameset.dtd">
+<html>
+<head>
+<title>
+Log4js 1.0 Overview
+</title>
+<link rel ="stylesheet" type="text/css" href="stylesheet.css" title="Style">
+<script>
+function asd() {
+	
+		parent.document.title="log4js.js Overview";
+	
+}
+</script>
+</head>
+<body bgcolor="white" onload="asd();">
+
+<!-- ========== START OF NAVBAR ========== -->
+<a name="navbar_top"><!-- --></a>
+<table border="0" width="100%" cellpadding="1" cellspacing="0">
+<tr>
+<td colspan=2 bgcolor="#EEEEFF" class="NavBarCell1">
+<a name="navbar_top_firstrow"><!-- --></a>
+<table border="0" cellpadding="0" cellspacing="3">
+  <tr align="center" valign="top">
+  
+  
+  <td bgcolor="#EEEEFF" class="NavBarCell1">    <a href="overview-summary.html"><font class="NavBarFont1"><b>Overview</b></font></a>&nbsp;</td>
+  <td bgcolor="#FFFFFF" class="NavBarCell1Rev">	&nbsp;<font class="NavBarFont1Rev"><b>File</b></font>&nbsp;</td>
+  
+
+  <td bgcolor="#FFFFFF" class="NavBarCell1"> 	<font class="NavBarFont1">Class</font>&nbsp;</td>
+  <td bgcolor="#EEEEFF" class="NavBarCell1">    <a href="overview-tree.html"><font class="NavBarFont1"><b>Tree</b></font></a>&nbsp;</td>
+  <td bgcolor="#EEEEFF" class="NavBarCell1">    <a href="index-all.html"--><font class="NavBarFont1"><b>Index</b></font></a>&nbsp;</td>
+  <td bgcolor="#EEEEFF" class="NavBarCell1">    <a href="help-doc.html"><font class="NavBarFont1"><b>Help</b></font></a>&nbsp;</td>
+  </tr>
+</table>
+</td>
+<td bgcolor="#EEEEFF" align="right" valign="top">
+<em>
+<b>Log4js 1.0</b></em>
+</td>
+</tr>
+
+<tr>
+<td bgcolor="white" class="NavBarCell2"><font size="-2">
+&nbsp;PREV&nbsp;
+&nbsp;NEXT</font></td>
+<td bgcolor="white" class="NavBarCell2"><font size="-2">
+  <a href="index.html" target="_top"><b>FRAMES</b></a>  &nbsp;
+&nbsp;<a href="overview-summary.html" target="_top"><b>NO FRAMES</b></a>
+&nbsp;&nbsp;
+<script>
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="allclasses-noframe.html" TARGET=""><B>All Classes</B></A>');
+  }
+  //-->
+</script>
+<noscript>
+<a href="allclasses-noframe.html" target=""><b>All Classes</b></a>
+</noscript>
+</font></td>
+</tr>
+</table>
+<!-- =========== END OF NAVBAR =========== -->
+
+<hr>
+<center>
+	
+	   <h2>log4js.js</h2>
+	
+</center>
+
+	
+
+
+<h4>Summary</h4>
+<p>
+	
+		log4js is a library to log in JavaScript in similar manner 
+ than in log4j for Java. The API should be nearly the same.
+ 
+ This file contains all log4js code and is the only file required for logging.
+ 
+ <h3>Example:</h3>
+ <pre>
+  var log = new Log4js.getLogger("some-category-name"); //create logger instance
+  log.setLevel(Log4js.Level.TRACE); //set the Level
+  log.addAppender(new ConsoleAppender(log, false)); // console that launches in new window
+  // if multiple appenders are set all will log
+  log.addAppender(new ConsoleAppender(log, true)); // console that is in-line in the page
+  log.addAppender(new FileAppender("C:\\somefile.log")); // file appender logs to C:\\somefile.log
+ 
+  ...
+ 
+  //call the log
+  log.trace("trace me" );
+ </pre>
+
+ <BR/><BR/><B>Version: </B>0.3
+ <BR/><BR/><B>Author:</B> Stephan Strittmatter - http://jroller.com/page/stritti
+ , Seth Chisamore - http://www.chisamore.com
+ <BR/>
+	
+</p>
+
+<hr>
+
+
+    <table border="1" cellpadding="3" cellspacing="0" width="100%">
+    <tr bgcolor="#CCCCFF" class="TableHeadingColor">
+    <td colspan=2><font size="+2">
+    
+        <b>Class Summary</b>
+    
+    </font></td>
+    </tr>
+    
+    <tr bgcolor="white" class="TableRowColor">
+    <td width="15%"><b><a href="Log4js/AjaxAppender.html">Log4js.AjaxAppender</a></b></td>
+    <td>&nbsp;</td>
+    </tr>
+    
+    <tr bgcolor="white" class="TableRowColor">
+    <td width="15%"><b><a href="Log4js/Appender.html">Log4js.Appender</a></b></td>
+    <td>&nbsp;</td>
+    </tr>
+    
+    <tr bgcolor="white" class="TableRowColor">
+    <td width="15%"><b><a href="Log4js/BasicLayout.html">Log4js.BasicLayout</a></b></td>
+    <td>&nbsp;</td>
+    </tr>
+    
+    <tr bgcolor="white" class="TableRowColor">
+    <td width="15%"><b><a href="Log4js/BrowserConsoleAppender.html">Log4js.BrowserConsoleAppender</a></b></td>
+    <td>&nbsp;</td>
+    </tr>
+    
+    <tr bgcolor="white" class="TableRowColor">
+    <td width="15%"><b><a href="Log4js/ConsoleAppender.html">Log4js.ConsoleAppender</a></b></td>
+    <td>&nbsp;</td>
+    </tr>
+    
+    <tr bgcolor="white" class="TableRowColor">
+    <td width="15%"><b><a href="Log4js/FileAppender.html">Log4js.FileAppender</a></b></td>
+    <td>&nbsp;</td>
+    </tr>
+    
+    <tr bgcolor="white" class="TableRowColor">
+    <td width="15%"><b><a href="Log4js/HtmlLayout.html">Log4js.HtmlLayout</a></b></td>
+    <td>&nbsp;</td>
+    </tr>
+    
+    <tr bgcolor="white" class="TableRowColor">
+    <td width="15%"><b><a href="Log4js/JSAlertAppender.html">Log4js.JSAlertAppender</a></b></td>
+    <td>&nbsp;</td>
+    </tr>
+    
+    <tr bgcolor="white" class="TableRowColor">
+    <td width="15%"><b><a href="Log4js/JSONLayout.html">Log4js.JSONLayout</a></b></td>
+    <td>&nbsp;</td>
+    </tr>
+    
+    <tr bgcolor="white" class="TableRowColor">
+    <td width="15%"><b><a href="Log4js/Layout.html">Log4js.Layout</a></b></td>
+    <td>&nbsp;</td>
+    </tr>
+    
+    <tr bgcolor="white" class="TableRowColor">
+    <td width="15%"><b><a href="Log4js/Logger.html">Log4js.Logger</a></b></td>
+    <td>&nbsp;</td>
+    </tr>
+    
+    <tr bgcolor="white" class="TableRowColor">
+    <td width="15%"><b><a href="Log4js/LoggingEvent.html">Log4js.LoggingEvent</a></b></td>
+    <td>&nbsp;</td>
+    </tr>
+    
+    <tr bgcolor="white" class="TableRowColor">
+    <td width="15%"><b><a href="Log4js/MetatagAppender.html">Log4js.MetatagAppender</a></b></td>
+    <td>&nbsp;</td>
+    </tr>
+    
+    <tr bgcolor="white" class="TableRowColor">
+    <td width="15%"><b><a href="Log4js/MozillaJSConsoleAppender.html">Log4js.MozillaJSConsoleAppender</a></b></td>
+    <td>&nbsp;</td>
+    </tr>
+    
+    <tr bgcolor="white" class="TableRowColor">
+    <td width="15%"><b><a href="Log4js/OperaJSConsoleAppender.html">Log4js.OperaJSConsoleAppender</a></b></td>
+    <td>&nbsp;</td>
+    </tr>
+    
+    <tr bgcolor="white" class="TableRowColor">
+    <td width="15%"><b><a href="Log4js/PatternLayout.html">Log4js.PatternLayout</a></b></td>
+    <td>&nbsp;</td>
+    </tr>
+    
+    <tr bgcolor="white" class="TableRowColor">
+    <td width="15%"><b><a href="Log4js/SafariJSConsoleAppender.html">Log4js.SafariJSConsoleAppender</a></b></td>
+    <td>&nbsp;</td>
+    </tr>
+    
+    <tr bgcolor="white" class="TableRowColor">
+    <td width="15%"><b><a href="Log4js/SimpleLayout.html">Log4js.SimpleLayout</a></b></td>
+    <td>&nbsp;</td>
+    </tr>
+    
+    <tr bgcolor="white" class="TableRowColor">
+    <td width="15%"><b><a href="Log4js/WindowsEventAppender.html">Log4js.WindowsEventAppender</a></b></td>
+    <td>&nbsp;</td>
+    </tr>
+    
+    <tr bgcolor="white" class="TableRowColor">
+    <td width="15%"><b><a href="Log4js/XMLLayout.html">Log4js.XMLLayout</a></b></td>
+    <td>&nbsp;</td>
+    </tr>
+    
+    </table>
+    <hr/> 
+
+
+<!-- ========== METHOD SUMMARY =========== -->
+
+<!-- ========== END METHOD SUMMARY =========== -->
+
+
+        <pre class="sourceview"><span class="comment">/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */</span>
+
+<span class="comment">/*jsl:option explicit*/</span>
+
+<span class="comment">/**
+ * <span class="attrib">@fileoverview</span> log4js is a library to log in JavaScript in similar manner 
+ * than in log4j for Java. The API should be nearly the same.
+ * 
+ * This file contains all log4js code and is the only file required for logging.
+ * 
+ * &lt;h3&gt;Example:&lt;/h3&gt;
+ * &lt;pre&gt;
+ *  var log = new Log4js.getLogger("some-category-name"); //create logger instance
+ *  log.setLevel(Log4js.Level.TRACE); //set the Level
+ *  log.addAppender(new ConsoleAppender(log, false)); // console that launches in new window
+ 
+ *  // if multiple appenders are set all will log
+ *  log.addAppender(new ConsoleAppender(log, true)); // console that is in-line in the page
+ *  log.addAppender(new FileAppender("C:\\somefile.log")); // file appender logs to C:\\somefile.log
+ * 
+ *  ...
+ * 
+ *  //call the log
+ *  log.trace("trace me" );
+ * &lt;/pre&gt;
+ *
+ * <span class="attrib">@version</span> 0.3
+ * <span class="attrib">@author</span> Stephan Strittmatter - http://jroller.com/page/stritti
+ * <span class="attrib">@author</span> Seth Chisamore - http://www.chisamore.com
+ * <span class="attrib">@since</span> 2005-05-20
+ * Website: http://log4js.berlios.de
+ */</span>
+var Log4js = {
+	
+	<span class="comment">/** 
+	 * Current version of log4js. 
+	 * <span class="attrib">@static</span>
+	 * <span class="attrib">@final</span>
+	 */</span>
+  	version: <span class="literal">"1.0"</span>,
+
+	<span class="comment">/**  
+	 * Date of logger initialized.
+	 * <span class="attrib">@static</span>
+	 * <span class="attrib">@final</span>
+	 */</span>
+	applicationStartDate: new Date(),
+		
+	<span class="comment">/**  
+	 * Hashtable of loggers.
+	 * <span class="attrib">@static</span>
+	 * <span class="attrib">@final</span>
+	 * <span class="attrib">@private</span>  
+	 */</span>
+	loggers: {},
+	
+	<span class="comment">/**
+	 * Get a logger instance. Instance is cached on categoryName level.
+	 * <span class="attrib">@param</span>  {String} categoryName name of category to log to.
+	 * <span class="attrib">@return</span> {Logger} instance of logger for the category
+	 * <span class="attrib">@static</span>
+	 */</span>
+	getLogger: <span class="reserved">function</span>(categoryName) {
+		
+		<span class="comment">// Use default logger if categoryName is not specified or invalid</span>
+		<span class="reserved">if</span> (!(typeof categoryName == <span class="literal">"string"</span>)) {
+			categoryName = <span class="literal">"[default]"</span>;
+		}
+
+		<span class="reserved">if</span> (!Log4js.loggers[categoryName]) {
+			<span class="comment">// Create the logger for this name if it doesn't already exist</span>
+			Log4js.loggers[categoryName] = new Log4js.Logger(categoryName);
+		}
+		
+		<span class="reserved">return</span> Log4js.loggers[categoryName];
+	},
+	
+	<span class="comment">/**
+	 * Get the default logger instance.
+	 * <span class="attrib">@return</span> {Logger} instance of default logger
+	 * <span class="attrib">@static</span>
+	 */</span>
+	getDefaultLogger: <span class="reserved">function</span>() {
+		<span class="reserved">return</span> Log4js.getLogger(<span class="literal">"[default]"</span>); 
+	},
+	
+  	<span class="comment">/**
+  	 * Atatch an observer function to an elements event browser independent.
+  	 * 
+  	 * <span class="attrib">@param</span> element element to attach event
+  	 * <span class="attrib">@param</span> name name of event
+  	 * <span class="attrib">@param</span> observer observer method to be called
+  	 * <span class="attrib">@private</span>
+  	 */</span>
+  	attachEvent: <span class="reserved">function</span> (element, name, observer) {
+		<span class="reserved">if</span> (element.addEventListener) { <span class="comment">//DOM event model</span>
+			element.addEventListener(name, observer, false);
+    	} <span class="reserved">else</span> <span class="reserved">if</span> (element.attachEvent) { <span class="comment">//M$ event model</span>
+			element.attachEvent(<span class="literal">'on'</span> + name, observer);
+    	}
+	}
+	
+	<span class="comment">/**
+	 * Load a JS-script dynamically.
+	 * <span class="attrib">@param</span> {String} src
+	 */</span>
+<span class="comment">/*	$import: function (src) {
+		var documentScripts = document.getElementsByTagName("script");
+	
+		for (index = 0; index &lt; documentScripts.length; ++index)
+		{
+			var documentScript = documentScripts[index];
+			if (documentScript.src == src) {
+				return false;
+			}
+		}
+		
+		var script = document.createElement('script');
+		script.type = 'text/javascript';
+		script.src = src;
+		document.getElementsByTagName('head')[0].appendChild(script); 
+		
+		return true;
+	}
+	*/</span>
+};
+
+<span class="comment">/**
+ * Internal object extension (OO) methods.
+ * 
+ * <span class="attrib">@private</span>
+ * <span class="attrib">@ignore</span>
+ */</span>
+Log4js.extend = <span class="reserved">function</span>(destination, source) {
+  <span class="reserved">for</span> (property in source) {
+    destination[property] = source[property];
+  }
+  <span class="reserved">return</span> destination;
+}
+    
+<span class="comment">/**
+ * Functions taken from Prototype library,  
+ * didn't want to require for just few functions.
+ * More info at {<span class="attrib">@link</span> http://prototype.conio.net/}
+ * <span class="attrib">@private</span>
+ */</span>	
+Log4js.bind = <span class="reserved">function</span>(fn, object) {
+  <span class="reserved">return</span> <span class="reserved">function</span>() {
+        <span class="reserved">return</span> fn.apply(object, arguments);
+  };
+};
+
+<span class="comment">/**
+ * Log4js.Level Enumeration. Do not use directly. Use static objects instead.
+ * <span class="attrib">@constructor</span>
+ * <span class="attrib">@param</span> {Number} level number of level
+ * <span class="attrib">@param</span> {String} levelString String representation of level
+ * <span class="attrib">@private</span>
+ */</span>
+Log4js.Level = <span class="reserved">function</span>(level, levelStr) {
+	<span class="reserved">this</span>.level = level;
+	<span class="reserved">this</span>.levelStr = levelStr;
+};
+
+Log4js.Level.<span class="reserved">prototype</span> =  {
+	<span class="comment">/** 
+	 * converts given String to corresponding Level
+	 * <span class="attrib">@param</span> {String} sArg String value of Level
+	 * <span class="attrib">@param</span> {Log4js.Level} defaultLevel default Level, if no String representation
+	 * <span class="attrib">@return</span> Level object
+	 * <span class="attrib">@type</span> Log4js.Level
+	 */</span>
+	toLevel: <span class="reserved">function</span>(sArg, defaultLevel) {                  
+				
+		<span class="reserved">if</span>(sArg === null) {
+			<span class="reserved">return</span> defaultLevel;
+		}
+		
+		<span class="reserved">if</span>(typeof sArg == <span class="literal">"string"</span>) { 
+			var s = sArg.toUpperCase();
+			<span class="reserved">if</span>(s == <span class="literal">"ALL"</span>) {<span class="reserved">return</span> Log4js.Level.ALL;}
+			<span class="reserved">if</span>(s == <span class="literal">"DEBUG"</span>) {<span class="reserved">return</span> Log4js.Level.DEBUG;}
+			<span class="reserved">if</span>(s == <span class="literal">"INFO"</span>) {<span class="reserved">return</span> Log4js.Level.INFO;}
+			<span class="reserved">if</span>(s == <span class="literal">"WARN"</span>) {<span class="reserved">return</span> Log4js.Level.WARN;}
+			<span class="reserved">if</span>(s == <span class="literal">"ERROR"</span>) {<span class="reserved">return</span> Log4js.Level.ERROR;}
+			<span class="reserved">if</span>(s == <span class="literal">"FATAL"</span>) {<span class="reserved">return</span> Log4js.Level.FATAL;}
+			<span class="reserved">if</span>(s == <span class="literal">"OFF"</span>) {<span class="reserved">return</span> Log4js.Level.OFF;}
+			<span class="reserved">if</span>(s == <span class="literal">"TRACE"</span>) {<span class="reserved">return</span> Log4js.Level.TRACE;}
+			<span class="reserved">return</span> defaultLevel;
+		} <span class="reserved">else</span> <span class="reserved">if</span>(typeof sArg == <span class="literal">"number"</span>) {
+			switch(sArg) {
+				case ALL_INT: <span class="reserved">return</span> Log4js.Level.ALL;
+				case DEBUG_INT: <span class="reserved">return</span> Log4js.Level.DEBUG;
+				case INFO_INT: <span class="reserved">return</span> Log4js.Level.INFO;
+				case WARN_INT: <span class="reserved">return</span> Log4js.Level.WARN;
+				case ERROR_INT: <span class="reserved">return</span> Log4js.Level.ERROR;
+				case FATAL_INT: <span class="reserved">return</span> Log4js.Level.FATAL;
+				case OFF_INT: <span class="reserved">return</span> Log4js.Level.OFF;
+				case TRACE_INT: <span class="reserved">return</span> Log4js.Level.TRACE;
+				default: <span class="reserved">return</span> defaultLevel;
+			}
+		} <span class="reserved">else</span> {
+			<span class="reserved">return</span> defaultLevel;	
+		}
+	},	
+	<span class="comment">/** 
+	 * <span class="attrib">@return</span>  converted Level to String
+	 * <span class="attrib">@type</span> String
+	 */</span>		
+	toString: <span class="reserved">function</span>() {
+		<span class="reserved">return</span> <span class="reserved">this</span>.levelStr;	
+	},
+	<span class="comment">/** 
+	 * <span class="attrib">@return</span> internal Number value of Level
+	 * <span class="attrib">@type</span> Number
+	 */</span>			
+	valueOf: <span class="reserved">function</span>() {
+		<span class="reserved">return</span> <span class="reserved">this</span>.level;
+	}
+};
+
+<span class="comment">// Static variables</span>
+<span class="comment">/** 
+ * <span class="attrib">@private</span>
+ */</span>
+Log4js.Level.OFF_INT = Number.MAX_VALUE;
+<span class="comment">/** 
+ * <span class="attrib">@private</span>
+ */</span>
+Log4js.Level.FATAL_INT = 50000;
+<span class="comment">/** 
+ * <span class="attrib">@private</span>
+ */</span>
+Log4js.Level.ERROR_INT = 40000;
+<span class="comment">/** 
+ * <span class="attrib">@private</span>
+ */</span>
+Log4js.Level.WARN_INT = 30000;
+<span class="comment">/** 
+ * <span class="attrib">@private</span>
+ */</span>
+Log4js.Level.INFO_INT = 20000;
+<span class="comment">/** 
+ * <span class="attrib">@private</span>
+ */</span>
+Log4js.Level.DEBUG_INT = 10000;
+<span class="comment">/** 
+ * <span class="attrib">@private</span>
+ */</span>
+Log4js.Level.TRACE_INT = 5000;
+<span class="comment">/** 
+ * <span class="attrib">@private</span>
+ */</span>
+Log4js.Level.ALL_INT = Number.MIN_VALUE;
+
+<span class="comment">/** 
+ * Logging Level OFF - all disabled
+ * <span class="attrib">@type</span> Log4js.Level
+ * <span class="attrib">@static</span>
+ */</span>
+Log4js.Level.OFF = new Log4js.Level(Log4js.Level.OFF_INT, <span class="literal">"OFF"</span>);
+<span class="comment">/** 
+ * Logging Level Fatal
+ * <span class="attrib">@type</span> Log4js.Level
+ * <span class="attrib">@static</span>
+ */</span>
+Log4js.Level.FATAL = new Log4js.Level(Log4js.Level.FATAL_INT, <span class="literal">"FATAL"</span>);
+<span class="comment">/** 
+ * Logging Level Error
+ * <span class="attrib">@type</span> Log4js.Level
+ * <span class="attrib">@static</span>
+ */</span>
+Log4js.Level.ERROR = new Log4js.Level(Log4js.Level.ERROR_INT, <span class="literal">"ERROR"</span>); 
+<span class="comment">/** 
+ * Logging Level Warn
+ * <span class="attrib">@type</span> Log4js.Level
+ * <span class="attrib">@static</span>
+ */</span>
+Log4js.Level.WARN = new Log4js.Level(Log4js.Level.WARN_INT, <span class="literal">"WARN"</span>); 
+<span class="comment">/** 
+ * Logging Level Info
+ * <span class="attrib">@type</span> Log4js.Level
+ * <span class="attrib">@static</span>
+ */</span>
+Log4js.Level.INFO = new Log4js.Level(Log4js.Level.INFO_INT, <span class="literal">"INFO"</span>);     
+<span class="comment">/** 
+ * Logging Level Debug
+ * <span class="attrib">@type</span> Log4js.Level
+ * <span class="attrib">@static</span>
+ */</span>
+Log4js.Level.DEBUG = new Log4js.Level(Log4js.Level.DEBUG_INT, <span class="literal">"DEBUG"</span>);  
+<span class="comment">/** 
+ * Logging Level Trace
+ * <span class="attrib">@type</span> Log4js.Level
+ * <span class="attrib">@static</span>
+ */</span>
+Log4js.Level.TRACE = new Log4js.Level(Log4js.Level.TRACE_INT, <span class="literal">"TRACE"</span>);  
+<span class="comment">/** 
+ * Logging Level All - All traces are enabled
+ * <span class="attrib">@type</span> Log4js.Level
+ * <span class="attrib">@static</span>
+ */</span>
+Log4js.Level.ALL = new Log4js.Level(Log4js.Level.ALL_INT, <span class="literal">"ALL"</span>); 
+
+<span class="comment">/**
+ * Log4js CustomEvent
+ * <span class="attrib">@constructor</span>
+ * <span class="attrib">@author</span> Corey Johnson - original code in Lumberjack (http://gleepglop.com/javascripts/logger/)
+ * <span class="attrib">@author</span> Seth Chisamore - adapted for Log4js
+ * <span class="attrib">@private</span>
+ */</span>
+Log4js.CustomEvent = <span class="reserved">function</span>() {
+	<span class="reserved">this</span>.listeners = [];
+};
+
+Log4js.CustomEvent.<span class="reserved">prototype</span> = {
+ 
+ 	<span class="comment">/**
+ 	 * <span class="attrib">@param</span> method method to be added
+ 	 */</span> 
+	addListener : <span class="reserved">function</span>(method) {
+		<span class="reserved">this</span>.listeners.push(method);
+	},
+
+ 	<span class="comment">/**
+ 	 * <span class="attrib">@param</span> method method to be removed
+ 	 */</span> 
+	removeListener : <span class="reserved">function</span>(method) {
+		var foundIndexes = <span class="reserved">this</span>.findListenerIndexes(method);
+
+		<span class="reserved">for</span>(var i = 0; i &lt; foundIndexes.length; i++) {
+			<span class="reserved">this</span>.listeners.splice(foundIndexes[i], 1);
+		}
+	},
+
+ 	<span class="comment">/**
+ 	 * <span class="attrib">@param</span> handler
+ 	 */</span> 
+	dispatch : <span class="reserved">function</span>(handler) {
+		<span class="reserved">for</span>(var i = 0; i &lt; <span class="reserved">this</span>.listeners.length; i++) {
+			try {
+				<span class="reserved">this</span>.listeners[i](handler);
+			}
+			catch (e) {
+				log4jsLogger.warn(<span class="literal">"Could not run the listener "</span> + <span class="reserved">this</span>.listeners[i] + <span class="literal">". \n"</span> + e);
+			}
+		}
+	},
+
+	<span class="comment">/**
+	 * <span class="attrib">@private</span>
+	 * <span class="attrib">@param</span> method
+	 */</span>
+	findListenerIndexes : <span class="reserved">function</span>(method) {
+		var indexes = [];
+		<span class="reserved">for</span>(var i = 0; i &lt; <span class="reserved">this</span>.listeners.length; i++) {			
+			<span class="reserved">if</span> (<span class="reserved">this</span>.listeners[i] == method) {
+				indexes.push(i);
+			}
+		}
+
+		<span class="reserved">return</span> indexes;
+	}
+};
+
+<span class="comment">/**
+ * Models a logging event.
+ * <span class="attrib">@constructor</span>
+ * <span class="attrib">@param</span> {String} categoryName name of category
+ * <span class="attrib">@param</span> {Log4js.Level} level level of message
+ * <span class="attrib">@param</span> {String} message message to log
+ * <span class="attrib">@param</span> {Log4js.Logger} logger the associated logger
+ * <span class="attrib">@author</span> Seth Chisamore
+ */</span>
+Log4js.LoggingEvent = <span class="reserved">function</span>(categoryName, level, message, exception, logger) {
+	<span class="comment">/**
+	 * the timestamp of the Logging Event
+	 * <span class="attrib">@type</span> Date
+	 * <span class="attrib">@private</span>
+	 */</span>
+	<span class="reserved">this</span>.startTime = new Date();
+	<span class="comment">/**
+	 * category of event
+	 * <span class="attrib">@type</span> String
+	 * <span class="attrib">@private</span>
+	 */</span>
+	<span class="reserved">this</span>.categoryName = categoryName;
+	<span class="comment">/**
+	 * the logging message
+	 * <span class="attrib">@type</span> String
+	 * <span class="attrib">@private</span>
+	 */</span>
+	<span class="reserved">this</span>.message = message;
+	<span class="comment">/**
+	 * the logging exception
+	 * <span class="attrib">@type</span> Exception
+	 * <span class="attrib">@private</span>
+	 */</span>
+	<span class="reserved">this</span>.exception = exception;
+	<span class="comment">/**
+	 * level of log
+	 * <span class="attrib">@type</span> Log4js.Level
+	 * <span class="attrib">@private</span>
+	 */</span>
+	<span class="reserved">this</span>.level = level;
+	<span class="comment">/**
+	 * reference to logger
+	 * <span class="attrib">@type</span> Log4js.Logger
+	 * <span class="attrib">@private</span>
+	 */</span>
+	<span class="reserved">this</span>.logger = logger;
+};
+
+Log4js.LoggingEvent.<span class="reserved">prototype</span> = {	
+	<span class="comment">/**
+	 * get the timestamp formatted as String.
+	 * <span class="attrib">@return</span> {String} formatted timestamp
+	 * <span class="attrib">@see</span> Log4js#setDateFormat()
+	 */</span>
+	getFormattedTimestamp: <span class="reserved">function</span>() {
+		<span class="reserved">if</span>(<span class="reserved">this</span>.logger) {
+			<span class="reserved">return</span> <span class="reserved">this</span>.logger.getFormattedTimestamp(<span class="reserved">this</span>.startTime);
+		} <span class="reserved">else</span> {
+			<span class="reserved">return</span> <span class="reserved">this</span>.startTime.toGMTString();
+		}
+	}
+};
+
+<span class="comment">/**
+ * Logger to log messages to the defined appender.&lt;/p&gt;
+ * Default appender is Appender, which is ignoring all messages. Please
+ * use setAppender() to set a specific appender (e.g. WindowAppender).
+ * use {<span class="attrib">@see</span> Log4js#getLogger(String)} to get an instance.
+ * <span class="attrib">@constructor</span>
+ * <span class="attrib">@param</span> name name of category to log to
+ * <span class="attrib">@author</span> Stephan Strittmatter
+ */</span>
+Log4js.Logger = <span class="reserved">function</span>(name) {
+	<span class="reserved">this</span>.loggingEvents = [];
+	<span class="reserved">this</span>.appenders = [];
+	<span class="comment">/** category of logger */</span>
+	<span class="reserved">this</span>.category = name || <span class="literal">""</span>;
+	<span class="comment">/** level to be logged */</span>
+	<span class="reserved">this</span>.level = Log4js.Level.FATAL;
+	
+	<span class="reserved">this</span>.dateformat = Log4js.DateFormatter.DEFAULT_DATE_FORMAT;
+	<span class="reserved">this</span>.dateformatter = new Log4js.DateFormatter();
+	
+	<span class="reserved">this</span>.onlog = new Log4js.CustomEvent();
+	<span class="reserved">this</span>.onclear = new Log4js.CustomEvent();
+	
+	<span class="comment">/** appender to write in */</span>
+	<span class="reserved">this</span>.appenders.push(new Log4js.Appender(<span class="reserved">this</span>));
+	
+	<span class="comment">// if multiple log objects are instantiated this will only log to the log </span>
+	<span class="comment">// object that is declared last can't seem to get the attachEvent method to </span>
+	<span class="comment">// work correctly</span>
+	try {
+		window.onerror = <span class="reserved">this</span>.windowError.bind(<span class="reserved">this</span>);
+	} catch (e) {
+		<span class="comment">//log4jsLogger.fatal(e);</span>
+	}
+};
+
+Log4js.Logger.<span class="reserved">prototype</span> = {
+
+	<span class="comment">/**
+	 * add additional appender. DefaultAppender always is there.
+	 * <span class="attrib">@param</span> appender additional wanted appender
+	 */</span>
+	addAppender: <span class="reserved">function</span>(appender) {
+		<span class="reserved">if</span> (appender instanceof Log4js.Appender) {
+			appender.setLogger(<span class="reserved">this</span>);
+			<span class="reserved">this</span>.appenders.push(appender);			
+		} <span class="reserved">else</span> {
+			throw <span class="literal">"Not instance of an Appender: "</span> + appender;
+		}
+	},
+
+	<span class="comment">/**
+	 * set Array of appenders. Previous Appenders are cleared and removed.
+	 * <span class="attrib">@param</span> {Array} appenders Array of Appenders
+	 */</span>
+	setAppenders: <span class="reserved">function</span>(appenders) {
+		<span class="comment">//clear first all existing appenders</span>
+		<span class="reserved">for</span>(var i = 0; i &lt; <span class="reserved">this</span>.appenders.length; i++) {
+			<span class="reserved">this</span>.appenders[i].doClear();
+		}
+		
+		<span class="reserved">this</span>.appenders = appenders;
+		
+		<span class="reserved">for</span>(var j = 0; j &lt; <span class="reserved">this</span>.appenders.length; j++) {
+			<span class="reserved">this</span>.appenders[j].setLogger(<span class="reserved">this</span>);
+		}
+	},
+	
+	<span class="comment">/**
+	 * Set the Loglevel default is LogLEvel.TRACE
+	 * <span class="attrib">@param</span> level wanted logging level
+	 */</span>
+	setLevel: <span class="reserved">function</span>(level) {
+		<span class="reserved">this</span>.level = level;
+	},
+	
+	<span class="comment">/** 
+	 * main log method logging to all available appenders 
+	 * <span class="attrib">@private</span>
+	 */</span>
+	log: <span class="reserved">function</span>(logLevel, message, exception) {
+		var loggingEvent = new Log4js.LoggingEvent(<span class="reserved">this</span>.category, logLevel, 
+			message, exception, <span class="reserved">this</span>);
+		<span class="reserved">this</span>.loggingEvents.push(loggingEvent);
+		<span class="reserved">this</span>.onlog.dispatch(loggingEvent);
+	},
+	
+	<span class="comment">/** clear logging */</span>
+	clear : <span class="reserved">function</span> () {
+		try{
+			<span class="reserved">this</span>.loggingEvents = [];
+			<span class="reserved">this</span>.onclear.dispatch();
+		} catch(e){}
+	},
+	<span class="comment">/** checks if Level Trace is enabled */</span>
+	isTraceEnabled: <span class="reserved">function</span>() {
+		<span class="reserved">if</span> (<span class="reserved">this</span>.level.valueOf() &lt;= Log4js.Level.TRACE.valueOf()) {
+			<span class="reserved">return</span> true;
+		}
+		<span class="reserved">return</span> false;
+	},
+	<span class="comment">/** 
+	 * Trace messages 
+	 * <span class="attrib">@param</span> message {Object} message to be logged
+	 */</span>
+	trace: <span class="reserved">function</span>(message) {
+		<span class="reserved">if</span> (<span class="reserved">this</span>.isTraceEnabled()) {
+			<span class="reserved">this</span>.log(Log4js.Level.TRACE, message, null);
+		}
+	},
+	<span class="comment">/** checks if Level Debug is enabled */</span>
+	isDebugEnabled: <span class="reserved">function</span>() {
+		<span class="reserved">if</span> (<span class="reserved">this</span>.level.valueOf() &lt;= Log4js.Level.DEBUG.valueOf()) {
+			<span class="reserved">return</span> true;
+		}
+		<span class="reserved">return</span> false;
+	},
+	<span class="comment">/** 
+	 * Debug messages 
+	 * <span class="attrib">@param</span> message {Object} message to be logged
+	 */</span>
+	debug: <span class="reserved">function</span>(message) {
+		<span class="reserved">if</span> (<span class="reserved">this</span>.isDebugEnabled()) {
+			<span class="reserved">this</span>.log(Log4js.Level.DEBUG, message, null);
+		}
+	},
+	<span class="comment">/**
+	 * Debug messages 
+	 * <span class="attrib">@param</span> {Object} message  message to be logged
+	 * <span class="attrib">@param</span> {Throwable} throwable 
+	 */</span>
+	debug: <span class="reserved">function</span>(message, throwable) {
+		<span class="reserved">if</span> (<span class="reserved">this</span>.isDebugEnabled()) {
+			<span class="reserved">this</span>.log(Log4js.Level.DEBUG, message, throwable);
+		}
+	},	
+	<span class="comment">/** checks if Level Info is enabled */</span>
+	isInfoEnabled: <span class="reserved">function</span>() {
+		<span class="reserved">if</span> (<span class="reserved">this</span>.level.valueOf() &lt;= Log4js.Level.INFO.valueOf()) {
+			<span class="reserved">return</span> true;
+		}
+		<span class="reserved">return</span> false;
+	},
+	<span class="comment">/** 
+	 * logging info messages 
+	 * <span class="attrib">@param</span> {Object} message  message to be logged
+	 */</span>
+	info: <span class="reserved">function</span>(message) {
+		<span class="reserved">if</span> (<span class="reserved">this</span>.isInfoEnabled()) {
+			<span class="reserved">this</span>.log(Log4js.Level.INFO, message, null);
+		}
+	},
+	<span class="comment">/** 
+	 * logging info messages 
+	 * <span class="attrib">@param</span> {Object} message  message to be logged
+	 * <span class="attrib">@param</span> {Throwable} throwable  
+	 */</span>
+	info: <span class="reserved">function</span>(message, throwable) {
+		<span class="reserved">if</span> (<span class="reserved">this</span>.isInfoEnabled()) {
+			<span class="reserved">this</span>.log(Log4js.Level.INFO, message, throwable);
+		}
+	},
+	<span class="comment">/** checks if Level Warn is enabled */</span>
+	isWarnEnabled: <span class="reserved">function</span>() {
+		<span class="reserved">if</span> (<span class="reserved">this</span>.level.valueOf() &lt;= Log4js.Level.WARN.valueOf()) {
+			<span class="reserved">return</span> true;
+		}
+		<span class="reserved">return</span> false;
+	},
+
+	<span class="comment">/** logging warn messages */</span>
+	warn: <span class="reserved">function</span>(message) {
+		<span class="reserved">if</span> (<span class="reserved">this</span>.isWarnEnabled()) {
+			<span class="reserved">this</span>.log(Log4js.Level.WARN, message, null);
+		}
+	},
+	<span class="comment">/** logging warn messages */</span>
+	warn: <span class="reserved">function</span>(message, throwable) {
+		<span class="reserved">if</span> (<span class="reserved">this</span>.isWarnEnabled()) {
+			<span class="reserved">this</span>.log(Log4js.Level.WARN, message, throwable);
+		}
+	},
+	<span class="comment">/** checks if Level Error is enabled */</span>
+	isErrorEnabled: <span class="reserved">function</span>() {
+		<span class="reserved">if</span> (<span class="reserved">this</span>.level.valueOf() &lt;= Log4js.Level.ERROR.valueOf()) {
+			<span class="reserved">return</span> true;
+		}
+		<span class="reserved">return</span> false;
+	},
+	<span class="comment">/** logging error messages */</span>
+	error: <span class="reserved">function</span>(message) {
+		<span class="reserved">if</span> (<span class="reserved">this</span>.isErrorEnabled()) {
+			<span class="reserved">this</span>.log(Log4js.Level.ERROR, message, null);
+		}
+	},
+	<span class="comment">/** logging error messages */</span>
+	error: <span class="reserved">function</span>(message, throwable) {
+		<span class="reserved">if</span> (<span class="reserved">this</span>.isErrorEnabled()) {
+			<span class="reserved">this</span>.log(Log4js.Level.ERROR, message, throwable);
+		}
+	},
+	<span class="comment">/** checks if Level Fatal is enabled */</span>
+	isFatalEnabled: <span class="reserved">function</span>() {
+		<span class="reserved">if</span> (<span class="reserved">this</span>.level.valueOf() &lt;= Log4js.Level.FATAL.valueOf()) {
+			<span class="reserved">return</span> true;
+		}
+		<span class="reserved">return</span> false;
+	},
+	<span class="comment">/** logging fatal messages */</span>
+	fatal: <span class="reserved">function</span>(message) {
+		<span class="reserved">if</span> (<span class="reserved">this</span>.isFatalEnabled()) {
+			<span class="reserved">this</span>.log(Log4js.Level.FATAL, message, null);
+		}
+	},
+	<span class="comment">/** logging fatal messages */</span>
+	fatal: <span class="reserved">function</span>(message, throwable) {
+		<span class="reserved">if</span> (<span class="reserved">this</span>.isFatalEnabled()) {
+			<span class="reserved">this</span>.log(Log4js.Level.FATAL, message, throwable);
+		}
+	},	
+	<span class="comment">/** 
+	 * Capture main window errors and log as fatal.
+	 * <span class="attrib">@private</span>
+	 */</span>
+	windowError: <span class="reserved">function</span>(msg, url, line){
+		var message = <span class="literal">"Error in ("</span> + (url || window.location) + <span class="literal">") on line "</span>+ line +<span class="literal">" with message ("</span> + msg + <span class="literal">")"</span>;
+		<span class="reserved">this</span>.log(Log4js.Level.FATAL, message, null);	
+	},
+	
+	<span class="comment">/**
+	 * Set the date format of logger. Following switches are supported:
+	 * &lt;ul&gt;
+	 * &lt;li&gt;yyyy - The year&lt;/li&gt;
+	 * &lt;li&gt;MM - the month&lt;/li&gt;
+	 * &lt;li&gt;dd - the day of month&lt;li&gt;
+	 * &lt;li&gt;hh - the hour&lt;li&gt;
+	 * &lt;li&gt;mm - minutes&lt;/li&gt;
+	 * &lt;li&gt;O - timezone offset&lt;/li&gt;
+	 * &lt;/ul&gt;
+	 * <span class="attrib">@param</span> {String} format format String for the date
+	 * <span class="attrib">@see</span> #getTimestamp
+	 */</span>
+	setDateFormat: <span class="reserved">function</span>(format) {
+	 	<span class="reserved">this</span>.dateformat = format;
+	},
+	 
+	<span class="comment">/**
+	 * Generates a timestamp using the format set in {Log4js.setDateFormat}.
+	 * <span class="attrib">@param</span> {Date} date the date to format
+	 * <span class="attrib">@see</span> #setDateFormat
+	 * <span class="attrib">@return</span> A formatted timestamp with the current date and time.
+	 */</span>
+	getFormattedTimestamp: <span class="reserved">function</span>(date) {
+	  <span class="reserved">return</span> <span class="reserved">this</span>.dateformatter.formatDate(date, <span class="reserved">this</span>.dateformat);
+	}
+};
+
+<span class="comment">/**
+ * Abstract base class for other appenders. 
+ * It is doing nothing.
+ *
+ * <span class="attrib">@constructor</span>
+ * <span class="attrib">@param</span> {Log4js.Logger} logger log4js instance this appender is attached to
+ * <span class="attrib">@author</span> Stephan Strittmatter
+ */</span>
+Log4js.Appender = <span class="reserved">function</span> () {
+	<span class="comment">/**
+	 * Reference to calling logger
+	 * <span class="attrib">@type</span> Log4js.Logger
+	 * <span class="attrib">@private</span>
+	 */</span>
+	 <span class="reserved">this</span>.logger = null;
+};
+
+Log4js.Appender.<span class="reserved">prototype</span> = {
+	<span class="comment">/** 
+	 * appends the given loggingEvent appender specific
+	 * <span class="attrib">@param</span> {Log4js.LoggingEvent} loggingEvent loggingEvent to append
+	 */</span>
+	doAppend: <span class="reserved">function</span>(loggingEvent) {
+		<span class="reserved">return</span>;
+	},
+	<span class="comment">/** 
+	 * clears the Appender
+	 */</span>
+	doClear: <span class="reserved">function</span>() {
+		<span class="reserved">return</span>;
+	},
+	
+	<span class="comment">/**
+	 * Set the Layout for this appender.
+	 * <span class="attrib">@param</span> {Log4js.Layout} layout Layout for formatting loggingEvent
+	 */</span>
+	setLayout: <span class="reserved">function</span>(layout){
+		<span class="reserved">this</span>.layout = layout;
+	},
+	<span class="comment">/**
+	 * Set reference to the logger.
+	 * <span class="attrib">@param</span> {Log4js.Logger} the invoking logger
+	 */</span>
+	setLogger: <span class="reserved">function</span>(logger){
+		<span class="comment">// add listener to the logger methods</span>
+		logger.onlog.addListener(Log4js.bind(<span class="reserved">this</span>.doAppend, <span class="reserved">this</span>));
+		logger.onclear.addListener(Log4js.bind(<span class="reserved">this</span>.doClear, <span class="reserved">this</span>));
+	
+		<span class="reserved">this</span>.logger = logger;
+	}
+};
+
+<span class="comment">/**
+ * Interface for Layouts.
+ * Use this Layout as "interface" for other Layouts. It is doing nothing.
+ *
+ * <span class="attrib">@constructor</span>
+ * <span class="attrib">@author</span> Stephan Strittmatter
+ */</span>
+Log4js.Layout = <span class="reserved">function</span>(){<span class="reserved">return</span>;};
+Log4js.Layout.<span class="reserved">prototype</span> = {
+	<span class="comment">/** 
+	 * Implement this method to create your own layout format.
+	 * <span class="attrib">@param</span> {Log4js.LoggingEvent} loggingEvent loggingEvent to format
+	 * <span class="attrib">@return</span> formatted String
+	 * <span class="attrib">@type</span> String
+	 */</span>
+	format: <span class="reserved">function</span>(loggingEvent) {
+		<span class="reserved">return</span> <span class="literal">""</span>;
+	},
+	<span class="comment">/** 
+	 * Returns the content type output by this layout. 
+	 * <span class="attrib">@return</span> The base class returns "text/plain".
+	 * <span class="attrib">@type</span> String
+	 */</span>
+	getContentType: <span class="reserved">function</span>() {
+		<span class="reserved">return</span> <span class="literal">"text/plain"</span>;
+	},
+	<span class="comment">/** 
+	 * <span class="attrib">@return</span> Returns the header for the layout format. The base class returns null.
+	 * <span class="attrib">@type</span> String
+	 */</span>
+	getHeader: <span class="reserved">function</span>() {
+		<span class="reserved">return</span> null;
+	},
+	<span class="comment">/** 
+	 * <span class="attrib">@return</span> Returns the footer for the layout format. The base class returns null.
+	 * <span class="attrib">@type</span> String
+	 */</span>
+	getFooter: <span class="reserved">function</span>() {
+		<span class="reserved">return</span> null;
+	},
+	
+	<span class="comment">/**
+	 * <span class="attrib">@return</span> Separator between events
+	 * <span class="attrib">@type</span> String
+	 */</span>
+	getSeparator: <span class="reserved">function</span>() {
+		<span class="reserved">return</span> <span class="literal">""</span>;
+	}
+};
+
+<span class="comment">/**
+ * Console Appender writes the logs to a console.  If "inline" is
+ * set to "false" the console launches in another window otherwise
+ * the window is inline on the page and toggled on and off with "Alt-D".
+ * Note: At FireFox &amp;gb; 2.0 the keystroke is little different now: "SHIFT+ALT+D".
+ *
+ * <span class="attrib">@constructor</span>
+ * <span class="attrib">@extends</span> Log4js.Appender
+ * <span class="attrib">@param</span> {boolean} isInline boolean value that indicates whether the console be placed inline, default is to launch in new window
+ *
+ * <span class="attrib">@author</span> Corey Johnson - original console code in Lumberjack (http://gleepglop.com/javascripts/logger/)
+ * <span class="attrib">@author</span> Seth Chisamore - adapted for use as a log4js appender
+ */</span>
+Log4js.ConsoleAppender = <span class="reserved">function</span>(isInline) {
+	
+	<span class="comment">/**
+	 * <span class="attrib">@type</span> Log4js.Layout
+	 * <span class="attrib">@private</span>
+	 */</span>
+	<span class="reserved">this</span>.layout = new Log4js.PatternLayout(Log4js.PatternLayout.TTCC_CONVERSION_PATTERN);
+	<span class="comment">/**
+	 * <span class="attrib">@type</span> boolean
+	 * <span class="attrib">@private</span>
+	 */</span>
+	<span class="reserved">this</span>.inline = isInline;
+
+	<span class="comment">/**
+	 * <span class="attrib">@type</span> String
+	 * <span class="attrib">@private</span>
+	 */</span>
+	<span class="reserved">this</span>.accesskey = <span class="literal">"d"</span>;
+	
+	<span class="comment">/**
+	 * <span class="attrib">@private</span>
+	 */</span>
+	<span class="reserved">this</span>.tagPattern = null;
+	
+	<span class="reserved">this</span>.commandHistory = [];
+  	<span class="reserved">this</span>.commandIndex = 0;
+  	
+  	<span class="comment">/**
+  	 * true if popup is blocked.
+  	 */</span>
+  	<span class="reserved">this</span>.popupBlocker = false;
+  	
+  	<span class="comment">/**
+  	 * current output div-element.
+  	 */</span>
+  	<span class="reserved">this</span>.outputElement = null;
+  	
+  	<span class="reserved">this</span>.docReference = null;
+	<span class="reserved">this</span>.winReference = null;		
+		
+	<span class="reserved">if</span>(<span class="reserved">this</span>.inline) {
+		Log4js.attachEvent(window, <span class="literal">'load'</span>, Log4js.bind(<span class="reserved">this</span>.initialize, <span class="reserved">this</span>));
+	}
+};
+
+Log4js.ConsoleAppender.<span class="reserved">prototype</span> = Log4js.extend(new Log4js.Appender(), {  
+
+	<span class="comment">/**
+	 * Set the access key to show/hide the inline console (default &amp;quote;d&amp;quote;)
+	 * <span class="attrib">@param</span> key access key to show/hide the inline console
+	 */</span>	
+	setAccessKey : <span class="reserved">function</span>(key) {
+		<span class="reserved">this</span>.accesskey = key;
+	},
+
+	<span class="comment">/**
+	 * <span class="attrib">@private</span>
+	 */</span>
+  	initialize : <span class="reserved">function</span>() {
+		
+		<span class="reserved">if</span>(!<span class="reserved">this</span>.inline) {
+
+			var winName = <span class="reserved">this</span>.makeWinName(<span class="reserved">this</span>.logger.category);
+
+			window.top.consoleWindow = window.open(<span class="literal">""</span>, winName, 
+				<span class="literal">"left=0,top=0,width=700,height=700,scrollbars=no,status=no,resizable=yes;toolbar=no"</span>);            
+			window.top.consoleWindow.opener = self;
+			var win = window.top.consoleWindow;
+								
+			<span class="reserved">if</span> (!win) { 
+				<span class="reserved">this</span>.popupBlocker=true; 
+				alert(<span class="literal">"Popup window manager blocking the Log4js popup window to bedisplayed.\n\n"</span> 
+					+ <span class="literal">"Please disabled this to properly see logged events."</span>);  
+			} <span class="reserved">else</span> {	
+				var doc = win.document;
+				doc.open();
+				doc.write(<span class="literal">"&lt;!DOCTYPE html PUBLIC -//W3C//DTD XHTML 1.0 Transitional//EN "</span>);
+				doc.write(<span class="literal">"  http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&gt;\n\n"</span>);
+				doc.write(<span class="literal">"&lt;html&gt;&lt;head&gt;&lt;title&gt;Log4js - "</span> + <span class="reserved">this</span>.logger.category + <span class="literal">"&lt;/title&gt;\n"</span>);
+				doc.write(<span class="literal">"&lt;/head&gt;&lt;body style=\"</span>background-color:darkgray\<span class="literal">"&gt;&lt;/body&gt;\n"</span>);
+				win.blur();
+				win.focus();
+			}
+			
+			<span class="reserved">this</span>.docReference = doc;
+			<span class="reserved">this</span>.winReference = win;
+		} <span class="reserved">else</span> {
+			<span class="reserved">this</span>.docReference = document;
+			<span class="reserved">this</span>.winReference = window;			
+		}
+				
+		<span class="reserved">this</span>.outputCount = 0;
+		<span class="reserved">this</span>.tagPattern = <span class="literal">".*"</span>;
+	  
+		<span class="comment">// I hate writing javascript in HTML... but what's a better alternative</span>
+		<span class="reserved">this</span>.logElement = <span class="reserved">this</span>.docReference.createElement(<span class="literal">'div'</span>);
+		<span class="reserved">this</span>.docReference.body.appendChild(<span class="reserved">this</span>.logElement);
+		<span class="reserved">this</span>.logElement.style.display = <span class="literal">'none'</span>;
+		
+		<span class="reserved">this</span>.logElement.style.position = <span class="literal">"absolute"</span>;
+		<span class="reserved">this</span>.logElement.style.left = <span class="literal">'0px'</span>;
+		<span class="reserved">this</span>.logElement.style.width = <span class="literal">'100%'</span>;
+	
+		<span class="reserved">this</span>.logElement.style.textAlign = <span class="literal">"left"</span>;
+		<span class="reserved">this</span>.logElement.style.fontFamily = <span class="literal">"lucida console"</span>;
+		<span class="reserved">this</span>.logElement.style.fontSize = <span class="literal">"100%"</span>;
+		<span class="reserved">this</span>.logElement.style.backgroundColor = <span class="literal">'darkgray'</span>;      
+		<span class="reserved">this</span>.logElement.style.opacity = 0.9;
+		<span class="reserved">this</span>.logElement.style.zIndex = 2000; 
+	
+		<span class="comment">// Add toolbarElement</span>
+		<span class="reserved">this</span>.toolbarElement = <span class="reserved">this</span>.docReference.createElement(<span class="literal">'div'</span>);
+		<span class="reserved">this</span>.logElement.appendChild(<span class="reserved">this</span>.toolbarElement);     
+		<span class="reserved">this</span>.toolbarElement.style.padding = <span class="literal">"0 0 0 2px"</span>;
+	
+		<span class="comment">// Add buttons        </span>
+		<span class="reserved">this</span>.buttonsContainerElement = <span class="reserved">this</span>.docReference.createElement(<span class="literal">'span'</span>);
+		<span class="reserved">this</span>.toolbarElement.appendChild(<span class="reserved">this</span>.buttonsContainerElement); 
+	
+		<span class="reserved">if</span>(<span class="reserved">this</span>.inline) {
+			var closeButton = <span class="reserved">this</span>.docReference.createElement(<span class="literal">'button'</span>);
+			closeButton.style.cssFloat = <span class="literal">"right"</span>;
+			closeButton.style.styleFloat = <span class="literal">"right"</span>; <span class="comment">// IE dom bug...doesn't understand cssFloat</span>
+			closeButton.style.color = <span class="literal">"black"</span>;
+			closeButton.innerHTML = <span class="literal">"close"</span>;
+			closeButton.onclick = Log4js.bind(<span class="reserved">this</span>.toggle, <span class="reserved">this</span>);
+			<span class="reserved">this</span>.buttonsContainerElement.appendChild(closeButton);
+		}
+		
+		var clearButton = <span class="reserved">this</span>.docReference.createElement(<span class="literal">'button'</span>);
+		clearButton.style.cssFloat = <span class="literal">"right"</span>;
+		clearButton.style.styleFloat = <span class="literal">"right"</span>; <span class="comment">// IE dom bug...doesn't understand cssFloat</span>
+		clearButton.style.color = <span class="literal">"black"</span>;
+		clearButton.innerHTML = <span class="literal">"clear"</span>;
+		clearButton.onclick = Log4js.bind(<span class="reserved">this</span>.logger.clear, <span class="reserved">this</span>.logger);
+		<span class="reserved">this</span>.buttonsContainerElement.appendChild(clearButton);
+	
+
+		<span class="comment">//Add CategoryName and  Level Filter</span>
+		<span class="reserved">this</span>.tagFilterContainerElement = <span class="reserved">this</span>.docReference.createElement(<span class="literal">'span'</span>);
+		<span class="reserved">this</span>.toolbarElement.appendChild(<span class="reserved">this</span>.tagFilterContainerElement);
+		<span class="reserved">this</span>.tagFilterContainerElement.style.cssFloat = <span class="literal">'left'</span>;
+		
+		<span class="reserved">this</span>.tagFilterContainerElement.appendChild(<span class="reserved">this</span>.docReference.createTextNode(<span class="literal">"Log4js - "</span> + <span class="reserved">this</span>.logger.category));
+		<span class="reserved">this</span>.tagFilterContainerElement.appendChild(<span class="reserved">this</span>.docReference.createTextNode(<span class="literal">" | Level Filter: "</span>));
+		
+		<span class="reserved">this</span>.tagFilterElement = <span class="reserved">this</span>.docReference.createElement(<span class="literal">'input'</span>);
+		<span class="reserved">this</span>.tagFilterContainerElement.appendChild(<span class="reserved">this</span>.tagFilterElement);
+		<span class="reserved">this</span>.tagFilterElement.style.width = <span class="literal">'200px'</span>;                    
+		<span class="reserved">this</span>.tagFilterElement.value = <span class="reserved">this</span>.tagPattern;    
+		<span class="reserved">this</span>.tagFilterElement.setAttribute(<span class="literal">'autocomplete'</span>, <span class="literal">'off'</span>); <span class="comment">// So Firefox doesn't flip out</span>
+		
+		Log4js.attachEvent(<span class="reserved">this</span>.tagFilterElement, <span class="literal">'keyup'</span>, Log4js.bind(<span class="reserved">this</span>.updateTags, <span class="reserved">this</span>));
+		Log4js.attachEvent(<span class="reserved">this</span>.tagFilterElement, <span class="literal">'click'</span>, Log4js.bind( <span class="reserved">function</span>() {<span class="reserved">this</span>.tagFilterElement.select();}, <span class="reserved">this</span>));
+		
+		<span class="comment">// Add outputElement</span>
+		<span class="reserved">this</span>.outputElement = <span class="reserved">this</span>.docReference.createElement(<span class="literal">'div'</span>);
+		<span class="reserved">this</span>.logElement.appendChild(<span class="reserved">this</span>.outputElement);  
+		<span class="reserved">this</span>.outputElement.style.overflow = <span class="literal">"auto"</span>;              
+		<span class="reserved">this</span>.outputElement.style.clear = <span class="literal">"both"</span>;
+		<span class="reserved">this</span>.outputElement.style.height = (<span class="reserved">this</span>.inline) ? (<span class="literal">"200px"</span>):(<span class="literal">"650px"</span>);
+		<span class="reserved">this</span>.outputElement.style.width = <span class="literal">"100%"</span>;
+		<span class="reserved">this</span>.outputElement.style.backgroundColor = <span class="literal">'black'</span>; 
+			  
+		<span class="reserved">this</span>.inputContainerElement = <span class="reserved">this</span>.docReference.createElement(<span class="literal">'div'</span>);
+		<span class="reserved">this</span>.inputContainerElement.style.width = <span class="literal">"100%"</span>;
+		<span class="reserved">this</span>.logElement.appendChild(<span class="reserved">this</span>.inputContainerElement);      
+		
+		<span class="reserved">this</span>.inputElement = <span class="reserved">this</span>.docReference.createElement(<span class="literal">'input'</span>);
+		<span class="reserved">this</span>.inputContainerElement.appendChild(<span class="reserved">this</span>.inputElement);  
+		<span class="reserved">this</span>.inputElement.style.width = <span class="literal">'100%'</span>;
+		<span class="reserved">this</span>.inputElement.style.borderWidth = <span class="literal">'0px'</span>; <span class="comment">// Inputs with 100% width always seem to be too large (I HATE THEM) they only work if the border, margin and padding are 0</span>
+		<span class="reserved">this</span>.inputElement.style.margin = <span class="literal">'0px'</span>;
+		<span class="reserved">this</span>.inputElement.style.padding = <span class="literal">'0px'</span>;
+		<span class="reserved">this</span>.inputElement.value = <span class="literal">'Type command here'</span>; 
+		<span class="reserved">this</span>.inputElement.setAttribute(<span class="literal">'autocomplete'</span>, <span class="literal">'off'</span>); <span class="comment">// So Firefox doesn't flip out</span>
+	
+		Log4js.attachEvent(<span class="reserved">this</span>.inputElement, <span class="literal">'keyup'</span>, Log4js.bind(<span class="reserved">this</span>.handleInput, <span class="reserved">this</span>));
+		Log4js.attachEvent(<span class="reserved">this</span>.inputElement, <span class="literal">'click'</span>, Log4js.bind( <span class="reserved">function</span>() {<span class="reserved">this</span>.inputElement.select();}, <span class="reserved">this</span>));
+		
+		<span class="reserved">if</span>(<span class="reserved">this</span>.inline){
+			window.setInterval(Log4js.bind(<span class="reserved">this</span>.repositionWindow, <span class="reserved">this</span>), 500);
+			<span class="reserved">this</span>.repositionWindow();	
+			<span class="comment">// Allow acess key link          </span>
+			var accessElement = <span class="reserved">this</span>.docReference.createElement(<span class="literal">'button'</span>);
+			accessElement.style.position = <span class="literal">"absolute"</span>;
+			accessElement.style.top = <span class="literal">"-100px"</span>;
+			accessElement.accessKey = <span class="reserved">this</span>.accesskey;
+			accessElement.onclick = Log4js.bind(<span class="reserved">this</span>.toggle, <span class="reserved">this</span>);
+			<span class="reserved">this</span>.docReference.body.appendChild(accessElement);
+		} <span class="reserved">else</span> {
+			<span class="reserved">this</span>.show();
+		}
+	},
+	<span class="comment">/**
+	 * shows/hide an element
+	 * <span class="attrib">@private</span>
+	 * <span class="attrib">@return</span> true if shown
+	 */</span>
+	toggle : <span class="reserved">function</span>() {
+		<span class="reserved">if</span> (<span class="reserved">this</span>.logElement.style.display == <span class="literal">'none'</span>) {
+		 	<span class="reserved">this</span>.show();
+		 	<span class="reserved">return</span> true;
+		} <span class="reserved">else</span> {
+			<span class="reserved">this</span>.hide();
+			<span class="reserved">return</span> false;
+		}
+	}, 
+	<span class="comment">/**
+	 * <span class="attrib">@private</span>
+	 */</span>
+	show : <span class="reserved">function</span>() {
+		<span class="reserved">this</span>.logElement.style.display = <span class="literal">''</span>;
+	  	<span class="reserved">this</span>.outputElement.scrollTop = <span class="reserved">this</span>.outputElement.scrollHeight; <span class="comment">// Scroll to bottom when toggled</span>
+ 	  	<span class="reserved">this</span>.inputElement.select();
+	}, 
+	<span class="comment">/**
+	 * <span class="attrib">@private</span>
+	 */</span>	
+	hide : <span class="reserved">function</span>() {
+		<span class="reserved">this</span>.logElement.style.display = <span class="literal">'none'</span>;
+	},  
+	<span class="comment">/**
+	 * <span class="attrib">@private</span>
+	 * <span class="attrib">@param</span> message
+	 * <span class="attrib">@style</span>
+	 */</span>	
+	output : <span class="reserved">function</span>(message, style) {
+
+		<span class="comment">// If we are at the bottom of the window, then keep scrolling with the output			</span>
+		var shouldScroll = (<span class="reserved">this</span>.outputElement.scrollTop + (2 * <span class="reserved">this</span>.outputElement.clientHeight)) &gt;= <span class="reserved">this</span>.outputElement.scrollHeight;
+                
+		<span class="reserved">this</span>.outputCount++;
+	  	style = (style ? style += <span class="literal">';'</span> : <span class="literal">''</span>);	  	
+	  	style += <span class="literal">'padding:1px;margin:0 0 5px 0'</span>;	     
+		  
+		<span class="reserved">if</span> (<span class="reserved">this</span>.outputCount % 2 === 0) {
+			style += <span class="literal">";background-color:#101010"</span>;
+		}
+	  	
+	  	message = message || <span class="literal">"undefined"</span>;
+	  	message = message.toString();
+                
+	  	<span class="reserved">this</span>.outputElement.innerHTML += <span class="literal">"&lt;pre style='"</span> + style + <span class="literal">"'&gt;"</span> + message + <span class="literal">"&lt;/pre&gt;"</span>;
+                
+	  	<span class="reserved">if</span> (shouldScroll) {				
+			<span class="reserved">this</span>.outputElement.scrollTop = <span class="reserved">this</span>.outputElement.scrollHeight;
+		}
+	},
+	
+	<span class="comment">/**
+	 * <span class="attrib">@private</span>
+	 */</span>
+	updateTags : <span class="reserved">function</span>() {
+		
+		var pattern = <span class="reserved">this</span>.tagFilterElement.value;
+	
+		<span class="reserved">if</span> (<span class="reserved">this</span>.tagPattern == pattern) {
+			<span class="reserved">return</span>;
+		}
+		
+		try {
+			new RegExp(pattern);
+		} catch (e) {
+			<span class="reserved">return</span>;
+		}
+		
+		<span class="reserved">this</span>.tagPattern = pattern;
+
+		<span class="reserved">this</span>.outputElement.innerHTML = <span class="literal">""</span>;
+		
+		<span class="comment">// Go through each log entry again</span>
+		<span class="reserved">this</span>.outputCount = 0;
+		<span class="reserved">for</span> (var i = 0; i &lt; <span class="reserved">this</span>.logger.loggingEvents.length; i++) {
+  			<span class="reserved">this</span>.doAppend(<span class="reserved">this</span>.logger.loggingEvents[i]);
+		}  
+	},
+
+	<span class="comment">/**
+	 * <span class="attrib">@private</span>
+	 */</span>	
+	repositionWindow : <span class="reserved">function</span>() {
+		var offset = window.pageYOffset || <span class="reserved">this</span>.docReference.documentElement.scrollTop || <span class="reserved">this</span>.docReference.body.scrollTop;
+		var pageHeight = self.innerHeight || <span class="reserved">this</span>.docReference.documentElement.clientHeight || <span class="reserved">this</span>.docReference.body.clientHeight;
+		<span class="reserved">this</span>.logElement.style.top = (offset + pageHeight - <span class="reserved">this</span>.logElement.offsetHeight) + <span class="literal">"px"</span>;
+	},
+
+	<span class="comment">/**
+	 * <span class="attrib">@param</span> loggingEvent event to be logged
+	 * <span class="attrib">@see</span> Log4js.Appender#doAppend
+	 */</span>
+	doAppend : <span class="reserved">function</span>(loggingEvent) {
+		
+		<span class="reserved">if</span>(<span class="reserved">this</span>.popupBlocker) {
+			<span class="comment">//popup blocked, we return in this case</span>
+			<span class="reserved">return</span>;
+		}
+		
+		<span class="reserved">if</span> ((!<span class="reserved">this</span>.inline) &amp;&amp; (!<span class="reserved">this</span>.winReference || <span class="reserved">this</span>.winReference.closed)) {
+			<span class="reserved">this</span>.initialize();
+		}
+		
+		<span class="reserved">if</span> (<span class="reserved">this</span>.tagPattern !== null &amp;&amp; 
+			loggingEvent.level.toString().search(new RegExp(<span class="reserved">this</span>.tagPattern, <span class="literal">'igm'</span>)) == -1) {
+			<span class="reserved">return</span>;
+		}
+		
+		var style = <span class="literal">''</span>;
+	  	
+		<span class="reserved">if</span> (loggingEvent.level.toString().search(/ERROR/) != -1) { 
+			style += <span class="literal">'color:red'</span>;
+		} <span class="reserved">else</span> <span class="reserved">if</span> (loggingEvent.level.toString().search(/FATAL/) != -1) { 
+			style += <span class="literal">'color:red'</span>;
+		} <span class="reserved">else</span> <span class="reserved">if</span> (loggingEvent.level.toString().search(/WARN/) != -1) { 
+			style += <span class="literal">'color:orange'</span>;
+		} <span class="reserved">else</span> <span class="reserved">if</span> (loggingEvent.level.toString().search(/DEBUG/) != -1) {
+			style += <span class="literal">'color:green'</span>;
+		} <span class="reserved">else</span> <span class="reserved">if</span> (loggingEvent.level.toString().search(/INFO/) != -1) {
+			style += <span class="literal">'color:white'</span>;
+		} <span class="reserved">else</span> {
+			style += <span class="literal">'color:yellow'</span>;
+		}
+	
+		<span class="reserved">this</span>.output(<span class="reserved">this</span>.layout.format(loggingEvent), style);	
+	},
+
+	<span class="comment">/**
+	 * <span class="attrib">@see</span> Log4js.Appender#doClear
+	 */</span>
+	doClear : <span class="reserved">function</span>() {
+		<span class="reserved">this</span>.outputElement.innerHTML = <span class="literal">""</span>;
+	},
+	<span class="comment">/**
+	 * <span class="attrib">@private</span>
+	 * <span class="attrib">@param</span> e
+	 */</span>
+	handleInput : <span class="reserved">function</span>(e) {
+		<span class="reserved">if</span> (e.keyCode == 13 ) {      
+			var command = <span class="reserved">this</span>.inputElement.value;
+			
+			switch(command) {
+				case <span class="literal">"clear"</span>:
+					<span class="reserved">this</span>.logger.clear();  
+					break;
+					
+				default:        
+					var consoleOutput = <span class="literal">""</span>;
+				
+					try {
+						consoleOutput = eval(<span class="reserved">this</span>.inputElement.value);
+					} catch (e) {  
+						<span class="reserved">this</span>.logger.error(<span class="literal">"Problem parsing input &lt;"</span> + command + <span class="literal">"&gt;"</span> + e.message);
+						break;
+					}
+						
+					<span class="reserved">this</span>.logger.trace(consoleOutput);
+					break;
+			}        
+		
+			<span class="reserved">if</span> (<span class="reserved">this</span>.inputElement.value !== <span class="literal">""</span> &amp;&amp; <span class="reserved">this</span>.inputElement.value !== <span class="reserved">this</span>.commandHistory[0]) {
+				<span class="reserved">this</span>.commandHistory.unshift(<span class="reserved">this</span>.inputElement.value);
+			}
+		  
+			<span class="reserved">this</span>.commandIndex = 0;
+			<span class="reserved">this</span>.inputElement.value = <span class="literal">""</span>;                                                     
+		} <span class="reserved">else</span> <span class="reserved">if</span> (e.keyCode == 38 &amp;&amp; <span class="reserved">this</span>.commandHistory.length &gt; 0) {
+    		<span class="reserved">this</span>.inputElement.value = <span class="reserved">this</span>.commandHistory[<span class="reserved">this</span>.commandIndex];
+
+			<span class="reserved">if</span> (<span class="reserved">this</span>.commandIndex &lt; <span class="reserved">this</span>.commandHistory.length - 1) {
+      			<span class="reserved">this</span>.commandIndex += 1;
+      		}
+    	} <span class="reserved">else</span> <span class="reserved">if</span> (e.keyCode == 40 &amp;&amp; <span class="reserved">this</span>.commandHistory.length &gt; 0) {
+    		<span class="reserved">if</span> (<span class="reserved">this</span>.commandIndex &gt; 0) {                                      
+      			<span class="reserved">this</span>.commandIndex -= 1;
+	    	}                       
+
+			<span class="reserved">this</span>.inputElement.value = <span class="reserved">this</span>.commandHistory[<span class="reserved">this</span>.commandIndex];
+	  	} <span class="reserved">else</span> {
+    		<span class="reserved">this</span>.commandIndex = 0;
+    	}
+	},
+
+	<span class="comment">/**
+	 * <span class="attrib">@private</span>
+	 */</span>
+	makeWinName: <span class="reserved">function</span>(category) {
+		<span class="reserved">return</span> category.replace(/[^\d\w]/g, <span class="literal">"_"</span>);
+	},
+                
+	<span class="comment">/** 
+	 * toString
+	 */</span>
+	 toString: <span class="reserved">function</span>() {
+	 	<span class="reserved">return</span> <span class="literal">"Log4js.ConsoleAppender[inline="</span> + <span class="reserved">this</span>.inline + <span class="literal">"]"</span>; 
+	 }
+}); 
+
+<span class="comment">/**
+ * Metatag Appender writing the logs to meta tags
+ *
+ * <span class="attrib">@extends</span> Log4js.Appender
+ * <span class="attrib">@constructor</span>
+ * <span class="attrib">@param</span> logger log4js instance this appender is attached to
+ * <span class="attrib">@author</span> Stephan Strittmatter
+ */</span>
+Log4js.MetatagAppender = <span class="reserved">function</span>() {
+	<span class="reserved">this</span>.currentLine = 0;
+};
+Log4js.MetatagAppender.<span class="reserved">prototype</span> = Log4js.extend(new Log4js.Appender(), {  
+	<span class="comment">/**
+	 * <span class="attrib">@param</span> loggingEvent event to be logged
+	 * <span class="attrib">@see</span> Log4js.Appender#doAppend
+	 */</span>
+	doAppend: <span class="reserved">function</span>(loggingEvent) {
+		var now = new Date();
+		var lines = loggingEvent.message.split(<span class="literal">"\n"</span>);
+		var headTag = document.getElementsByTagName(<span class="literal">"head"</span>)[0];
+
+		<span class="reserved">for</span> (var i = 1; i &lt;= lines.length; i++) {
+			var value = lines[i - 1];
+			<span class="reserved">if</span> (i == 1) {
+				value = loggingEvent.level.toString() + <span class="literal">": "</span> + value;
+			} <span class="reserved">else</span> {
+				value = <span class="literal">"&gt; "</span> + value;
+			}
+
+			var metaTag = document.createElement(<span class="literal">"meta"</span>);
+			metaTag.setAttribute(<span class="literal">"name"</span>, <span class="literal">"X-log4js:"</span> + <span class="reserved">this</span>.currentLine);
+			metaTag.setAttribute(<span class="literal">"content"</span>, value);
+			headTag.appendChild(metaTag);
+			<span class="reserved">this</span>.currentLine += 1;
+		}
+	},
+
+	<span class="comment">/** 
+	 * toString
+	 */</span>
+	 toString: <span class="reserved">function</span>() {
+	 	<span class="reserved">return</span> <span class="literal">"Log4js.MetatagAppender"</span>; 
+	 }
+});
+
+<span class="comment">/**
+ * AJAX Appender sending {<span class="attrib">@link</span> Log4js.LoggingEvent}s asynchron via 
+ * &lt;code&gt;XMLHttpRequest&lt;/code&gt; to server.&lt;br /&gt;
+ * The {<span class="attrib">@link</span> Log4js.LoggingEvent} is POSTed as response content and is 
+ * formatted by the accociated layout. Default layout is {<span class="attrib">@link</span> Log4js.XMLLayout}. 
+ * The &lt;code&gt;threshold&lt;/code&gt; defines when the logs 
+ * should be send to the server. By default every event is sent on its
+ * own (threshold=1). If it is set to 10, then the events are send in groups of
+ * 10 events.
+ *
+ * <span class="attrib">@extends</span> Log4js.Appender 
+ * <span class="attrib">@constructor</span>
+ * <span class="attrib">@param</span> {Log4js.Logger} logger log4js instance this appender is attached to
+ * <span class="attrib">@param</span> {String} loggingUrl url where appender will post log messages to
+ * <span class="attrib">@author</span> Stephan Strittmatter
+ */</span>
+Log4js.AjaxAppender = <span class="reserved">function</span>(loggingUrl) {
+
+	<span class="comment">/**
+	 * is still esnding data to server
+	 * <span class="attrib">@type</span> boolean
+	 * <span class="attrib">@private</span>
+	 */</span>
+	<span class="reserved">this</span>.isInProgress = false;
+	
+	<span class="comment">/**
+	 * <span class="attrib">@type</span> String
+	 * <span class="attrib">@private</span>
+	 */</span>
+	<span class="reserved">this</span>.loggingUrl = loggingUrl || <span class="literal">"logging.log4js"</span>;
+	
+	<span class="comment">/**
+	 * <span class="attrib">@type</span> Integer
+	 * <span class="attrib">@private</span>
+	 */</span>
+	<span class="reserved">this</span>.threshold = 1;
+	
+	<span class="comment">/**
+	 * timeout when request is aborted.
+	 * <span class="attrib">@private</span>
+	 */</span>
+	<span class="reserved">this</span>.timeout = 2000;
+	
+	<span class="comment">/**
+	 * List of LoggingEvents which should be send after threshold is reached.
+	 * <span class="attrib">@type</span> Map
+	 * <span class="attrib">@private</span>
+	 */</span>
+	<span class="reserved">this</span>.loggingEventMap = new Log4js.FifoBuffer();
+
+	<span class="comment">/**
+	 * <span class="attrib">@type</span> Log4js.Layout
+	 * <span class="attrib">@private</span>
+	 */</span>
+	<span class="reserved">this</span>.layout = new Log4js.XMLLayout();
+	<span class="comment">/**
+	 * <span class="attrib">@type</span> XMLHttpRequest
+	 * <span class="attrib">@private</span>
+	 */</span>	
+	<span class="reserved">this</span>.httpRequest = null;
+};
+
+Log4js.AjaxAppender.<span class="reserved">prototype</span> = Log4js.extend(new Log4js.Appender(), {  
+	<span class="comment">/**
+	 * sends the logs to the server
+	 * <span class="attrib">@param</span> loggingEvent event to be logged
+	 * <span class="attrib">@see</span> Log4js.Appender#doAppend
+	 */</span>
+	doAppend: <span class="reserved">function</span>(loggingEvent) {
+		log4jsLogger.trace(<span class="literal">"&gt; AjaxAppender.append"</span>);
+	
+		<span class="reserved">if</span> (<span class="reserved">this</span>.loggingEventMap.length() &lt;= <span class="reserved">this</span>.threshold || <span class="reserved">this</span>.isInProgress === true) {
+			<span class="reserved">this</span>.loggingEventMap.push(loggingEvent);
+		}
+		
+		<span class="reserved">if</span>(<span class="reserved">this</span>.loggingEventMap.length() &gt;= <span class="reserved">this</span>.threshold &amp;&amp; <span class="reserved">this</span>.isInProgress === false) {
+			<span class="comment">//if threshold is reached send the events and reset current threshold</span>
+			<span class="reserved">this</span>.send();
+		}
+		
+		log4jsLogger.trace(<span class="literal">"&lt; AjaxAppender.append"</span>);
+	},
+	
+	<span class="comment">/** <span class="attrib">@see</span> Appender#doClear */</span>
+	doClear: <span class="reserved">function</span>() {
+		log4jsLogger.trace(<span class="literal">"&gt; AjaxAppender.doClear"</span> );
+		<span class="reserved">if</span>(<span class="reserved">this</span>.loggingEventMap.length() &gt; 0) {
+			<span class="reserved">this</span>.send();
+		}
+		log4jsLogger.trace(<span class="literal">"&lt; AjaxAppender.doClear"</span> );
+	},
+	
+	<span class="comment">/**
+	 * Set the threshold when logs have to be send. Default threshold is 1.
+	 * <span class="attrib">@praram</span> {int} threshold new threshold
+	 */</span>
+	setThreshold: <span class="reserved">function</span>(threshold) {
+		log4jsLogger.trace(<span class="literal">"&gt; AjaxAppender.setThreshold: "</span> + threshold );
+		<span class="reserved">this</span>.threshold = threshold;
+		log4jsLogger.trace(<span class="literal">"&lt; AjaxAppender.setThreshold"</span> );
+	},
+	
+	<span class="comment">/**
+	 * Set the timeout in milli seconds until sending request is aborted.
+	 * Default is 2000 ms.
+	 * <span class="attrib">@param</span> {int} milliseconds the new timeout
+	 */</span>
+	setTimeout: <span class="reserved">function</span>(milliseconds) {
+		<span class="reserved">this</span>.timeout = milliseconds;
+	},
+	
+	<span class="comment">/**
+	 * send the request.
+	 */</span>
+	send: <span class="reserved">function</span>() {
+		<span class="reserved">if</span>(<span class="reserved">this</span>.loggingEventMap.length() &gt;0) {
+			
+			log4jsLogger.trace(<span class="literal">"&gt; AjaxAppender.send"</span>);
+			
+			
+			<span class="reserved">this</span>.isInProgress = true;
+			var a = [];
+	
+			<span class="reserved">for</span>(var i = 0; i &lt; <span class="reserved">this</span>.loggingEventMap.length() &amp;&amp; i &lt; <span class="reserved">this</span>.threshold; i++) {
+				a.push(<span class="reserved">this</span>.layout.format(<span class="reserved">this</span>.loggingEventMap.pull()));
+			} 
+					
+			var content = <span class="reserved">this</span>.layout.getHeader();	
+			content += a.join(<span class="reserved">this</span>.layout.getSeparator());
+			content += <span class="reserved">this</span>.layout.getFooter();
+			
+			var appender = <span class="reserved">this</span>;
+			<span class="reserved">if</span>(<span class="reserved">this</span>.httpRequest === null){
+				<span class="reserved">this</span>.httpRequest = <span class="reserved">this</span>.getXmlHttpRequest();
+			}
+			<span class="reserved">this</span>.httpRequest.onreadystatechange = <span class="reserved">function</span>() {
+				appender.onReadyStateChanged.call(appender);
+			};
+			
+			<span class="reserved">this</span>.httpRequest.open(<span class="literal">"POST"</span>, <span class="reserved">this</span>.loggingUrl, true);
+			<span class="comment">// set the request headers.</span>
+			<span class="comment">//this.httpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");</span>
+			<span class="reserved">this</span>.httpRequest.setRequestHeader(<span class="literal">"Content-type"</span>, <span class="reserved">this</span>.layout.getContentType());
+			<span class="comment">//REFERER will be the top-level</span>
+			<span class="comment">// URI which may differ from the location of the error if</span>
+			<span class="comment">// it occurs in an included .js file</span>
+			<span class="reserved">this</span>.httpRequest.setRequestHeader(<span class="literal">"REFERER"</span>, location.href);
+	 		<span class="reserved">this</span>.httpRequest.setRequestHeader(<span class="literal">"Content-length"</span>, content.length);
+			<span class="reserved">this</span>.httpRequest.setRequestHeader(<span class="literal">"Connection"</span>, <span class="literal">"close"</span>);
+			<span class="reserved">this</span>.httpRequest.send( content );
+			
+			appender = <span class="reserved">this</span>;
+			
+			try {
+				window.setTimeout(<span class="reserved">function</span>(){
+					log4jsLogger.trace(<span class="literal">"&gt; AjaxAppender.timeout"</span>);
+					appender.httpRequest.onreadystatechange = <span class="reserved">function</span>(){<span class="reserved">return</span>;};
+					appender.httpRequest.abort();
+					<span class="comment">//this.httpRequest = null;</span>
+					appender.isInProgress = false;
+		
+					<span class="reserved">if</span>(appender.loggingEventMap.length() &gt; 0) {
+						appender.send();
+					}
+					log4jsLogger.trace(<span class="literal">"&lt; AjaxAppender.timeout"</span>);
+				}, <span class="reserved">this</span>.timeout);
+			} catch (e) {
+				log4jsLogger.fatal(e);
+			}
+			log4jsLogger.trace(<span class="literal">"&gt; AjaxAppender.send"</span>);
+		}
+	},
+	
+	<span class="comment">/**
+	 * <span class="attrib">@private</span>
+	 */</span>
+	onReadyStateChanged: <span class="reserved">function</span>() {
+		log4jsLogger.trace(<span class="literal">"&gt; AjaxAppender.onReadyStateChanged"</span>);
+		var req = <span class="reserved">this</span>.httpRequest;
+		<span class="reserved">if</span> (<span class="reserved">this</span>.httpRequest.readyState != 4) { 
+			log4jsLogger.trace(<span class="literal">"&lt; AjaxAppender.onReadyStateChanged: readyState "</span> + req.readyState + <span class="literal">" != 4"</span>);
+			<span class="reserved">return</span>; 
+		}
+		
+		var success = ((typeof req.status === <span class="literal">"undefined"</span>) || req.status === 0 || (req.status &gt;= 200 &amp;&amp; req.status &lt; 300));
+		
+		<span class="reserved">if</span> (success) {
+			log4jsLogger.trace(<span class="literal">"  AjaxAppender.onReadyStateChanged: success"</span>);
+
+			<span class="comment">//ready sending data</span>
+			<span class="reserved">this</span>.isInProgress = false;
+
+		} <span class="reserved">else</span> {
+			var msg = <span class="literal">"  AjaxAppender.onReadyStateChanged: XMLHttpRequest request to URL "</span> + <span class="reserved">this</span>.loggingUrl + <span class="literal">" returned status code "</span> + <span class="reserved">this</span>.httpRequest.status;
+			log4jsLogger.error(msg);
+		}
+		
+		log4jsLogger.trace(<span class="literal">"&lt; AjaxAppender.onReadyStateChanged: readyState == 4"</span>);		
+	},
+	<span class="comment">/**
+	 * Get the XMLHttpRequest object independent of browser.
+	 * <span class="attrib">@private</span>
+	 */</span>
+	getXmlHttpRequest: <span class="reserved">function</span>() {
+		log4jsLogger.trace(<span class="literal">"&gt; AjaxAppender.getXmlHttpRequest"</span>);
+		
+		var httpRequest = false;
+
+		try {		
+			<span class="reserved">if</span> (window.XMLHttpRequest) { <span class="comment">// Mozilla, Safari, IE7...</span>
+					httpRequest = new XMLHttpRequest();
+				<span class="reserved">if</span> (httpRequest.overrideMimeType) {
+					httpRequest.overrideMimeType(<span class="reserved">this</span>.layout.getContentType());
+				}
+			} <span class="reserved">else</span> <span class="reserved">if</span> (window.ActiveXObject) { <span class="comment">// IE</span>
+				try {
+					httpRequest = new ActiveXObject(<span class="literal">"Msxml2.XMLHTTP"</span>);
+				} catch (e) {
+					httpRequest = new ActiveXObject(<span class="literal">"Microsoft.XMLHTTP"</span>);
+				}
+			}
+		} catch (e) {
+			httpRequest = false;
+		}
+		
+		<span class="reserved">if</span> (!httpRequest) {
+			log4jsLogger.fatal(<span class="literal">"Unfortunatelly your browser does not support AjaxAppender for log4js!"</span>);
+		}
+		
+		log4jsLogger.trace(<span class="literal">"&lt; AjaxAppender.getXmlHttpRequest"</span>);
+		<span class="reserved">return</span> httpRequest;
+	},
+	
+	<span class="comment">/** 
+	 * toString
+	 */</span>
+	 toString: <span class="reserved">function</span>() {
+	 	<span class="reserved">return</span> <span class="literal">"Log4js.AjaxAppender[loggingUrl="</span> + <span class="reserved">this</span>.loggingUrl + <span class="literal">", threshold="</span> + <span class="reserved">this</span>.threshold + <span class="literal">"]"</span>; 
+	 }
+});
+
+<span class="comment">/**
+ * File Appender writing the logs to a text file.
+ * PLEASE NOTE - Only works in IE and Mozilla 
+ * use ActiveX to write file on IE
+ * use XPCom components  to write file on Mozilla
+ * 
+ * <span class="attrib">@extends</span> Log4js.Appender 
+ * <span class="attrib">@constructor</span>
+ * <span class="attrib">@param</span> logger log4js instance this appender is attached to
+ * <span class="attrib">@param</span> file file log messages will be written to
+ * <span class="attrib">@author</span> Seth Chisamore
+ * <span class="attrib">@author</span> Nicolas Justin njustin<span class="attrib">@idealx</span>.com
+ * <span class="attrib">@author</span> Gregory Kokanosky gkokanosky<span class="attrib">@idealx</span>.com
+ */</span>
+Log4js.FileAppender = <span class="reserved">function</span>(file) {
+
+	<span class="reserved">this</span>.layout = new Log4js.SimpleLayout();
+	<span class="reserved">this</span>.isIE = <span class="literal">'undefined'</span>;
+	
+	<span class="reserved">this</span>.file = file || <span class="literal">"log4js.log"</span>;	
+	
+	try{
+		<span class="reserved">this</span>.fso = new ActiveXObject(<span class="literal">"Scripting.FileSystemObject"</span>);
+		<span class="reserved">this</span>.isIE = true;
+	} catch(e){
+		try {
+			netscape.security.PrivilegeManager.enablePrivilege(<span class="literal">"UniversalXPConnect"</span>);
+			<span class="reserved">this</span>.fso =  Components.classes[<span class="literal">"@mozilla.org/file/local;1"</span>].createInstance(Components.interfaces.nsILocalFile);
+			<span class="reserved">this</span>.isIE = false; <span class="comment">//mozilla &amp; co</span>
+		} catch (e) {
+			log4jsLogger.error(e);
+		}
+	}
+};
+
+Log4js.FileAppender.<span class="reserved">prototype</span> = Log4js.extend(new Log4js.Appender(), {  
+	<span class="comment">/**
+	 * <span class="attrib">@param</span> loggingEvent event to be logged
+	 * <span class="attrib">@see</span> Log4js.Appender#doAppend
+	 */</span>
+	doAppend: <span class="reserved">function</span>(loggingEvent) {
+		try {
+			var fileHandle = null;
+			
+			<span class="reserved">if</span>( <span class="reserved">this</span>.isIE === <span class="literal">'undefined'</span>) {
+				log4jsLogger.error(<span class="literal">"Unsupported "</span>)
+			}
+			<span class="reserved">else</span> <span class="reserved">if</span>( <span class="reserved">this</span>.isIE ){
+				<span class="comment">// try opening existing file, create if needed</span>
+				fileHandle = <span class="reserved">this</span>.fso.OpenTextFile(<span class="reserved">this</span>.file, 8, true);        
+				<span class="comment">// write out our data</span>
+				fileHandle.WriteLine(<span class="reserved">this</span>.layout.format(loggingEvent));
+				fileHandle.close();   
+			} <span class="reserved">else</span> {
+				netscape.security.PrivilegeManager.enablePrivilege(<span class="literal">"UniversalXPConnect"</span>);
+				<span class="reserved">this</span>.fso.initWithPath(<span class="reserved">this</span>.file);
+    			<span class="reserved">if</span>(!<span class="reserved">this</span>.fso.exists()) {
+    				<span class="comment">//create file if needed</span>
+            		<span class="reserved">this</span>.fso.create(0x00, 0600);
+    			}
+				
+ 				fileHandle = Components.classes[<span class="literal">"@mozilla.org/network/file-output-stream;1"</span>].createInstance(Components.interfaces.nsIFileOutputStream);
+        		fileHandle.init( <span class="reserved">this</span>.fso, 0x04 | 0x08 | 0x10, 064, 0);
+				var line = <span class="reserved">this</span>.layout.format(loggingEvent);
+        		fileHandle.write(line, line.length); <span class="comment">//write data</span>
+        		fileHandle.close();
+			}
+		} catch (e) {
+			log4jsLogger.error(e);
+		}
+	},
+	<span class="comment">/*
+	 * <span class="attrib">@see</span> Log4js.Appender#doClear
+	 */</span>
+	doClear: <span class="reserved">function</span>() {
+		try {
+			<span class="reserved">if</span>( <span class="reserved">this</span>.isIE ){
+				var fileHandle = <span class="reserved">this</span>.fso.GetFile(<span class="reserved">this</span>.file);
+				fileHandle.Delete();
+			} <span class="reserved">else</span> {
+				netscape.security.PrivilegeManager.enablePrivilege(<span class="literal">"UniversalXPConnect"</span>);
+				<span class="reserved">this</span>.fso.initWithPath(<span class="reserved">this</span>.file);
+				<span class="reserved">if</span>(<span class="reserved">this</span>.fso.exists()) {
+					<span class="reserved">this</span>.fso.remove(false);
+				}
+			}
+		} catch (e) {
+			log4jsLogger.error(e);
+		}
+	},
+	
+	<span class="comment">/** 
+	 * toString
+	 */</span>
+	 toString: <span class="reserved">function</span>() {
+	 	<span class="reserved">return</span> <span class="literal">"Log4js.FileAppender[file="</span> + <span class="reserved">this</span>.file + <span class="literal">"]"</span>; 
+	 }
+});
+
+<span class="comment">/**
+ * Windows Event Appender writes the logs to the Windows Event log.
+ * PLEASE NOTE - Only works in IE..uses ActiveX to write to Windows Event log
+ *
+ * <span class="attrib">@extends</span> Log4js.Appender 
+ * <span class="attrib">@constructor</span>
+ * <span class="attrib">@param</span> logger log4js instance this appender is attached to
+ * <span class="attrib">@author</span> Seth Chisamore
+ */</span>
+Log4js.WindowsEventAppender = <span class="reserved">function</span>() {
+	
+	<span class="reserved">this</span>.layout = new Log4js.SimpleLayout();
+	
+	try {
+		<span class="reserved">this</span>.shell = new ActiveXObject(<span class="literal">"WScript.Shell"</span>);
+	} catch(e) {
+		log4jsLogger.error(e);
+	}
+};
+
+Log4js.WindowsEventAppender.<span class="reserved">prototype</span> = Log4js.extend(new Log4js.Appender(), {  
+	<span class="comment">/**
+	 * <span class="attrib">@param</span> loggingEvent event to be logged
+	 * <span class="attrib">@see</span> Log4js.Appender#doAppend
+	 */</span>
+	doAppend: <span class="reserved">function</span>(loggingEvent) {
+		var winLevel = 4;
+		
+		<span class="comment">// Map log level to windows event log level.</span>
+		<span class="comment">// Windows events: - SUCCESS: 0, ERROR: 1, WARNING: 2, INFORMATION: 4, AUDIT_SUCCESS: 8, AUDIT_FAILURE: 16</span>
+		switch (loggingEvent.level) {	
+			case Log4js.Level.FATAL:
+				winLevel = 1;
+				break;
+			case Log4js.Level.ERROR:
+				winLevel = 1;
+				break;
+			case Log4js.Level.WARN:
+				winLevel = 2;
+				break;
+			default:
+				winLevel = 4;
+				break;
+		}
+		
+		try {
+			<span class="reserved">this</span>.shell.LogEvent(winLevel, <span class="reserved">this</span>.level.format(loggingEvent));
+		} catch(e) {
+			log4jsLogger.error(e);
+		}
+	},
+	
+	<span class="comment">/** 
+	 * toString
+	 */</span>
+	 toString: <span class="reserved">function</span>() {
+	 	<span class="reserved">return</span> <span class="literal">"Log4js.WindowsEventAppender"</span>; 
+	 } 
+});
+
+<span class="comment">/**
+ * JS Alert Appender writes the logs to the JavaScript alert dialog box
+ * <span class="attrib">@constructor</span>
+ * <span class="attrib">@extends</span> Log4js.Appender  
+ * <span class="attrib">@param</span> logger log4js instance this appender is attached to
+ * <span class="attrib">@author</span> S&amp;eacute;bastien LECACHEUR
+ */</span>
+Log4js.JSAlertAppender = <span class="reserved">function</span>() {
+
+	<span class="reserved">this</span>.layout = new Log4js.SimpleLayout();
+};
+
+Log4js.JSAlertAppender.<span class="reserved">prototype</span> = Log4js.extend(new Log4js.Appender(), {  
+	<span class="comment">/** 
+	 * <span class="attrib">@see</span> Log4js.Appender#doAppend
+	 */</span>
+	doAppend: <span class="reserved">function</span>(loggingEvent) {
+		alert(<span class="reserved">this</span>.layout.getHeader() + <span class="reserved">this</span>.layout.format(loggingEvent) + <span class="reserved">this</span>.layout.getFooter());
+	},
+	
+	<span class="comment">/** 
+	 * toString
+	 */</span>
+	 toString: <span class="reserved">function</span>() {
+	 	<span class="reserved">return</span> <span class="literal">"Log4js.JSAlertAppender"</span>; 
+	 }	
+});
+
+<span class="comment">/**
+ * Appender writes the logs to the JavaScript console of Mozilla browser
+ * More infos: http://kb.mozillazine.org/index.php?title=JavaScript_Console&amp;redirect=no
+ * PLEASE NOTE - Only works in Mozilla browser
+ * <span class="attrib">@constructor</span>
+ * <span class="attrib">@extends</span> Log4js.Appender  
+ * <span class="attrib">@param</span> logger log4js instance this appender is attached to
+ * <span class="attrib">@author</span> Stephan Strittmatter
+ */</span>
+Log4js.MozillaJSConsoleAppender = <span class="reserved">function</span>() {
+	<span class="reserved">this</span>.layout = new Log4js.SimpleLayout();
+	try {
+		netscape.security.PrivilegeManager.enablePrivilege(<span class="literal">"UniversalXPConnect"</span>);
+		<span class="reserved">this</span>.jsConsole = Components.classes[<span class="literal">"@mozilla.org/consoleservice;1"</span>].getService(Components.interfaces.nsIConsoleService);
+		<span class="reserved">this</span>.scriptError = Components.classes[<span class="literal">"@mozilla.org/scripterror;1"</span>].createInstance(Components.interfaces.nsIScriptError);
+	} catch (e) {
+		log4jsLogger.error(e);
+	}
+};
+
+Log4js.MozillaJSConsoleAppender.<span class="reserved">prototype</span> = Log4js.extend(new Log4js.Appender(), {  
+	<span class="comment">/** 
+	 * <span class="attrib">@see</span> Log4js.Appender#doAppend
+	 */</span>
+	doAppend: <span class="reserved">function</span>(loggingEvent) {
+		try {
+			netscape.security.PrivilegeManager.enablePrivilege(<span class="literal">"UniversalXPConnect"</span>);
+			<span class="reserved">this</span>.scriptError.init(<span class="reserved">this</span>.layout.format(loggingEvent), null, null, null, null, <span class="reserved">this</span>.getFlag(loggingEvent), loggingEvent.categoryName);
+			<span class="reserved">this</span>.jsConsole.logMessage(<span class="reserved">this</span>.scriptError);
+		} catch (e) {
+			log4jsLogger.error(e);
+		}
+	},
+	
+	<span class="comment">/** 
+	 * toString
+	 */</span>
+	 toString: <span class="reserved">function</span>() {
+	 	<span class="reserved">return</span> <span class="literal">"Log4js.MozillaJSConsoleAppender"</span>; 
+	 },
+	 
+	<span class="comment">/**
+	 * Map Log4js.Level to jsConsole Flags:
+	 * &lt;ul&gt;
+	 * &lt;li&gt;nsIScriptError.errorFlag (0) = Level.Error&lt;/li&gt;
+	 * &lt;li&gt;nsIScriptError.warningFlag (1)= Log4js.Level.WARN&lt;/li&gt;
+	 * &lt;li&gt;nsIScriptError.exceptionFlag (2) = Log4js.Level.FATAL&lt;/li&gt;
+	 * &lt;li&gt;nsIScriptError.strictFlag (4) = unused&lt;/li&gt;
+	 * &lt;/ul&gt;
+	 * <span class="attrib">@private</span>
+	 */</span>	
+	getFlag: <span class="reserved">function</span>(loggingEvent)
+	{
+		var retval;
+		switch (loggingEvent.level) {	
+			case Log4js.Level.FATAL:
+				retval = 2;<span class="comment">//nsIScriptError.exceptionFlag = 2</span>
+				break;
+			case Log4js.Level.ERROR:
+				retval = 0;<span class="comment">//nsIScriptError.errorFlag</span>
+				break;
+			case Log4js.Level.WARN:
+				retval = 1;<span class="comment">//nsIScriptError.warningFlag = 1</span>
+				break;
+			default:
+				retval = 1;<span class="comment">//nsIScriptError.warningFlag = 1</span>
+				break;
+		}
+		
+		<span class="reserved">return</span> retval;		
+	}
+});
+
+<span class="comment">/**
+ * Appender writes the logs to the JavaScript console of Opera browser
+ * PLEASE NOTE - Only works in Opera browser
+ * <span class="attrib">@constructor</span>
+ * <span class="attrib">@extends</span> Log4js.Appender  
+ * <span class="attrib">@param</span> logger log4js instance this appender is attached to
+ * <span class="attrib">@author</span> Stephan Strittmatter
+ */</span>
+Log4js.OperaJSConsoleAppender = <span class="reserved">function</span>() {
+	<span class="reserved">this</span>.layout = new Log4js.SimpleLayout();
+};
+
+Log4js.OperaJSConsoleAppender.<span class="reserved">prototype</span> = Log4js.extend(new Log4js.Appender(), {  
+	<span class="comment">/** 
+	 * <span class="attrib">@see</span> Log4js.Appender#doAppend
+	 */</span>
+	doAppend: <span class="reserved">function</span>(loggingEvent) {
+		opera.postError(<span class="reserved">this</span>.layout.format(loggingEvent));
+	},
+	
+	<span class="comment">/** 
+	 * toString
+	 */</span>
+	 toString: <span class="reserved">function</span>() {
+	 	<span class="reserved">return</span> <span class="literal">"Log4js.OperaJSConsoleAppender"</span>; 
+	 }
+});
+
+<span class="comment">/**
+ * Appender writes the logs to the JavaScript console of Safari browser
+ * PLEASE NOTE - Only works in Safari browser
+ * <span class="attrib">@constructor</span>
+ * <span class="attrib">@extends</span> Log4js.Appender  
+ * <span class="attrib">@param</span> logger log4js instance this appender is attached to
+ * <span class="attrib">@author</span> Stephan Strittmatter
+ */</span>
+Log4js.SafariJSConsoleAppender = <span class="reserved">function</span>() {
+	<span class="reserved">this</span>.layout = new Log4js.SimpleLayout();
+};
+
+Log4js.SafariJSConsoleAppender.<span class="reserved">prototype</span> = Log4js.extend(new Log4js.Appender(), {  
+	<span class="comment">/** 
+	 * <span class="attrib">@see</span> Log4js.Appender#doAppend
+	 */</span>
+	doAppend: <span class="reserved">function</span>(loggingEvent) {
+		window.console.log(<span class="reserved">this</span>.layout.format(loggingEvent));
+	},
+	
+	<span class="comment">/** 
+	 * toString
+	 */</span>
+	 toString: <span class="reserved">function</span>() {
+	 	<span class="reserved">return</span> <span class="literal">"Log4js.SafariJSConsoleAppender"</span>; 
+	 }
+});
+
+<span class="comment">/**
+ * JavaScript Console Appender which is browser independent.
+ * It checks internally for the current browser and adds delegate to
+ * specific JavaScript Console Appender of the browser.
+ *
+ * <span class="attrib">@constructor</span>
+ * <span class="attrib">@author</span> Stephan Strittmatter
+ * <span class="attrib">@since</span> 1.0
+ */</span>
+Log4js.BrowserConsoleAppender = <span class="reserved">function</span>() {
+	<span class="comment">/**
+	 * Delegate for browser specific implementation
+	 * <span class="attrib">@type</span> Log4js.Appender
+	 * <span class="attrib">@private</span>
+	 */</span>
+	<span class="reserved">this</span>.consoleDelegate = null;
+	
+	<span class="reserved">if</span> (window.console) {
+		<span class="reserved">this</span>.consoleDelegate = new Log4js.SafariJSConsoleAppender(); 
+	}
+    <span class="reserved">else</span> <span class="reserved">if</span> (window.opera) {
+		<span class="reserved">this</span>.consoleDelegate = new Log4js.OperaJSConsoleAppender(); 
+	}
+	<span class="reserved">else</span> <span class="reserved">if</span>(netscape) {
+		<span class="reserved">this</span>.consoleDelegate = new Log4js.MozJSConsoleAppender(); 
+	}
+    <span class="reserved">else</span> {
+       <span class="comment">//<span class="attrib">@todo</span></span>
+       log4jsLogger.error(<span class="literal">"Unsupported Browser"</span>);
+    }
+};
+
+Log4js.BrowserConsoleAppender.<span class="reserved">prototype</span> = Log4js.extend(new Log4js.Appender(), {  
+	<span class="comment">/** 
+	 * <span class="attrib">@see</span> Log4js.Appender#doAppend
+	 */</span>
+	doAppend: <span class="reserved">function</span>(loggingEvent) {
+		<span class="reserved">this</span>.consoleDelegate.doAppend(loggingEvent);
+	},
+	<span class="comment">/** 
+	 * <span class="attrib">@see</span> Log4js.Appender#doClear
+	 */</span>
+	doClear: <span class="reserved">function</span>() {
+		<span class="reserved">this</span>.consoleDelegate.doClear();
+	},
+	<span class="comment">/**
+	 * <span class="attrib">@see</span> Log4js.Appender#setLayout
+	 */</span>
+	setLayout: <span class="reserved">function</span>(layout){
+		<span class="reserved">this</span>.consoleDelegate.setLayout(layout);
+	},
+	
+	<span class="comment">/** 
+	 * toString
+	 */</span>
+	 toString: <span class="reserved">function</span>() {
+	 	<span class="reserved">return</span> <span class="literal">"Log4js.BrowserConsoleAppender: "</span> + <span class="reserved">this</span>.consoleDelegate.toString(); 
+	 }
+});
+
+<span class="comment">/**
+ * SimpleLayout consists of the level of the log statement, followed by " - " 
+ * and then the log message itself. For example,
+ * &lt;code&gt;DEBUG - Hello world&lt;/code&gt;
+ *
+ * <span class="attrib">@constructor</span>
+ * <span class="attrib">@extends</span> Log4js.Layout
+ * <span class="attrib">@extends</span> Layout
+ * <span class="attrib">@author</span> Stephan Strittmatter
+ */</span>
+Log4js.SimpleLayout = <span class="reserved">function</span>() {
+	<span class="reserved">this</span>.LINE_SEP  = <span class="literal">"\n"</span>;
+	<span class="reserved">this</span>.LINE_SEP_LEN = 1;
+};
+
+Log4js.SimpleLayout.<span class="reserved">prototype</span> = Log4js.extend(new Log4js.Layout(), {
+	<span class="comment">/** 
+	 * Implement this method to create your own layout format.
+	 * <span class="attrib">@param</span> {Log4js.LoggingEvent} loggingEvent loggingEvent to format
+	 * <span class="attrib">@return</span> formatted String
+	 * <span class="attrib">@type</span> String
+	 */</span>
+	format: <span class="reserved">function</span>(loggingEvent) {
+		<span class="reserved">return</span> loggingEvent.level.toString() + <span class="literal">" - "</span> + loggingEvent.message + <span class="reserved">this</span>.LINE_SEP;
+	},
+	<span class="comment">/** 
+	 * Returns the content type output by this layout. 
+	 * <span class="attrib">@return</span> The base class returns "text/plain".
+	 * <span class="attrib">@type</span> String
+	 */</span>
+	getContentType: <span class="reserved">function</span>() {
+		<span class="reserved">return</span> <span class="literal">"text/plain"</span>;
+	},
+	<span class="comment">/** 
+	 * <span class="attrib">@return</span> Returns the header for the layout format. The base class returns null.
+	 * <span class="attrib">@type</span> String
+	 */</span>
+	getHeader: <span class="reserved">function</span>() {
+		<span class="reserved">return</span> <span class="literal">""</span>;
+	},
+	<span class="comment">/** 
+	 * <span class="attrib">@return</span> Returns the footer for the layout format. The base class returns null.
+	 * <span class="attrib">@type</span> String
+	 */</span>
+	getFooter: <span class="reserved">function</span>() {
+		<span class="reserved">return</span> <span class="literal">""</span>;
+	}
+});
+	
+<span class="comment">/**
+ * BasicLayout is a simple layout for storing the loggs. The loggs are stored
+ * in following format:
+ * &lt;pre&gt;
+ * categoryName~startTime [logLevel] message\n
+ * &lt;/pre&gt;
+ *
+ * <span class="attrib">@constructor</span>
+ * <span class="attrib">@extends</span> Log4js.Layout
+ * <span class="attrib">@author</span> Stephan Strittmatter
+ */</span>
+Log4js.BasicLayout = <span class="reserved">function</span>() {
+	<span class="reserved">this</span>.LINE_SEP  = <span class="literal">"\n"</span>;
+};
+
+Log4js.BasicLayout.<span class="reserved">prototype</span> = Log4js.extend(new Log4js.Layout(), {
+	<span class="comment">/** 
+	 * Implement this method to create your own layout format.
+	 * <span class="attrib">@param</span> {Log4js.LoggingEvent} loggingEvent loggingEvent to format
+	 * <span class="attrib">@return</span> formatted String
+	 * <span class="attrib">@type</span> String
+	 */</span>
+	format: <span class="reserved">function</span>(loggingEvent) {
+		<span class="reserved">return</span> loggingEvent.categoryName + <span class="literal">"~"</span> + loggingEvent.startTime.toLocaleString() + <span class="literal">" ["</span> + loggingEvent.level.toString() + <span class="literal">"] "</span> + loggingEvent.message + <span class="reserved">this</span>.LINE_SEP;
+	},
+	<span class="comment">/** 
+	 * Returns the content type output by this layout. 
+	 * <span class="attrib">@return</span> The base class returns "text/plain".
+	 * <span class="attrib">@type</span> String
+	 */</span>
+	getContentType: <span class="reserved">function</span>() {
+		<span class="reserved">return</span> <span class="literal">"text/plain"</span>;
+	},
+	<span class="comment">/** 
+	 * <span class="attrib">@return</span> Returns the header for the layout format. The base class returns null.
+	 * <span class="attrib">@type</span> String
+	 */</span>
+	getHeader: <span class="reserved">function</span>() {
+		<span class="reserved">return</span> <span class="literal">""</span>;
+	},
+	<span class="comment">/** 
+	 * <span class="attrib">@return</span> Returns the footer for the layout format. The base class returns null.
+	 * <span class="attrib">@type</span> String
+	 */</span>
+	getFooter: <span class="reserved">function</span>() {
+		<span class="reserved">return</span> <span class="literal">""</span>;
+	}
+});
+
+<span class="comment">/**
+ * HtmlLayout write the logs in Html format.
+ *
+ * <span class="attrib">@constructor</span>
+ * <span class="attrib">@extends</span> Log4js.Layout
+ * <span class="attrib">@author</span> Stephan Strittmatter
+ */</span>
+Log4js.HtmlLayout = <span class="reserved">function</span>() {<span class="reserved">return</span>;};
+
+Log4js.HtmlLayout.<span class="reserved">prototype</span> = Log4js.extend(new Log4js.Layout(), {
+	<span class="comment">/** 
+	 * Implement this method to create your own layout format.
+	 * <span class="attrib">@param</span> {Log4js.LoggingEvent} loggingEvent loggingEvent to format
+	 * <span class="attrib">@return</span> formatted String
+	 * <span class="attrib">@type</span> String
+	 */</span>
+	format: <span class="reserved">function</span>(loggingEvent) {
+		<span class="reserved">return</span> <span class="literal">"&lt;div style=\"</span><span class="literal">" + this.getStyle(loggingEvent) + "</span>\<span class="literal">"&gt;"</span> + loggingEvent.getFormattedTimestamp() + <span class="literal">" - "</span> + loggingEvent.level.toString() + <span class="literal">" - "</span> + loggingEvent.message + <span class="literal">"&lt;/div&gt;\n"</span>;
+	},
+	<span class="comment">/** 
+	 * Returns the content type output by this layout. 
+	 * <span class="attrib">@return</span> The base class returns "text/html".
+	 * <span class="attrib">@type</span> String
+	 */</span>
+	getContentType: <span class="reserved">function</span>() {
+		<span class="reserved">return</span> <span class="literal">"text/html"</span>;
+	},
+	<span class="comment">/** 
+	 * <span class="attrib">@return</span> Returns the header for the layout format. The base class returns null.
+	 * <span class="attrib">@type</span> String
+	 */</span>
+	getHeader: <span class="reserved">function</span>() {
+		<span class="reserved">return</span> <span class="literal">"&lt;html&gt;&lt;head&gt;&lt;title&gt;log4js&lt;/head&gt;&lt;body&gt;"</span>;
+	},
+	<span class="comment">/** 
+	 * <span class="attrib">@return</span> Returns the footer for the layout format. The base class returns null.
+	 * <span class="attrib">@type</span> String
+	 */</span>
+	getFooter: <span class="reserved">function</span>() {
+		<span class="reserved">return</span> <span class="literal">"&lt;/body&gt;&lt;/html&gt;"</span>;
+	},
+	
+	getStyle: <span class="reserved">function</span>(loggingEvent)
+	{
+		var style;
+		<span class="reserved">if</span> (loggingEvent.level.toString().search(/ERROR/) != -1) { 
+			style = <span class="literal">'color:red'</span>;
+		} <span class="reserved">else</span> <span class="reserved">if</span> (loggingEvent.level.toString().search(/FATAL/) != -1) { 
+			style = <span class="literal">'color:red'</span>;
+		} <span class="reserved">else</span> <span class="reserved">if</span> (loggingEvent.level.toString().search(/WARN/) != -1) { 
+			style = <span class="literal">'color:orange'</span>;
+		} <span class="reserved">else</span> <span class="reserved">if</span> (loggingEvent.level.toString().search(/DEBUG/) != -1) {
+			style = <span class="literal">'color:green'</span>;
+		} <span class="reserved">else</span> <span class="reserved">if</span> (loggingEvent.level.toString().search(/INFO/) != -1) {
+			style = <span class="literal">'color:white'</span>;
+		} <span class="reserved">else</span> {
+			style = <span class="literal">'color:yellow'</span>;
+		}	
+		<span class="reserved">return</span> style;
+	}
+});
+
+<span class="comment">/**
+ * XMLLayout write the logs in XML format.
+ * Layout is simmilar to log4j's XMLLayout:
+ * &lt;pre&gt;
+ * &lt;log4js:event category="category" level="Level" client="Client" referer="ref" timestam="Date"&gt;
+ * &lt;log4js:message&gt;Logged message&lt;/log4js:message&gt;
+ * &lt;/log4js:event&gt;
+ * &lt;/pre&gt;
+ * <span class="attrib">@constructor</span>
+ * <span class="attrib">@extends</span> Log4js.Layout
+ * <span class="attrib">@author</span> Stephan Strittmatter
+ */</span>
+Log4js.XMLLayout = <span class="reserved">function</span>(){<span class="reserved">return</span>;};
+Log4js.XMLLayout.<span class="reserved">prototype</span> = Log4js.extend(new Log4js.Layout(), {
+	<span class="comment">/** 
+	 * Implement this method to create your own layout format.
+	 * <span class="attrib">@param</span> {Log4js.LoggingEvent} loggingEvent loggingEvent to format
+	 * <span class="attrib">@return</span> formatted String
+	 * <span class="attrib">@type</span> String
+	 */</span>
+	format: <span class="reserved">function</span>(loggingEvent) {
+		var useragent = <span class="literal">"unknown"</span>;
+		try {
+			useragent = navigator.userAgent;
+		} catch(e){
+			useragent = <span class="literal">"unknown"</span>;
+		}
+		
+		var referer = <span class="literal">"unknown"</span>;
+		try {
+			referer = location.href;
+		} catch(e){
+			referer = <span class="literal">"unknown"</span>;
+		}
+				
+		var content = <span class="literal">"&lt;log4js:event logger=\"</span><span class="literal">";
+		content += loggingEvent.categoryName + "</span>\<span class="literal">" level=\"</span><span class="literal">";
+		content += loggingEvent.level.toString() + "</span>\<span class="literal">" useragent=\"</span><span class="literal">";
+		content += useragent + "</span>\<span class="literal">" referer=\"</span><span class="literal">";
+		content += referer.replace(/&amp;/g, "</span>&amp;amp;<span class="literal">") + "</span>\<span class="literal">" timestamp=\"</span><span class="literal">";
+		content += loggingEvent.getFormattedTimestamp() + "</span>\<span class="literal">"&gt;\n"</span>;
+		content += <span class="literal">"\t&lt;log4js:message&gt;&lt;![CDATA["</span> + <span class="reserved">this</span>.escapeCdata(loggingEvent.message) + <span class="literal">"]]&gt;&lt;/log4js:message&gt;\n"</span>;	
+ 		
+ 		<span class="reserved">if</span> (loggingEvent.exception) {
+			content += <span class="reserved">this</span>.formatException(loggingEvent.exception) ;
+		}
+ 		content += <span class="literal">"&lt;/log4js:event&gt;\n"</span>;
+        
+      <span class="reserved">return</span> content;
+	},
+	<span class="comment">/** 
+	 * Returns the content type output by this layout. 
+	 * <span class="attrib">@return</span> The base class returns "text/xml".
+	 * <span class="attrib">@type</span> String
+	 */</span>
+	getContentType: <span class="reserved">function</span>() {
+		<span class="reserved">return</span> <span class="literal">"text/xml"</span>;
+	},
+	<span class="comment">/** 
+	 * <span class="attrib">@return</span> Returns the header for the layout format. The base class returns null.
+	 * <span class="attrib">@type</span> String
+	 */</span>
+	getHeader: <span class="reserved">function</span>() {
+		<span class="reserved">return</span> <span class="literal">"&lt;log4js:eventSet version=\"</span><span class="literal">" + Log4js.version + 
+			"</span>\<span class="literal">" xmlns:log4js=\"</span>http:<span class="comment">//log4js.berlios.de/2007/log4js/\"&gt;\n";</span>
+	},
+	<span class="comment">/** 
+	 * <span class="attrib">@return</span> Returns the footer for the layout format. The base class returns null.
+	 * <span class="attrib">@type</span> String
+	 */</span>
+	getFooter: <span class="reserved">function</span>() {
+		<span class="reserved">return</span> <span class="literal">"&lt;/log4js:eventSet&gt;\n"</span>;
+	},
+	
+	getSeparator: <span class="reserved">function</span>() {
+		<span class="reserved">return</span> <span class="literal">"\n"</span>;
+	},
+	
+	<span class="comment">/**
+	 * better readable formatted Exceptions.
+	 * <span class="attrib">@param</span> ex {Exception} the exception to be formatted.
+	 * <span class="attrib">@return</span> {String} the formatted String representation of the exception.
+	 * <span class="attrib">@private</span>
+	 */</span>
+	formatException: <span class="reserved">function</span>(ex) {
+		<span class="reserved">if</span> (ex) {
+			var exStr = <span class="literal">"\t&lt;log4js:throwable&gt;"</span>; 
+			<span class="reserved">if</span> (ex.message) {
+				exStr +=  <span class="literal">"\t\t&lt;log4js:message&gt;&lt;![CDATA["</span> + <span class="reserved">this</span>.escapeCdata(ex.message) + <span class="literal">"]]&gt;&lt;/log4js:message&gt;\n"</span>;	
+			} 
+			<span class="reserved">if</span> (ex.description) {
+				exStr +=  <span class="literal">"\t\t&lt;log4js:description&gt;&lt;![CDATA["</span> + <span class="reserved">this</span>.escapeCdata(ex.description) + <span class="literal">"]]&gt;&lt;/log4js:description&gt;\n"</span>;	
+			}
+			
+			exStr +=  <span class="literal">"\t\t&lt;log4js:stacktrace&gt;"</span>;
+			exStr +=  <span class="literal">"\t\t\t&lt;log4js:location fileName=\"</span><span class="literal">"+ex.fileName+"</span>\<span class="literal">" lineNumber=\"</span><span class="literal">"+ex.lineNumber+"</span>\<span class="literal">" /&gt;"</span>;
+			exStr +=  <span class="literal">"\t\t&lt;/log4js:stacktrace&gt;"</span>;
+			exStr = <span class="literal">"\t&lt;/log4js:throwable&gt;"</span>;
+			<span class="reserved">return</span> exStr;
+		}
+		<span class="reserved">return</span> null;
+	},
+	<span class="comment">/**
+	 * Escape Cdata messages
+	 * <span class="attrib">@param</span> str {String} message to escape
+	 * <span class="attrib">@return</span> {String} the escaped message
+	 * <span class="attrib">@private</span>
+	 */</span>
+	escapeCdata: <span class="reserved">function</span>(str) {
+		<span class="reserved">return</span> str.replace(/\]\]&gt;/, <span class="literal">"]]&gt;]]&amp;gt;&lt;![CDATA["</span>);
+	}
+});
+
+<span class="comment">/**
+ * JSONLayout write the logs in JSON format.
+ * JSON library is required to use this Layout. See also {<span class="attrib">@link</span> http://www.json.org}
+ * <span class="attrib">@constructor</span>
+ * <span class="attrib">@extends</span> Log4js.Layout
+ * <span class="attrib">@author</span> Stephan Strittmatter
+ */</span>
+Log4js.JSONLayout = <span class="reserved">function</span>() {
+	<span class="reserved">this</span>.df = new Log4js.DateFormatter();
+};
+Log4js.JSONLayout.<span class="reserved">prototype</span> = Log4js.extend(new Log4js.Layout(), {
+	<span class="comment">/** 
+	 * Implement this method to create your own layout format.
+	 * <span class="attrib">@param</span> {Log4js.LoggingEvent} loggingEvent loggingEvent to format
+	 * <span class="attrib">@return</span> formatted String
+	 * <span class="attrib">@type</span> String
+	 */</span>
+	format: <span class="reserved">function</span>(loggingEvent) {
+		
+				var useragent = <span class="literal">"unknown"</span>;
+		try {
+			useragent = navigator.userAgent;
+		} catch(e){
+			useragent = <span class="literal">"unknown"</span>;
+		}
+		
+		var referer = <span class="literal">"unknown"</span>;
+		try {
+			referer = location.href;
+		} catch(e){
+			referer = <span class="literal">"unknown"</span>;
+		}
+		
+		var jsonString = <span class="literal">"{\n \"</span>LoggingEvent\<span class="literal">": {\n"</span>;
+		
+		jsonString += <span class="literal">"\t\"</span>logger\<span class="literal">": \"</span><span class="literal">" +  loggingEvent.categoryName + "</span>\<span class="literal">",\n"</span>;
+		jsonString += <span class="literal">"\t\"</span>level\<span class="literal">": \"</span><span class="literal">" +  loggingEvent.level.toString() + "</span>\<span class="literal">",\n"</span>;
+		jsonString += <span class="literal">"\t\"</span>message\<span class="literal">": \"</span><span class="literal">" +  loggingEvent.message + "</span>\<span class="literal">",\n"</span>; 
+		jsonString += <span class="literal">"\t\"</span>referer\<span class="literal">": \"</span><span class="literal">" + referer + "</span>\<span class="literal">",\n"</span>; 
+		jsonString += <span class="literal">"\t\"</span>useragent\<span class="literal">": \"</span><span class="literal">" + useragent + "</span>\<span class="literal">",\n"</span>; 
+		jsonString += <span class="literal">"\t\"</span>timestamp\<span class="literal">": \"</span><span class="literal">" +  this.df.formatDate(loggingEvent.startTime, "</span>yyyy-MM-ddThh:mm:ssZ<span class="literal">") + "</span>\<span class="literal">",\n"</span>;
+		jsonString += <span class="literal">"\t\"</span>exception\<span class="literal">": \"</span><span class="literal">" +  loggingEvent.exception + "</span>\<span class="literal">"\n"</span>; 
+		jsonString += <span class="literal">"}}"</span>;      
+        
+        <span class="reserved">return</span> jsonString;
+	},
+	<span class="comment">/** 
+	 * Returns the content type output by this layout. 
+	 * <span class="attrib">@return</span> The base class returns "text/xml".
+	 * <span class="attrib">@type</span> String
+	 */</span>
+	getContentType: <span class="reserved">function</span>() {
+		<span class="reserved">return</span> <span class="literal">"text/json"</span>;
+	},
+	<span class="comment">/** 
+	 * <span class="attrib">@return</span> Returns the header for the layout format. The base class returns null.
+	 * <span class="attrib">@type</span> String
+	 */</span>
+	getHeader: <span class="reserved">function</span>() {
+		<span class="reserved">return</span> <span class="literal">"{\"</span>Log4js\<span class="literal">": [\n"</span>;
+	},
+	<span class="comment">/** 
+	 * <span class="attrib">@return</span> Returns the footer for the layout format. The base class returns null.
+	 * <span class="attrib">@type</span> String
+	 */</span>
+	getFooter: <span class="reserved">function</span>() {
+		<span class="reserved">return</span> <span class="literal">"\n]}"</span>;
+	},
+	
+	getSeparator: <span class="reserved">function</span>() {
+		<span class="reserved">return</span> <span class="literal">",\n"</span>;
+	}
+});
+
+<span class="comment">/** 
+ * PatternLayout 
+ *
+ * <span class="attrib">@constructor</span>
+ * <span class="attrib">@extends</span> Log4js.Layout
+ * <span class="attrib">@author</span> Stephan Strittmatter
+ */</span>
+Log4js.PatternLayout = <span class="reserved">function</span>(pattern) {
+	<span class="reserved">if</span> (pattern) {
+		<span class="reserved">this</span>.pattern = pattern;
+	} <span class="reserved">else</span> {
+		<span class="reserved">this</span>.pattern = Log4js.PatternLayout.DEFAULT_CONVERSION_PATTERN;
+	}
+};
+
+Log4js.PatternLayout.TTCC_CONVERSION_PATTERN = <span class="literal">"%r %p %c - %m%n"</span>;
+Log4js.PatternLayout.DEFAULT_CONVERSION_PATTERN = <span class="literal">"%m%n"</span>;
+Log4js.PatternLayout.ISO8601_DATEFORMAT = <span class="literal">"yyyy-MM-dd HH:mm:ss,SSS"</span>;
+Log4js.PatternLayout.DATETIME_DATEFORMAT = <span class="literal">"dd MMM YYYY HH:mm:ss,SSS"</span>;
+Log4js.PatternLayout.ABSOLUTETIME_DATEFORMAT = <span class="literal">"HH:mm:ss,SSS"</span>;
+
+Log4js.PatternLayout.<span class="reserved">prototype</span> = Log4js.extend(new Log4js.Layout(), {
+	<span class="comment">/** 
+	 * Returns the content type output by this layout. 
+	 * <span class="attrib">@return</span> "text/plain".
+	 * <span class="attrib">@type</span> String
+	 */</span>
+	getContentType: <span class="reserved">function</span>() {
+		<span class="reserved">return</span> <span class="literal">"text/plain"</span>;
+	},
+	<span class="comment">/** 
+	 * <span class="attrib">@return</span> Returns the header for the layout format.
+	 * <span class="attrib">@type</span> String
+	 */</span>
+	getHeader: <span class="reserved">function</span>() {
+		<span class="reserved">return</span> null;
+	},
+	<span class="comment">/** 
+	 * <span class="attrib">@return</span> Returns the footer for the layout format.
+	 * <span class="attrib">@type</span> String
+	 */</span>
+	getFooter: <span class="reserved">function</span>() {
+		<span class="reserved">return</span> null;
+	},
+	
+	format: <span class="reserved">function</span>(loggingEvent) {
+		var regex = /%(-?[0-9]+)?(\.?[0-9]+)?([cdmnpr%])(\{([^\}]+)\})?|([^%]+)/;
+		var formattedString = <span class="literal">""</span>;
+		var result;
+		var searchString = <span class="reserved">this</span>.pattern;
+
+		<span class="comment">// Cannot use regex global flag since it doesn't work in IE5</span>
+		<span class="reserved">while</span> ((result = regex.exec(searchString))) {
+			var matchedString = result[0];
+			var padding = result[1];
+			var truncation = result[2];
+			var conversionCharacter = result[3];
+			var specifier = result[5];
+			var text = result[6];
+
+			<span class="comment">// Check if the pattern matched was just normal text</span>
+			<span class="reserved">if</span> (text) {
+				formattedString += <span class="literal">""</span> + text;
+			} <span class="reserved">else</span> {
+				<span class="comment">// Create a raw replacement string based on the conversion</span>
+				<span class="comment">// character and specifier</span>
+				var replacement = <span class="literal">""</span>;
+				switch(conversionCharacter) {
+					case <span class="literal">"c"</span>:
+						var loggerName = loggingEvent.categoryName;
+						<span class="reserved">if</span> (specifier) {
+							var precision = parseInt(specifier, 10);
+							var loggerNameBits = loggingEvent.categoryName.split(<span class="literal">"."</span>);
+							<span class="reserved">if</span> (precision &gt;= loggerNameBits.length) {
+								replacement = loggerName;
+							} <span class="reserved">else</span> {
+								replacement = loggerNameBits.slice(loggerNameBits.length - precision).join(<span class="literal">"."</span>);
+							}
+						} <span class="reserved">else</span> {
+							replacement = loggerName;
+						}
+						break;
+					case <span class="literal">"d"</span>:
+						var dateFormat = Log4js.PatternLayout.ISO8601_DATEFORMAT;
+						<span class="reserved">if</span> (specifier) {
+							dateFormat = specifier;
+							<span class="comment">// Pick up special cases</span>
+							<span class="reserved">if</span> (dateFormat == <span class="literal">"ISO8601"</span>) {
+								dateFormat = Log4js.PatternLayout.ISO8601_DATEFORMAT;
+							} <span class="reserved">else</span> <span class="reserved">if</span> (dateFormat == <span class="literal">"ABSOLUTE"</span>) {
+								dateFormat = Log4js.PatternLayout.ABSOLUTETIME_DATEFORMAT;
+							} <span class="reserved">else</span> <span class="reserved">if</span> (dateFormat == <span class="literal">"DATE"</span>) {
+								dateFormat = Log4js.PatternLayout.DATETIME_DATEFORMAT;
+							}
+						}
+						<span class="comment">// Format the date</span>
+						replacement = (new Log4js.SimpleDateFormat(dateFormat)).format(loggingEvent.startTime);
+						break;
+					case <span class="literal">"m"</span>:
+						replacement = loggingEvent.message;
+						break;
+					case <span class="literal">"n"</span>:
+						replacement = <span class="literal">"\n"</span>;
+						break;
+					case <span class="literal">"p"</span>:
+						replacement = loggingEvent.level.toString();
+						break;
+					case <span class="literal">"r"</span>:
+						replacement = <span class="literal">""</span> + loggingEvent.startTime.toLocaleTimeString(); <span class="comment">//TODO: .getDifference(Log4js.applicationStartDate);</span>
+						break;
+					case <span class="literal">"%"</span>:
+						replacement = <span class="literal">"%"</span>;
+						break;
+					default:
+						replacement = matchedString;
+						break;
+				}
+				<span class="comment">// Format the replacement according to any padding or</span>
+				<span class="comment">// truncation specified</span>
+
+				var len;
+
+				<span class="comment">// First, truncation</span>
+				<span class="reserved">if</span> (truncation) {
+					len = parseInt(truncation.substr(1), 10);
+					replacement = replacement.substring(0, len);
+				}
+				<span class="comment">// Next, padding</span>
+				<span class="reserved">if</span> (padding) {
+					<span class="reserved">if</span> (padding.charAt(0) == <span class="literal">"-"</span>) {
+						len = parseInt(padding.substr(1), 10);
+						<span class="comment">// Right pad with spaces</span>
+						<span class="reserved">while</span> (replacement.length &lt; len) {
+							replacement += <span class="literal">" "</span>;
+						}
+					} <span class="reserved">else</span> {
+						len = parseInt(padding, 10);
+						<span class="comment">// Left pad with spaces</span>
+						<span class="reserved">while</span> (replacement.length &lt; len) {
+							replacement = <span class="literal">" "</span> + replacement;
+						}
+					}
+				}
+				formattedString += replacement;
+			}
+			searchString = searchString.substr(result.index + result[0].length);
+		}
+		<span class="reserved">return</span> formattedString;
+	}
+});
+
+<span class="comment">/**
+ * <span class="attrib">@private</span>
+ * <span class="attrib">@ignore</span>
+ */</span>
+<span class="reserved">if</span> (!Array.<span class="reserved">prototype</span>.push) {
+	<span class="comment">/**
+	 * Functions taken from Prototype library, didn't want to require for just few 
+	 * functions.
+	 * More info at {<span class="attrib">@link</span> http://
+	 * prototype.conio.net/}
+	 * <span class="attrib">@private</span>
+	 */</span>
+	Array.<span class="reserved">prototype</span>.push = <span class="reserved">function</span>() {
+		var startLength = <span class="reserved">this</span>.length;
+		<span class="reserved">for</span> (var i = 0; i &lt; arguments.length; i++) {
+			<span class="reserved">this</span>[startLength + i] = arguments[i];
+		}
+		<span class="reserved">return</span> <span class="reserved">this</span>.length;
+	};
+}
+
+<span class="comment">/**
+ * FIFO buffer
+ * <span class="attrib">@private</span>
+ */</span>
+Log4js.FifoBuffer = <span class="reserved">function</span>()
+{
+  <span class="reserved">this</span>.array = new Array();
+};
+
+Log4js.FifoBuffer.<span class="reserved">prototype</span> = {
+
+	<span class="comment">/**
+	 * <span class="attrib">@param</span> {Object} obj any object added to buffer
+	 */</span>
+	push : <span class="reserved">function</span>(obj) {
+        <span class="reserved">this</span>.array[<span class="reserved">this</span>.array.length] = obj;
+        <span class="reserved">return</span> <span class="reserved">this</span>.array.length;
+	},
+	
+	<span class="comment">/**
+	 * <span class="attrib">@return</span> first putted in Object
+	 */</span>
+	pull : <span class="reserved">function</span>() {
+		<span class="reserved">if</span> (<span class="reserved">this</span>.array.length &gt; 0) {
+			var firstItem = <span class="reserved">this</span>.array[0];
+			<span class="reserved">for</span> (var i = 0; i &lt; <span class="reserved">this</span>.array.length - 1; i++) {
+				<span class="reserved">this</span>.array[i] = <span class="reserved">this</span>.array[i + 1];
+			}
+			<span class="reserved">this</span>.array.length = <span class="reserved">this</span>.array.length - 1;
+			<span class="reserved">return</span> firstItem;
+		}
+		<span class="reserved">return</span> null;
+	},
+	
+	length : <span class="reserved">function</span>() {
+		<span class="reserved">return</span> <span class="reserved">this</span>.array.length;
+	}
+};
+
+
+
+<span class="comment">/**
+ * Date Formatter
+ * addZero() and formatDate() are courtesy of Mike Golding:
+ * http://www.mikezilla.com/exp0015.html
+ * <span class="attrib">@private</span>
+ */</span> 
+Log4js.DateFormatter = <span class="reserved">function</span>() {
+	<span class="reserved">return</span>;
+};
+<span class="comment">/**
+ * default format of date (ISO-8601)
+ * <span class="attrib">@static</span>
+ * <span class="attrib">@final</span>
+ */</span>
+Log4js.DateFormatter.DEFAULT_DATE_FORMAT = <span class="literal">"yyyy-MM-ddThh:mm:ssO"</span>;
+
+
+Log4js.DateFormatter.<span class="reserved">prototype</span> = {
+	<span class="comment">/**
+	 * Formats the given date by the given pattern.&lt;br /&gt;
+	 * Following switches are supported:
+	 * &lt;ul&gt;
+	 * &lt;li&gt;yyyy: The year&lt;/li&gt;
+	 * &lt;li&gt;MM: the month&lt;/li&gt;
+	 * &lt;li&gt;dd: the day of month&lt;li&gt;
+	 * &lt;li&gt;hh: the hour&lt;li&gt;
+	 * &lt;li&gt;mm: minutes&lt;/li&gt;
+	 * &lt;li&gt;O: timezone offset&lt;/li&gt;
+	 * &lt;/ul&gt;
+	 * <span class="attrib">@param</span> {Date} vDate the date to format
+	 * <span class="attrib">@param</span> {String} vFormat the format pattern
+	 * <span class="attrib">@return</span> {String} formatted date string
+	 * <span class="attrib">@static</span>
+	 */</span>
+	formatDate : <span class="reserved">function</span>(vDate, vFormat) {
+	  var vDay = <span class="reserved">this</span>.addZero(vDate.getDate());
+	  var vMonth = <span class="reserved">this</span>.addZero(vDate.getMonth()+1);
+	  var vYearLong = <span class="reserved">this</span>.addZero(vDate.getFullYear());
+	  var vYearShort = <span class="reserved">this</span>.addZero(vDate.getFullYear().toString().substring(3,4));
+	  var vYear = (vFormat.indexOf(<span class="literal">"yyyy"</span>)&gt;-1?vYearLong:vYearShort);
+	  var vHour  = <span class="reserved">this</span>.addZero(vDate.getHours());
+	  var vMinute = <span class="reserved">this</span>.addZero(vDate.getMinutes());
+	  var vSecond = <span class="reserved">this</span>.addZero(vDate.getSeconds());
+	  var vTimeZone = <span class="reserved">this</span>.O(vDate);
+	  var vDateString = vFormat.replace(/dd/g, vDay).replace(/MM/g, vMonth).replace(/y{1,4}/g, vYear);
+	  vDateString = vDateString.replace(/hh/g, vHour).replace(/mm/g, vMinute).replace(/ss/g, vSecond);
+	  vDateString = vDateString.replace(/O/g, vTimeZone);
+	  <span class="reserved">return</span> vDateString;
+	},
+		
+	<span class="comment">/**
+	 * <span class="attrib">@private</span>
+	 * <span class="attrib">@static</span>
+	 */</span>
+	addZero : <span class="reserved">function</span>(vNumber) {
+	  <span class="reserved">return</span> ((vNumber &lt; 10) ? <span class="literal">"0"</span> : <span class="literal">""</span>) + vNumber;
+	},
+	
+	<span class="comment">/**
+	 * Formates the TimeOffest
+	 * Thanks to http://www.svendtofte.com/code/date_format/
+	 * <span class="attrib">@private</span>
+	 */</span>
+	O : <span class="reserved">function</span> (date) {
+		<span class="comment">// Difference to Greenwich time (GMT) in hours</span>
+		var os = Math.abs(date.getTimezoneOffset());
+		var h = String(Math.floor(os/60));
+		var m = String(os%60);
+		h.length == 1? h = <span class="literal">"0"</span>+h:1;
+		m.length == 1? m = <span class="literal">"0"</span>+m:1;
+		<span class="reserved">return</span> date.getTimezoneOffset() &lt; 0 ? <span class="literal">"+"</span>+h+m : <span class="literal">"-"</span>+h+m;
+	}
+};
+
+
+<span class="comment">/**
+ * internal Logger to be used
+ * <span class="attrib">@private</span>
+ */</span>
+var log4jsLogger = Log4js.getLogger(<span class="literal">"Log4js"</span>);
+log4jsLogger.addAppender(new Log4js.ConsoleAppender());
+log4jsLogger.setLevel(Log4js.Level.ALL);</pre>
+	<hr>
+
+
+
+<!-- ========== START OF NAVBAR ========== -->
+<a name="navbar_top"><!-- --></a>
+<table border="0" width="100%" cellpadding="1" cellspacing="0">
+<tr>
+<td colspan=2 bgcolor="#EEEEFF" class="NavBarCell1">
+<a name="navbar_top_firstrow"><!-- --></a>
+<table border="0" cellpadding="0" cellspacing="3">
+  <tr align="center" valign="top">
+  
+  
+  <td bgcolor="#EEEEFF" class="NavBarCell1">    <a href="overview-summary.html"><font class="NavBarFont1"><b>Overview</b></font></a>&nbsp;</td>
+  <td bgcolor="#FFFFFF" class="NavBarCell1Rev">	&nbsp;<font class="NavBarFont1Rev"><b>File</b></font>&nbsp;</td>
+  
+
+  <td bgcolor="#FFFFFF" class="NavBarCell1"> <font class="NavBarFont1">Class</font>&nbsp;</td>
+  <td bgcolor="#EEEEFF" class="NavBarCell1">    <a href="overview-tree.html"><font class="NavBarFont1"><b>Tree</b></font></a>&nbsp;</td>
+  <td bgcolor="#EEEEFF" class="NavBarCell1">    <a href="index-all.html"--><font class="NavBarFont1"><b>Index</b></font></a>&nbsp;</td>
+  <td bgcolor="#EEEEFF" class="NavBarCell1">    <a href="help-doc.html"><font class="NavBarFont1"><b>Help</b></font></a>&nbsp;</td>
+  </tr>
+</table>
+</td>
+<td bgcolor="#EEEEFF" align="right" valign="top"><em>
+<b>Log4js 1.0</b></em>
+</td>
+</tr>
+
+<tr>
+<td bgcolor="white" class="NavBarCell2"><font size="-2">
+&nbsp;PREV&nbsp;
+&nbsp;NEXT</font></td>
+<td bgcolor="white" class="NavBarCell2"><font size="-2">
+  <a href="index.html" target="_top"><b>FRAMES</b></a>  &nbsp;
+&nbsp;<a href="overview-summary.html" target="_top"><b>NO FRAMES</b></a>
+&nbsp;&nbsp;
+<script>
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="allclasses-noframe.html" TARGET=""><B>All Classes</B></A>');
+  }
+  //-->
+</script>
+<noscript>
+<a href="allclasses-noframe.html" target=""><b>All Classes</b></a>
+</noscript>
+</font></td>
+</tr>
+</table>
+<!-- =========== END OF NAVBAR =========== -->
+
+<hr>
+<font size="-1">
+Log4js - Logging API for JavaScript
+</font>
+<div class="jsdoc_ctime">Documentation generated by <a href="http://jsdoc.sourceforge.net/" target="_parent">JSDoc</a> on Tue Aug  5 09:52:42 2008</div>
+</body>
+</html>
