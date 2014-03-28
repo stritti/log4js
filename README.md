@@ -1,4 +1,5 @@
-log4js
+[![Build Status](https://secure.travis-ci.org/stritti/log4js.png?branch=master)](http://travis-ci.org/stritti/log4js)
+Log4js
 ======
 
 Log4js - The Logging Framework for JavaScript
