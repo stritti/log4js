@@ -2310,7 +2310,7 @@ Log4js.PatternLayout.prototype = Log4js.extend(new Log4js.Layout(), {
 							}
 						}
 						// Format the date
-						replacement = (new Log4js.SimpleDateFormat(dateFormat)).format(loggingEvent.startTime);
+						replacement =  loggingEvent.getFormattedTimestamp(loggingEvent.startTime);
 						break;
 					case "m":
 						replacement = loggingEvent.message;
