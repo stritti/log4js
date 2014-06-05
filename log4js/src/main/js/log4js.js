@@ -1399,14 +1399,7 @@ Log4js.AjaxAppender.prototype = Log4js.extend(new Log4js.Appender(), {
 			
 			this.httpRequest.open("POST", this.loggingUrl, true);
 			// set the request headers.
-			//this.httpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 			this.httpRequest.setRequestHeader("Content-type", this.layout.getContentType());
-			//REFERER will be the top-level
-			// URI which may differ from the location of the error if
-			// it occurs in an included .js file
-			this.httpRequest.setRequestHeader("REFERER", location.href);
-	 		this.httpRequest.setRequestHeader("Content-length", content.length);
-			this.httpRequest.setRequestHeader("Connection", "close");
 			this.httpRequest.send( content );
 			
 			appender = this;
@@ -2196,11 +2189,10 @@ Log4js.JSONLayout.prototype = Log4js.extend(new Log4js.Layout(), {
 	},
 	/** 
 	 * Returns the content type output by this layout. 
-	 * @return The base class returns "text/xml".
-	 * @type String
+	 * @return The base class returns "application/json"
 	 */
 	getContentType: function() {
-		return "text/json";
+		return "application/json";
 	},
 	/** 
 	 * @return Returns the header for the layout format. The base class returns null.
