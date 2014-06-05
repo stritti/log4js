@@ -1399,7 +1399,6 @@ Log4js.AjaxAppender.prototype = Log4js.extend(new Log4js.Appender(), {
 			
 			this.httpRequest.open("POST", this.loggingUrl, true);
 			// set the request headers.
-			this.httpRequest.setRequestHeader("Content-type", "application/json");
 			this.httpRequest.setRequestHeader("Content-type", this.layout.getContentType());
 			this.httpRequest.send( content );
 			
