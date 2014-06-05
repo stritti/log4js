@@ -2189,11 +2189,10 @@ Log4js.JSONLayout.prototype = Log4js.extend(new Log4js.Layout(), {
 	},
 	/** 
 	 * Returns the content type output by this layout. 
-	 * @return The base class returns "text/xml".
-	 * @type String
+	 * @return The base class returns "application/json"
 	 */
 	getContentType: function() {
-		return "text/json";
+		return "application/json";
 	},
 	/** 
 	 * @return Returns the header for the layout format. The base class returns null.
