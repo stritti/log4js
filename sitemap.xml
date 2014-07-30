@@ -1,54 +1,48 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <urlset xmlns="http://www.google.com/schemas/sitemap/0.84">
 	<url>
-		<loc>http://log4js.berlios.de/</loc>
+		<loc>http://stritti.github.io/log4js/</loc>
 	</url>
 	<url>
-		<loc>http://log4js.berlios.de/index.html</loc>
+		<loc>http://stritti.github.io/log4js/index.html</loc>
 	</url>
 	<url>
-		<loc>http://log4js.berlios.de/docu/index.html</loc>
+		<loc>http://stritti.github.io/log4js/docu/index.html</loc>
 	</url>
 	<url>
-		<loc>http://log4js.berlios.de/project/index.html</loc>
+		<loc>http://stritti.github.io/log4js/project/index.html</loc>
 	</url>
 	<url>
-		<loc>http://log4js.berlios.de/examples.html</loc>
+		<loc>http://stritti.github.io/log4js/examples.html</loc>
 	</url>
 	<url>
-		<loc>http://log4js.berlios.de/faq.html</loc>
+		<loc>http://stritti.github.io/log4js/faq.html</loc>
 	</url>
 	<url>
-		<loc>http://log4js.berlios.de/license.html</loc>
+		<loc>http://stritti.github.io/log4js/license.html</loc>
 	</url>
 	<url>
-		<loc>http://log4js.berlios.de/changes.html</loc>
+		<loc>http://stritti.github.io/log4js/changes.html</loc>
 	</url>
 	<url>
-		<loc>http://log4js.berlios.de/todo.html</loc>
+		<loc>http://stritti.github.io/log4js/todo.html</loc>
 	</url>
 	<url>
-		<loc>http://log4js.berlios.de/committer.html</loc>
+		<loc>http://stritti.github.io/log4js/committer.html</loc>
 	</url>
 	<url>
-		<loc>http://log4js.berlios.de/credits.html</loc>
+		<loc>http://stritti.github.io/log4js/credits.html</loc>
 	</url>
 	<url>
-		<loc>http://log4js.berlios.de/links.html</loc>
+		<loc>http://stritti.github.io/log4js/links.html</loc>
 	</url>
 	<url>
-		<loc>http://log4js.berlios.de/docu/users-guide.html</loc>
+		<loc>http://stritti.github.io/log4js/docu/users-guide.html</loc>
 	</url>
 	<url>
-		<loc>http://log4js.berlios.de/apidocs/index.html</loc>
+		<loc>hhttp://stritti.github.io/log4js/apidocs/index.html</loc>
 	</url>
 	<url>
-		<loc>http://log4js.berlios.de/project/viewsvn.html</loc>
-	</url>
-	<url>
-		<loc>http://log4js.berlios.de/project/mailinglists.html</loc>
-	</url>
-	<url>
-		<loc>http://log4js.berlios.de/apidocs</loc>
+		<loc>http://stritti.github.io/log4js/apidocs</loc>
 	</url>
 </urlset>
