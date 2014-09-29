@@ -1,7 +1,7 @@
 {
   "name": "log4js-gabe",
   "version": "1.0.0",
-  "main": "log4js/src/main/js/log4js.js"
+  "main": "log4js/src/main/js/log4js.js",
   "authors": [
     "stritti (https://github.com/stritti)"
   ],
