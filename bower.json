@@ -1,5 +1,5 @@
 {
-  "name": "log4js-gabe",
+  "name": "log4js",
   "version": "1.0.0",
   "main": "log4js/src/main/js/log4js.js",
   "authors": [
