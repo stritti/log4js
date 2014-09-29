@@ -1,0 +1,24 @@
+{
+  "name": "log4js-gabe",
+  "version": "1.0.0",
+  "main": "log4js/src/main/js/log4js.js"
+  "authors": [
+    "stritti (https://github.com/stritti)"
+  ],
+  "description": "Log4js - The Logging Framework for JavaScript",
+  "keywords": [
+    "log",
+    "logging",
+    "log4js",
+    "log4j"
+  ],
+  "license": "Apache License, Version 2.0",
+  "homepage": "http://stritti.github.io/log4js/",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
