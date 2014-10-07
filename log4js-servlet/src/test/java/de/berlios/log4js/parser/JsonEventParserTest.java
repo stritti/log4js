@@ -32,7 +32,7 @@ public class JsonEventParserTest {
 		jsonString += "\t\"logger\": \"" + "category1" + "\",\n";
 		jsonString += "\t\"level\": \"" + "ERROR" + "\",\n";
 		jsonString += "\t\"message\": \"" + "My message" + "\",\n";
-		jsonString += "\t\"referer\": \"" + "http://log4js.berlios.de" + "\",\n";
+		jsonString += "\t\"referer\": \"" + "http://stritti.github.io/log4js/" + "\",\n";
 		jsonString += "\t\"useragent\": \"" + "Mozilla" + "\",\n";
 		jsonString += "\t\"timestamp\": \"" + "2000-02-01T12:13:30Z" + "\",\n";
 		jsonString += "\t\"exception\": \"" + "exception1" + "\"\n";
@@ -42,7 +42,7 @@ public class JsonEventParserTest {
 		jsonString += "\t\"logger\": \"" + "category2" + "\",\n";
 		jsonString += "\t\"level\": \"" + "INFO" + "\",\n";
 		jsonString += "\t\"message\": \"" + "My message" + "\",\n";
-		jsonString += "\t\"referer\": \"" + "http://log4js.berlios.de" + "\",\n";
+		jsonString += "\t\"referer\": \"" + "http://stritti.github.io/log4js/" + "\",\n";
 		jsonString += "\t\"useragent\": \"" + "Mozilla" + "\",\n";
 		jsonString += "\t\"timestamp\": \"" + "2000-02-01T12:13:30Z" + "\",\n";
 		jsonString += "\t\"exception\": \"" + "exception2" + "\"\n";

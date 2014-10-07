@@ -15,15 +15,12 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<!DOCTYPE status PUBLIC "-//APACHE//DTD Status V1.3//EN" 
-    "http://forrest.apache.org/dtd/status-v13.dtd">
+<!DOCTYPE status PUBLIC "-//APACHE//DTD Status V1.3//EN" "http://forrest.apache.org/dtd/status-v13.dtd">
 <status>
     <developers>
-        <person name="Stephan Strittmatter" email="stritti@berlios.de" 
-            id="ssr"/>
-        <person name="Seth Chisamore" email="schisamo@users.berlios.de" 
-            id="sce"/>
-        <person name="Volunteer needed" email="stritti@berlios.de" id="open"/>
+        <person name="Stephan Strittmatter" id="ssr"/>
+		<person name="Stephan Strittmatter" id="stritti"/>
+        <person name="Seth Chisamore" email="schisamo@users.berlios.de" id="sce"/>
     </developers>
     
     <!-- Define here the Title of the Context you want to display in the Changes pages.
@@ -192,7 +189,7 @@
                 </section>
             </notes>
             <action dev="ssr" type="add" context="docs" importance="medium"> 
-                Initial installation of website at <a href="ext:log4js">http://log4js.berlios.de</a>
+                Initial installation of website at <a href="ext:log4js">http://stritti.github.io/log4js/</a>
             </action>
             <action dev="ssr" type="add" context="admin" importance="medium"> 
                 Project setup at <a href="ext:log4js/develop">http://developer.berlios.de/projects/log4js/</a> and initial checkin at SVN.

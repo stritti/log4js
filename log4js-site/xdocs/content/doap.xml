@@ -25,7 +25,7 @@
   <title type="text">Log4js</title>
   <author>
     <name>Log4js</name>
-    <uri>http://log4js.berlios.de</uri>
+    <uri>http://stritti.github.io/log4js/</uri>
   </author>
 
   <updated>2005-08-09T23:06:00Z</updated>
@@ -35,7 +35,7 @@
     rel="alternate" 
     type="text/html" 
     hreflang="en" 
-    href="http://log4js.berlios.de"/>
+    href="http://stritti.github.io/log4js/"/>
 
   <entry>
     <title>Log4js</title>
@@ -45,7 +45,7 @@
     <content type="application/rdf+xml">
       <doap:Project>
         <doap:name>Log4js</doap:name>
-        <doap:homepage rdf:resource="http://log4js.berlios.de"/>
+        <doap:homepage rdf:resource="http://stritti.github.io/log4js/"/>
         <doap:created>2005-06-23</doap:created>
 
         <doap:description xml:lang="en">
@@ -63,12 +63,12 @@
           rdf:resource="http://developer.berlios.de/project/showfiles.php?group_id=5368"/>
 
         <doap:mailing-list
-          rdf:resource="http://log4js.berlios.de/project/maillists.html"/>
+          rdf:resource="http://stritti.github.io/log4js//project/maillists.html"/>
 
         <doap:maintainer>
           <foaf:Person>
             <foaf:name>The Log4js Project</foaf:name>
-            <foaf:homepage rdf:resource="http://log4js.berlios.de/comitter.html"/>
+            <foaf:homepage rdf:resource="http://stritti.github.io/log4js//comitter.html"/>
 <!--            <foaf:mbox rdf:resource="mailto:dev@forrest.apache.org"/>-->
           </foaf:Person>
         </doap:maintainer>

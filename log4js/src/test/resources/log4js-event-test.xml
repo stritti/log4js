@@ -1,6 +1,6 @@
-<log4js:eventSet xmlns:log4js="http://log4js.berlios.de/2007/log4js/"
+<log4js:eventSet xmlns:log4js="http://stritti.github.io/log4js//2007/log4js/"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://log4js.berlios.de/2007/log4js/ log4js.xsd">
+	xsi:schemaLocation="http://stritti.github.io/log4js//2007/log4js/ log4js.xsd">
 	<log4js:event logger="ajaxTest" level="TRACE"
 		client="Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.8.1b1) Gecko/20060710 Firefox/2.0b1"
 		referer="http://localhost:8080/log4js-example-0.3/"
@@ -25,7 +25,7 @@
 	</log4js:event>
 	<log4js:event logger="ajaxTest" level="INFO"
 		client="Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.8.1b1) Gecko/20060710 Firefox/2.0b1"
-		referer="http://log4js.berlios.de/log4js/"
+		referer="http://stritti.github.io/log4js//log4js/"
 		timestamp="2006-08-02T17:40:33+02:00">
 		<log4js:message><![CDATA[I was informed!]]></log4js:message>
 	</log4js:event>

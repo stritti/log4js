@@ -140,7 +140,7 @@ public class Log4jsServlet extends HttpServlet {
 
 			sos.write("<?xml version=\"1.0\"?>\n\n".getBytes());
 			sos
-					.write("<log4js xmlns:log4js=\"http://log4js.berlios.de/log4js\">"
+					.write("<log4js xmlns:log4js=\"http://stritti.github.io/log4js//log4js\">"
 							.getBytes());
 
 			sos

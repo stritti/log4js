@@ -36,12 +36,12 @@
  *  log.trace("trace me" );
  * </pre>
  *
- * @version 1.0
+ * @version 1.0.0
  * @author Stephan Strittmatter - http://jroller.com/page/stritti
  * @author Seth Chisamore - http://www.chisamore.com
  * @since 2005-05-20
  * @static
- * Website: http://log4js.berlios.de
+ * Website: http://stritti.github.io/log4js/
  */
 var Log4js = {
 	
@@ -50,7 +50,7 @@ var Log4js = {
 	 * @static
 	 * @final
 	 */
-  	version: "1.0",
+  	version: "1.0.0",
 
 	/**  
 	 * Date of logger initialized.
@@ -1399,7 +1399,14 @@ Log4js.AjaxAppender.prototype = Log4js.extend(new Log4js.Appender(), {
 			
 			this.httpRequest.open("POST", this.loggingUrl, true);
 			// set the request headers.
+			//this.httpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 			this.httpRequest.setRequestHeader("Content-type", this.layout.getContentType());
+			//REFERER will be the top-level
+			// URI which may differ from the location of the error if
+			// it occurs in an included .js file
+			this.httpRequest.setRequestHeader("REFERER", location.href);
+	 		this.httpRequest.setRequestHeader("Content-length", content.length);
+			this.httpRequest.setRequestHeader("Connection", "close");
 			this.httpRequest.send( content );
 			
 			appender = this;
@@ -2092,7 +2099,7 @@ Log4js.XMLLayout.prototype = Log4js.extend(new Log4js.Layout(), {
 	 */
 	getHeader: function() {
 		return "<log4js:eventSet version=\"" + Log4js.version + 
-			"\" xmlns:log4js=\"http://log4js.berlios.de/2007/log4js/\">\n";
+			"\" xmlns:log4js=\"http://stritti.github.io/log4js//2007/log4js/\">\n";
 	},
 	/** 
 	 * @return Returns the footer for the layout format. The base class returns null.
@@ -2189,10 +2196,11 @@ Log4js.JSONLayout.prototype = Log4js.extend(new Log4js.Layout(), {
 	},
 	/** 
 	 * Returns the content type output by this layout. 
-	 * @return The base class returns "application/json"
+	 * @return The base class returns "text/xml".
+	 * @type String
 	 */
 	getContentType: function() {
-		return "application/json";
+		return "text/json";
 	},
 	/** 
 	 * @return Returns the header for the layout format. The base class returns null.
@@ -2310,7 +2318,7 @@ Log4js.PatternLayout.prototype = Log4js.extend(new Log4js.Layout(), {
 							}
 						}
 						// Format the date
-						replacement =  loggingEvent.getFormattedTimestamp(loggingEvent.startTime);
+						replacement = (new Log4js.SimpleDateFormat(dateFormat)).format(loggingEvent.startTime);
 						break;
 					case "m":
 						replacement = loggingEvent.message;

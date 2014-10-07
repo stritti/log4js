@@ -353,7 +353,7 @@
 		</pathconvert>
 
 		<schemavalidate warn="yes" failonerror="no" fullchecking="yes" lenient="yes">
-			<schema namespace="http://log4js.berlios.de/2007/log4js/"
+			<schema namespace="http://stritti.github.io/log4js//2007/log4js/"
 		          file="${xsd.file}" />
 
 			<fileset dir="${src.test.dir}/resources/" includes="*.xml" />

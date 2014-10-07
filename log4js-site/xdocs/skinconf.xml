@@ -86,7 +86,7 @@ which will be used to configure the chosen Forrest skin.
 
   <project-description>Logging Framework for JavaScript</project-description>
 
-  <project-url>http://log4js.berlios.de/</project-url>
+  <project-url>http://stritti.github.io/log4js//</project-url>
 
 <!-- 
   <project-logo>images/project.png</project-logo>
@@ -138,7 +138,7 @@ which will be used to configure the chosen Forrest skin.
 
   <trail location="none">
     <link1 href="http://logging.apache.org/" name="logging.apache.org" />
-    <link2 href="http://log4js.berlios.de/" name="Log4js" />   
+    <link2 href="http://stritti.github.io/log4js//" name="Log4js" />
     <link3 href="" name="" />
   </trail>
 
@@ -223,13 +223,13 @@ which will be used to configure the chosen Forrest skin.
     li.file {list-style: none outside; }
     
     .note .label {
-        background-image: url(http://log4js.berlios.de/skin/images/info.png);
+        background-image: url(http://stritti.github.io/log4js//skin/images/info.png);
         background-repeat: no-repeat;
         background-position: right; 
      }
      
     .warning .label {
-        background-image: url(http://log4js.berlios.de/skin/images/warning.png);
+        background-image: url(http://stritti.github.io/log4js//skin/images/warning.png);
         background-repeat: no-repeat;
         background-position: right; 
      }
@@ -396,7 +396,7 @@ which will be used to configure the chosen Forrest skin.
 
     <credit role="pdf">
       <name>&copy; Log4js 2009. All rights reserved.</name>
-      <url>http://log4js.berlios.de/</url>      
+      <url>http://stritti.github.io/log4js//</url>
     </credit>
 
   </credits>

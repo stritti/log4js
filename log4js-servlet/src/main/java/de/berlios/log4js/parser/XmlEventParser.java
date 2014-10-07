@@ -131,7 +131,7 @@ public class XmlEventParser implements EventParser {
 
 		sw.append("<?xml version=\"1.0\"?>\n\n");
 		sw
-				.append("<log4js:response xmlns:log4js=\"http://log4js.berlios.de/log4js\" ");
+				.append("<log4js:response xmlns:log4js=\"http://stritti.github.io/log4js//log4js\" ");
 
 		return sw.toString();
 	}

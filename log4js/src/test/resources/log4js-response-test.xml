@@ -1,7 +1,7 @@
 <log4js:response state="Error"
-	xmlns:log4js="http://log4js.berlios.de/2007/log4js/"
+	xmlns:log4js="http://stritti.github.io/log4js//2007/log4js/"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://log4js.berlios.de/2007/log4js/ log4js.xsd">
+	xsi:schemaLocation="http://stritti.github.io/log4js//2007/log4js/ log4js.xsd">
 	<log4js:message>All right!</log4js:message>
 	<log4js:throwable>
 		<log4js:message>An exception occurred.</log4js:message>

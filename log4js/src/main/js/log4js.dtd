@@ -83,7 +83,7 @@
 <!-- ==================================================================== -->
 <!ELEMENT log4js:eventSet (log4js:event*)>
 <!ATTLIST log4js:eventSet
-  xmlns:log4js             CDATA #FIXED "http://log4js.berlios.de/log4js/" 
+  xmlns:log4js             CDATA #FIXED "http://stritti.github.io/log4js//log4js/"
   version                (0.2|0.3) "0.3" 
   includesLocationInfo   (true|false) "true"
 >

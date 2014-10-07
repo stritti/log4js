@@ -97,12 +97,12 @@ See http://forrest.apache.org/docs/linking.html for more info
   </all>
 -->
 	<external-refs>
-		<log4js href="http://log4js.berlios.de">
+		<log4js href="http://stritti.github.io/log4js/">
 			<develop href="http://developer.berlios.de/projects/log4js/" />
 			<downloads 
 				href="http://developer.berlios.de/project/showfiles.php?group_id=5368" 
 				/>
-			<apidocs href="http://log4js.berlios.de/apidocs/index.html" />
+			<apidocs href="http://stritti.github.io/log4js//apidocs/index.html" />
 			<svn href="http://developer.berlios.de/svn/&amp;group_id=5368" />
 			<svnhowto 
 				href="http://developer.berlios.de/docman/display_doc.php?docid=394&amp;group_id=2" 

@@ -1,0 +1,23 @@
+{
+  "name": "log4js",
+  "version": "1.0.0",
+  "homepage": "https://github.com/stritti/log4js",
+  "authors": [
+    "stritti <stephan@st-strittmatter.name>"
+  ],
+  "description": "Log4js - The Logging Framework for JavaScript",
+  "main": "src/main/js/log4js.js",
+  "keywords": [
+    "logging",
+    "log4js",
+    "log"
+  ],
+  "license": "Apache 2.0",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

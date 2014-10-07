@@ -12,5 +12,5 @@
   <!-- Indicate if the contributors list should be included. Values are true or false. -->
   <property name="projectInfo.changes.includeContributorList" value="true" />
 
-  <property name="projectInfo.url" value="http://log4js.berlios.de/" />
+  <property name="projectInfo.url" value="https://github.com/stritti/log4js" />
 </properties>
