@@ -1,2 +1,2 @@
 language: java
-install: ant build
+install: ant dist
