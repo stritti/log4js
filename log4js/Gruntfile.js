@@ -11,7 +11,7 @@ grunt.initConfig({
    /**
     * Get package meta data
     */
-   pkg: grunt.file.readJSON('package.json'),
+   pkg: grunt.file.readJSON('../package.json'),
    /**
     * Project banner
     */
