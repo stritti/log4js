@@ -10,8 +10,7 @@ before_install:
 install: 
  - npm install
 before_script: 
- - cd ./log4js
-   - 'npm install -g bower grunt-cli karma'
+  - 'npm install -g bower grunt-cli karma'
   - 'bower install'
   - npm install grunt-sass
   - npm install archiver --save
@@ -24,4 +23,5 @@ before_script:
   - npm install grunt-contrib-uglify --save-dev
   - npm install grunt-contrib-clean --save-dev  
 script:
+ - cd ./log4js
  - grunt build --verbose
