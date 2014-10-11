@@ -8,9 +8,10 @@ before_install:
   - gem install sass
   - gem install compass
 install: 
- - npm install
-before_script: 
+  - npm install
   - npm install -g bower grunt-cli
+  
+before_script: 
   - bower install
   - npm install grunt-sass
   - npm install archiver --save
