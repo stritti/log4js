@@ -6,4 +6,5 @@ before_install:
 install: 
  - npm install
 before_script: 
+ - cd log4js
  - grunt build
