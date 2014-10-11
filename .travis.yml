@@ -10,7 +10,7 @@ before_install:
 install: 
  - npm install
 before_script: 
-#  - npm install -g bower grunt-cli
+  - npm install -g bower grunt-cli
   - bower install
   - npm install grunt-sass
   - npm install archiver --save
