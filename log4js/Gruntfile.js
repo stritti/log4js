@@ -32,64 +32,6 @@ grunt.initConfig({
    /**
     *
     */
-   sass: {
-      options: {
-        includePaths: [
-           'bower_components/foundation/scss',
-        ]
-      },
-      dev: {
-        options: {
-          style: 'expanded',
-          banner: '<%= tag.banner %>',
-          compass: true
-        },
-        files: [{
-            'src/css/app.css': 'src/sass/app.scss',
-            'src/css/editor.css': 'src/sass/editor.scss'},
-            {
-               expand: true,
-               cwd: 'src/sass/pages',
-               src: ['**/*.scss'],
-               dest: 'src/css/pages/',
-               ext: '.css'
-            }]
-         
-        
-      },
-      dist: {
-        options: {
-          style: 'compressed',
-          compass: true
-        },
-        files: {
-            'src/css/app.css': 'src/sass/app.scss',
-            'src/css/editor.css': 'src/sass/editor.scss',
-         }
-      }
-   },
-
-   cssmin: {
-     minify: {
-       files: [{
-         expand: true,
-         cwd: 'target/files/<%= pkg.name %>/css/',
-         src: ['**/*.css', '!*.min.css'],
-         dest: 'target/files/<%= pkg.name %>/css/',
-         ext: '.min.css'
-       }, /*{
-         expand: true,
-         cwd: 'src/css/',
-         src: ['*.min.css'],
-         dest: 'src/css/',
-         ext: '.min.css'
-       }*/]
-     }
-   },
-
-   /**
-    *
-    */
    uglify  : {
       options: {
          // the banner is inserted at the top of the output
@@ -139,7 +81,6 @@ grunt.initConfig({
          cwd: 'src/',
          src: ['**',  '!**/*.scss', '!sass/**' ],
          expand: true,
-         //dest: 'target/files/tpl_bodenleger-stockach/',
          dest: '../build/',
      },
    },
@@ -170,7 +111,7 @@ grunt.initConfig({
          src: ['target/files/<%= pkg.name %>/']
       },
       deploy: {
-         src: ['../xampp_1_8_1/htdocs/templates/Bodenleger-Stockach/']
+         src: ['../xampp/htdocs/<%= pkg.name %>/']
       },
    },
    /**
@@ -179,10 +120,6 @@ grunt.initConfig({
    watch: {
       grunt: { 
          files: ['Gruntfile.js']
-      },
-      sass: {
-         files: ['src/sass/**/*.{scss,sass}'],
-         tasks: ['sass:dev']
       },
       livereload: {
          files: [
@@ -202,7 +139,6 @@ grunt.initConfig({
    }  
 });
 
-   grunt.loadNpmTasks('grunt-sass');
    grunt.loadNpmTasks('grunt-contrib-cssmin');
    grunt.loadNpmTasks('grunt-contrib-watch');
    grunt.loadNpmTasks('grunt-contrib-compress');
@@ -214,11 +150,11 @@ grunt.initConfig({
    /**
     * Build task
     * Run `grunt build` on the command line
-    * This will generate ZIP-Archive with all required artifacts for the Joomla!-Template.
+    * This will generate ZIP-Archive with all required artifacts.
     */
    grunt.registerTask('build',
       'Compiles all of the assets and copies the files to the build directory.',
-      ['sass:dist', 'jshint', 'copy:build', 'cssmin', 'uglify', 'compress']
+      ['jshint', 'copy:build', 'cssmin', 'uglify', 'compress']
    );
    /**
     * Default task
@@ -226,6 +162,6 @@ grunt.initConfig({
     * This will compile sass-Files on the fly and copy changed files to testing server (deploy).
     */
    grunt.registerTask('default',
-      [ 'sass:dev', 'watch']
+      [ 'watch']
    );
 };
