@@ -196,15 +196,18 @@ Log4js.Level.prototype =  {
 		
 		if(typeof sArg == "string") { 
 			var s = sArg.toUpperCase();
-			if(s == "ALL") {return Log4js.Level.ALL;}
-			if(s == "DEBUG") {return Log4js.Level.DEBUG;}
-			if(s == "INFO") {return Log4js.Level.INFO;}
-			if(s == "WARN") {return Log4js.Level.WARN;}
-			if(s == "ERROR") {return Log4js.Level.ERROR;}
-			if(s == "FATAL") {return Log4js.Level.FATAL;}
-			if(s == "OFF") {return Log4js.Level.OFF;}
-			if(s == "TRACE") {return Log4js.Level.TRACE;}
-			return defaultLevel;
+			
+			switch(s) {
+				case "ALL": return Log4js.Level.ALL;
+				case "DEBUG": return Log4js.Level.DEBUG;
+				case "INFO": return Log4js.Level.INFO;
+				case "WARN": return Log4js.Level.WARN;
+				case "ERROR": return Log4js.Level.ERROR;
+				case "FATAL": return Log4js.Level.FATAL;
+				case "OFF": return Log4js.Level.OFF;
+				case "TRACE": return Log4js.Level.TRACE;
+				default: return defaultLevel;
+			}
 		} else if(typeof sArg == "number") {
 			switch(sArg) {
 				case ALL_INT: return Log4js.Level.ALL;
@@ -1484,7 +1487,7 @@ Log4js.AjaxAppender.prototype = Log4js.extend(new Log4js.Appender(), {
 		}
 		
 		if (!httpRequest) {
-			log4jsLogger.fatal("Unfortunatelly your browser does not support AjaxAppender for log4js!");
+			log4jsLogger.fatal("Unfortunately, your browser does not support AjaxAppender for log4js!");
 		}
 		
 		log4jsLogger.trace("< AjaxAppender.getXmlHttpRequest");
