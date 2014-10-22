@@ -5,18 +5,13 @@ before_install:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
   - gem update --system
-  - gem install sass
-  - gem install compass
 install: 
   - npm install
   - npm install -g bower grunt-cli
   
 before_script: 
   - bower install
-  - npm install grunt-sass
-  - npm install archiver --save
   - npm install grunt-contrib-watch --save-dev
-  - npm install grunt-contrib-sass --save-dev
   - npm install grunt-contrib-cssmin --save-dev
   - npm install grunt-contrib-compress --save-dev
   - npm install grunt-contrib-copy --save-dev
