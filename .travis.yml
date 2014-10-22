@@ -20,4 +20,4 @@ before_script:
   - npm install grunt-contrib-clean --save-dev  
 script:
  - cd ./log4js
- - grunt build --verbose
+ - grunt -b "./log4js" --gruntfile "./log4js/Grundfile.js" build --verbose
