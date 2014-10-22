@@ -1,6 +1,5 @@
 /**
- * Grunt Module
- *
+ * Grunt Module of log4js.
  */
 /*jshint node:true */
 module.exports = function(grunt) {
@@ -12,22 +11,6 @@ grunt.initConfig({
     * Get package meta data
     */
    pkg: grunt.file.readJSON('../package.json'),
-   /**
-    * Project banner
-    */
-   tag: {
-     banner: '/*!\n' +
-             ' * <%= pkg.name %>\n' +
-             ' * <%= pkg.title %>\n' +
-             ' * <%= pkg.url %>\n' +
-             ' * @author <%= pkg.author %>\n' +
-             ' * @version <%= pkg.version %>\n' +
-             ' * Copyright <%= pkg.copyright %>. <%= pkg.license %> licensed.\n' +
-             ' */\n',
-     deploy: {
-        dest: 'target/files/<%= pkg.name %>/css/'
-     },
-   },
 
    /**
     *
@@ -38,7 +21,7 @@ grunt.initConfig({
          banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n'
       },
       build : {
-         src     : ['**/*.js', '!*.min.js', '!**/foundation/*', '!**vendor/*'],
+         src     : ['**/*.js', '!*.min.js'],
          cwd     : 'target/files/<%= pkg.name %>/js/',
          dest    : 'src/js/',
          expand  : true,
@@ -57,11 +40,12 @@ grunt.initConfig({
     */
    jshint: {
       options: {
-        jshintrc: '.jshintrc',
+        jshintrc: '.jshintrc'
       },
       files: [
          'Gruntfile.js',
-         'src/js/*.js',
+         'src/main/js/*.js',
+         'src/test/js/*.js'
       ]
    },
    /**
@@ -73,7 +57,7 @@ grunt.initConfig({
          cwd: 'src/',
          src: ['**',  '!**/*.scss' ],
          expand: true,
-         dest: 'target/files/<%= pkg.name %>/',
+         dest: 'target/files/<%= pkg.name %>/'
      },
 
       deploy: {
@@ -81,8 +65,8 @@ grunt.initConfig({
          cwd: 'src/',
          src: ['**',  '!**/*.scss', '!sass/**' ],
          expand: true,
-         dest: '../build/',
-     },
+         dest: '../build/'
+     }
    },
 
    /**
@@ -112,7 +96,7 @@ grunt.initConfig({
       },
       deploy: {
          src: ['../xampp/htdocs/<%= pkg.name %>/']
-      },
+      }
    },
    /**
     * 
@@ -135,11 +119,10 @@ grunt.initConfig({
             //interrupt: true,
             livereload: true
          }
-      },
+      }
    }  
 });
 
-   grunt.loadNpmTasks('grunt-contrib-cssmin');
    grunt.loadNpmTasks('grunt-contrib-watch');
    grunt.loadNpmTasks('grunt-contrib-compress');
    grunt.loadNpmTasks('grunt-contrib-copy');
@@ -153,15 +136,13 @@ grunt.initConfig({
     * This will generate ZIP-Archive with all required artifacts.
     */
    grunt.registerTask('build',
-      'Compiles all of the assets and copies the files to the build directory.',
-      ['jshint', 'copy:build', 'cssmin', 'uglify', 'compress']
+      ['jshint', 'copy:build', 'uglify', 'compress']
    );
    /**
     * Default task
     * Run `grunt` on the command line
-    * This will compile sass-Files on the fly and copy changed files to testing server (deploy).
     */
    grunt.registerTask('default',
-      [ 'watch']
+      ['watch']
    );
 };
