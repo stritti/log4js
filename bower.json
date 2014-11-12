@@ -6,7 +6,11 @@
     "stritti <stephan@st-strittmatter.name>"
   ],
   "description": "Log4js - The Logging Framework for JavaScript",
-  "main": "src/main/js/log4js.js",
+  "main": [
+    "src/main/js/log4js.js"
+  ],
+  "ignore": [
+  ],
   "keywords": [
     "logging",
     "log4js",
