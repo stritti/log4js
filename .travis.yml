@@ -19,4 +19,4 @@ before_script:
   - npm install grunt-contrib-uglify --save-dev
   - npm install grunt-contrib-clean --save-dev  
 script:
- - grunt -b "./log4js" --gruntfile "./log4js/Grundfile.js" build --verbose
+ - grunt -b "./log4js" --gruntfile "./log4js/Gruntfile.js" build --verbose
