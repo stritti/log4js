@@ -12,6 +12,5 @@ install:
 before_script:
   - cd log4js
   - npm install
-  - bower install
 script:
-  - grunt -b "./log4js" --gruntfile "Gruntfile.js" build --verbose
+  - grunt --gruntfile "Gruntfile.js" build --verbose

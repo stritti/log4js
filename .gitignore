@@ -1,1 +1,5 @@
 /nbproject/private/
+node_modules/
+release/
+log4js/target/
+log4js/node_modules/
