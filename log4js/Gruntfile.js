@@ -135,8 +135,7 @@ grunt.initConfig({
     * Run `grunt build` on the command line
     * This will generate ZIP-Archive with all required artifacts.
     */
-   grunt.registerTask('build',
-      ['jshint', 'copy:build', 'uglify', 'compress']
+   grunt.registerTask('build', ['copy:build', 'uglify', 'compress']
    );
    /**
     * Default task
