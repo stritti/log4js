@@ -120,7 +120,14 @@ grunt.initConfig({
             livereload: true
          }
       }
-   }  
+   },
+   karma: {
+     unit: {
+       configFile: 'src/test/karma.conf.js',
+       // browsers: ['Chrome'],
+       singleRun: true
+     }
+   }
 });
 
    grunt.loadNpmTasks('grunt-contrib-watch');
@@ -130,12 +137,14 @@ grunt.initConfig({
    grunt.loadNpmTasks('grunt-contrib-uglify');
    grunt.loadNpmTasks('grunt-contrib-clean');
 
+    grunt.loadTasks('tasks');
+
    /**
     * Build task
     * Run `grunt build` on the command line
     * This will generate ZIP-Archive with all required artifacts.
     */
-   grunt.registerTask('build', ['copy:build', 'uglify', 'compress']
+   grunt.registerTask('build', ['copy:build', 'uglify', 'compress', 'karma']
    );
    /**
     * Default task
