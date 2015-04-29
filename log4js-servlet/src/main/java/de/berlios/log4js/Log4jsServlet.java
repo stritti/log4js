@@ -195,21 +195,23 @@ public class Log4jsServlet extends HttpServlet {
 			throws ClassNotFoundException, InstantiationException,
 			IllegalAccessException {
 
-		EventParser parser = this.parserList.get(contentType);
+    String strippedContentType = contentType.split(";")[0];
+
+		EventParser parser = this.parserList.get(strippedContentType);
 
 		if (parser == null) {
 			String p = this.getServletConfig().getInitParameter(
-					"parser." + contentType);
+					"parser." + strippedContentType);
 
 			if (p == null) {
-				this.parserList.put(contentType, null);
+				this.parserList.put(strippedContentType, null);
 				throw new UnsupportedOperationException(
-						"Content type not supported: " + contentType);
+						"Content type not supported: " + strippedContentType);
 			}
 
 			Class<EventParser> c = (Class<EventParser>) Class.forName(p);
 			parser = c.newInstance();
-			this.parserList.put(contentType, parser);
+			this.parserList.put(strippedContentType, parser);
 		}
 
 		return parser;

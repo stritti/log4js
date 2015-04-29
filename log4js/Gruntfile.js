@@ -12,6 +12,23 @@ grunt.initConfig({
     */
    pkg: grunt.file.readJSON('../package.json'),
 
+    concat: {
+      game: {
+        src: ["src/main/js/log4js.js",
+              "src/main/js/level.js",
+              "src/main/js/logger.js",
+              "src/main/js/custom-event.js",
+              "src/main/js/logging-event.js",
+              "src/main/js/appender.js",
+              "src/main/js/appenders/*.js",
+              "src/main/js/layout.js",
+              "src/main/js/layouts/*.js",
+              "src/main/js/date-formatter.js",
+              "src/main/js/fifo-buffer.js"],
+        dest: "target/log4js.js"
+      }
+    },
+
    /**
     *
     */
@@ -136,6 +153,7 @@ grunt.initConfig({
    grunt.loadNpmTasks('grunt-contrib-jshint');
    grunt.loadNpmTasks('grunt-contrib-uglify');
    grunt.loadNpmTasks('grunt-contrib-clean');
+   grunt.loadNpmTasks('grunt-contrib-concat');
 
     grunt.loadTasks('tasks');
 

@@ -3,3 +3,5 @@ node_modules/
 release/
 log4js/target/
 log4js/node_modules/
+log4js-servlet/target/
+log4js-servlet/lib/
