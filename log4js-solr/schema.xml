@@ -104,7 +104,6 @@
      required, it is highly recommended. A <uniqueKey> is present in almost all Solr 
      installations. See the <uniqueKey> declaration below where <uniqueKey> is set to "id".
    -->   
-   <field name="id" type="string" indexed="true" stored="true" required="true" multiValued="false" />
    <field name="logger" type="string" indexed="true" stored="true" required="true" />
    <field name="level" type="string" indexed="true" stored="true" required="true" />
    <field name="message" type="text_general" indexed="true" stored="true" required="true" />

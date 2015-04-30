@@ -3,18 +3,26 @@ SOLR LOG RECIEVER
 
 As an exmple, I use latest solr, which is version 5.
 
-Use schema.xml as base.
+Configure server
+----------------
 
-Patch your $SOLR_HOME/server/webapps/solr.war with CORS filter:
+Use schema.xml as base. There is no required id field in schema, so you may omit setting this strange value for log
+messages.
+
+You can send arbitrary fields with with underscored suffixes like "collected_money_i" - where _i denotes integer type.
+You might be interested in _t (text), _s (string), _b (boolean), _f (float), _dt (date/time). Use final 's' to mark
+multivalued field. See schema.xml for details about other types. Feel free to change core schema !
+
+Patch your $SOLR_HOME/server/webapps/solr.war/WEB-INF/web.xml (this might require you unzip solr.war) with CORS filter:
 
 ```xml
 <filter>
-	<filter-name>cross-origin</filter-name>
-	<filter-class>org.eclipse.jetty.servlets.CrossOriginFilter</filter-class>
-	<init-param>
-		<param-name>allowedMethods</param-name>
-		<param-value>POST</param-value>
-	</init-param>
+  <filter-name>cross-origin</filter-name>
+  <filter-class>org.eclipse.jetty.servlets.CrossOriginFilter</filter-class>
+  <init-param>
+    <param-name>chainPreflight</param-name>
+    <param-value>false</param-value>
+  </init-param>
 </filter>
 
 <filter-mapping>
@@ -37,9 +45,25 @@ http://HOST:PORT/solr/COLLECTION_NAME/update/json/docs?split=/Log4js&f=/Log4js/L
 
 to post your log messages. Use JSON Appender.
 
+Sample message:
+
+```json
+{
+	"Log4js": [
+		{
+			"LoggingEvent":
+			{
+				"logger": "sample",
+				"level": "INFO",
+				"message": "this is a message from me",
+				"referer": "http://true-generals.wg"
+			}
+		}
+	]
+}
+```
+
 Known Issues
 ------------
 
 1. Anybody can screw up your logs, because update is available to anybody. Should be fixed with Jetty filters.
-2. No id field for log events. Maybe solr can be configured to autogenerate these ids.
-3. Solr does not send Cross Origin Headers. Should be fixed with Jetty configuration.
