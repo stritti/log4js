@@ -13,7 +13,7 @@ grunt.initConfig({
    pkg: grunt.file.readJSON('../package.json'),
 
     concat: {
-      game: {
+      build: {
         src: ["src/main/js/log4js.js",
               "src/main/js/level.js",
               "src/main/js/logger.js",
@@ -25,7 +25,7 @@ grunt.initConfig({
               "src/main/js/layouts/*.js",
               "src/main/js/date-formatter.js",
               "src/main/js/fifo-buffer.js"],
-        dest: "target/log4js.js"
+        dest: "target/files/<%= pkg.name %>/js/<%= pkg.name %>.combined.js"
       }
     },
 
@@ -40,12 +40,12 @@ grunt.initConfig({
       build : {
          src     : ['**/*.js', '!*.min.js'],
          cwd     : 'target/files/<%= pkg.name %>/js/',
-         dest    : 'src/js/',
+         dest    : 'target/',
          expand  : true,
          rename  : function (dest, src) {
             var folder    = src.substring(0, src.lastIndexOf('/'));
             var filename  = src.substring(src.lastIndexOf('/'), src.length);
-            filename  = filename.substring(0, filename.lastIndexOf('.'));
+            filename  = filename.substring(0, filename.lastIndexOf('.')).replace(/\.combined/, "");
 
             return dest + folder + filename + '.min.js';
          }
@@ -71,7 +71,7 @@ grunt.initConfig({
    copy: {
       build: {
          nonull: true,
-         cwd: 'src/',
+         cwd: 'src/main/',
          src: ['**',  '!**/*.scss' ],
          expand: true,
          dest: 'target/files/<%= pkg.name %>/'
@@ -162,7 +162,7 @@ grunt.initConfig({
     * Run `grunt build` on the command line
     * This will generate ZIP-Archive with all required artifacts.
     */
-   grunt.registerTask('build', ['copy:build', 'uglify', 'compress', 'karma']
+   grunt.registerTask('build', ['concat:build', 'uglify', 'compress', 'karma']
    );
    /**
     * Default task
