@@ -18,7 +18,7 @@ Log4js.MozillaJSConsoleAppender = function() {
 	}
 };
 
-Log4js.MozillaJSConsoleAppender.prototype = Log4js.extend(new Log4js.Appender(), {  
+Log4js.MozillaJSConsoleAppender.prototype = Log4js.extend(new Log4js.Appender(), /** @lends Log4js.MozillaJSConsoleAppender# */ {
 	/** 
 	 * @see Log4js.Appender#doAppend
 	 */
@@ -83,7 +83,7 @@ Log4js.OperaJSConsoleAppender = function() {
 	this.layout = new Log4js.SimpleLayout();
 };
 
-Log4js.OperaJSConsoleAppender.prototype = Log4js.extend(new Log4js.Appender(), {  
+Log4js.OperaJSConsoleAppender.prototype = Log4js.extend(new Log4js.Appender(), /** @lends Log4js.OperaJSConsoleAppender# */ {
 	/** 
 	 * @see Log4js.Appender#doAppend
 	 */
@@ -111,7 +111,7 @@ Log4js.SafariJSConsoleAppender = function() {
 	this.layout = new Log4js.SimpleLayout();
 };
 
-Log4js.SafariJSConsoleAppender.prototype = Log4js.extend(new Log4js.Appender(), {  
+Log4js.SafariJSConsoleAppender.prototype = Log4js.extend(new Log4js.Appender(), /** @lends Log4js.SafariJSConsoleAppender# */ {
 	/** 
 	 * @see Log4js.Appender#doAppend
 	 */
@@ -160,7 +160,7 @@ Log4js.BrowserConsoleAppender = function() {
     }
 };
 
-Log4js.BrowserConsoleAppender.prototype = Log4js.extend(new Log4js.Appender(), {  
+Log4js.BrowserConsoleAppender.prototype = Log4js.extend(new Log4js.Appender(), /** @lends Log4js.BrowserConsoleAppender# */ {
 	/** 
 	 * @see Log4js.Appender#doAppend
 	 */

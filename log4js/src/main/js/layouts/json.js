@@ -8,7 +8,7 @@
 Log4js.JSONLayout = function() {
 	this.df = new Log4js.DateFormatter();
 };
-Log4js.JSONLayout.prototype = Log4js.extend(new Log4js.Layout(), {
+Log4js.JSONLayout.prototype = Log4js.extend(new Log4js.Layout(), /** @lends Log4js.JSONLayout# */ {
 	/** 
 	 * Implement this method to create your own layout format.
 	 * @param {Log4js.LoggingEvent} loggingEvent loggingEvent to format
@@ -35,7 +35,7 @@ Log4js.JSONLayout.prototype = Log4js.extend(new Log4js.Layout(), {
 		
 		jsonString += "\t\"logger\": \"" +  loggingEvent.categoryName + "\",\n";
 		jsonString += "\t\"level\": \"" +  loggingEvent.level.toString() + "\",\n";
-		jsonString += "\t\"message\": \"" +  loggingEvent.message + "\",\n"; 
+		jsonString += "\t\"message\": \"" +  loggingEvent.message + "\",\n";
 		jsonString += "\t\"referer\": \"" + referer + "\",\n"; 
 		jsonString += "\t\"useragent\": \"" + useragent + "\",\n"; 
 		jsonString += "\t\"timestamp\": \"" +  this.df.formatDate(loggingEvent.startTime, "yyyy-MM-ddThh:mm:ssZ") + "\",\n";

@@ -11,7 +11,7 @@
  * @author Stephan Strittmatter
  */
 Log4js.XMLLayout = function(){return;};
-Log4js.XMLLayout.prototype = Log4js.extend(new Log4js.Layout(), {
+Log4js.XMLLayout.prototype = Log4js.extend(new Log4js.Layout(), /** @lends Log4js.XMLLayout# */ {
 	/** 
 	 * Implement this method to create your own layout format.
 	 * @param {Log4js.LoggingEvent} loggingEvent loggingEvent to format

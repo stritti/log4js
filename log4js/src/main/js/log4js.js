@@ -144,7 +144,7 @@ var Log4js = {
  * @private
  */
 Log4js.extend = function(destination, source) {
-  for (property in source) {
+  for (var property in source) {
     destination[property] = source[property];
   }
   return destination;

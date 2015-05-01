@@ -7,7 +7,7 @@
  */
 Log4js.HtmlLayout = function() {return;};
 
-Log4js.HtmlLayout.prototype = Log4js.extend(new Log4js.Layout(), {
+Log4js.HtmlLayout.prototype = Log4js.extend(new Log4js.Layout(), /** @lends Log4js.HtmlLayout# */ {
 	/** 
 	 * Implement this method to create your own layout format.
 	 * @param {Log4js.LoggingEvent} loggingEvent loggingEvent to format

@@ -10,7 +10,7 @@ Log4js.JSAlertAppender = function() {
 	this.layout = new Log4js.SimpleLayout();
 };
 
-Log4js.JSAlertAppender.prototype = Log4js.extend(new Log4js.Appender(), {  
+Log4js.JSAlertAppender.prototype = Log4js.extend(new Log4js.Appender(), /** @lends Log4js.JSAlertAppender# */ {
 	/** 
 	 * @see Log4js.Appender#doAppend
 	 */

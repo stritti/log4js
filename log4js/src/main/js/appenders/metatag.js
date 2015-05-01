@@ -9,7 +9,7 @@
 Log4js.MetatagAppender = function() {
 	this.currentLine = 0;
 };
-Log4js.MetatagAppender.prototype = Log4js.extend(new Log4js.Appender(), {  
+Log4js.MetatagAppender.prototype = Log4js.extend(new Log4js.Appender(), /** @lends Log4js.MetatagAppender# */ {
 	/**
 	 * @param loggingEvent event to be logged
 	 * @see Log4js.Appender#doAppend

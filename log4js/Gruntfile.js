@@ -104,6 +104,15 @@ grunt.initConfig({
      }
    },
 
+  jsdoc: {
+    build: {
+      src: ["src/main/js/**/*.js"],
+      options: {
+        destination: "target/docs/"
+      }
+    }
+  },
+
    /**
     *
     */
@@ -154,6 +163,7 @@ grunt.initConfig({
    grunt.loadNpmTasks('grunt-contrib-uglify');
    grunt.loadNpmTasks('grunt-contrib-clean');
    grunt.loadNpmTasks('grunt-contrib-concat');
+   grunt.loadNpmTasks('grunt-jsdoc');
 
     grunt.loadTasks('tasks');
 

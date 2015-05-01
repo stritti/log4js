@@ -19,7 +19,7 @@ Log4js.PatternLayout.ISO8601_DATEFORMAT = "yyyy-MM-dd HH:mm:ss,SSS";
 Log4js.PatternLayout.DATETIME_DATEFORMAT = "dd MMM YYYY HH:mm:ss,SSS";
 Log4js.PatternLayout.ABSOLUTETIME_DATEFORMAT = "HH:mm:ss,SSS";
 
-Log4js.PatternLayout.prototype = Log4js.extend(new Log4js.Layout(), {
+Log4js.PatternLayout.prototype = Log4js.extend(new Log4js.Layout(), /** @lends Log4js.PatternLayout# */ {
 	/** 
 	 * Returns the content type output by this layout. 
 	 * @return "text/plain".

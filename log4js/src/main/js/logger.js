@@ -238,16 +238,16 @@ Log4js.Logger.prototype = {
 	 * <li>O - timezone offset</li>
 	 * </ul>
 	 * @param {String} format format String for the date
-	 * @see #getTimestamp
+	 * @see {@getTimestamp}
 	 */
 	setDateFormat: function(format) {
 	 	this.dateformat = format;
 	},
 	 
 	/**
-	 * Generates a timestamp using the format set in {Log4js.setDateFormat}.
+	 * Generates a timestamp using the format set in {Log4js.DateFormatter.formatDate}.
 	 * @param {Date} date the date to format
-	 * @see #setDateFormat
+	 * @see {@setDateFormat}
 	 * @return A formatted timestamp with the current date and time.
 	 */
 	getFormattedTimestamp: function(date) {

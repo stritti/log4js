@@ -60,7 +60,7 @@ Log4js.AjaxAppender = function(loggingUrl) {
 	this.httpRequest = null;
 };
 
-Log4js.AjaxAppender.prototype = Log4js.extend(new Log4js.Appender(), {  
+Log4js.AjaxAppender.prototype = Log4js.extend(new Log4js.Appender(), /** @lends Log4js.AjaxAppender# */ {
 	/**
 	 * sends the logs to the server
 	 * @param loggingEvent event to be logged

@@ -12,7 +12,7 @@ Log4js.SimpleLayout = function() {
 	this.LINE_SEP_LEN = 1;
 };
 
-Log4js.SimpleLayout.prototype = Log4js.extend(new Log4js.Layout(), {
+Log4js.SimpleLayout.prototype = Log4js.extend(new Log4js.Layout(), /** @lends Log4js.SimpleLayout# */ {
 	/** 
 	 * Implement this method to create your own layout format.
 	 * @param {Log4js.LoggingEvent} loggingEvent loggingEvent to format

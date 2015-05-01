@@ -33,7 +33,7 @@ Log4js.FileAppender = function(file) {
 	}
 };
 
-Log4js.FileAppender.prototype = Log4js.extend(new Log4js.Appender(), {  
+Log4js.FileAppender.prototype = Log4js.extend(new Log4js.Appender(), /** @lends Log4js.FileAppender# */ {  
 	/**
 	 * @param loggingEvent event to be logged
 	 * @see Log4js.Appender#doAppend

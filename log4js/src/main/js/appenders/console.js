@@ -56,7 +56,7 @@ Log4js.ConsoleAppender = function(isInline) {
 	}
 };
 
-Log4js.ConsoleAppender.prototype = Log4js.extend(new Log4js.Appender(), {  
+Log4js.ConsoleAppender.prototype = Log4js.extend(new Log4js.Appender(), /** @lends Log4js.ConsoleAppender# */ {
 
 	/**
 	 * Set the access key to show/hide the inline console (default &quote;d&quote;)
