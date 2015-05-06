@@ -1,7 +1,9 @@
 /nbproject/private/
 node_modules/
 release/
+build/
 log4js/target/
 log4js/node_modules/
 log4js-servlet/target/
 log4js-servlet/lib/
+log4js-site/build/

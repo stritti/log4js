@@ -34,7 +34,9 @@
 
 	<property name="version" value="${version}" />
 
-	<property name="src.dir" value="log4js/src/main" />
+	<property name="src.base" value="log4js" />
+	<property name="src.target" value="${src.base}/target" />
+	<property name="src.dir" value="${src.base}/src/main" />
 	<property name="src.js.dir" value="${src.dir}/js" />
 
 	<property name="lib.dir" value="lib" />
@@ -58,7 +60,7 @@
 	<property name="servlet-api.jar" value="${lib.dir}/servlet-api-${tools.servlet-api.version}.jar" />
 
 	<!-- unit tests -->
-	<property name="src.test.dir" value="log4js/src/test" />
+	<property name="src.test.dir" value="{src.base}/src/test" />
 	<property name="src.test.java.dir" value="${src.test.dir}/java" />
 	<property name="src.test.js.dir" value="${src.test.dir}/js" />
 	<property name="classes.java.dir" value="${dist.dir}/classes" />
@@ -175,11 +177,12 @@
 	<!-- - - - - - - - - - - - - - - - - - 
           target: compile                      
          - - - - - - - - - - - - - - - - - -->
-	<target name="compile" depends="init, jslint">
-		<mkdir dir="${dist.dir}/lib" />
-		<exec executable="perl" output="${dist.dir}/lib/log4js-lib.js" failonerror="false">
-			<arg line="-Tw ${tools.dir}/jsjam.pl --quiet --keep-globals --keep-identifiers ${src.js.dir}/log4js.js" />
+	<target name="compile" depends="init">
+		<mkdir dir="${dist.dir}" />
+		<exec executable="grunt" failonerror="false" dir="${src.base}">
+			<arg line="concat uglify" />
 		</exec>
+		<copy tofile="${dist.dir}/lib/log4js-lib.js" file="${src.target}/log4js.min.js" overwrite="true" />
 	</target>
 
 	<!-- ================================= 
@@ -204,11 +207,9 @@
           target: jslint              
          ================================= -->
 	<target name="jslint" depends="init" description="--> verify syntax of JavaScripts">
-		<exec executable="${basedir}/${tools.dir}/jsl/jsl-${tools.jsl.version}/jsl.exe" resultproperty="${jslint.result}">
-			<arg line="conf ${tools.dir}/jsl/jsl.conf process ${src.js.dir}/*.js" />
+		<exec executable="grunt" failonerror="false" dir="${src.base}">
+			<arg line="jshint" />
 		</exec>
-
-		<echo message="${jslint.result}" />
 	</target>
 
 	<target name="doc" depends="doc.api" description="generate documentation">
@@ -242,21 +243,6 @@
 	          For example:
 	             C:>myproject\ant download-dependencies dist
 		</description>
-
-		<!-- for compression of JavaScript -->
-		<get dest="${tools.dir}/jsjam.pl" usetimestamp="true" ignoreerrors="true" src="http://www.anvilon.com/software/download/jsjam" />
-
-		<!-- unit testing -->
-		<get dest="${lib.dir}/junit-${tools.junit.version}.jar" usetimestamp="true" ignoreerrors="true" src="http://www.ibiblio.org/maven/junit/jars/junit-${tools.junit.version}.jar" verbose="true" />
-
-		<get dest="${lib.dir}/jsunit${tools.jsunit.version}.zip" usetimestamp="true" ignoreerrors="true" src="http://mesh.dl.sourceforge.net/sourceforge/jsunit/jsunit${tools.jsunit.version}.zip" verbose="true" />
-		<unzip src="${lib.dir}/jsunit${tools.jsunit.version}.zip" dest="${tools.dir}/JSUnit" />
-
-		<get dest="${lib.dir}/jstester-${tools.jstester.version}.jar" usetimestamp="true" ignoreerrors="true" src="http://switch.dl.sourceforge.net/sourceforge/jstester/jstester-${tools.jstester.version}.jar" verbose="true" />
-
-		<get dest="${lib.dir}/js-${tools.rhino.version}.jar" usetimestamp="true" ignoreerrors="true" src="http://www.ibiblio.org/maven/rhino/jars/js-${tools.rhino.version}.jar" verbose="true" />
-		<get dest="${lib.dir}/commons-logging-${tools.commons-logging.version}.jar" usetimestamp="true" ignoreerrors="true" src="http://www.ibiblio.org/maven/commons-logging/jars/commons-logging-${tools.commons-logging.version}.jar" verbose="true" />
-
 
 		<!-- for API documentation -->
 		<get dest="${lib.dir}/JSDoc-${tools.jsdoc.version}.tgz" usetimestamp="true" ignoreerrors="true" src="http://mesh.dl.sourceforge.net/sourceforge/jsdoc/JSDoc-${tools.jsdoc.version}.tgz" verbose="true" />
@@ -299,7 +285,7 @@
 	<target name="site" description="Generates static HTML documentation" depends="doc.api, compile">
 
 		
-		<exec executable="${env.FORREST_HOME}/bin/forrest.bat" dir="log4js-site">
+		<exec executable="${env.FORREST_HOME}/bin/forrest" dir="log4js-site">
 
 		</exec>
 
@@ -343,52 +329,21 @@
 -->
 
 	<!-- ================================= 
-          target: compile.test              
-         ================================= -->
-	<target name="compile.test" depends="init" description="--> compiles test clases">
-		<mkdir dir="${classes.test.java.dir}" />
-		<javac srcdir="${src.test.java.dir}" destdir="${classes.test.java.dir}">
-			<classpath>
-				<fileset dir="${lib.dir}">
-					<include name="*.jar" />
-				</fileset>
-			</classpath>
-		</javac>
-	</target>
-
-	<!-- ================================= 
           target: test              
          ================================= -->
-	<target name="test" depends="compile, compile.test" description="--> Unit tests">
+	<target name="test" depends="compile" description="--> Unit tests">
 		<mkdir dir="${dist.reports.dir}" />
-
-		<junit printsummary="yes">
-			<classpath>
-				<pathelement location="${dist.dir}" />
-				<pathelement path="${dist.dir}/classes" />
-				<pathelement path="${classes.test.java.dir}" />
-				<pathelement path="${src.js.dir}" />
-				<fileset dir="${lib.dir}">
-					<include name="*.jar" />
-				</fileset>
-			</classpath>
-
-			<formatter type="xml" />
-
-			<batchtest todir="${dist.reports.dir}">
-				<fileset dir="${src.test.java.dir}">
-					<include name="**/*Test.java" />
-				</fileset>
-			</batchtest>
-		</junit>
+		<exec executable="grunt" failonerror="false" dir="${src.base}">
+			<arg line="karma" />
+		</exec>
 
 		<!-- Create html output from the reports -->
-		<junitreport todir="${dist.reports.dir}">
-			<fileset dir="${dist.reports.dir}">
-				<include name="TEST-*.xml" />
-			</fileset>
-			<report format="frames" todir="${dist.reports.dir}" />
-		</junitreport>
+		<!-- <junitreport todir="${dist.reports.dir}"> -->
+		<!-- 	<fileset dir="${dist.reports.dir}"> -->
+		<!-- 		<include name="TEST-*.xml" /> -->
+		<!-- 	</fileset> -->
+		<!-- 	<report format="frames" todir="${dist.reports.dir}" /> -->
+		<!-- </junitreport> -->
 	</target>
 
 
