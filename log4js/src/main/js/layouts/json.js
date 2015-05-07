@@ -35,7 +35,7 @@ Log4js.JSONLayout.prototype = Log4js.extend(new Log4js.Layout(), /** @lends Log4
 		
 		jsonString += "\t\"logger\": \"" +  loggingEvent.categoryName + "\",\n";
 		jsonString += "\t\"level\": \"" +  loggingEvent.level.toString() + "\",\n";
-		jsonString += "\t\"message\": \"" +  loggingEvent.message + "\",\n";
+		jsonString += this.formatMessage(loggingEvent.message);
 		jsonString += "\t\"referer\": \"" + referer + "\",\n"; 
 		jsonString += "\t\"useragent\": \"" + useragent + "\",\n"; 
 		jsonString += "\t\"timestamp\": \"" +  this.df.formatDate(loggingEvent.startTime, "yyyy-MM-ddThh:mm:ssZ") + "\",\n";
@@ -44,6 +44,42 @@ Log4js.JSONLayout.prototype = Log4js.extend(new Log4js.Layout(), /** @lends Log4
         
         return jsonString;
 	},
+
+  /**
+   * Writes message object or string into given string stream.
+   */
+  formatMessage: function(message) {
+    var stream = "";
+    if((typeof message) == "string") {
+      stream += "\t\"message\": \"" + message + "\",\n";
+    } else if((typeof message) == "object") {
+      if("message" in message) {
+        stream += "\t\"message\": \"" + message.message + "\",\n";
+      }
+      for(var property in message) {
+        if(property == "message") continue;
+        var val = message[property];
+        if(val instanceof Date)
+          stream += "\t\"" + property + "_dt\": \"" + this.df.formatDate(val, "yyyy-MM-ddThh:mm:ssZ") + "\",\n";
+        else {
+          switch(typeof val) {
+          case "string":
+            stream += "\t\"" + property + "_s\": \"" + val + "\",\n";
+            break;
+          case "number":
+            stream += "\t\"" + property + "_l\": " + val + ",\n";
+            break;
+          default:
+            stream += "\t\"" + property + "_s\": \"" + val.toString() + "\",\n";
+            break;
+          }
+        }
+      }
+    } else {
+      stream += "\t\"message\": \"" + message.toString() + "\",\n";
+    }
+    return stream;
+  },
 	/** 
 	 * Returns the content type output by this layout. 
 	 * @return The base class returns "text/xml".

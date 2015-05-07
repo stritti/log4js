@@ -197,9 +197,15 @@
 		<property name="footer" value="Log4js - Logging API for JavaScript" />
 		<property name="logo" value="${basedir}/log4js-site/logo/1.0/exports/1.0_70px.jpg" />
 
-		<exec executable="perl">
-			<arg line="${tools.dir}/JSDoc/JSDoc-${tools.jsdoc.version}/jsdoc.pl -r &quot;${src.dir}/js&quot; -d &quot;${apidoc.dir}&quot; -project-name &quot;${ant.project.name} ${version}&quot; -page-footer &quot;${footer}&quot;  -logo &quot;${logo}&quot;" />
+		<exec executable="cmd">
+			<arg line="/c" />
+			<arg line="grunt" />
+			<arg line="jsdoc" />
+			<!-- <arg line="${tools.dir}/JSDoc/JSDoc-${tools.jsdoc.version}/jsdoc.pl -r &quot;${src.dir}/js&quot; -d &quot;${apidoc.dir}&quot; -project-name &quot;${ant.project.name} ${version}&quot; -page-footer &quot;${footer}&quot;  -logo &quot;${logo}&quot;" /> -->
 		</exec>
+		<copy todir="${apidoc.dir}">
+			<fileset dir="log4js/target/docs/"></fileset>
+		</copy>
 	</target>
 
 
@@ -207,9 +213,14 @@
           target: jslint              
          ================================= -->
 	<target name="jslint" depends="init" description="--> verify syntax of JavaScripts">
-		<exec executable="grunt" failonerror="false" dir="${src.base}">
+		<exec executable="cmd" failonerror="false" dir="${src.base}">
+			<arg line="/c" />
+			<arg line="grunt" />
 			<arg line="jshint" />
 		</exec>
+		<!-- <exec executable="grunt" failonerror="false" dir="${src.base}"> -->
+		<!-- 	<arg line="jshint" /> -->
+		<!-- </exec> -->
 	</target>
 
 	<target name="doc" depends="doc.api" description="generate documentation">

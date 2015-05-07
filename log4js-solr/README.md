@@ -13,6 +13,9 @@ You can send arbitrary fields with with underscored suffixes like "collected_mon
 You might be interested in _t (text), _s (string), _b (boolean), _f (float), _dt (date/time). Use final 's' to mark
 multivalued field. See schema.xml for details about other types. Feel free to change core schema !
 
+Check your jetty version in $SOLR_HOME/server/lib/ directory and download corresponding jetty-servlets.jar from
+http://central.maven.org/maven2/org/eclipse/jetty/jetty-servlets/
+
 Patch your $SOLR_HOME/server/webapps/solr.war/WEB-INF/web.xml (this might require you unzip solr.war) with CORS filter:
 
 ```xml
@@ -67,3 +70,4 @@ Known Issues
 ------------
 
 1. Anybody can screw up your logs, because update is available to anybody. Should be fixed with Jetty filters.
+2. Exceptions parameter handling.
