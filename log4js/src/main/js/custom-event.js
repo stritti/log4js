@@ -38,7 +38,7 @@ Log4js.CustomEvent.prototype = {
 				this.listeners[i](handler);
 			}
 			catch (e) {
-				log4jsLogger && log4jsLogger.warn("Could not run the listener " + this.listeners[i] + ". \n" + e);
+				if(log4jsLogger) log4jsLogger.warn("Could not run the listener " + this.listeners[i] + ". \n" + e);
 			}
 		}
 	},

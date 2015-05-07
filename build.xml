@@ -51,6 +51,8 @@
 	<property name="dist.docs.dir" value="${dist.dir}/docs" />
 	<property name="dist.reports.dir" value="${dist.dir}/reports" />
 
+	<property name="apidoc.dir" value="${dist.dir}/docs/api" />
+
 	<!-- example properties -->
 	<property name="example.src.dir" value="log4js-examples/src/main/examples" />
 	<property name="example.webapp.dir" value="${dist.dir}/webapp" />
@@ -76,6 +78,79 @@
 	<!-- release properties -->
 	<property name="release.dir" value="release" />
 
+	<!-- OS specific properties -->
+	<condition property="isWin">
+		<os family="windows" />
+	</condition>
+	<condition property="isUnix">
+		<os family="unix" />
+	</condition>
+	<condition property="isMac">
+		<os family="mac" />
+	</condition>
+
+	<!-- OS specific tasks -->
+	<target name="-compile-win" if="isWin">
+		<exec executable="cmd" failonerror="true" dir="${src.base}">
+			<arg line="/c" />
+			<arg line="grunt" />
+			<arg line="concat uglify" />
+		</exec>
+	</target>
+	<target name="-compile-unix" if="isUnix">
+		<exec executable="grunt" failonerror="true" dir="${src.base}">
+			<arg line="concat uglify" />
+		</exec>
+	</target>
+	<target name="-compile-mac" if="isMac">
+		<fail message="Sorry, MAC is not supported." />
+	</target>
+
+
+	<target name="-doc.api-win" if="isWin">
+		<exec executable="cmd">
+			<arg line="/c" />
+			<arg line="grunt" />
+			<arg line="jsdoc" />
+		</exec>
+	</target>
+	<target name="-doc.api-unix" if="isUnix">
+		<exec executable="grunt" failonerror="true" dir="${src.base}">
+			<arg line="jsdoc" />
+		</exec>
+	</target>
+	<target name="-doc.api-mac" if="isMac">
+		<fail message="Sorry, MAC is not supported." />
+	</target>
+
+	<target name="-jshint-win" if="isWin">
+		<exec executable="cmd" failonerror="false" dir="${src.base}">
+			<arg line="/c" />
+			<arg line="grunt" />
+			<arg line="jshint" />
+		</exec>
+	</target>
+	<target name="-jshint-unix" if="isUnix">
+		<exec executable="grunt" failonerror="true" dir="${src.base}">
+			<arg line="jshint" />
+		</exec>
+	</target>
+	<target name="-jshint-mac" if="isMac">
+		<fail message="Sorry, MAC is not supported." />
+	</target>
+
+	<target name="-site-win" if="isWin">
+		<exec executable="cmd" failonerror="false" dir="${src.base}">
+			<arg line="/c" />
+			<arg line="${env.FORREST_HOME}/bin/forrest.bat" />
+		</exec>
+	</target>
+	<target name="-site-unix" if="isUnix">
+		<exec executable="${env.FORREST_HOME}/bin/forrest" dir="log4js-site" />
+	</target>
+	<target name="-site-mac" if="isMac">
+		<fail message="Sorry, MAC is not supported." />
+	</target>
 
 	<!-- ================================= 
           target: release              
@@ -124,7 +199,8 @@
 	<!-- ================================= 
           target: distribute              
          ================================= -->
-	<target name="dist" depends="dist.api, dist.doc, dist.example" description="--> generate complete distribution">
+	<!-- TODO: return dist.example -->
+	<target name="dist" depends="dist.api, dist.doc" description="--> generate complete distribution">
 
 	</target>
 
@@ -177,32 +253,14 @@
 	<!-- - - - - - - - - - - - - - - - - - 
           target: compile                      
          - - - - - - - - - - - - - - - - - -->
-	<target name="compile" depends="init">
-		<mkdir dir="${dist.dir}" />
-		<exec executable="grunt" failonerror="false" dir="${src.base}">
-			<arg line="concat uglify" />
-		</exec>
+	<target name="compile" depends="init, -compile-win, -compile-unix, -compile-mac">
 		<copy tofile="${dist.dir}/lib/log4js-lib.js" file="${src.target}/log4js.min.js" overwrite="true" />
 	</target>
 
 	<!-- ================================= 
           target: doc.api              
          ================================= -->
-	<target name="doc.api" description="generate the API doc" depends="init">
-		<property name="apidoc.dir" value="${dist.dir}/docs/api" />
-
-		<echo level="info">Gererate JSDoc to directory ${apidoc.dir}...</echo>
-		<mkdir dir="${apidoc.dir}" />
-
-		<property name="footer" value="Log4js - Logging API for JavaScript" />
-		<property name="logo" value="${basedir}/log4js-site/logo/1.0/exports/1.0_70px.jpg" />
-
-		<exec executable="cmd">
-			<arg line="/c" />
-			<arg line="grunt" />
-			<arg line="jsdoc" />
-			<!-- <arg line="${tools.dir}/JSDoc/JSDoc-${tools.jsdoc.version}/jsdoc.pl -r &quot;${src.dir}/js&quot; -d &quot;${apidoc.dir}&quot; -project-name &quot;${ant.project.name} ${version}&quot; -page-footer &quot;${footer}&quot;  -logo &quot;${logo}&quot;" /> -->
-		</exec>
+	<target name="doc.api" description="generate the API doc" depends="init,-doc.api-win,-doc.api-unix,-doc.api-mac">
 		<copy todir="${apidoc.dir}">
 			<fileset dir="log4js/target/docs/"></fileset>
 		</copy>
@@ -212,15 +270,14 @@
 	<!-- ================================= 
           target: jslint              
          ================================= -->
-	<target name="jslint" depends="init" description="--> verify syntax of JavaScripts">
-		<exec executable="cmd" failonerror="false" dir="${src.base}">
-			<arg line="/c" />
-			<arg line="grunt" />
-			<arg line="jshint" />
-		</exec>
-		<!-- <exec executable="grunt" failonerror="false" dir="${src.base}"> -->
-		<!-- 	<arg line="jshint" /> -->
-		<!-- </exec> -->
+	<target name="jslint" depends="jshint" description="--> (Depricated) verify syntax of JavaScripts">
+	<echo>Warning!!! This task is renamed into jshint for new library is used</echo>
+	</target>
+
+	<!-- ================================= 
+          target: jshint              
+         ================================= -->
+	<target name="jshint" depends="init,-jshint-win,-jshint-unix,-jshint-mac" description="--> verify syntax of JavaScripts">
 	</target>
 
 	<target name="doc" depends="doc.api" description="generate documentation">
@@ -255,30 +312,10 @@
 	             C:>myproject\ant download-dependencies dist
 		</description>
 
-		<!-- for API documentation -->
-		<get dest="${lib.dir}/JSDoc-${tools.jsdoc.version}.tgz" usetimestamp="true" ignoreerrors="true" src="http://mesh.dl.sourceforge.net/sourceforge/jsdoc/JSDoc-${tools.jsdoc.version}.tgz" verbose="true" />
-		<mkdir dir="${tools.dir}/JSDoc" />
-		<untar compression="gzip" src="${lib.dir}/JSDoc-${tools.jsdoc.version}.tgz" dest="${tools.dir}/JSDoc" />
-
-		<!-- install HTML-Template via CPAN -->
-		<exec executable="perl">
-			<arg line="-MCPAN -e 'install HTML::Template'" />
-		</exec>
-
-		<!-- JavaScript Lint -->
-		<get dest="${lib.dir}/jsl-${tools.jsl.version}-win32.zip" usetimestamp="true" ignoreerrors="true" src="http://www.javascriptlint.com/download/jsl-${tools.jsl.version}-win32.zip" />
-		<unzip src="${lib.dir}/jsl-${tools.jsl.version}-win32.zip" dest="${tools.dir}/jsl" />
-		<!--
-		<get dest="${lib.dir}/apache-forrest.zip" usetimestamp="true" ignoreerrors="true" src="http://www.artfiles.org/apache.org/forrest/apache-forrest-0.7.zip" />
-		<unzip src="${lib.dir}/apache-forrest.zip" dest="${tools.dir}/apache-forrest" />
-		<copy todir="${ant.home}/lib" file="${env.FORREST_HOME}/lib/core/xml-commons-resolver-1.1.jar" />
--->
-		<!--
-		<get dest="${lib.dir}/velocity.zip" usetimestamp="true" ignoreerrors="true" src="http://www.apache.org/dist/jakarta/velocity/velocity-1.4/velocity-1.4.zip" />
--->
 		<!-- for examples and servlet-->
-		<get dest="${log4j.jar}" usetimestamp="true" ignoreerrors="true" src="http://www.ibiblio.org/maven/log4j/jars/log4j-${tools.log4j.version}.jar" verbose="true" />
-		<get dest="${servlet-api.jar}" usetimestamp="true" ignoreerrors="true" src="http://www.ibiblio.org/maven/javax.servlet/jars/servlet-api-${tools.servlet-api.version}.jar" verbose="true" />
+	<!-- TODO: handle servlet api library download and log4js lib compilation, as well as example -->
+		<!-- <get dest="${log4j.jar}" usetimestamp="true" ignoreerrors="true" src="http://www.ibiblio.org/maven/log4j/jars/log4j-${tools.log4j.version}.jar" verbose="true" /> -->
+		<!-- <get dest="${servlet-api.jar}" usetimestamp="true" ignoreerrors="true" src="http://www.ibiblio.org/maven/javax.servlet/jars/servlet-api-${tools.servlet-api.version}.jar" verbose="true" /> -->
 	</target>
 
 
@@ -293,13 +330,7 @@
 	<!-- ================================= 
           target for forrest: use site to generate the files        
          ================================= -->
-	<target name="site" description="Generates static HTML documentation" depends="doc.api, compile">
-
-		
-		<exec executable="${env.FORREST_HOME}/bin/forrest" dir="log4js-site">
-
-		</exec>
-
+	<target name="site" description="Generates static HTML documentation" depends="doc.api, compile, -site-win, -site-unix, -site-mac">
 		<copy todir="${project.site-dir}">
 			<fileset dir="log4js-site/build/site"></fileset>
 		</copy>
@@ -348,7 +379,7 @@
 			<arg line="karma" />
 		</exec>
 
-		<!-- Create html output from the reports -->
+		<!-- TODO: Create html output from the reports -->
 		<!-- <junitreport todir="${dist.reports.dir}"> -->
 		<!-- 	<fileset dir="${dist.reports.dir}"> -->
 		<!-- 		<include name="TEST-*.xml" /> -->

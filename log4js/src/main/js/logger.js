@@ -115,15 +115,6 @@ Log4js.Logger.prototype = {
 		}
 		return false;
 	},
-	/** 
-	 * Debug messages 
-	 * @param message {Object} message to be logged
-	 */
-	debug: function(message) {
-		if (this.isDebugEnabled()) {
-			this.log(Log4js.Level.DEBUG, message, null);
-		}
-	},
 	/**
 	 * Debug messages 
 	 * @param {Object} message  message to be logged
@@ -144,15 +135,6 @@ Log4js.Logger.prototype = {
 	/** 
 	 * logging info messages 
 	 * @param {Object} message  message to be logged
-	 */
-	info: function(message) {
-		if (this.isInfoEnabled()) {
-			this.log(Log4js.Level.INFO, message, null);
-		}
-	},
-	/** 
-	 * logging info messages 
-	 * @param {Object} message  message to be logged
 	 * @param {Throwable} throwable  
 	 */
 	info: function(message, throwable) {
@@ -169,12 +151,6 @@ Log4js.Logger.prototype = {
 	},
 
 	/** logging warn messages */
-	warn: function(message) {
-		if (this.isWarnEnabled()) {
-			this.log(Log4js.Level.WARN, message, null);
-		}
-	},
-	/** logging warn messages */
 	warn: function(message, throwable) {
 		if (this.isWarnEnabled()) {
 			this.log(Log4js.Level.WARN, message, throwable);
@@ -188,12 +164,6 @@ Log4js.Logger.prototype = {
 		return false;
 	},
 	/** logging error messages */
-	error: function(message) {
-		if (this.isErrorEnabled()) {
-			this.log(Log4js.Level.ERROR, message, null);
-		}
-	},
-	/** logging error messages */
 	error: function(message, throwable) {
 		if (this.isErrorEnabled()) {
 			this.log(Log4js.Level.ERROR, message, throwable);
@@ -205,12 +175,6 @@ Log4js.Logger.prototype = {
 			return true;
 		}
 		return false;
-	},
-	/** logging fatal messages */
-	fatal: function(message) {
-		if (this.isFatalEnabled()) {
-			this.log(Log4js.Level.FATAL, message, null);
-		}
 	},
 	/** logging fatal messages */
 	fatal: function(message, throwable) {

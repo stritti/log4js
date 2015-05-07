@@ -66,8 +66,8 @@ Log4js.DateFormatter.prototype = {
 		var os = Math.abs(date.getTimezoneOffset());
 		var h = String(Math.floor(os/60));
 		var m = String(os%60);
-		h.length == 1? h = "0"+h:1;
-		m.length == 1? m = "0"+m:1;
+		if(h.length == 1) h = "0" + h;
+		if(m.length == 1) m = "0" + m;
 		return date.getTimezoneOffset() < 0 ? "+"+h+m : "-"+h+m;
 	}
 };

@@ -76,7 +76,7 @@ var Log4js = {
 	getLogger: function(categoryName) {
 		
 		// Use default logger if categoryName is not specified or invalid
-		if (!(typeof categoryName == "string")) {
+		if (typeof categoryName != "string") {
 			categoryName = "[default]";
 		}
 

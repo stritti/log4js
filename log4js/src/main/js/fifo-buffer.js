@@ -5,7 +5,7 @@
  */
 Log4js.FifoBuffer = function()
 {
-  this.array = new Array();
+  this.array = [];
 };
 
 Log4js.FifoBuffer.prototype = {
