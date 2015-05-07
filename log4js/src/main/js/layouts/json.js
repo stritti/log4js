@@ -38,7 +38,7 @@ Log4js.JSONLayout.prototype = Log4js.extend(new Log4js.Layout(), /** @lends Log4
 		jsonString += this.formatMessage(loggingEvent.message);
 		jsonString += "\t\"referer\": \"" + referer + "\",\n"; 
 		jsonString += "\t\"useragent\": \"" + useragent + "\",\n"; 
-		jsonString += "\t\"timestamp\": \"" +  this.df.formatDate(loggingEvent.startTime, "yyyy-MM-ddThh:mm:ssZ") + "\",\n";
+		jsonString += "\t\"timestamp\": \"" +  this.df.formatUTCDate(loggingEvent.startTime, "yyyy-MM-ddThh:mm:ssZ") + "\",\n";
 		jsonString += "\t\"exception\": \"" +  loggingEvent.exception + "\"\n"; 
 		jsonString += "}}";      
         
@@ -60,7 +60,7 @@ Log4js.JSONLayout.prototype = Log4js.extend(new Log4js.Layout(), /** @lends Log4
         if(property == "message") continue;
         var val = message[property];
         if(val instanceof Date)
-          stream += "\t\"" + property + "_dt\": \"" + this.df.formatDate(val, "yyyy-MM-ddThh:mm:ssZ") + "\",\n";
+          stream += "\t\"" + property + "_dt\": \"" + this.df.formatUTCDate(val, "yyyy-MM-ddThh:mm:ssZ") + "\",\n";
         else {
           switch(typeof val) {
           case "string":

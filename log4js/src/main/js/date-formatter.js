@@ -47,7 +47,35 @@ Log4js.DateFormatter.prototype = {
 	  vDateString = vDateString.replace(/O/g, vTimeZone);
 	  return vDateString;
 	},
-		
+	/**
+	 * Formats the given date by the given pattern in UTC without timezone specific information.<br />
+	 * Following switches are supported:
+	 * <ul>
+	 * <li>yyyy: The year</li>
+	 * <li>MM: the month</li>
+	 * <li>dd: the day of month<li>
+	 * <li>hh: the hour<li>
+	 * <li>mm: minutes</li>
+	 * </ul>
+	 * @param {Date} vDate the date to format
+	 * @param {String} vFormat the format pattern
+	 * @return {String} formatted date string
+	 * @static
+	 */
+	formatUTCDate : function(vDate, vFormat) {
+		var vDay = this.addZero(vDate.getUTCDate());
+		var vMonth = this.addZero(vDate.getUTCMonth()+1);
+		var vYearLong = this.addZero(vDate.getUTCFullYear());
+		var vYearShort = this.addZero(vDate.getUTCFullYear().toString().substring(3,4));
+		var vYear = (vFormat.indexOf("yyyy")>-1?vYearLong:vYearShort);
+		var vHour	 = this.addZero(vDate.getUTCHours());
+		var vMinute = this.addZero(vDate.getUTCMinutes());
+		var vSecond = this.addZero(vDate.getUTCSeconds());
+		var vDateString = vFormat.replace(/dd/g, vDay).replace(/MM/g, vMonth).replace(/y{1,4}/g, vYear);
+		vDateString = vDateString.replace(/hh/g, vHour).replace(/mm/g, vMinute).replace(/ss/g, vSecond);
+		return vDateString;
+	},
+
 	/**
 	 * @private
 	 * @static
@@ -55,7 +83,7 @@ Log4js.DateFormatter.prototype = {
 	addZero : function(vNumber) {
 	  return ((vNumber < 10) ? "0" : "") + vNumber;
 	},
-	
+
 	/**
 	 * Formates the TimeOffest
 	 * Thanks to http://www.svendtofte.com/code/date_format/
