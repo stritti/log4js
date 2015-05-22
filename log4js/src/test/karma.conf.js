@@ -9,7 +9,7 @@ module.exports = function(config) {
         // list of files / patterns to load in the browser
         files : [
             'node_modules/chai/chai.js',
-            'target/files/log4js/main/js/log4js.js',
+            'target/log4js.min.js',
             'src/test/js/unit/**/*.js',
             'src/test/js/unit/*.js'
             // 'test/functional/**/*.js',

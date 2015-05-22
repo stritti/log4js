@@ -7,7 +7,7 @@
   ],
   "description": "Log4js - The Logging Framework for JavaScript",
   "main": [
-    "src/main/js/log4js.js"
+    "target/log4js.js"
   ],
   "ignore": [
   ],
