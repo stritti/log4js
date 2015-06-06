@@ -2,7 +2,7 @@
   "name": "log4js",
   "title": "Log4js - The Logging API for JavaScript",
   "description": "Log4js - The Logging Framework for JavaScript",
-  "version": "1.2.13",
+  "version": "2.0.0Beta1",
   "main": "log4js/src/main/js/log4js.js",
   "authors": [
     "stritti (https://github.com/stritti)"
