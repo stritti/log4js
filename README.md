@@ -1,10 +1,8 @@
-[![Github Releases](https://img.shields.io/github/downloads/atom/atom/latest/total.svg)]()
-[![Apache License][license-image]][license-url]
+[![Apache License](http://img.shields.io/badge/license-Apache%202.0-blue.svg?style=flat)](LICENSE.txt)
+[![Github Releases](https://img.shields.io/github/downloads/atom/atom/latest/total.svg)](https://github.com/stritti/log4js/releases)
 [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
 [![Build Status](https://secure.travis-ci.org/stritti/log4js.png?branch=master)](http://travis-ci.org/stritti/log4js)
 
-[license-image]: http://img.shields.io/badge/license-Apache%202.0-blue.svg?style=flat
-[license-url]: LICENSE
 Log4js
 ======
 
@@ -20,3 +18,5 @@ The website of Log4js: http://stritti.github.io/log4js/
 There is a conversion of this log4js framework to work with node.js: https://github.com/nomiddlename/log4js-node
 
 [![Analytics](https://ga-beacon.appspot.com/UA-327996-12/stritti/log4js)](https://github.com/igrigorik/ga-beacon)
+[license-image]: http://img.shields.io/badge/license-Apache%202.0-blue.svg?style=flat
+[license-url]: LICENSE.txt
