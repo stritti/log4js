@@ -18,7 +18,7 @@
 	XSD of log4js.
 	
 	@version 1.0
-	@author Stephan Strittmatter - http://jroller.com/page/stritti
+	@author Stephan Strittmatter - https://github.com/stritti
 -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://stritti.github.io/log4js//2007/log4js/" xmlns:log4js="http://stritti.github.io/log4js//2007/log4js/">
 	<xs:element name="eventSet">

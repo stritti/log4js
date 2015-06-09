@@ -37,7 +37,7 @@
  * </pre>
  *
  * @version 1.0.0
- * @author Stephan Strittmatter - http://jroller.com/page/stritti
+ * @author Stephan Strittmatter - https://github.com/stritti
  * @author Seth Chisamore - http://www.chisamore.com
  * @since 2005-05-20
  * @static
