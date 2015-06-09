@@ -1,5 +1,10 @@
+[![Github Releases](https://img.shields.io/github/downloads/atom/atom/latest/total.svg)]()
+[![Apache License][license-image]][license-url]
 [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
 [![Build Status](https://secure.travis-ci.org/stritti/log4js.png?branch=master)](http://travis-ci.org/stritti/log4js)
+
+[license-image]: http://img.shields.io/badge/license-Apache%202.0-blue.svg?style=flat
+[license-url]: LICENSE
 Log4js
 ======
 
