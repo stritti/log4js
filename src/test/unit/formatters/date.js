@@ -49,14 +49,14 @@ describe('DateFormatter', () => {
   it('format date timezone offset', () => {
     const dateFormatter = new DateFormatter();
     const testDate = new Date(2006, 0, 2, 3, 4, 6, 7);
-    expect(dateFormatter.formatDate(testDate, 'O')).to.equal('+0100');
+    expect(dateFormatter.formatDate(testDate, 'O')).to.match(/(\+|-)\d\d\d\d/);
   });
 
   it('format date default', () => {
     const dateFormatter = new DateFormatter();
     const testDate = new Date(2006, 0, 2, 3, 4, 6, 7);
     expect(dateFormatter.formatDate(testDate, DateFormatter.DEFAULT_DATE_FORMAT))
-      .to.equal('2006-01-02T03:04:06+0100');
+      .to.match(/2006-01-02T03:04:06(\+|-)\d\d\d\d/);
   });
 
   it('format date', () => {

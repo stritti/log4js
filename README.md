@@ -1,4 +1,4 @@
-[![Apache License](http://img.shields.io/badge/license-Apache%202.0-blue.svg?style=flat)](LICENSE.txt)
+[![Apache License](http://img.shields.io/badge/license-Apache%202.0-blue.svg?style=flat)](LICENSE.txt) [![Build Status](https://travis-ci.org/peterjuras/log4js.svg?branch=master)](https://travis-ci.org/peterjuras/log4js)
 
 Log4js - ES6 Port
 ======
