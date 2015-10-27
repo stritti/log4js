@@ -41,6 +41,7 @@
   },
   "jspm": {
     "main": "index",
+    "format": "es6",
     "directories": {
       "baseURL": "lib",
       "lib": "lib"
