@@ -6,7 +6,6 @@ System.config({
     "optional": [
       "runtime",
       "optimisation.modules.system",
-      "es7.classProperties"
     ]
   },
   paths: {

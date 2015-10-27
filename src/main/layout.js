@@ -2,27 +2,27 @@
 // Use this Layout as "interface" for other Layouts. It is doing nothing.
 class Layout {
   // Implement this method to create your own layout format.
-  format = loggingEvent => { // eslint-disable-line
+  format(loggingEvent) { // eslint-disable-line
     return '';
   }
 
   // Returns the content type output by this layout.
-  getContentType = () => {
+  getContentType() {
     return 'text/plain';
   }
 
   // Returns the header for the layout format. The base class returns null.
-  getHeader = () => {
+  getHeader() {
     return null;
   }
 
   // Returns the footer for the layout format. The base class returns null.
-  getFooter = () => {
+  getFooter() {
     return null;
   }
 
   // Separator between events
-  getSeparator = () => {
+  getSeparator() {
     return '';
   }
 }

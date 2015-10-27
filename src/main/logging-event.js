@@ -5,9 +5,9 @@ class LoggingEvent {
     this.message = message;
     this.exception = exception;
     this.logger = logger;
-  }
 
-  startTime = new Date();
+    this.startTime = new Date();
+  }
 }
 
 export default LoggingEvent;

@@ -10,35 +10,42 @@ import LoggingEvent from './logging-event.js';
 
 class Logger {
   constructor(name) {
-    if (name) {
-      this.category = name;
-    }
+    this.category = name || '';
+    this.appenders = [new Appender(this)];
+    this.loggingEvents = [];
+    this.level = Level.FATAL;
+    this.dateformat = DateFormatter.DEFAULT_DATE_FORMAT;
+    this.onlog = new CustomEvent();
+    this.onclear = new CustomEvent();
 
-    this.appenders.push(new Appender(this));
+    this.addAppender = this.addAppender.bind(this);
+    this.setAppenders = this.setAppenders.bind(this);
+    this.setLevel = this.setLevel.bind(this);
+    this.log = this.log.bind(this);
+    this.clear = this.clear.bind(this);
+    this.isLevelEnabled = this.isLevelEnabled.bind(this);
+    this.logIfEnabled = this.logIfEnabled.bind(this);
+    this.trace = this.trace.bind(this);
+    this.debug = this.debug.bind(this);
+    this.info = this.info.bind(this);
+    this.warn = this.warn.bind(this);
+    this.error = this.error.bind(this);
+    this.fatal = this.fatal.bind(this);
+    this.windowError = this.windowError.bind(this);
+    this.setDateFormat = this.setDateFormat.bind(this);
+    this.getFormattedTimestamp = this.getFormattedTimestamp.bind(this);
 
     // if multiple log objects are instantiated this will only log to the log
     // object that is declared last can't seem to get the attachEvent method to
     // work correctly
     try {
-      window.onerror = this.windowError.bind(this);
+      window.onerror = this.windowError;
     } catch (exception) {
       // Fail silently
     }
   }
 
-  loggingEvents = [];
-  appenders = [];
-  category = '';
-  // Minimum log level
-  level = Level.FATAL;
-
-  dateformat = DateFormatter.DEFAULT_DATE_FORMAT;
-  dateformatter = new DateFormatter();
-
-  onlog = new CustomEvent();
-  onclear = new CustomEvent();
-
-  addAppender = appender => {
+  addAppender(appender) {
     if (appender instanceof Appender) {
       appender.setLogger(this);
       this.appenders.push(appender);
@@ -47,7 +54,7 @@ class Logger {
     }
   }
 
-  setAppenders = appenders => {
+  setAppenders(appenders) {
     // The following code has been disabled, since it seems unreasonable to
     // clear the logs just because the appenders will be set for the logger.
     // You should manually call 'logger.clear()' if you want to clear the logs
@@ -66,18 +73,18 @@ class Logger {
     }).value();
   }
 
-  setLevel = level => {
+  setLevel(level) {
     this.level = level;
   }
 
-  log = (logLevel, message, exception) => {
+  log(logLevel, message, exception) {
     const loggingEvent = new LoggingEvent(this.category, logLevel, message,
       exception, this);
     this.loggingEvents.push(loggingEvent);
     this.onlog.dispatch(loggingEvent);
   }
 
-  clear = () => {
+  clear() {
     try {
       this.loggingEvents = [];
       this.onclear.dispatch();
@@ -86,52 +93,52 @@ class Logger {
     }
   }
 
-  isLevelEnabled = logLevel => {
+  isLevelEnabled(logLevel) {
     return this.level.valueOf() <= logLevel.valueOf();
   }
 
-  logIfEnabled = (logLevel, message, exception) => {
+  logIfEnabled(logLevel, message, exception) {
     if (this.isLevelEnabled(logLevel)) {
       this.log(logLevel, message, exception);
     }
   }
 
-  trace = message => {
+  trace(message) {
     this.logIfEnabled(Level.TRACE, message);
   }
 
-  debug = (message, throwable) => {
+  debug(message, throwable) {
     this.logIfEnabled(Level.DEBUG, message, throwable);
   }
 
-  info = (message, throwable) => {
+  info(message, throwable) {
     this.logIfEnabled(Level.INFO, message, throwable);
   }
 
-  warn = (message, throwable) => {
+  warn(message, throwable) {
     this.logIfEnabled(Level.WARN, message, throwable);
   }
 
-  error = (message, throwable) => {
+  error(message, throwable) {
     this.logIfEnabled(Level.ERROR, message, throwable);
   }
 
-  fatal = (message, throwable) => {
+  fatal(message, throwable) {
     this.logIfEnabled(Level.FATAL, message, throwable);
   }
 
-  windowError = (msg, url, line) => {
+  windowError(msg, url, line) {
     const message = `Error in (${url || window.location}) on line ${line}` +
       ` with message (${msg})`;
     this.fatal(message);
   }
 
-  setDateFormat = format => {
+  setDateFormat(format) {
     this.dateformat = format;
   }
 
-  getFormattedTimestamp = date => {
-    return this.dateformatter.formatDate(date, this.dateformat);
+  getFormattedTimestamp(date) {
+    return DateFormatter.formatDate(date, this.dateformat);
   }
 }
 

@@ -1,19 +1,26 @@
 import _ from 'lodash';
 
 class CustomEvent {
-  listeners = [];
+  constructor() {
+    this.listeners = [];
 
-  addListener = method => {
+    this.addListener = this.addListener.bind(this);
+    this.removeListener = this.removeListener.bind(this);
+    this.dispatch = this.dispatch.bind(this);
+    this.findListenerIndexes = this.findListenerIndexes.bind(this);
+  }
+
+  addListener(method) {
     this.listeners.push(method);
   }
 
-  removeListener = method => {
+  removeListener(method) {
     _(this.findListenerIndexes(method)).forEach(index => {
       this.listeners.splice(index, 1);
     }).value();
   }
 
-  dispatch = handler => {
+  dispatch(handler) {
     _(this.listeners).forEach(listener => {
       try {
         listener(handler);
@@ -23,7 +30,7 @@ class CustomEvent {
     }).value();
   }
 
-  findListenerIndexes = method => {
+  findListenerIndexes(method) {
     return _(this.listeners)
       .filter(listener => listener === method)
       .map(listener => this.listeners.indexOf(listener))

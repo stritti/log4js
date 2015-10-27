@@ -2,18 +2,22 @@
 // on its own
 
 class Appender {
-  logger;
+  constructor() {
+    this.setLayout = this.setLayout.bind(this);
+    this.setLogger = this.setLogger.bind(this);
+    this.dispose = this.dispose.bind(this);
+  }
 
   // Appends the given loggingEvent to the appender specific log
   // 'loggingEvent' is from the type 'LoggingEvent'
-  doAppend = loggingEvent => {} // eslint-disable-line
+  doAppend(loggingEvent) {} // eslint-disable-line
 
   // Clears the logs produced by this appender
-  doClear = () => {}
+  doClear() {}
 
   // Set the layout for this appender
   // 'layout' is a from the type 'Layout'
-  setLayout = layout => {
+  setLayout(layout) {
     this.layout = layout;
   }
 
@@ -21,7 +25,7 @@ class Appender {
   // The appender will start listening to the onlog
   // and onclear events from the logger.
   // 'logger' is from the type 'Logger'
-  setLogger = logger => {
+  setLogger(logger) {
     logger.onlog.addListener(this.doAppend);
     logger.onclear.addListener(this.doClear);
 
@@ -32,7 +36,7 @@ class Appender {
   // This method should be called before the references to the Appender
   // will be gone, to allow the appender to remove itself from the
   // logging events
-  dispose = () => {
+  dispose() {
     this.logger.onlog.removeListener(this.doAppend);
     this.logger.onclear.removeListener(this.doClear);
 

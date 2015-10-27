@@ -15,19 +15,19 @@ import Logger from './src/main/logger';
 import ConsoleAppender from './src/main/appenders/console.js';
 import Level from './src/main/level.js';
 
-class Log4js {
+const Log4js = {
   // Current version of log4js.
-  static version = '0.0.1';
+  version: '0.0.1',
   // Date of logger initialized.
-  static applicationStartDate = new Date();
+  applicationStartDate: new Date(),
   // Hashtable of loggers.
-  static loggers = {};
+  loggers: {},
   // Quick access to the ConsoleAppender
-  static ConsoleAppender = ConsoleAppender;
+  ConsoleAppender: ConsoleAppender,
   // Quick access to the log levels
-  static Level = Level;
+  Level: Level,
   // Get a logger instance. Instance is cached on categroyName level.
-  static getLogger = categoryNameParam => {
+  getLogger: categoryNameParam => {
     // Use default logger if categoryName is not specified or invalid
     let categoryName;
     if (typeof categoryNameParam !== 'string') {
@@ -42,7 +42,7 @@ class Log4js {
     }
 
     return Log4js.loggers[categoryName];
-  }
-}
+  },
+};
 
 export default Log4js;

@@ -3,9 +3,15 @@ import Level from '../level.js';
 import SimpleLayout from '../layouts/simple.js';
 
 class ConsoleAppender extends Appender {
-  layout = new SimpleLayout();
+  constructor() {
+    super();
 
-  doAppend = loggingEvent => {
+    this.layout = new SimpleLayout();
+
+    this.doAppend = this.doAppend.bind(this);
+  }
+
+  doAppend(loggingEvent) {
     const logMessage = this.layout.format(loggingEvent);
 
     if (loggingEvent.level === Level.WARN && console.warn) {
@@ -17,11 +23,11 @@ class ConsoleAppender extends Appender {
     }
   }
 
-  doClear = () => {
+  doClear() {
     console.clear();
   }
 
-  toString = () => {
+  toString() {
     return 'Log4js.ConsoleAppender';
   }
 }
