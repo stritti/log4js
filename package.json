@@ -42,13 +42,6 @@
   "jspm": {
     "main": "index",
     "format": "es6",
-    "ignore": [
-      "test",
-      ".eslintrc",
-      ".travis.yml",
-      ".npmignore",
-      ".gitignore"
-    ],
     "directories": {
       "baseURL": "src",
       "lib": "src"
