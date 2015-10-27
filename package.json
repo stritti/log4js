@@ -42,9 +42,16 @@
   "jspm": {
     "main": "index",
     "format": "es6",
+    "ignore": [
+      "test",
+      ".eslintrc",
+      ".travis.yml",
+      ".npmignore",
+      ".gitignore"
+    ],
     "directories": {
-      "baseURL": "lib",
-      "lib": "lib"
+      "baseURL": "src",
+      "lib": "src"
     },
     "dependencies": {
       "lodash": "npm:lodash@^3.10.1"
