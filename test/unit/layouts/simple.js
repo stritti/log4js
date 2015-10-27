@@ -2,10 +2,10 @@
 /*  eslint-env mocha */
 
 import { expect } from 'chai';
-import Level from '../../../main/level.js';
-import Log4js from '../../../../index.js';
-import LoggingEvent from '../../../main/logging-event.js';
-import SimpleLayout from '../../../main/layouts/simple.js';
+import Level from '../../../src/level';
+import Log4js from '../../../src/index';
+import LoggingEvent from '../../../src/logging-event';
+import SimpleLayout from '../../../src/layouts/simple';
 
 describe('SimpleLayout', () => {
   it('interface', () => {

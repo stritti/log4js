@@ -3,9 +3,9 @@
 
 import { expect } from 'chai';
 import Sinon from 'sinon';
-import Log4js from '../../../../index.js';
-import LoggingEvent from '../../../main/logging-event.js';
-import SimpleLayout from '../../../main/layouts/simple.js';
+import Log4js from '../../../src/index';
+import LoggingEvent from '../../../src/logging-event';
+import SimpleLayout from '../../../src/layouts/simple';
 
 describe('Console Appender', () => {
   let sandbox;

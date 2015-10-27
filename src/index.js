@@ -11,9 +11,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import Logger from './src/main/logger';
-import ConsoleAppender from './src/main/appenders/console.js';
-import Level from './src/main/level.js';
+import Logger from './logger';
+import ConsoleAppender from './appenders/console';
+import Level from './level';
 
 const Log4js = {
   // Current version of log4js.

@@ -1,6 +1,6 @@
-import Appender from '../appender.js';
-import Level from '../level.js';
-import SimpleLayout from '../layouts/simple.js';
+import Appender from '../appender';
+import Level from '../level';
+import SimpleLayout from '../layouts/simple';
 
 class ConsoleAppender extends Appender {
   constructor() {

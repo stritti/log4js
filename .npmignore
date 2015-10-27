@@ -1,0 +1,5 @@
+src
+.eslintrc
+.gitignore
+.travis.yml
+config.js

@@ -2,11 +2,11 @@
 // Default appender is Appender, which is ignoring all messages. Please
 // use setAppender() to set a specific appender (e.g. WindowAppender).
 import _ from 'lodash';
-import Appender from './appender.js';
-import CustomEvent from './custom-event.js';
-import DateFormatter from './date-formatter.js';
-import Level from './level.js';
-import LoggingEvent from './logging-event.js';
+import Appender from './appender';
+import CustomEvent from './custom-event';
+import DateFormatter from './date-formatter';
+import Level from './level';
+import LoggingEvent from './logging-event';
 
 class Logger {
   constructor(name) {

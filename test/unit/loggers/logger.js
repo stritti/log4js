@@ -2,8 +2,8 @@
 /*  eslint-env mocha */
 
 import { expect } from 'chai';
-import Log4js from '../../../../index.js';
-import Logger from '../../../main/logger.js';
+import Log4js from '../../../src/index';
+import Logger from '../../../src/logger';
 
 describe('Logger', () => {
   it('returns default logger', () => {

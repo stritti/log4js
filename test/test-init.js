@@ -64,10 +64,9 @@ mocha.suite.on('pre-require', context => {
       mocha.globals(allowedMochaGlobals);
       mocha.run();
     }, err => {
-      console.error("Error loading test modules");
+      console.error('Error loading test modules');
       console.error(err);
     });
-
 });
 
 mocha.setup('bdd');

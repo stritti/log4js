@@ -2,7 +2,7 @@
 /*  eslint-env mocha */
 
 import { expect } from 'chai';
-import DateFormatter from '../../../main/date-formatter.js';
+import DateFormatter from '../../../src/date-formatter';
 
 describe('DateFormatter', () => {
   it('constant', () => {
