@@ -15,6 +15,7 @@ describe('Console Appender', () => {
 
     sandbox.stub(console, 'log');
     sandbox.stub(console, 'warn');
+    sandbox.stub(console, 'info');
     sandbox.stub(console, 'error');
   });
 
@@ -45,10 +46,30 @@ describe('Console Appender', () => {
     logger.debug(debug);
 
     Sinon.assert.notCalled(console.warn);
+    Sinon.assert.notCalled(console.info);
     Sinon.assert.notCalled(console.error);
     Sinon.assert.calledOnce(console.log);
 
     Sinon.assert.calledWithExactly(console.log, formattedMessage);
+  });
+
+  it('info logging', () => {
+    const logger = Log4js.getLogger('info');
+    const info = 'What an info!';
+    const formattedMessage = new SimpleLayout().format(
+      new LoggingEvent('info', Log4js.Level.INFO, info, undefined, logger));
+
+    logger.setLevel(Log4js.Level.INFO);
+    logger.addAppender(new Log4js.ConsoleAppender());
+
+    logger.info(info);
+
+    Sinon.assert.calledOnce(console.info);
+    Sinon.assert.notCalled(console.error);
+    Sinon.assert.notCalled(console.warn);
+    Sinon.assert.notCalled(console.log);
+
+    Sinon.assert.calledWithExactly(console.info, formattedMessage);
   });
 
   it('warning logging', () => {
@@ -64,6 +85,7 @@ describe('Console Appender', () => {
 
     Sinon.assert.calledOnce(console.warn);
     Sinon.assert.notCalled(console.error);
+    Sinon.assert.notCalled(console.info);
     Sinon.assert.notCalled(console.log);
 
     Sinon.assert.calledWithExactly(console.warn, formattedMessage);
@@ -82,6 +104,7 @@ describe('Console Appender', () => {
 
     Sinon.assert.notCalled(console.warn);
     Sinon.assert.calledOnce(console.error);
+    Sinon.assert.notCalled(console.info);
     Sinon.assert.notCalled(console.log);
 
     Sinon.assert.calledWithExactly(console.error, formattedMessage);

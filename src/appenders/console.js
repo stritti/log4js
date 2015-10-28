@@ -1,3 +1,5 @@
+/* eslint no-console:0 */
+
 import Appender from '../appender';
 import Level from '../level';
 import SimpleLayout from '../layouts/simple';
@@ -16,6 +18,8 @@ class ConsoleAppender extends Appender {
 
     if (loggingEvent.level === Level.WARN && console.warn) {
       console.warn(logMessage);
+    } else if (loggingEvent.level === Level.INFO && console.info) {
+      console.info(logMessage);
     } else if (loggingEvent.level.valueOf() >= Level.ERROR.valueOf() && console.error) {
       console.error(logMessage);
     } else {
