@@ -56,4 +56,19 @@ describe('DateFormatter', () => {
     expect(DateFormatter.formatDate(testDate, 'yyyy-MM-dd hh:mm:ss'))
       .to.equal('2006-01-02 03:04:06');
   });
+
+  it('format date in full time format', () => {
+    const testDateWithTwoZeros = new Date(2006, 0, 2, 3, 4, 6, 7);
+    const testDateWithOneZero = new Date(2006, 0, 2, 3, 4, 6, 70);
+    const testDateWithNoZeros = new Date(2006, 0, 2, 3, 4, 6, 700);
+
+    expect(DateFormatter.formatDate(testDateWithTwoZeros, DateFormatter.FULL_TIME_FORMAT))
+      .to.equal('2006-01-02-03-04-06-007');
+
+    expect(DateFormatter.formatDate(testDateWithOneZero, DateFormatter.FULL_TIME_FORMAT))
+      .to.equal('2006-01-02-03-04-06-070');
+
+    expect(DateFormatter.formatDate(testDateWithNoZeros, DateFormatter.FULL_TIME_FORMAT))
+      .to.equal('2006-01-02-03-04-06-700');
+  });
 });
