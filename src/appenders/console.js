@@ -36,4 +36,11 @@ class ConsoleAppender extends Appender {
   }
 }
 
+ConsoleAppender.getAppender = function getAppender() {
+  if (!ConsoleAppender._appender) {
+    ConsoleAppender._appender = new ConsoleAppender();
+  }
+  return ConsoleAppender._appender;
+};
+
 export default ConsoleAppender;

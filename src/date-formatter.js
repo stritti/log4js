@@ -85,6 +85,7 @@ function formatUTCDate(date, format) {
 const DateFormatter = {
   DEFAULT_DATE_FORMAT: 'yyyy-MM-ddThh:mm:ssO',
   FULL_TIME_FORMAT: 'yyyy-MM-dd-hh-mm-ss-mls',
+  SIMPLE_LOG_FORMAT: 'yyyy.MM.dd-hh:mm:ss',
   formatDate: formatDate,
   formatUTCDate: formatUTCDate,
   formatOffset: formatOffset,

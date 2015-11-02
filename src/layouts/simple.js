@@ -1,3 +1,4 @@
+import DateFormatter from '../date-formatter';
 import Layout from '../layout';
 
 class SimpleLayout extends Layout {
@@ -12,7 +13,8 @@ class SimpleLayout extends Layout {
   }
 
   format(loggingEvent) {
-    return `${loggingEvent.level.toString()} - ${loggingEvent.categoryName} - ${loggingEvent.message}${this.LINE_SEP}` +
+    return `${DateFormatter.formatDate(new Date(), DateFormatter.SIMPLE_LOG_FORMAT)} - ${loggingEvent.level.toString()}` +
+      ` - ${loggingEvent.categoryName} - ${loggingEvent.message}${this.LINE_SEP}` +
       `${loggingEvent.exception ? loggingEvent.exception + this.LINE_SEP : ''}`;
   }
 

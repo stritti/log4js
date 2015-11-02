@@ -2,13 +2,15 @@
 /*  eslint-env mocha */
 
 import { expect } from 'chai';
-import Sinon from 'sinon';
+import DateFormatter from '../../../src/date-formatter';
 import Log4js from '../../../src/index';
 import LoggingEvent from '../../../src/logging-event';
 import SimpleLayout from '../../../src/layouts/simple';
+import Sinon from 'sinon';
 
 describe('Console Appender', () => {
   let sandbox;
+  const simpleLogDateRegex = /\d\d\d\d\.\d\d\.\d\d-\d\d:\d\d:\d\d/;
 
   beforeEach(() => {
     sandbox = Sinon.sandbox.create();
@@ -27,11 +29,18 @@ describe('Console Appender', () => {
     const logger = Log4js.getLogger('console');
     expect(logger).to.be.ok;
 
-    const appender = new Log4js.ConsoleAppender();
+    const appender = Log4js.ConsoleAppender.getAppender();
     expect(appender).to.be.ok;
 
     appender.setLayout(new SimpleLayout());
     appender.setLogger(logger);
+  });
+
+  it('is singleton', () => {
+    const firstConsoleAppender = Log4js.ConsoleAppender.getAppender();
+    const secondConsoleAppender = Log4js.ConsoleAppender.getAppender();
+
+    expect(firstConsoleAppender).to.equal(secondConsoleAppender);
   });
 
   it('debug logging', () => {
@@ -39,9 +48,10 @@ describe('Console Appender', () => {
     const debug = 'My debug message';
     const formattedMessage = new SimpleLayout().format(
       new LoggingEvent('debug', Log4js.Level.DEBUG, debug, undefined, logger));
+    const formattedMessageWithoutDate = formattedMessage.substring(DateFormatter.SIMPLE_LOG_FORMAT.length);
 
-    logger.setLevel(Log4js.Level.ALL);
-    logger.addAppender(new Log4js.ConsoleAppender());
+    logger.setLevel(Log4js.Level.DEBUG);
+    logger.addAppender(Log4js.ConsoleAppender.getAppender());
 
     logger.debug(debug);
 
@@ -50,7 +60,29 @@ describe('Console Appender', () => {
     Sinon.assert.notCalled(console.error);
     Sinon.assert.calledOnce(console.log);
 
-    Sinon.assert.calledWithExactly(console.log, formattedMessage);
+    const logCall = console.log.getCall(0);
+    const logMessage = logCall.args[0];
+
+    const logDate = logMessage.substring(0, DateFormatter.SIMPLE_LOG_FORMAT.length);
+    const logRest = logMessage.substring(DateFormatter.SIMPLE_LOG_FORMAT.length);
+
+    expect(logDate).to.match(simpleLogDateRegex);
+    expect(logRest).to.equal(formattedMessageWithoutDate);
+  });
+
+  it('debug not logging when level not low enough', () => {
+    const logger = Log4js.getLogger('debug');
+    const debug = 'My debug message';
+
+    logger.setLevel(Log4js.Level.INFO);
+    logger.addAppender(Log4js.ConsoleAppender.getAppender());
+
+    logger.debug(debug);
+
+    Sinon.assert.notCalled(console.warn);
+    Sinon.assert.notCalled(console.info);
+    Sinon.assert.notCalled(console.error);
+    Sinon.assert.notCalled(console.log);
   });
 
   it('info logging', () => {
@@ -58,9 +90,10 @@ describe('Console Appender', () => {
     const info = 'What an info!';
     const formattedMessage = new SimpleLayout().format(
       new LoggingEvent('info', Log4js.Level.INFO, info, undefined, logger));
+    const formattedMessageWithoutDate = formattedMessage.substring(DateFormatter.SIMPLE_LOG_FORMAT.length);
 
     logger.setLevel(Log4js.Level.INFO);
-    logger.addAppender(new Log4js.ConsoleAppender());
+    logger.addAppender(Log4js.ConsoleAppender.getAppender());
 
     logger.info(info);
 
@@ -69,7 +102,29 @@ describe('Console Appender', () => {
     Sinon.assert.notCalled(console.warn);
     Sinon.assert.notCalled(console.log);
 
-    Sinon.assert.calledWithExactly(console.info, formattedMessage);
+    const logCall = console.info.getCall(0);
+    const logMessage = logCall.args[0];
+
+    const logDate = logMessage.substring(0, DateFormatter.SIMPLE_LOG_FORMAT.length);
+    const logRest = logMessage.substring(DateFormatter.SIMPLE_LOG_FORMAT.length);
+
+    expect(logDate).to.match(simpleLogDateRegex);
+    expect(logRest).to.equal(formattedMessageWithoutDate);
+  });
+
+  it('info not logging when level not low enough', () => {
+    const logger = Log4js.getLogger('info');
+    const info = 'What an info!';
+
+    logger.setLevel(Log4js.Level.WARN);
+    logger.addAppender(Log4js.ConsoleAppender.getAppender());
+
+    logger.info(info);
+
+    Sinon.assert.notCalled(console.info);
+    Sinon.assert.notCalled(console.error);
+    Sinon.assert.notCalled(console.warn);
+    Sinon.assert.notCalled(console.log);
   });
 
   it('warning logging', () => {
@@ -77,9 +132,10 @@ describe('Console Appender', () => {
     const warning = 'What a warning!';
     const formattedMessage = new SimpleLayout().format(
       new LoggingEvent('warning', Log4js.Level.WARN, warning, undefined, logger));
+    const formattedMessageWithoutDate = formattedMessage.substring(DateFormatter.SIMPLE_LOG_FORMAT.length);
 
     logger.setLevel(Log4js.Level.WARN);
-    logger.addAppender(new Log4js.ConsoleAppender());
+    logger.addAppender(Log4js.ConsoleAppender.getAppender());
 
     logger.warn(warning);
 
@@ -88,7 +144,29 @@ describe('Console Appender', () => {
     Sinon.assert.notCalled(console.info);
     Sinon.assert.notCalled(console.log);
 
-    Sinon.assert.calledWithExactly(console.warn, formattedMessage);
+    const logCall = console.warn.getCall(0);
+    const logMessage = logCall.args[0];
+
+    const logDate = logMessage.substring(0, DateFormatter.SIMPLE_LOG_FORMAT.length);
+    const logRest = logMessage.substring(DateFormatter.SIMPLE_LOG_FORMAT.length);
+
+    expect(logDate).to.match(simpleLogDateRegex);
+    expect(logRest).to.equal(formattedMessageWithoutDate);
+  });
+
+  it('warning not logging when level not low enough', () => {
+    const logger = Log4js.getLogger('warning');
+    const warning = 'What a warning!';
+
+    logger.setLevel(Log4js.Level.ERROR);
+    logger.addAppender(Log4js.ConsoleAppender.getAppender());
+
+    logger.warn(warning);
+
+    Sinon.assert.notCalled(console.warn);
+    Sinon.assert.notCalled(console.error);
+    Sinon.assert.notCalled(console.info);
+    Sinon.assert.notCalled(console.log);
   });
 
   it('error logging', () => {
@@ -96,9 +174,10 @@ describe('Console Appender', () => {
     const error = 'Something went horribly wrong!';
     const formattedMessage = new SimpleLayout().format(
       new LoggingEvent('error', Log4js.Level.ERROR, error, undefined, logger));
+    const formattedMessageWithoutDate = formattedMessage.substring(DateFormatter.SIMPLE_LOG_FORMAT.length);
 
     logger.setLevel(Log4js.Level.ERROR);
-    logger.addAppender(new Log4js.ConsoleAppender());
+    logger.addAppender(Log4js.ConsoleAppender.getAppender());
 
     logger.error(error);
 
@@ -107,6 +186,28 @@ describe('Console Appender', () => {
     Sinon.assert.notCalled(console.info);
     Sinon.assert.notCalled(console.log);
 
-    Sinon.assert.calledWithExactly(console.error, formattedMessage);
+    const logCall = console.error.getCall(0);
+    const logMessage = logCall.args[0];
+
+    const logDate = logMessage.substring(0, DateFormatter.SIMPLE_LOG_FORMAT.length);
+    const logRest = logMessage.substring(DateFormatter.SIMPLE_LOG_FORMAT.length);
+
+    expect(logDate).to.match(simpleLogDateRegex);
+    expect(logRest).to.equal(formattedMessageWithoutDate);
+  });
+
+  it('error not logging when level not low enough', () => {
+    const logger = Log4js.getLogger('error');
+    const error = 'Something went horribly wrong!';
+
+    logger.setLevel(Log4js.Level.FATAL);
+    logger.addAppender(Log4js.ConsoleAppender.getAppender());
+
+    logger.error(error);
+
+    Sinon.assert.notCalled(console.warn);
+    Sinon.assert.notCalled(console.error);
+    Sinon.assert.notCalled(console.info);
+    Sinon.assert.notCalled(console.log);
   });
 });
