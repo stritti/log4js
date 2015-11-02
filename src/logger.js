@@ -65,12 +65,11 @@ class Logger {
     // 	this.appenders[i].doClear();
     // }
     // -----------------------------------------
+    _(this.appenders).forEach(appender => appender.dispose()).value();
 
     this.appenders = appenders;
 
-    _(this.appenders).forEach(appender => {
-      appender.setLogger(this);
-    }).value();
+    _(this.appenders).forEach(appender => appender.setLogger(this)).value();
   }
 
   setLevel(level) {
