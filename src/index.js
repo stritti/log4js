@@ -16,8 +16,6 @@ import ConsoleAppender from './appenders/console';
 import Level from './level';
 
 const Log4js = {
-  // Current version of log4js.
-  version: '0.0.1',
   // Date of logger initialized.
   applicationStartDate: new Date(),
   // Hashtable of loggers.
