@@ -37,10 +37,12 @@ class Appender {
   // will be gone, to allow the appender to remove itself from the
   // logging events
   dispose() {
-    this.logger.onlog.removeListener(this.doAppend);
-    this.logger.onclear.removeListener(this.doClear);
+    if (this.logger) {
+      this.logger.onlog.removeListener(this.doAppend);
+      this.logger.onclear.removeListener(this.doClear);
 
-    this.logger = undefined;
+      this.logger = undefined;
+    }
   }
 }
 
