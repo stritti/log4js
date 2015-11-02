@@ -12,7 +12,6 @@
  * limitations under the License.
  */
 import Logger from './logger';
-import ConsoleAppender from './appenders/console';
 import Level from './level';
 
 const Log4js = {
@@ -20,8 +19,6 @@ const Log4js = {
   applicationStartDate: new Date(),
   // Hashtable of loggers.
   loggers: {},
-  // Quick access to the ConsoleAppender
-  ConsoleAppender: ConsoleAppender,
   // Quick access to the log levels
   Level: Level,
   // Get a logger instance. Instance is cached on categroyName level.
