@@ -12,15 +12,12 @@
  * limitations under the License.
  */
 import Logger from './logger';
-import Level from './level';
 
 const Log4js = {
   // Date of logger initialized.
   applicationStartDate: new Date(),
   // Hashtable of loggers.
   loggers: {},
-  // Quick access to the log levels
-  Level: Level,
   // Get a logger instance. Instance is cached on categroyName level.
   getLogger: categoryNameParam => {
     // Use default logger if categoryName is not specified or invalid

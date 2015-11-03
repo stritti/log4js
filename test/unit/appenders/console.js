@@ -2,7 +2,9 @@
 /*  eslint-env mocha */
 
 import { expect } from 'chai';
+import ConsoleAppender from '../../../src/appenders/console';
 import DateFormatter from '../../../src/date-formatter';
+import Level from '../../../src/level';
 import Log4js from '../../../src/index';
 import LoggingEvent from '../../../src/logging-event';
 import SimpleLayout from '../../../src/layouts/simple';
@@ -29,7 +31,7 @@ describe('Console Appender', () => {
     const logger = Log4js.getLogger('console');
     expect(logger).to.be.ok;
 
-    const appender = Log4js.ConsoleAppender.getAppender();
+    const appender = ConsoleAppender.getAppender();
     expect(appender).to.be.ok;
 
     appender.setLayout(new SimpleLayout());
@@ -37,8 +39,8 @@ describe('Console Appender', () => {
   });
 
   it('is singleton', () => {
-    const firstConsoleAppender = Log4js.ConsoleAppender.getAppender();
-    const secondConsoleAppender = Log4js.ConsoleAppender.getAppender();
+    const firstConsoleAppender = ConsoleAppender.getAppender();
+    const secondConsoleAppender = ConsoleAppender.getAppender();
 
     expect(firstConsoleAppender).to.equal(secondConsoleAppender);
   });
@@ -47,11 +49,11 @@ describe('Console Appender', () => {
     const logger = Log4js.getLogger('debug');
     const debug = 'My debug message';
     const formattedMessage = new SimpleLayout().format(
-      new LoggingEvent('debug', Log4js.Level.DEBUG, debug, undefined, logger));
+      new LoggingEvent('debug', Level.DEBUG, debug, undefined, logger));
     const formattedMessageWithoutDate = formattedMessage.substring(DateFormatter.SIMPLE_LOG_FORMAT.length);
 
-    logger.setLevel(Log4js.Level.DEBUG);
-    logger.addAppender(Log4js.ConsoleAppender.getAppender());
+    logger.setLevel(Level.DEBUG);
+    logger.addAppender(ConsoleAppender.getAppender());
 
     logger.debug(debug);
 
@@ -74,8 +76,8 @@ describe('Console Appender', () => {
     const logger = Log4js.getLogger('debug');
     const debug = 'My debug message';
 
-    logger.setLevel(Log4js.Level.INFO);
-    logger.addAppender(Log4js.ConsoleAppender.getAppender());
+    logger.setLevel(Level.INFO);
+    logger.addAppender(ConsoleAppender.getAppender());
 
     logger.debug(debug);
 
@@ -89,11 +91,11 @@ describe('Console Appender', () => {
     const logger = Log4js.getLogger('info');
     const info = 'What an info!';
     const formattedMessage = new SimpleLayout().format(
-      new LoggingEvent('info', Log4js.Level.INFO, info, undefined, logger));
+      new LoggingEvent('info', Level.INFO, info, undefined, logger));
     const formattedMessageWithoutDate = formattedMessage.substring(DateFormatter.SIMPLE_LOG_FORMAT.length);
 
-    logger.setLevel(Log4js.Level.INFO);
-    logger.addAppender(Log4js.ConsoleAppender.getAppender());
+    logger.setLevel(Level.INFO);
+    logger.addAppender(ConsoleAppender.getAppender());
 
     logger.info(info);
 
@@ -116,8 +118,8 @@ describe('Console Appender', () => {
     const logger = Log4js.getLogger('info');
     const info = 'What an info!';
 
-    logger.setLevel(Log4js.Level.WARN);
-    logger.addAppender(Log4js.ConsoleAppender.getAppender());
+    logger.setLevel(Level.WARN);
+    logger.addAppender(ConsoleAppender.getAppender());
 
     logger.info(info);
 
@@ -131,11 +133,11 @@ describe('Console Appender', () => {
     const logger = Log4js.getLogger('warning');
     const warning = 'What a warning!';
     const formattedMessage = new SimpleLayout().format(
-      new LoggingEvent('warning', Log4js.Level.WARN, warning, undefined, logger));
+      new LoggingEvent('warning', Level.WARN, warning, undefined, logger));
     const formattedMessageWithoutDate = formattedMessage.substring(DateFormatter.SIMPLE_LOG_FORMAT.length);
 
-    logger.setLevel(Log4js.Level.WARN);
-    logger.addAppender(Log4js.ConsoleAppender.getAppender());
+    logger.setLevel(Level.WARN);
+    logger.addAppender(ConsoleAppender.getAppender());
 
     logger.warn(warning);
 
@@ -158,8 +160,8 @@ describe('Console Appender', () => {
     const logger = Log4js.getLogger('warning');
     const warning = 'What a warning!';
 
-    logger.setLevel(Log4js.Level.ERROR);
-    logger.addAppender(Log4js.ConsoleAppender.getAppender());
+    logger.setLevel(Level.ERROR);
+    logger.addAppender(ConsoleAppender.getAppender());
 
     logger.warn(warning);
 
@@ -173,11 +175,11 @@ describe('Console Appender', () => {
     const logger = Log4js.getLogger('error');
     const error = 'Something went horribly wrong!';
     const formattedMessage = new SimpleLayout().format(
-      new LoggingEvent('error', Log4js.Level.ERROR, error, undefined, logger));
+      new LoggingEvent('error', Level.ERROR, error, undefined, logger));
     const formattedMessageWithoutDate = formattedMessage.substring(DateFormatter.SIMPLE_LOG_FORMAT.length);
 
-    logger.setLevel(Log4js.Level.ERROR);
-    logger.addAppender(Log4js.ConsoleAppender.getAppender());
+    logger.setLevel(Level.ERROR);
+    logger.addAppender(ConsoleAppender.getAppender());
 
     logger.error(error);
 
@@ -200,8 +202,8 @@ describe('Console Appender', () => {
     const logger = Log4js.getLogger('error');
     const error = 'Something went horribly wrong!';
 
-    logger.setLevel(Log4js.Level.FATAL);
-    logger.addAppender(Log4js.ConsoleAppender.getAppender());
+    logger.setLevel(Level.FATAL);
+    logger.addAppender(ConsoleAppender.getAppender());
 
     logger.error(error);
 
