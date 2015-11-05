@@ -12,7 +12,6 @@ class Logger {
   constructor(name) {
     this.category = name || '';
     this.appenders = [new Appender(this)];
-    this.loggingEvents = [];
     this.level = Level.FATAL;
     this.dateformat = DateFormatter.DEFAULT_DATE_FORMAT;
     this.onlog = new CustomEvent();
@@ -79,13 +78,11 @@ class Logger {
   log(logLevel, message, exception) {
     const loggingEvent = new LoggingEvent(this.category, logLevel, message,
       exception, this);
-    this.loggingEvents.push(loggingEvent);
     this.onlog.dispatch(loggingEvent);
   }
 
   clear() {
     try {
-      this.loggingEvents = [];
       this.onclear.dispatch();
     } catch (exception) {
       console.error(`Error clearing logs ${exception}`);
