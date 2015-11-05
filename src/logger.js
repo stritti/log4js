@@ -65,7 +65,7 @@ class Logger {
     // 	this.appenders[i].doClear();
     // }
     // -----------------------------------------
-    _(this.appenders).forEach(appender => appender.dispose()).value();
+    _(this.appenders).forEach(appender => appender.dispose(this)).value();
 
     this.appenders = appenders;
 

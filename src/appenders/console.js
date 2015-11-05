@@ -31,6 +31,10 @@ class ConsoleAppender extends Appender {
     console.clear();
   }
 
+  flush(timeout) { // eslint-disable-line
+    return true;
+  }
+
   toString() {
     return 'Log4js.ConsoleAppender';
   }

@@ -8,6 +8,9 @@ class Appender {
     this.dispose = this.dispose.bind(this);
   }
 
+  // Flushes the buffer of the appenders, returns a promise
+  flush(timeout) {} // eslint-disable-line
+
   // Appends the given loggingEvent to the appender specific log
   // 'loggingEvent' is from the type 'LoggingEvent'
   doAppend(loggingEvent) {} // eslint-disable-line
@@ -28,21 +31,15 @@ class Appender {
   setLogger(logger) {
     logger.onlog.addListener(this.doAppend);
     logger.onclear.addListener(this.doClear);
-
-    this.logger = logger;
   }
 
   // Dispose the Appender
   // This method should be called before the references to the Appender
   // will be gone, to allow the appender to remove itself from the
   // logging events
-  dispose() {
-    if (this.logger) {
-      this.logger.onlog.removeListener(this.doAppend);
-      this.logger.onclear.removeListener(this.doClear);
-
-      this.logger = undefined;
-    }
+  dispose(logger) {
+    logger.onlog.removeListener(this.doAppend);
+    logger.onclear.removeListener(this.doClear);
   }
 }
 
