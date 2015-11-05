@@ -9,7 +9,7 @@ class Appender {
   }
 
   // Flushes the buffer of the appenders, returns a promise
-  flush(timeout) {} // eslint-disable-line
+  flush(timeout) { return true; } // eslint-disable-line
 
   // Appends the given loggingEvent to the appender specific log
   // 'loggingEvent' is from the type 'LoggingEvent'
