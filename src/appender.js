@@ -30,7 +30,6 @@ class Appender {
   // 'logger' is from the type 'Logger'
   setLogger(logger) {
     logger.onlog.addListener(this.doAppend);
-    logger.onclear.addListener(this.doClear);
   }
 
   // Dispose the Appender
@@ -39,7 +38,6 @@ class Appender {
   // logging events
   dispose(logger) {
     logger.onlog.removeListener(this.doAppend);
-    logger.onclear.removeListener(this.doClear);
   }
 }
 
