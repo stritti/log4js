@@ -15,13 +15,11 @@ class Logger {
     this.level = Level.FATAL;
     this.dateformat = DateFormatter.DEFAULT_DATE_FORMAT;
     this.onlog = new CustomEvent();
-    this.onclear = new CustomEvent();
 
     this.addAppender = this.addAppender.bind(this);
     this.setAppenders = this.setAppenders.bind(this);
     this.setLevel = this.setLevel.bind(this);
     this.log = this.log.bind(this);
-    this.clear = this.clear.bind(this);
     this.isLevelEnabled = this.isLevelEnabled.bind(this);
     this.logIfEnabled = this.logIfEnabled.bind(this);
     this.trace = this.trace.bind(this);
@@ -79,14 +77,6 @@ class Logger {
     const loggingEvent = new LoggingEvent(this.category, logLevel, message,
       exception, this);
     this.onlog.dispatch(loggingEvent);
-  }
-
-  clear() {
-    try {
-      this.onclear.dispatch();
-    } catch (exception) {
-      console.error(`Error clearing logs ${exception}`);
-    }
   }
 
   isLevelEnabled(logLevel) {
