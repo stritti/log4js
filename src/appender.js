@@ -1,5 +1,4 @@
-// Base class for other appenders performing no action
-// on its own
+// Base class for other appenders performing no action on its own
 
 class Appender {
   constructor() {

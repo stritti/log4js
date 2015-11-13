@@ -1,7 +1,6 @@
-// Date Formatter
-// addZero() and formatDate() based on the implementations of Mike Golding:
-// http://www.mikezilla.com/exp0015.html
-
+// Adds leading zeros to a number
+// number: the number that will receive leading zeros
+// size: the full wanted length of the resulting string
 function pad(number, size = 2) {
   let result = `${number}`;
   while (result.length < size) {
@@ -15,8 +14,8 @@ function pad(number, size = 2) {
 function formatOffset(date) {
   // Difference to Greenwich time (GMT) in hours
   const os = Math.abs(date.getTimezoneOffset());
-  let hours = String(Math.floor(os / 60));
-  let minutes = String(os % 60);
+  let hours = Math.floor(os / 60) + '';
+  let minutes = os % 60 + '';
   if (hours.length === 1) {
     hours = `0${hours}`;
   }
@@ -83,9 +82,9 @@ function formatUTCDate(date, format) {
 }
 
 const DateFormatter = {
-  DEFAULT_DATE_FORMAT: 'yyyy-MM-ddThh:mm:ssO',
-  FULL_TIME_FORMAT: 'yyyy-MM-dd-hh-mm-ss-mls',
-  SIMPLE_LOG_FORMAT: 'yyyy.MM.dd-hh:mm:ss',
+  DEFAULT_DATE_FORMAT: 'yyyy-MM-ddThh:mm:ssO', // e.g. 2015-11-23T10:23:01+0100
+  FULL_TIME_FORMAT: 'yyyy-MM-dd-hh-mm-ss-mls', // e.g. 2015-11-23-10-23-01-123
+  SIMPLE_LOG_FORMAT: 'yyyy.MM.dd-hh:mm:ss', // e.g. 2015.11.23-10:23:01
   formatDate: formatDate,
   formatUTCDate: formatUTCDate,
   formatOffset: formatOffset,

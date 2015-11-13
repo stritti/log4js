@@ -1,33 +1,33 @@
 import DateFormatter from '../date-formatter';
 import Layout from '../layout';
 
+// Simple string layout for a logging event which styles a log event
+// in the following format:
+//
+//  yyyy.mm.dd-hh:MM:ss - LEVEL - CATEGORY - MESSAGE
+//  EXCEPTION
+// (new line after EXCEPTION)
 class SimpleLayout extends Layout {
   constructor() {
     super();
 
     this.LINE_SEP = '\n';
-    this.LINE_SEP_LEN = 1;
 
     this.format = this.format.bind(this);
-    this.getSeparator = this.getSeparator.bind(this);
   }
 
   format(loggingEvent) {
-    return `${DateFormatter.formatDate(new Date(), DateFormatter.SIMPLE_LOG_FORMAT)} - ${loggingEvent.level.toString()}` +
+    return `${DateFormatter.formatDate(loggingEvent.startTime, DateFormatter.SIMPLE_LOG_FORMAT)} - ${loggingEvent.level.toString()}` +
       ` - ${loggingEvent.categoryName} - ${loggingEvent.message}${this.LINE_SEP}` +
       `${loggingEvent.exception ? loggingEvent.exception + this.LINE_SEP : ''}`;
   }
 
-  getHeader() {
-    return '';
-  }
-
-  getFooter() {
-    return '';
+  getContentType() {
+    return 'text/plain';
   }
 
   getSeparator() {
-    return this.LINE_SEP;
+    return '';
   }
 }
 

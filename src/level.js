@@ -1,4 +1,5 @@
-// Level Enumeration. Do not use directly. Use static objects instead.
+// Level Enumeration. Do not use the Level class directly. Use the static objects
+// like Level.ERROR, Level.DEBUG etc. instead.
 
 class Level {
   constructor(level, levelStr) {
@@ -18,36 +19,15 @@ class Level {
   }
 }
 
-
 // Converts given String to corresponding Level
 Level.toLevel = function toLevel(sArg, defaultLevel) {
-  if (!sArg) {
-    return defaultLevel;
-  }
-
   if (typeof sArg === 'string') {
+    // The string corresponds to a key in Level, which can simply be returned
     const str = sArg.toUpperCase();
-    switch (str) {
-    case 'ALL':
-      return Level.ALL;
-    case 'DEBUG':
-      return Level.DEBUG;
-    case 'INFO':
-      return Level.INFO;
-    case 'WARN':
-      return Level.WARN;
-    case 'ERROR':
-      return Level.ERROR;
-    case 'FATAL':
-      return Level.FATAL;
-    case 'OFF':
-      return Level.OFF;
-    case 'TRACE':
-      return Level.TRACE;
-    default:
-      return defaultLevel;
-    }
+    return Level[str];
   } else if (typeof sArg === 'number') {
+    // A number has to be mapped to the correct level by comparing the integer
+    // value and returning the corresponding level.
     switch (sArg) {
     case Level.ALL_INT:
       return Level.ALL;
@@ -68,9 +48,8 @@ Level.toLevel = function toLevel(sArg, defaultLevel) {
     default:
       return defaultLevel;
     }
-  } else {
-    return defaultLevel;
   }
+  return defaultLevel;
 };
 
 Level.OFF_INT = Number.MAX_VALUE;

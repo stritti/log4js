@@ -1,7 +1,5 @@
-// Logger to log messages to the defined appender.</p>
-// Default appender is Appender, which is ignoring all messages. Please
-// use setAppender() to set a specific appender (e.g. WindowAppender).
-import _ from 'lodash';
+// Logger to log messages to the defined appenders.
+// Use setAppender() to set a specific appender (e.g. ConsoleAppender).
 import Appender from './appender';
 import CustomEvent from './custom-event';
 import DateFormatter from './date-formatter';
@@ -9,11 +7,13 @@ import Level from './level';
 import LoggingEvent from './logging-event';
 
 class Logger {
+  // Creates a new Logger with a category name
+  // 'name' should be the category as a string
   constructor(name) {
     this.category = name || '';
-    this.appenders = [new Appender(this)];
-    this.level = Level.FATAL;
-    this.dateformat = DateFormatter.DEFAULT_DATE_FORMAT;
+    this.appenders = [];
+    this.level = Level.ALL;
+    this.dateformat = DateFormatter.SIMPLE_LOG_FORMAT;
     this.onlog = new CustomEvent();
 
     this.addAppender = this.addAppender.bind(this);
@@ -28,20 +28,12 @@ class Logger {
     this.warn = this.warn.bind(this);
     this.error = this.error.bind(this);
     this.fatal = this.fatal.bind(this);
-    this.windowError = this.windowError.bind(this);
     this.setDateFormat = this.setDateFormat.bind(this);
     this.getFormattedTimestamp = this.getFormattedTimestamp.bind(this);
-
-    // if multiple log objects are instantiated this will only log to the log
-    // object that is declared last can't seem to get the attachEvent method to
-    // work correctly
-    try {
-      window.onerror = this.windowError;
-    } catch (exception) {
-      // Fail silently
-    }
   }
 
+  // Adds an appender to this logger without touching current appenders
+  // 'appender' is of the type 'Appender'
   addAppender(appender) {
     if (appender instanceof Appender) {
       appender.setLogger(this);
@@ -51,6 +43,8 @@ class Logger {
     }
   }
 
+  // Sets the appenders for this logger. Current appenders will be removed from the logger!
+  // 'appenders' is of the type 'Array<Appender>'
   setAppenders(appenders) {
     // The following code has been disabled, since it seems unreasonable to
     // clear the logs just because the appenders will be set for the logger.
@@ -62,70 +56,62 @@ class Logger {
     // 	this.appenders[i].doClear();
     // }
     // -----------------------------------------
-    _(this.appenders).forEach(appender => appender.dispose(this)).value();
+    this.appenders.forEach(appender => appender.dispose(this));
 
     this.appenders = appenders;
 
-    _(this.appenders).forEach(appender => appender.setLogger(this)).value();
+    this.appenders.forEach(appender => appender.setLogger(this));
   }
 
+  // 'level' is of the type 'Level'
   setLevel(level) {
     this.level = level;
   }
 
+  // Internally used logging function. This should NOT be called directly. Use the
+  // helper functions with implicit log levels (logger.debug(...), logger.error(...))
+  // instead.
+  // 'logLevel' is of the type 'Level'
+  // 'message' is of the type 'string'
+  // 'exception' can be any object
   log(logLevel, message, exception) {
     const loggingEvent = new LoggingEvent(this.category, logLevel, message,
       exception, this);
     this.onlog.dispatch(loggingEvent);
   }
 
+  // Returns whether the log level of an event is at least as high
+  // as the enabled log level
+  // E.g. isLevelEnabled(Level.DEBUG) for logger.level === Level.DEBUG => true
+  // E.g. isLevelEnabled(Level.DEBUG) for logger.level === Level.ERROR => false
+  // 'logLevel' is of the type 'Level'
   isLevelEnabled(logLevel) {
     return this.level.valueOf() <= logLevel.valueOf();
   }
 
+  // Helper method to log a message if the level is enabled
   logIfEnabled(logLevel, message, exception) {
     if (this.isLevelEnabled(logLevel)) {
       this.log(logLevel, message, exception);
     }
   }
 
-  trace(message) {
-    this.logIfEnabled(Level.TRACE, message);
-  }
-
-  debug(message, throwable) {
-    this.logIfEnabled(Level.DEBUG, message, throwable);
-  }
-
-  info(message, throwable) {
-    this.logIfEnabled(Level.INFO, message, throwable);
-  }
-
-  warn(message, throwable) {
-    this.logIfEnabled(Level.WARN, message, throwable);
-  }
-
-  error(message, throwable) {
-    this.logIfEnabled(Level.ERROR, message, throwable);
-  }
-
-  fatal(message, throwable) {
-    this.logIfEnabled(Level.FATAL, message, throwable);
-  }
-
-  windowError(msg, url, line) {
-    const message = `Error in (${url || window.location}) on line ${line}` +
-      ` with message (${msg})`;
-    this.fatal(message);
-  }
-
   setDateFormat(format) {
     this.dateformat = format;
   }
 
+  // Returns a formatted timestamp for custom logging
   getFormattedTimestamp(date) {
     return DateFormatter.formatDate(date, this.dateformat);
   }
 }
+
+// Helper methods that should can be called to log on a specific level. Each
+// level can be used as a method like logger.trace(...) or logger.warn(...)
+['trace', 'debug', 'info', 'warn', 'error', 'fatal'].forEach(levelStr => {
+  Logger.prototype[levelStr] = function log(message, throwable) {
+    this.logIfEnabled(Level.toLevel(levelStr), message, throwable);
+  };
+});
 
 export default Logger;

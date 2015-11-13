@@ -212,4 +212,23 @@ describe('Console Appender', () => {
     Sinon.assert.notCalled(console.info);
     Sinon.assert.notCalled(console.log);
   });
+
+  // Not really working, creates issues since mocha also listens to window.onerror
+  // and fails the test once (but also passes it once)
+  it.skip('global window error event logging', () => {
+    const logger = Log4js.getLogger('window');
+
+    logger.addAppender(ConsoleAppender.getAppender());
+
+    try {
+      notdefined + 1; // eslint-disable-line
+    } catch (exception) {
+      window.dispatchEvent(new Event('error'));
+    }
+
+    Sinon.assert.notCalled(console.warn);
+    Sinon.assert.notCalled(console.info);
+    Sinon.assert.notCalled(console.log);
+    Sinon.assert.calledOnce(console.error);
+  });
 });

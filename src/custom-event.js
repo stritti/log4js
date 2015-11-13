@@ -1,5 +1,5 @@
-import _ from 'lodash';
-
+// CustomEvents keep track of the attached listeners and dispatch logging
+// events to all listeners.
 class CustomEvent {
   constructor() {
     this.listeners = [];
@@ -14,27 +14,31 @@ class CustomEvent {
     this.listeners.push(method);
   }
 
+  // Removes every occurence of a listener method from the tracked listeners
   removeListener(method) {
-    _(this.findListenerIndexes(method)).forEach(index => {
+    this.findListenerIndexes(method).forEach(index => {
       this.listeners.splice(index, 1);
-    }).value();
+    });
   }
 
-  dispatch(handler) {
-    _(this.listeners).forEach(listener => {
+  dispatch(loggingEvent) {
+    this.listeners.forEach(listener => {
       try {
-        listener(handler);
+        listener(loggingEvent);
       } catch (exception) {
-        console.error(`Could not run listener ${listener}\n${exception}`);
+        // An error inside the logger has occured, the only way to safely
+        // display this error is through the console.
+        console.error(`Could not run listener ${listener}\n${exception}`); // eslint-disable-line
       }
-    }).value();
+    });
   }
 
+  // Finds all occurences of a listener method and returns their indexes in the
+  // listener array
   findListenerIndexes(method) {
-    return _(this.listeners)
+    return this.listeners
       .filter(listener => listener === method)
-      .map(listener => this.listeners.indexOf(listener))
-      .value();
+      .map(listener => this.listeners.indexOf(listener));
   }
 }
 

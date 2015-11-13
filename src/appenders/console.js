@@ -5,6 +5,7 @@ import Appender from '../appender';
 import Level from '../level';
 import SimpleLayout from '../layouts/simple';
 
+// Appender that writes log messages to the console
 class ConsoleAppender extends Appender {
   constructor() {
     super();
@@ -37,6 +38,8 @@ class ConsoleAppender extends Appender {
   }
 }
 
+// There is only one console to log to, which means that the ConsoleAppender
+// will be used as a Singleton.
 ConsoleAppender.getAppender = function getAppender() {
   if (!ConsoleAppender._appender) {
     ConsoleAppender._appender = new ConsoleAppender();
