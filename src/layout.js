@@ -1,6 +1,6 @@
 // Base class for Layouts.
 // Use this Layout as "interface" for other Layouts. It is doing nothing.
-class Layout {
+export default class Layout {
 
   // Implement this method to create your own layout format.
   // The return value should be the formatted log event
@@ -26,8 +26,6 @@ class Layout {
 
   // Separator between events
   getSeparator() {
-    return null;
+    return '\n';
   }
 }
-
-export default Layout;

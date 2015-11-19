@@ -1,46 +1,25 @@
 // Logger to log messages to the defined appenders.
 // Use setAppender() to set a specific appender (e.g. ConsoleAppender).
 import Appender from './appender';
-import CustomEvent from './custom-event';
-import DateFormatter from './date-formatter';
-import Level from './level';
-import LoggingEvent from './logging-event';
+import Level from './log-level';
+import LogEvent from './log-event';
 
 class Logger {
-  // Creates a new Logger with a category name
-  // 'name' should be the category as a string
-  constructor(name) {
-    this.category = name || '';
+  // Creates a new Logger with a category
+  // 'category' should be the category as a string
+  constructor(category) {
+    this.category = category || '';
     this.appenders = [];
     this.level = Level.ALL;
-    this.dateformat = DateFormatter.SIMPLE_LOG_FORMAT;
-    this.onlog = new CustomEvent();
-
-    this.addAppender = this.addAppender.bind(this);
-    this.setAppenders = this.setAppenders.bind(this);
-    this.setLevel = this.setLevel.bind(this);
-    this.log = this.log.bind(this);
-    this.isLevelEnabled = this.isLevelEnabled.bind(this);
-    this.logIfEnabled = this.logIfEnabled.bind(this);
-    this.trace = this.trace.bind(this);
-    this.debug = this.debug.bind(this);
-    this.info = this.info.bind(this);
-    this.warn = this.warn.bind(this);
-    this.error = this.error.bind(this);
-    this.fatal = this.fatal.bind(this);
-    this.setDateFormat = this.setDateFormat.bind(this);
-    this.getFormattedTimestamp = this.getFormattedTimestamp.bind(this);
   }
 
   // Adds an appender to this logger without touching current appenders
   // 'appender' is of the type 'Appender'
   addAppender(appender) {
-    if (appender instanceof Appender) {
-      appender.setLogger(this);
-      this.appenders.push(appender);
-    } else {
+    if (!appender instanceof Appender) {
       throw new Error(`Not instance of an Appender: ${appender}`);
     }
+    this.appenders.push(appender);
   }
 
   // Sets the appenders for this logger. Current appenders will be removed from the logger!
@@ -56,11 +35,7 @@ class Logger {
     // 	this.appenders[i].doClear();
     // }
     // -----------------------------------------
-    this.appenders.forEach(appender => appender.dispose(this));
-
     this.appenders = appenders;
-
-    this.appenders.forEach(appender => appender.setLogger(this));
   }
 
   // 'level' is of the type 'Level'
@@ -75,9 +50,10 @@ class Logger {
   // 'message' is of the type 'string'
   // 'exception' can be any object
   log(logLevel, message, exception) {
-    const loggingEvent = new LoggingEvent(this.category, logLevel, message,
+    const loggingEvent = new LogEvent(this.category, logLevel, message,
       exception, this);
-    this.onlog.dispatch(loggingEvent);
+
+    this.appenders.forEach(appender => appender.doAppend(loggingEvent));
   }
 
   // Returns whether the log level of an event is at least as high
@@ -94,15 +70,6 @@ class Logger {
     if (this.isLevelEnabled(logLevel)) {
       this.log(logLevel, message, exception);
     }
-  }
-
-  setDateFormat(format) {
-    this.dateformat = format;
-  }
-
-  // Returns a formatted timestamp for custom logging
-  getFormattedTimestamp(date) {
-    return DateFormatter.formatDate(date, this.dateformat);
   }
 }
 

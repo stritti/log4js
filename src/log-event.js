@@ -1,4 +1,4 @@
-class LoggingEvent {
+export default class LogEvent {
   // 'categoryName' is of the type 'string'
   // 'level' is of the type 'Level'
   // 'message' is of the type 'string'
@@ -12,5 +12,3 @@ class LoggingEvent {
     this.startTime = new Date();
   }
 }
-
-export default LoggingEvent;

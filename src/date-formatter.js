@@ -1,3 +1,7 @@
+export const DEFAULT_DATE_FORMAT = 'yyyy-MM-ddThh:mm:ssO'; // e.g. 2015-11-23T10:23:01+0100
+export const FULL_TIME_FORMAT = 'yyyy-MM-dd-hh-mm-ss-mls'; // e.g. 2015-11-23-10-23-01-123
+export const SIMPLE_LOG_FORMAT = 'yyyy.MM.dd-hh:mm:ss'; // e.g. 2015.11.23-10:23:01
+
 // Adds leading zeros to a number
 // number: the number that will receive leading zeros
 // size: the full wanted length of the resulting string
@@ -9,9 +13,11 @@ function pad(number, size = 2) {
   return result;
 }
 
-// Formates the TimeOffest
+// Formates the TimeOffset
 // Thanks to http://www.svendtofte.com/code/date_format/
-function formatOffset(date) {
+// Examples: 1 hour ahead returns: '+01:00'
+// 5 hours 30 minutes behind returns: '-05:30'
+export function formatOffset(date) {
   // Difference to Greenwich time (GMT) in hours
   const os = Math.abs(date.getTimezoneOffset());
   let hours = Math.floor(os / 60) + '';
@@ -35,7 +41,7 @@ function formatOffset(date) {
 // ss: seconds
 // mls: milliseconds
 // O: timezone offset
-function formatDate(date, format) {
+export function formatDate(date, format) {
   const day = pad(date.getDate());
   const month = pad(date.getMonth() + 1);
   const yearLong = pad(date.getFullYear());
@@ -44,7 +50,7 @@ function formatDate(date, format) {
   const minute = pad(date.getMinutes());
   const second = pad(date.getSeconds());
   const milliseconds = pad(date.getMilliseconds(), 3);
-  const timeZone = this.formatOffset(date);
+  const timeZone = formatOffset(date);
 
   const year = (format.indexOf('yyyy') >= -1 ? yearLong : yearShort);
   let dateString = format.replace(/dd/g, day).replace(/MM/g, month).replace(/y{1,4}/g, year);
@@ -63,7 +69,7 @@ function formatDate(date, format) {
 // mm: minutes
 // ss: seconds
 // mls: milliseconds
-function formatUTCDate(date, format) {
+export function formatUTCDate(date, format) {
   const day = pad(date.getUTCDate());
   const month = pad(date.getUTCMonth() + 1);
   const yearLong = pad(date.getUTCFullYear());
@@ -80,14 +86,3 @@ function formatUTCDate(date, format) {
 
   return dateString;
 }
-
-const DateFormatter = {
-  DEFAULT_DATE_FORMAT: 'yyyy-MM-ddThh:mm:ssO', // e.g. 2015-11-23T10:23:01+0100
-  FULL_TIME_FORMAT: 'yyyy-MM-dd-hh-mm-ss-mls', // e.g. 2015-11-23-10-23-01-123
-  SIMPLE_LOG_FORMAT: 'yyyy.MM.dd-hh:mm:ss', // e.g. 2015.11.23-10:23:01
-  formatDate: formatDate,
-  formatUTCDate: formatUTCDate,
-  formatOffset: formatOffset,
-};
-
-export default DateFormatter;
