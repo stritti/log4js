@@ -1,6 +1,6 @@
 {
   "name": "log4js-es6",
-  "version": "3.3.6",
+  "version": "3.4.0",
   "description": "[![Apache License](http://img.shields.io/badge/license-Apache%202.0-blue.svg?style=flat)](LICENSE.txt)",
   "main": "lib/index.js",
   "registry": "jspm",
