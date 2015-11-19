@@ -15,7 +15,7 @@ export default class SimpleLayout extends Layout {
   }
 
   format(loggingEvent) {
-    return `${formatDate(loggingEvent.startTime, SIMPLE_LOG_FORMAT)} - ${loggingEvent.level.toString()}` +
+    return `${formatDate(loggingEvent.timestamp, SIMPLE_LOG_FORMAT)} - ${loggingEvent.level.toString()}` +
       ` - ${loggingEvent.categoryName} - ${loggingEvent.message}` +
       `${loggingEvent.exception ? this.LINE_SEP + loggingEvent.exception : ''}` + this.getSeparator();
   }

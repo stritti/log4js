@@ -9,6 +9,6 @@ export default class LogEvent {
     this.message = message;
     this.exception = exception;
 
-    this.startTime = new Date();
+    this.timestamp = new Date();
   }
 }

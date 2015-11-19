@@ -35,17 +35,15 @@ export function getLogger(category) {
   return loggers[categoryName];
 }
 
-// Is called when an error occurs outside of the current execution block
-function windowError(msg, url, line) {
-  const message = `Error in (${url || window.location}) on line ${line}` +
-    ` with message (${msg})`;
-  getLogger('window').fatal(message);
-}
-
 // Listen to gloabl window errors
-export function listenToWindowErrors() {
+// 'logger' has to be an initialized Logger object
+export function listenToWindowErrors(logger) {
   try {
-    window.addEventListener('error', windowError);
+    window.addEventListener('error', (msg, url, line) => {
+      const message = `Error in (${url || window.location}) on line ${line}` +
+        ` with message (${msg})`;
+      logger.fatal(message);
+    });
   } catch (exception) {
     // An error inside the logger has occured, the only way to safely
     // display this error is through the console.
