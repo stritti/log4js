@@ -31,4 +31,23 @@ describe('SimpleLayout', () => {
     expect(messageDate).to.match(simpleLogDateRegex);
     expect(messageRest).to.equal(' - DEBUG - test - message\nexception\n');
   });
+
+  it('exception object is logged as string', () => {
+    const logger = getLogger('test');
+    const layout = new SimpleLayout();
+
+    const exception = {
+      error: 'true',
+      errorObj: {
+        errorObjKey: 'test',
+      },
+    };
+
+    const message = layout.format(
+      new LogEvent('test', LogLevel.DEBUG, 'Exception object logging', exception, logger)
+    );
+
+    expect(message).to.not.contain('[object Object]');
+    expect(message).to.contain('{"error":"true","errorObj":{"errorObjKey":"test"}}');
+  });
 });

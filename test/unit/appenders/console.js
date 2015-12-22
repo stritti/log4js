@@ -212,24 +212,4 @@ describe('Console Appender', () => {
     assert.notCalled(console.info);
     assert.notCalled(console.log);
   });
-
-  // Not really working, creates issues since mocha also listens to window.onerror
-  // and fails the test once (but also passes it once)
-  it.skip('global window error event logging', () => {
-    const logger = getLogger('window');
-
-    logger.addAppender(ConsoleAppender.getInstance());
-    listenToWindowErrors();
-
-    try {
-      notdefined + 1; // eslint-disable-line
-    } catch (exception) {
-      window.dispatchEvent(new Event('error'));
-    }
-
-    assert.notCalled(console.warn);
-    assert.notCalled(console.info);
-    assert.notCalled(console.log);
-    assert.calledOnce(console.error);
-  });
 });

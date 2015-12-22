@@ -15,9 +15,16 @@ export default class SimpleLayout extends Layout {
   }
 
   format(loggingEvent) {
+    let exceptionString;
+    if (loggingEvent.exception && loggingEvent.exception instanceof Object) {
+      exceptionString = JSON.stringify(loggingEvent.exception);
+    } else if (loggingEvent.exception) {
+      exceptionString = loggingEvent.exception;
+    }
+
     return `${formatDate(loggingEvent.timestamp, SIMPLE_LOG_FORMAT)} - ${loggingEvent.level.toString()}` +
       ` - ${loggingEvent.categoryName} - ${loggingEvent.message}` +
-      `${loggingEvent.exception ? this.LINE_SEP + loggingEvent.exception : ''}` + this.getSeparator();
+      `${loggingEvent.exception ? this.LINE_SEP + exceptionString : ''}` + this.getSeparator();
   }
 
   getContentType() {
