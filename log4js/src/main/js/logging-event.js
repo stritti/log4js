@@ -1,3 +1,5 @@
+/* global Log4js */
+
 /**
  * Models a logging event.
  * @constructor

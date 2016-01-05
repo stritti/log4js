@@ -1,3 +1,5 @@
+/* global Log4js */
+
 /**
  * Logger to log messages to the defined appender.</p>
  * Default appender is Appender, which is ignoring all messages. Please

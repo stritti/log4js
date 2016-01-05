@@ -1,3 +1,5 @@
+/* global Log4js */
+
 /**
  * Abstract base class for other appenders. 
  * It is doing nothing.

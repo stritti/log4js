@@ -1,3 +1,5 @@
+/* global Log4js */
+
 /**
  * BasicLayout is a simple layout for storing the loggs. The loggs are stored
  * in following format:

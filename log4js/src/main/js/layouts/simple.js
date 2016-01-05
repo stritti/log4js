@@ -1,3 +1,5 @@
+/* global Log4js */
+
 /**
  * SimpleLayout consists of the level of the log statement, followed by " - " 
  * and then the log message itself. For example,

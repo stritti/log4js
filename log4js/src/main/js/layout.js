@@ -1,3 +1,5 @@
+/* global Log4js */
+
 /**
  * Interface for Layouts.
  * Use this Layout as "interface" for other Layouts. It is doing nothing.

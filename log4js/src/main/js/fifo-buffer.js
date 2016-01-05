@@ -1,3 +1,5 @@
+/* global Log4js */
+
 /**
  * FIFO buffer
  * @constructor
