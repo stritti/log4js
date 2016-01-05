@@ -7,3 +7,6 @@ log4js/node_modules/
 log4js-servlet/target/
 log4js-servlet/lib/
 log4js-site/build/
+/log4js-servlet/nbproject/private/
+/log4js-servlet/nbproject/
+/log4js/nbproject/private/
