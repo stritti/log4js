@@ -1,0 +1,6 @@
+AuthName "Members Only"
+AuthType Basic
+AuthBasicProvider dbm
+AuthDBMUserFile /opt/csw/apache2/etc/passwd/passwd_authdb
+AuthDBMGroupFile /opt/csw/apache2/etc/passwd/passwd_authdb
+require group log4js
