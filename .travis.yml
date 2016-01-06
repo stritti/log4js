@@ -20,7 +20,7 @@ install:
 
 before_script:
   - cd log4js
-  - npm install
+  - npm install /home/travis/build/stritti/log4js/log4js/package.json
 script:
   - grunt --gruntfile "Gruntfile.js" build --verbose
 
