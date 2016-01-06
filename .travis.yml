@@ -20,7 +20,6 @@ install:
   - npm install -g bower grunt-cli
 
 before_script:
-  - cd log4js
   - npm install 
 script:
   - grunt --gruntfile "Gruntfile.js" build --verbose
