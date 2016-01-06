@@ -15,12 +15,12 @@ before_install:
   - "sh -e /etc/init.d/xvfb start"
   - gem update --system
 install:
-  - npm install
+  - npm install /home/travis/build/stritti/log4js/log4js/package.json
   - npm install -g bower grunt-cli
 
 before_script:
   - cd log4js
-  - npm install /home/travis/build/stritti/log4js/log4js/package.json
+  - npm install 
 script:
   - grunt --gruntfile "Gruntfile.js" build --verbose
 
