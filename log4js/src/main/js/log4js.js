@@ -38,7 +38,7 @@
  *
  * @version 1.0.0
  * @author Stephan Strittmatter - https://github.com/stritti
- * @author Seth Chisamore - http://www.chisamore.com
+ * @author Seth Chisamore - https://github.com/schisamo
  * @since 2005-05-20
  * @static
  * Website: http://stritti.github.io/log4js/

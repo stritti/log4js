@@ -8,7 +8,6 @@
  * 
  * @extends Log4js.Appender 
  * @constructor
- * @param logger log4js instance this appender is attached to
  * @param file file log messages will be written to
  * @author Seth Chisamore
  * @author Nicolas Justin njustin@idealx.com

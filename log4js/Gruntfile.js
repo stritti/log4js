@@ -91,7 +91,7 @@ module.exports = function (grunt) {
         compress: {
             main: {
                 options: {
-                    archive: 'target/<%= pkg.name %>.zip',
+                    archive: 'target/<%= pkg.name %>-<%= pkg.version %>.zip',
                     mode: 'zip'
                 },
                 files: [
@@ -107,7 +107,7 @@ module.exports = function (grunt) {
             build: {
                 src: ["src/main/js/**/*.js"],
                 options: {
-                    destination: "target/docs/"
+                    destination: "target/files//<%= pkg.name %>/docs/"
                 }
             }
         },
@@ -116,7 +116,7 @@ module.exports = function (grunt) {
          */
         clean: {
             build: {
-                src: ['target/files/<%= pkg.name %>/']
+                src: ['target/']
             },
             deploy: {
                 src: ['../xampp/htdocs/<%= pkg.name %>/']
@@ -161,6 +161,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-jsdoc');
 
     grunt.loadTasks('tasks');
@@ -170,7 +171,7 @@ module.exports = function (grunt) {
      * Run `grunt build` on the command line
      * This will generate ZIP-Archive with all required artifacts.
      */
-    grunt.registerTask('build', ['concat:build', 'uglify', 'compress', 'karma']
+    grunt.registerTask('build', ['concat:build', 'uglify', 'jsdoc', 'compress', 'karma']
             );
     /**
      * Default task
