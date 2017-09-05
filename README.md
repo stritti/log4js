@@ -14,6 +14,17 @@ The Framework was hosted on log4js.berlios.de for a long time.
 
 The website of Log4js: http://stritti.github.io/log4js/
 
+### Development
+To build the JavaScript library we use [npm](https://www.npmjs.com/) and [grunt](https://gruntjs.com/). 
+
+````
+cd log4js
+npm install
+grunt build
+````
+
+Include then the `target/log4js.min.js` file in your project.
+
 ### Node.js
 There is a conversion of this log4js framework to work with node.js: https://github.com/nomiddlename/log4js-node
 

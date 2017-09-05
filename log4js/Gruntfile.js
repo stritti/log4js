@@ -2,6 +2,7 @@
  * Grunt Module of log4js.
  */
 /*jshint node:true */
+
 module.exports = function (grunt) {
     /**
      * Configuration
