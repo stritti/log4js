@@ -1,3 +1,5 @@
+/* global Log4js */
+
 /**
  * JSONLayout write the logs in JSON format.
  * JSON library is required to use this Layout. See also {@link http://www.json.org}

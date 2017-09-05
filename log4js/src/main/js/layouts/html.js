@@ -1,3 +1,5 @@
+/* global Log4js */
+
 /**
  * HtmlLayout write the logs in Html format.
  *

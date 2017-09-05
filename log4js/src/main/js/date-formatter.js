@@ -1,3 +1,5 @@
+/* global Log4js */
+
 /**
  * Date Formatter
  * addZero() and formatDate() are courtesy of Mike Golding:

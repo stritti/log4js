@@ -20,8 +20,7 @@
 <faqs>
 	<title>Log4js - Frequently Asked Questions</title>
 	<authors>
-		<person email="stritti@users.berlios.de" id="ssr" 
-			name="Stephan Strittmatter" />
+		<person id="ssr" name="Stephan Strittmatter" />
 	</authors>
 
 	<faqsection id="general">

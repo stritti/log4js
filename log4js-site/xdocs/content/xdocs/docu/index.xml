@@ -22,8 +22,7 @@
     <title>Log4js - Documentation</title>
 
   <authors>
-      <person email="stritti@users.berlios.de" id="ssr"
-              name="Stephan Strittmatter" />
+      <person  id="ssr" name="Stephan Strittmatter" />
   </authors>
          <meta name="robots">ALL</meta>
         <meta name="description">Log4js - Documentation of the Logging API</meta>

@@ -37,8 +37,8 @@
  * </pre>
  *
  * @version 1.0.0
- * @author Stephan Strittmatter - http://jroller.com/page/stritti
- * @author Seth Chisamore - http://www.chisamore.com
+ * @author Stephan Strittmatter - https://github.com/stritti
+ * @author Seth Chisamore - https://github.com/schisamo
  * @since 2005-05-20
  * @static
  * Website: http://stritti.github.io/log4js/
@@ -76,7 +76,7 @@ var Log4js = {
 	getLogger: function(categoryName) {
 		
 		// Use default logger if categoryName is not specified or invalid
-		if (typeof categoryName != "string") {
+		if (typeof categoryName !== "string") {
 			categoryName = "[default]";
 		}
 

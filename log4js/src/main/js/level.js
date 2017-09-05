@@ -1,3 +1,5 @@
+/* global Log4js */
+
 /**
  * Log4js.Level Enumeration. Do not use directly. Use static objects instead.
  * @constructor
