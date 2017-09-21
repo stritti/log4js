@@ -26,7 +26,7 @@ grunt build
 Include then the `target/log4js.min.js` file in your project.
 
 ### Node.js
-There is a conversion of this log4js framework to work with node.js: https://github.com/nomiddlename/log4js-node
+There is a fork of log4js framework working with node.js: https://github.com/nomiddlename/log4js-node
 
 [![Analytics](https://ga-beacon.appspot.com/UA-327996-12/stritti/log4js)](https://github.com/igrigorik/ga-beacon)
 [license-image]: http://img.shields.io/badge/license-Apache%202.0-blue.svg?style=flat
