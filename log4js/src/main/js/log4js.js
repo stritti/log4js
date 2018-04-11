@@ -36,7 +36,7 @@
  *  log.trace("trace me" );
  * </pre>
  *
- * @version 1.0.0
+ * @version 2.0.0
  * @author Stephan Strittmatter - https://github.com/stritti
  * @author Seth Chisamore - https://github.com/schisamo
  * @since 2005-05-20
@@ -50,7 +50,7 @@ var Log4js = {
 	 * @static
 	 * @final
 	 */
-  	version: "1.0.0",
+  	version: "2.0.0",
 
 	/**  
 	 * Date of logger initialized.
