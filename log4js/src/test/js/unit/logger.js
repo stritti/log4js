@@ -3,7 +3,7 @@ describe('layouts/basic', function () {
   var assert = chai.assert;
 
   it("basics Version String check", function() {
-    assert.equal(Log4js.version, '1.0.0');
+    assert.equal(Log4js.version, '2.0.0');
   });
 
   it("get default logger", function() {

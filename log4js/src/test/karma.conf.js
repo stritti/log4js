@@ -54,7 +54,7 @@ module.exports = function(config) {
         // - PhantomJS
         // - IE (only Windows)
         // CLI --browsers Chrome,Firefox,Safari
-        browsers : ['Firefox'],
+        browsers : ['Chrome', 'Firefox', 'IE'],
 
         // If browser does not capture in given timeout [ms], kill it
         // CLI --capture-timeout 60000
@@ -73,8 +73,10 @@ module.exports = function(config) {
         },
 
         plugins : [
-            // 'karma-chrome-launcher',
+            'karma-chrome-launcher',
             'karma-firefox-launcher',
+            'karma-ie-launcher',
+            'karma-edge-launcher',
             'karma-mocha',
             // 'karma-phantomjs-launcher'
             'karma-spec-reporter'

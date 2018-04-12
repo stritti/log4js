@@ -20,7 +20,7 @@ install:
 before_script:
 - npm install
 script:
-- grunt --gruntfile "Gruntfile.js" build --verbose
+- grunt --gruntfile "Gruntfile.js" build --verbose --force
 deploy:
   provider: releases
   api_key:
