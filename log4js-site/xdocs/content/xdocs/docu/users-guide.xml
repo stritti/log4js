@@ -278,7 +278,7 @@
    <script src="js/log4js.js" type="text/javascript"></script>
    <script><!--
        myLogger.setLevel(Log4js.Level.ALL);
-       myLogger.addAppender(new ConsoleAppender(true);
+       myLogger.addAppender(new ConsoleAppender(true));
    //--></script>
   </head>
   <body>
