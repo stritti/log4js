@@ -62,15 +62,6 @@
 	            </ul>
 	        </section>
 
-	        <section id="documentation">
-	            <title>Tools used for Documentation</title>
-	            <ul>
-	                <li>Forrest for generating web site: 
-	                	<a href="http://forrest.apache.org">http://forrest.apache.org</a></li>
-	                <li>JSDoc for API documentation: 
-	                	<a href="http://www.anvilon.com/software/jsjam/">http://www.anvilon.com/software/jsjam/</a></li>
-	            </ul>
-	        </section>
 
 	        <section id="otherProjects">
 	            <title>Other JavaScript Logging Projects</title>
