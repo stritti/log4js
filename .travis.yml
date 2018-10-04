@@ -33,4 +33,5 @@ deploy:
   skip_cleanup: true
   on:
     repo: stritti/log4js
+    branch: master
     tags: true
