@@ -172,8 +172,9 @@ module.exports = function (grunt) {
      * Run `grunt build` on the command line
      * This will generate ZIP-Archive with all required artifacts.
      */
-    grunt.registerTask('build', ['concat:build', 'uglify', 'jsdoc', 'compress', 'karma'] );
-    
+    grunt.registerTask('build', ['concat:build', 'uglify', 'jsdoc', 'compress'] );
+
+    grunt.registerTask('test', ['concat:build', 'uglify', 'jsdoc', 'compress', 'karma'] );
     /**
      * Default task
      * Run `grunt` on the command line
