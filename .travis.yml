@@ -25,7 +25,7 @@ deploy:
   provider: releases
   api_key:
     secure: D3OkluDRa3mkyQAYPMCrbIqvIpZAGOsjqO/21myRDa7MiRjkZJgg2TMxfSTfUsnSf4aMKvLybvD7+YWd1015U7OqFR+I0hkwV49DNlQgw9/Gh7mFAfrM3wO7qibSKdTeaph76hmCQfNxN9UWEdyrnEzRooBlwJDa/skq65z70hc=
-  file: log4js\target\*.zip
+  file: log4js/target/*.zip
   skip_cleanup: true
   on:
     repo: stritti/log4js
