@@ -2,7 +2,7 @@ language: node_js
 cache:
   bundler: true
   directories:
-  - node_modules # NPM packages
+  - node_modules
 node_js:
 - 10.6.0
 env:
@@ -27,7 +27,7 @@ script:
 deploy:
   provider: releases
   api_key:
-    secure: D3OkluDRa3mkyQAYPMCrbIqvIpZAGOsjqO/21myRDa7MiRjkZJgg2TMxfSTfUsnSf4aMKvLybvD7+YWd1015U7OqFR+I0hkwV49DNlQgw9/Gh7mFAfrM3wO7qibSKdTeaph76hmCQfNxN9UWEdyrnEzRooBlwJDa/skq65z70hc=
+    secure: iKdorqXgiTH3RcLLNj8Q4AoRWxpYA6yT7YDYKnuORz3tcAvHrIBmt+ff6h5zsn2JVGkFamc0njfYdrOfLdc4+cQQfQVq80OhJJnkIQ0WgOtG0yt+yVHKb8lWBGr9P0lMvvBuROsuxGl9jPcgkUTtuvxHoJ3T24WlLDGXJSWdCzw=
   file: log4js/target/*.zip
   skip_cleanup: true
   on:
