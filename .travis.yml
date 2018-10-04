@@ -29,7 +29,7 @@ deploy:
   api_key:
     secure: iKdorqXgiTH3RcLLNj8Q4AoRWxpYA6yT7YDYKnuORz3tcAvHrIBmt+ff6h5zsn2JVGkFamc0njfYdrOfLdc4+cQQfQVq80OhJJnkIQ0WgOtG0yt+yVHKb8lWBGr9P0lMvvBuROsuxGl9jPcgkUTtuvxHoJ3T24WlLDGXJSWdCzw=
   file_glob: true
-  file: log4js/target/*
+  file: target/*.zip
   skip_cleanup: true
   on:
     repo: stritti/log4js
