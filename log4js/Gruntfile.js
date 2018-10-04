@@ -23,12 +23,12 @@ module.exports = function (grunt) {
                     "src/main/js/logger.js",
                     "src/main/js/custom-event.js",
                     "src/main/js/logging-event.js",
+                    "src/main/js/date-formatter.js",
+                    "src/main/js/fifo-buffer.js",
                     "src/main/js/appender.js",
                     "src/main/js/appenders/*.js",
                     "src/main/js/layout.js",
-                    "src/main/js/layouts/*.js",
-                    "src/main/js/date-formatter.js",
-                    "src/main/js/fifo-buffer.js"],
+                    "src/main/js/layouts/*.js"],
                 dest: "target/files/<%= pkg.name %>/js/<%= pkg.name %>.combined.js"
             }
         },
