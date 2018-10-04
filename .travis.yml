@@ -16,6 +16,8 @@ before_install:
 install:
 - cd log4js
 - npm install
+before_script:
+- npm install
 script:
 - grunt --gruntfile "Gruntfile.js" build --verbose --force
 deploy:
