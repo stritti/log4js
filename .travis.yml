@@ -19,9 +19,9 @@ before_install:
 - gem update --system
 install:
 - cd log4js
-- npm install
+- npm ci
 before_script:
-- npm install
+- npm ci
 script:
 - grunt --gruntfile "Gruntfile.js" build
 deploy:
