@@ -33,6 +33,19 @@ consoleLog.trace('I was traced!')
 Within sources there is a more detailed [example](log4js/src/main/example/index.html).
 
 ## Development
+
+The project is seperated in modules. Core JavaScript module is located in subdirectory `log4js` 
+
+### Structure
+````
+├───log4js: Main JavaScript Log4js module 
+├───log4js-servlet: Java Servlet to collect AJAX-Logs serverside
+├───log4js-solr: configuration to collect logs using Apace SOLR
+├───log4js-site: (outdated) project documentation
+ 
+````
+
+### Log4js
 To build the JavaScript library we use [npm](https://www.npmjs.com/) and [grunt](https://gruntjs.com/). 
 
 ````
@@ -45,9 +58,19 @@ Include then the `target/log4js.min.js` file in your project.
 
 More details in the [Wiki](https://github.com/stritti/log4js/wiki/Development)
 
+### Log4js Servlet
+
+The servlet is Java based project which is compiled using `maven`.
+
+### Log4js SOLR
+
+For more details see [README.md](log4js-solr/README.md) in the subdirectory [log4js-solr](log4js-solr)
+
+### Log4js Site
+
 ## Contribution
 
-Pull Requests are very welcome.
+[Pull Requests](https://github.com/stritti/log4js/pulls) are very welcome.
 
 ## Other JavaScript Logger
 There are a lot other projects which are started logging in JavaScript:
