@@ -93,10 +93,11 @@ Log4js.ConsoleAppender.prototype = Log4js.extend(new Log4js.Appender(), /** @len
                 doc.write("</head><body style=\"background-color:darkgray\"></body>\n");
                 win.blur();
                 win.focus();
+
+                this.docReference = doc;
+                this.winReference = win;
             }
 
-            this.docReference = doc;
-            this.winReference = win;
         } else {
             this.docReference = document;
             this.winReference = window;
@@ -271,7 +272,7 @@ Log4js.ConsoleAppender.prototype = Log4js.extend(new Log4js.Appender(), /** @len
 
         var pattern = this.tagFilterElement.value;
 
-        if (this.tagPattern == pattern) {
+        if (this.tagPattern === pattern) {
             return;
         }
 
@@ -376,13 +377,13 @@ Log4js.ConsoleAppender.prototype = Log4js.extend(new Log4js.Appender(), /** @len
 
             this.commandIndex = 0;
             this.inputElement.value = "";
-        } else if (e.keyCode == 38 && this.commandHistory.length > 0) {
+        } else if (e.keyCode === 38 && this.commandHistory.length > 0) {
             this.inputElement.value = this.commandHistory[this.commandIndex];
 
             if (this.commandIndex < this.commandHistory.length - 1) {
                 this.commandIndex += 1;
             }
-        } else if (e.keyCode == 40 && this.commandHistory.length > 0) {
+        } else if (e.keyCode === 40 && this.commandHistory.length > 0) {
             if (this.commandIndex > 0) {
                 this.commandIndex -= 1;
             }
