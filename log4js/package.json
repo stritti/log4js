@@ -7,6 +7,11 @@
   "authors": [
     "stritti (https://github.com/stritti)"
   ],
+  "scripts": {
+    "watch": "grunt watch",
+    "build": "grunt build",
+    "test": "grunt test"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/stritti/log4js.git"
@@ -20,6 +25,9 @@
   ],
   "license": "Apache-2.0",
   "homepage": "http://stritti.github.io/log4js/",
+  "bugs": {
+    "url": "https://github.com/stritti/log4js/issues"
+  },
   "ignore": [
     "**/.*",
     "node_modules",
