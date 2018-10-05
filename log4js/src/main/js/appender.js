@@ -5,7 +5,6 @@
  * It is doing nothing.
  *
  * @constructor
- * @param {Log4js.Logger} logger log4js instance this appender is attached to
  * @author Stephan Strittmatter
  */
 Log4js.Appender = function () {
@@ -41,7 +40,7 @@ Log4js.Appender.prototype = {
 	},
 	/**
 	 * Set reference to the logger.
-	 * @param {Log4js.Logger} the invoking logger
+	 * @param {Log4js.Logger} logger The invoking logger
 	 */
 	setLogger: function(logger){
 		// add listener to the logger methods
