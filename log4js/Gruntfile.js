@@ -73,6 +73,13 @@ module.exports = function (grunt) {
          *
          */
         copy: {
+            resources: {
+                nonull: true,
+                cwd: 'src/main/resources',
+                src: ['**'],
+                expand: true,
+                dest: 'target/files/<%= pkg.name %>/resources'
+            },
             example: {
                 nonull: true,
                 cwd: 'src/main/example',
@@ -167,7 +174,7 @@ module.exports = function (grunt) {
      * Run `grunt build` on the command line
      * This will generate ZIP-Archive with all required artifacts.
      */
-    grunt.registerTask('build', ['concat:build', 'uglify', 'jsdoc', 'compress', 'copy:example'] );
+    grunt.registerTask('build', ['concat:build', 'uglify', 'jsdoc', 'compress', 'copy'] );
 
     grunt.registerTask('test', ['build', 'karma'] );
     /**
