@@ -8,6 +8,30 @@ Log4js
 
 Log4js - The Logging Framework for JavaScript
 
+## Usage
+
+Add the JavaScript file to head of HTML page:
+````html
+<head>
+    <script src="log4js.min.js" type="text/javascript"></script>
+</head>
+
+````
+Add script for instantiation of Logger:
+````javascript
+let consoleLog = new Log4js.Logger("consoleTest");
+consoleLog.setLevel(Log4js.Level.ALL);
+let consoleAppender = new Log4js.ConsoleAppender(true);
+consoleLog.addAppender(consoleAppender);
+
+````
+Then you are able to add logging event:
+````javascript
+consoleLog.trace('I was traced!')
+````
+
+Within sources there is a more detailed [example](log4js/src/main/example/index.html).
+
 ## Development
 To build the JavaScript library we use [npm](https://www.npmjs.com/) and [grunt](https://gruntjs.com/). 
 
