@@ -45,7 +45,7 @@ Log4js.AjaxAppender = function (loggingUrl) {
 
     /**
      * List of LoggingEvents which should be send after threshold is reached.
-     * @type Map
+     * @type Log4js.FifoBuffer
      * @private
      */
     this.loggingEventMap = new Log4js.FifoBuffer();

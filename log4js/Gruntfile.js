@@ -28,7 +28,9 @@ module.exports = function (grunt) {
                     "src/main/js/appender.js",
                     "src/main/js/appenders/*.js",
                     "src/main/js/layout.js",
-                    "src/main/js/layouts/*.js"],
+                    "src/main/js/layouts/*.js",
+                    "src/main/js/log4js-all.js"
+                ],
                 dest: "target/files/<%= pkg.name %>/js/<%= pkg.name %>.combined.js"
             }
         },
@@ -71,19 +73,12 @@ module.exports = function (grunt) {
          *
          */
         copy: {
-            build: {
+            example: {
                 nonull: true,
-                cwd: 'src/main/',
-                src: ['**', '!**/*.scss'],
+                cwd: 'src/main/example',
+                src: ['**'],
                 expand: true,
-                dest: 'target/files/<%= pkg.name %>/'
-            },
-            deploy: {
-                nonull: true,
-                cwd: 'src/',
-                src: ['**', '!**/*.scss', '!sass/**'],
-                expand: true,
-                dest: '../build/'
+                dest: 'target/files/<%= pkg.name %>/example'
             }
         },
         /**
@@ -139,7 +134,7 @@ module.exports = function (grunt) {
                     'src/js/**/*.{js,json}',
                     'src/language/**/*.ini'
                 ],
-                tasks: ['copy:deploy'],
+                tasks: ['copy:example'],
                 options: {
                     //interrupt: true,
                     livereload: true
@@ -172,9 +167,9 @@ module.exports = function (grunt) {
      * Run `grunt build` on the command line
      * This will generate ZIP-Archive with all required artifacts.
      */
-    grunt.registerTask('build', ['concat:build', 'uglify', 'jsdoc', 'compress'] );
+    grunt.registerTask('build', ['concat:build', 'uglify', 'jsdoc', 'compress', 'copy:example'] );
 
-    grunt.registerTask('test', ['concat:build', 'uglify', 'jsdoc', 'compress', 'karma'] );
+    grunt.registerTask('test', ['build', 'karma'] );
     /**
      * Default task
      * Run `grunt` on the command line
