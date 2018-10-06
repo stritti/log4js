@@ -6,7 +6,7 @@
 Log4js
 ======
 
-Log4js - The Logging Framework for JavaScript
+Log4js - The Logging Framework for JavaScript with no runtime dependencies 
 
 ## Usage
 
