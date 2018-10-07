@@ -13,6 +13,17 @@
  */
 package de.log4js.parser;
 
+import de.log4js.LogLevel;
+import de.log4js.LoggingEvent;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,40 +31,29 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
-
-import de.log4js.LogLevel;
-import de.log4js.LoggingEvent;
-
 /**
  * Parser to parse XML of log4js events.
  * 
  * @author Stephan Strittmatter
- * @created 02.08.2007
- * 
- * @history 02.08.2007 Stephan Strittmatter created
+ * @since 02.08.2007
+ *
  */
 public class XmlEventParser implements EventParser {
 
 	/**
-	 * @see de.berlios.log4js.parser.EventParser#parse(java.lang.String)
+	 * @see de.log4js.parser.EventParser#parse(java.lang.String)
 	 */
 	public List<LoggingEvent> parse(String xml) throws ParseException {
+		if(xml == null) {
+			throw new IllegalArgumentException("xml was null");
+		}
 
 		InputStream is = new ByteArrayInputStream(xml.getBytes());
 		return parse(is);
 	}
 
 	/**
-	 * @see de.berlios.log4js.parser.EventParser#parse(java.io.InputStream)
+	 * @see de.log4js.parser.EventParser#parse(java.io.InputStream)
 	 */
 	public List<LoggingEvent> parse(InputStream is) throws ParseException {
 

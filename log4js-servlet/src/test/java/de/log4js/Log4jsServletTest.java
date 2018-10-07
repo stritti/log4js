@@ -13,19 +13,14 @@
  */
 package de.log4js;
 
-import java.io.IOException;
-
-import javax.servlet.ServletException;
-
-import junit.framework.TestCase;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.log4js.Log4jsServlet;
+import javax.servlet.ServletException;
+import java.io.IOException;
 
-public class Log4jsServletTest extends TestCase {
+public class Log4jsServletTest {
 
   Log4jsServlet servlet;
 

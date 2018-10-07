@@ -13,16 +13,14 @@
  */
 package de.log4js.parser;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import de.log4js.LoggingEvent;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-import de.log4js.LogLevel;
-import de.log4js.LoggingEvent;
 
 /**
  * Parser to parse JSON of log4js events.
@@ -34,38 +32,23 @@ import de.log4js.LoggingEvent;
  */
 public class JsonEventParser implements EventParser {
 
+	private Gson gson = new Gson();
+
 	/**
-	 * @see de.berlios.log4js.parser.EventParser#parse(java.lang.String)
+	 * @see de.log4js.parser.EventParser#parse(java.lang.String)
 	 */
 	@SuppressWarnings("unchecked")
 	public List<LoggingEvent> parse(String input) throws ParseException {
 
 		List<LoggingEvent> eventList = new ArrayList<LoggingEvent>();
 
-		JSONObject json = JSONObject.fromObject(input);
-		JSONArray root = (JSONArray) json.get("Log4js");
-		Iterator<JSONObject> eventIterator = root.iterator();
+		LoggingEvent json = gson.fromJson(input, LoggingEvent.class);
 
-		while (eventIterator.hasNext()) {
-			JSONObject elem = (JSONObject) (eventIterator.next())
-					.get("LoggingEvent");
-			LoggingEvent event = new LoggingEvent();
-			event.setCategoryName(elem.getString("logger"));
-			event.setException(elem.getString("exception"));
-			event.setLogLevel(LogLevel.valueOf(elem.getString("level")));
-			event.setMessage(elem.getString("message"));
-			event.setReferer(elem.getString("referer"));
-			event.setUserAgent(elem.getString("useragent"));
-			event.setTimestamp(elem.getString("timestamp"));
-
-			eventList.add(event);
-
-		}
 		return eventList;
 	}
 
 	/**
-	 * @see de.berlios.log4js.parser.EventParser#parse(java.io.InputStream)
+	 * @see de.log4js.parser.EventParser#parse(java.io.InputStream)
 	 */
 	public List<LoggingEvent> parse(InputStream is) throws ParseException {
 
@@ -96,12 +79,12 @@ public class JsonEventParser implements EventParser {
 
 	public String getResponse(String state, String message, Throwable throwable) {
 
-		JSONObject json = new JSONObject();
-		json.put("state", state);
-		json.put("response", message);
+		JsonObject json = new JsonObject();
+		json.addProperty("state", state);
+		json.addProperty("response", message);
 		
 		if(throwable != null) {
-			json.put("stacktrace", throwable.getStackTrace());
+			json.addProperty("stacktrace", "" + throwable.getStackTrace());
 		}
 		return json.toString();
 	}
