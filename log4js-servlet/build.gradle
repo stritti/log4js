@@ -18,9 +18,8 @@ repositories {
 dependencies {
 
     compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
-
+    compile group: 'commons-io', name: 'commons-io', version: '2.6'
     compile group: 'com.google.code.gson', name: 'gson', version: '2.7'
-
     compile group: 'javax.servlet', name: 'servlet-api', version: '2.5'
     compile group: 'javax.servlet.jsp', name: 'jsp-api', version: '2.1'
 
