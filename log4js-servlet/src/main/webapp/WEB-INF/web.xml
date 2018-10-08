@@ -26,7 +26,7 @@
 	
 	<servlet>
 	    <servlet-name>Log4js Servlet</servlet-name>
-	    <servlet-class>de.berlios.log4js.Log4jsServlet</servlet-class>
+	    <servlet-class>de.log4js.Log4jsServlet</servlet-class>
 
 		<init-param>
 			<description>
@@ -36,19 +36,19 @@
 				de.berlios.log4js.adapter.Log4jAdapter
 			</description>
 			<param-name>logging.adapter</param-name>
-			<param-value>de.berlios.log4js.adapter.Log4jAdapter</param-value>
+			<param-value>de.log4js.adapter.Log4jAdapter</param-value>
 		</init-param>
 				
 		<init-param>
 			<description>Parser implementation for XML data.</description>
 			<param-name>parser.text/xml</param-name>
-			<param-value>de.berlios.log4js.parser.XmlEventParser</param-value>
+			<param-value>de.log4js.parser.XmlEventParser</param-value>
 		</init-param>
 	
 		<init-param>
 			<description>Parser implementation for JSON data.</description>
 			<param-name>parser.text/json</param-name>
-			<param-value>de.berlios.log4js.parser.JsonEventParser</param-value>
+			<param-value>de.log4js.parser.JsonEventParser</param-value>
 		</init-param>    
 	</servlet>
 
