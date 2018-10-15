@@ -40,12 +40,14 @@ The project is seperated in modules. Core JavaScript module is located in subdir
 ````
 ├───log4js: Main JavaScript Log4js module 
 ├───log4js-servlet: Java Servlet to collect AJAX-Logs serverside
-├───log4js-solr: configuration to collect logs using Apace SOLR
+├───log4js-solr: configuration to collect logs using Apache SOLR
 ├───log4js-site: (outdated) project documentation
  
 ````
 
 ### Log4js
+> Main JavaScript module
+
 To build the JavaScript library we use [npm](https://www.npmjs.com/) and [grunt](https://gruntjs.com/). 
 
 ````

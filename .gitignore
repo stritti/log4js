@@ -13,3 +13,4 @@ log4js-site/build/
 log4js/.cache/
 log4js-servlet/out/
 .idea/
+.gradle/
