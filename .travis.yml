@@ -29,6 +29,8 @@ deploy:
     email: stephan@st-strittmatter.name
     api_key:
       secure: NQyGsxZKqApzTxBjsXMI/2drQcCF8s38iuofEL/wbATWC9Y9ggfI6oyd/tqqyYrgouBoSqHPSOEP4ghe381yrO9jlnJMiwzmLqVivZAAe4x2DI3nrlaz+AFcvTpf/36T4LFevTP3Lh6LoVGRrKnfRCjQzfBv0hYOLtjNCc/zjeU=
+    file_glob: true
+    file: target/*.zip
     skip_cleanup: true
     on:
       tags: true
