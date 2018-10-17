@@ -26,3 +26,8 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 
 }
+
+compileJava {
+    options.encoding = 'UTF-8'
+    options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+}
