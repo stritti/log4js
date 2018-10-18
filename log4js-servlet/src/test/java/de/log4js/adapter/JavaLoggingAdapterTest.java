@@ -13,9 +13,9 @@
  */
 package de.log4js.adapter;
 
-import static org.junit.Assert.*;
-
 import org.junit.Test;
+
+import static org.junit.Assert.fail;
 
 public class JavaLoggingAdapterTest {
 

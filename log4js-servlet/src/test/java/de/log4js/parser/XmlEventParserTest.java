@@ -13,18 +13,15 @@
  */
 package de.log4js.parser;
 
-import java.util.List;
-
-import junit.framework.TestCase;
-
-import org.junit.Assert;
-import org.junit.Test;
-
 import de.log4js.LogLevel;
 import de.log4js.LoggingEvent;
 import de.log4js.TestUtil;
+import org.junit.Assert;
+import org.junit.Test;
 
-public class XmlEventParserTest extends TestCase {
+import java.util.List;
+
+public class XmlEventParserTest {
 
 
   @Test

@@ -26,10 +26,11 @@
  */
 package de.log4js.adapter;
 
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
 
 import de.log4js.LoggingEvent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 /**
  * Adapter to log using Apache Log4j logging.
@@ -42,13 +43,13 @@ public class Log4jAdapter implements Adapter {
 	private Logger logger;
 
 	/**
-	 * @see de.berlios.log4js.adapter.Adapter#logEvent(de.berlios.log4js.LoggingEvent)
+	 * @see de.log4js.adapter.Adapter#logEvent(de.log4js.LoggingEvent)
 	 */
 	public void logEvent(LoggingEvent loggingEvent) {
 
 		String msg;
 
-		this.logger = Logger.getLogger(loggingEvent.getCategoryName());
+		this.logger = LoggerFactory.getLogger(loggingEvent.getCategoryName());
 
 		if (loggingEvent.getException() != null) {
 			msg = loggingEvent.getMessage() + " -- EXCEPTION:\t"
@@ -59,27 +60,27 @@ public class Log4jAdapter implements Adapter {
 
 		switch (loggingEvent.getLogLevel()) {
 		case ERROR:
-			this.logger.log(Level.ERROR, msg);
+			this.logger.error( msg);
 			break;
 
 		case DEBUG:
-			this.logger.log(Level.DEBUG, msg);
+			this.logger.debug( msg);
 			break;
 
 		case FATAL:
-			this.logger.log(Level.FATAL, msg);
+			this.logger.error( msg);
 			break;
 
 		case INFO:
-			this.logger.log(Level.INFO, msg);
+			this.logger.info( msg);
 			break;
 
 		case TRACE:
-			this.logger.log(Level.TRACE, msg);
+			this.logger.trace( msg);
 			break;
 
 		case WARN:
-			this.logger.log(Level.WARN, msg);
+			this.logger.warn(msg);
 			break;
 
 		default:

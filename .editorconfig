@@ -1,0 +1,34 @@
+# This file is for unifying the coding style for different editors and IDEs
+# EditorConfig is awesome: http://EditorConfig.org
+
+root = true
+
+[*.java]
+indent_style = space
+indent_size = 3
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+[*.{js,css}]
+indent_style = tab
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+[*.jsp]
+charset = utf-8
+indent_style = space
+indent_size = 3
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.json]
+indent_style = space
+indent_size = 2
+
+[*.md]
+trim_trailing_whitespace = false

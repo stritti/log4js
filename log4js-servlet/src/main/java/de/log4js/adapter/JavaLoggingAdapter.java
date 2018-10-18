@@ -13,10 +13,10 @@
  */
 package de.log4js.adapter;
 
+import de.log4js.LoggingEvent;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import de.log4js.LoggingEvent;
 
 /**
  * Adapter to log using Java logging.

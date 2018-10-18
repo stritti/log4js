@@ -13,23 +13,22 @@
  */
 package de.log4js;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import de.log4js.adapter.Adapter;
+import de.log4js.parser.EventParser;
+import de.log4js.parser.ParseException;
+import de.log4js.parser.XmlEventParser;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import de.log4js.adapter.Adapter;
-import de.log4js.parser.EventParser;
-import de.log4js.parser.ParseException;
-import de.log4js.parser.XmlEventParser;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Servlet to log the Log4js events send by AJAXAppender.
@@ -161,12 +160,9 @@ public class Log4jsServlet extends HttpServlet {
 	 * parameters.
 	 * 
 	 * @return Instance of adapter.
-	 * @throws InstantiationException
-	 * @throws IllegalAccessException
-	 * @throws ClassNotFoundException
 	 */
 	@SuppressWarnings("unchecked")
-	protected Adapter getAdapter() throws InstantiationException,
+	private Adapter getAdapter() throws InstantiationException,
 			IllegalAccessException, ClassNotFoundException {
 
 		String a = this.getServletConfig().getInitParameter("logging.adapter");
@@ -189,11 +185,11 @@ public class Log4jsServlet extends HttpServlet {
 	 * @throws IllegalAccessException
 	 */
 	@SuppressWarnings("unchecked")
-	protected EventParser getParser(String contentType)
+	private EventParser getParser(String contentType)
 			throws ClassNotFoundException, InstantiationException,
 			IllegalAccessException {
 
-    String strippedContentType = contentType.split(";")[0];
+    	String strippedContentType = contentType.split(";")[0];
 
 		EventParser parser = this.parserList.get(strippedContentType);
 

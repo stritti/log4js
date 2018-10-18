@@ -14,13 +14,12 @@
 package de.log4js.parser;
 
 
-import java.util.List;
-
+import de.log4js.LogLevel;
+import de.log4js.LoggingEvent;
 import org.junit.Assert;
 import org.junit.Test;
 
-import de.log4js.LogLevel;
-import de.log4js.LoggingEvent;
+import java.util.List;
 
 public class JsonEventParserTest {
 

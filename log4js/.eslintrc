@@ -1,0 +1,8 @@
+{
+  "extends": "airbnb",
+  "rules": {
+    "id-length": [2, {
+      "exceptions": ["_"]
+    }]
+  }
+}
