@@ -72,6 +72,8 @@ For more details see [README.md](log4js-solr/README.md) in the subdirectory [log
 
 ### Log4js Site
 
+Outdated documentation.
+
 ## Contribution
 
 [Pull Requests](https://github.com/stritti/log4js/pulls) are very welcome.
