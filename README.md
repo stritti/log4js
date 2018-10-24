@@ -10,25 +10,27 @@ Log4js - The Logging Framework for JavaScript with no runtime dependencies
 
 ## Usage
 
-Add the JavaScript file to head of HTML page:
-````html
-<head>
+* Download the most current [https://github.com/stritti/log4js/releases](Release) and unzip the archive.
+* Copy the file `js/log4js.min.js` to your project.
+* Add the JavaScript file to head of HTML page:
+  ````html
+  <head>
     <script src="log4js.min.js" type="text/javascript"></script>
-</head>
+  </head>
 
-````
-Add script for instantiation of Logger:
-````javascript
-let consoleLog = new Log4js.Logger("consoleTest");
-consoleLog.setLevel(Log4js.Level.ALL);
-let consoleAppender = new Log4js.ConsoleAppender(true);
-consoleLog.addAppender(consoleAppender);
-
-````
-Then you are able to add logging event:
-````javascript
-consoleLog.trace('I was traced!')
-````
+  ````
+* Add script for instantiation of Logger:
+  ````javascript
+  let consoleLog = new Log4js.Logger("consoleTest");
+  consoleLog.setLevel(Log4js.Level.ALL);
+  let consoleAppender = new Log4js.ConsoleAppender(true);
+  consoleLog.addAppender(consoleAppender);
+  
+  ````
+* Then you are able to add logging event:
+  ````javascript
+  consoleLog.trace('I was traced!')
+  ````
 
 Within sources there is a more detailed [example](log4js/src/main/example/index.html).
 
