@@ -49,13 +49,16 @@ The project is seperated in modules. Core JavaScript module is located in subdir
 
 ### Log4js
 > Main JavaScript module
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
 
 To build the JavaScript library we use [npm](https://www.npmjs.com/) and [grunt](https://gruntjs.com/). 
 
 ````
 cd log4js
 npm install
-grunt build
+npm test
+npm build
 ````
 
 Include then the `target/log4js.min.js` file in your project.
