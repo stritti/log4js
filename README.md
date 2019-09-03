@@ -83,7 +83,7 @@ There are a lot other projects which are started logging in JavaScript:
 
 There is a very active fork of current log4js framework modified for node.js usage: https://github.com/nomiddlename/log4js-node
 
-Further loggers could be found (and added!) in the [Wiki](https://github.com/stritti/log4js/wiki/JavaScript-Logger).
+Further loggers could be found (and added!) in the [Wiki](https://github.com/stritti/log4js/wiki/Other-JavaScript-Logger).
 
 # License
 [LICENSE.txt](LICENSE.txt)
