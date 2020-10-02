@@ -7,6 +7,7 @@ Log4js
 ======
 
 Log4js - The Logging Framework for JavaScript with no runtime dependencies 
+Since [2005](https://github.com/stritti/log4js/commit/0b17184d2a998f6ff884261ba433c3e4f01cc95e)
 
 ## Usage
 
