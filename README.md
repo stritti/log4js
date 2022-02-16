@@ -11,7 +11,7 @@ Log4js - The Logging Framework for JavaScript with no runtime dependencies
 
 ## Usage
 
-* Download the most current [https://github.com/stritti/log4js/releases](Release) and unzip the archive.
+* Download the most current [release](https://github.com/stritti/log4js/releases) and unzip the archive.
 * Copy the file `js/log4js.min.js` to your project.
 * Add the JavaScript file to head of HTML page:
   ````html
