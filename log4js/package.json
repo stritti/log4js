@@ -1,16 +1,35 @@
 {
   "name": "log4js",
   "title": "Log4js - The Logging API for JavaScript",
-  "description": "Logging Framework for JavaScript",
-  "version": "2.0.0",
-  "main": "log4js/src/main/js/log4js.js",
+  "description": "Modern TypeScript Logging Framework for JavaScript",
+  "version": "3.0.0",
+  "type": "module",
+  "main": "./dist/log4js.umd.js",
+  "module": "./dist/log4js.js",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/log4js.js",
+      "require": "./dist/log4js.umd.js"
+    }
+  },
+  "files": [
+    "dist",
+    "src/main/ts"
+  ],
   "authors": [
     "stritti (https://github.com/stritti)"
   ],
   "scripts": {
-    "watch": "grunt watch",
-    "build": "grunt build",
-    "test": "standard && grunt test"
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "lint": "eslint src/main/ts --ext .ts",
+    "lint:fix": "eslint src/main/ts --ext .ts --fix",
+    "typecheck": "tsc --noEmit"
   },
   "repository": {
     "type": "git",
@@ -21,49 +40,30 @@
     "logging",
     "logger",
     "log4js",
-    "log4j"
+    "log4j",
+    "typescript",
+    "modern",
+    "es2022"
   ],
   "license": "Apache-2.0",
   "homepage": "http://stritti.github.io/log4js/",
   "bugs": {
     "url": "https://github.com/stritti/log4js/issues"
   },
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "test",
-    "tests"
-  ],
-  "standard": {
-    "ignore": [
-      "target/",
-      "tasks/"
-    ]
-  },
   "devDependencies": {
-    "standard": "*",
-    "active-x-obfuscator": "0.0.2",
-    "chai": "^4.2.0",
-    "grunt": "^1.0.3",
-    "grunt-cli": "^1.3.1",
-    "grunt-contrib-clean": "^2.0.0",
-    "grunt-contrib-compress": "^1.4.3",
-    "grunt-contrib-concat": "^1.0.1",
-    "grunt-contrib-copy": "^1.0.0",
-    "grunt-contrib-cssmin": "^3.0.0",
-    "grunt-contrib-jshint": "^2.0.0",
-    "grunt-contrib-uglify": "^4.0.0",
-    "grunt-contrib-watch": "^1.1.0",
-    "grunt-jsdoc": "^2.3.0",
-    "grunt-karma": "^3.0.0",
-    "karma": "^4.0.0",
-    "karma-chrome-launcher": "^2.2.0",
-    "karma-edge-launcher": "^0.4.2",
-    "karma-firefox-launcher": "^1.1.0",
-    "karma-ie-launcher": "^1.0.0",
-    "karma-mocha": "^1.3.0",
-    "karma-spec-reporter": "^0.0.32",
-    "mocha": "^5.2.0",
-    "uglify-js": "^3.4.9"
+    "@types/node": "^20.11.5",
+    "@typescript-eslint/eslint-plugin": "^6.19.0",
+    "@typescript-eslint/parser": "^6.19.0",
+    "@vitest/ui": "^1.2.1",
+    "eslint": "^8.56.0",
+    "jsdom": "^24.1.3",
+    "terser": "^5.27.0",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.12",
+    "vite-plugin-dts": "^3.7.2",
+    "vitest": "^1.2.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
