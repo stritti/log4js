@@ -1,0 +1,13 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# VitePress build output
+.vitepress/dist
+.vitepress/cache
+
+# Logs
+*.log
+
+# OS
+.DS_Store
