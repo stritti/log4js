@@ -23,7 +23,8 @@
     "test": "vitest",
     "lint": "eslint src --ext .ts",
     "lint:fix": "eslint src --ext .ts --fix",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "semantic-release": "semantic-release"
   },
   "keywords": [
     "log4js",
@@ -40,12 +41,18 @@
     "winston": "^3.11.0"
   },
   "devDependencies": {
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^9.2.6",
+    "@semantic-release/npm": "^11.0.2",
     "@types/express": "^4.17.21",
     "@types/cors": "^2.8.17",
     "@types/node": "^20.11.5",
     "@typescript-eslint/eslint-plugin": "^6.19.0",
     "@typescript-eslint/parser": "^6.19.0",
+    "conventional-changelog-conventionalcommits": "^7.0.2",
     "eslint": "^8.56.0",
+    "semantic-release": "^23.0.0",
     "tsx": "^4.7.0",
     "tsup": "^8.0.1",
     "typescript": "^5.3.3",

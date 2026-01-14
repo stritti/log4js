@@ -1,0 +1,74 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+      - master
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+  packages: write
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'npm'
+          cache-dependency-path: log4js/package-lock.json
+      
+      - name: Install dependencies (log4js)
+        working-directory: ./log4js
+        run: npm ci
+      
+      - name: Run linter
+        working-directory: ./log4js
+        run: npm run lint
+      
+      - name: Run type checking
+        working-directory: ./log4js
+        run: npm run typecheck
+      
+      - name: Run tests
+        working-directory: ./log4js
+        run: npm test run
+      
+      - name: Build
+        working-directory: ./log4js
+        run: npm run build
+      
+      - name: Release (log4js)
+        working-directory: ./log4js
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npx semantic-release
+      
+      - name: Install dependencies (log4js-server)
+        working-directory: ./log4js-server
+        run: npm ci || npm install
+      
+      - name: Build (log4js-server)
+        working-directory: ./log4js-server
+        run: npm run build || tsc
+      
+      - name: Release (log4js-server)
+        working-directory: ./log4js-server
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npx semantic-release

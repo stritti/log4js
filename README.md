@@ -53,7 +53,7 @@ Within sources there is a more detailed [example](log4js/examples/index.html).
 
 ## Development
 
-The project is seperated in modules. Core JavaScript module is located in subdirectory `log4js` 
+The project is separated in modules. Core JavaScript module is located in subdirectory `log4js` 
 
 ### Structure
 ````
@@ -61,9 +61,20 @@ The project is seperated in modules. Core JavaScript module is located in subdir
 ├───log4js-server: Node.js/Express server for collecting browser logs
 ├───log4js-servlet: Java Servlet to collect AJAX-Logs serverside
 ├───log4js-solr: configuration to collect logs using Apache SOLR
-├───log4js-site: (outdated) project documentation
+├───docs: VitePress documentation site
  
 ````
+
+### Release Management
+
+Log4js v3.0+ uses automated release management with **semantic-release** and **Conventional Commits**:
+
+✅ Automated versioning and changelog generation  
+✅ GitHub releases with build artifacts  
+✅ npm package publishing  
+✅ Commit message validation  
+
+See [RELEASE_MANAGEMENT.md](RELEASE_MANAGEMENT.md) or the [online guide](https://stritti.github.io/log4js/guide/releases) for details.
 
 ### Log4js
 > Main JavaScript module - Now with TypeScript!

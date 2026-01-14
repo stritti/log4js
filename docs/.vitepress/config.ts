@@ -49,6 +49,12 @@ export default defineConfig({
             { text: 'Browser Usage', link: '/guide/browser' },
             { text: 'Best Practices', link: '/guide/best-practices' }
           ]
+        },
+        {
+          text: 'Development',
+          items: [
+            { text: 'Releases', link: '/guide/releases' }
+          ]
         }
       ],
       '/server/': [
