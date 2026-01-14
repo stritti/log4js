@@ -1,7 +1,8 @@
 [![Apache License](http://img.shields.io/badge/license-Apache%202.0-blue.svg?style=flat)](LICENSE.txt)
-[![Github Releases](https://img.shields.io/github/downloads/atom/atom/latest/total.svg)](https://github.com/stritti/log4js/releases)
-[![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
-[![Build Status](https://secure.travis-ci.org/stritti/log4js.png?branch=master)](http://travis-ci.org/stritti/log4js)
+[![GitHub Release](https://img.shields.io/github/v/release/stritti/log4js)](https://github.com/stritti/log4js/releases)
+[![CI](https://github.com/stritti/log4js/workflows/CI/badge.svg)](https://github.com/stritti/log4js/actions)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue)](https://www.typescriptlang.org/)
+[![Vite](https://img.shields.io/badge/Vite-5.0-646CFF)](https://vitejs.dev/)
 
 Log4js
 ======
@@ -10,21 +11,37 @@ Log4js - The Logging Framework for JavaScript with no runtime dependencies
 
 ## Usage
 
-* Download the most current [https://github.com/stritti/log4js/releases](Release) and unzip the archive.
-* Copy the file `js/log4js.min.js` to your project.
+### Modern ES Module (Recommended)
+
+```javascript
+import { Log4js, Level, BrowserConsoleAppender } from 'log4js'
+
+const logger = Log4js.getLogger('my-app')
+logger.setLevel(Level.ALL)
+logger.addAppender(new BrowserConsoleAppender())
+
+logger.info('Hello from Log4js v3.0!')
+```
+
+### UMD/Browser Script
+
+* Download the most current [release](https://github.com/stritti/log4js/releases) and unzip the archive.
+* Copy the file `dist/log4js.umd.js` (or `dist/log4js.iife.js` for browsers) to your project.
 * Add the JavaScript file to head of HTML page:
   ````html
   <head>
-    <script src="log4js.min.js" type="text/javascript"></script>
+    <script src="log4js.iife.js" type="text/javascript"></script>
   </head>
 
   ````
 * Add script for instantiation of Logger:
   ````javascript
-  let consoleLog = new Log4js.Logger("consoleTest");
-  consoleLog.setLevel(Log4js.Level.ALL);
-  let consoleAppender = new Log4js.ConsoleAppender(true);
-  consoleLog.addAppender(consoleAppender);
+  const { Log4js, Level, BrowserConsoleAppender } = window
+  
+  const consoleLog = Log4js.getLogger("consoleTest")
+  consoleLog.setLevel(Level.ALL)
+  const consoleAppender = new BrowserConsoleAppender()
+  consoleLog.addAppender(consoleAppender)
   
   ````
 * Then you are able to add logging event:
@@ -32,7 +49,7 @@ Log4js - The Logging Framework for JavaScript with no runtime dependencies
   consoleLog.trace('I was traced!')
   ````
 
-Within sources there is a more detailed [example](log4js/src/main/example/index.html).
+Within sources there is a more detailed [example](log4js/examples/index.html).
 
 ## Development
 
@@ -40,7 +57,8 @@ The project is seperated in modules. Core JavaScript module is located in subdir
 
 ### Structure
 ````
-├───log4js: Main JavaScript Log4js module 
+├───log4js: Main TypeScript/JavaScript Log4js module (v3.0)
+├───log4js-server: Node.js/Express server for collecting browser logs
 ├───log4js-servlet: Java Servlet to collect AJAX-Logs serverside
 ├───log4js-solr: configuration to collect logs using Apache SOLR
 ├───log4js-site: (outdated) project documentation
@@ -48,22 +66,28 @@ The project is seperated in modules. Core JavaScript module is located in subdir
 ````
 
 ### Log4js
-> Main JavaScript module
-[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
-[![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
+> Main JavaScript module - Now with TypeScript!
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue)](https://www.typescriptlang.org/)
+[![Vite](https://img.shields.io/badge/Vite-5.0-646CFF)](https://vitejs.dev/)
 
-To build the JavaScript library we use [npm](https://www.npmjs.com/) and [grunt](https://gruntjs.com/). 
+To build the JavaScript library we use [npm](https://www.npmjs.com/) and [Vite](https://vitejs.dev/). 
 
-````
+````bash
 cd log4js
 npm install
 npm test
-npm build
+npm run build
 ````
 
-Include then the `target/log4js.min.js` file in your project.
+Include then the `dist/log4js.min.js` file in your project, or use the ES module or UMD builds.
 
 More details in the [Wiki](https://github.com/stritti/log4js/wiki/Development)
+
+### Log4js Server (Node.js)
+
+Modern Node.js/TypeScript server for receiving browser log events. A lightweight alternative to the Java servlet.
+
+See [log4js-server/README.md](log4js-server/README.md) for details.
 
 ### Log4js Servlet
 
