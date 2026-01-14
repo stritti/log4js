@@ -282,6 +282,158 @@ export default {
 }
 ```
 
+### Angular
+
+Create a logging service that can be injected throughout your Angular application:
+
+```typescript
+import { Injectable } from '@angular/core'
+import { Log4js, Logger, Level, BrowserConsoleAppender } from 'log4js'
+
+@Injectable({
+  providedIn: 'root'
+})
+export class LoggingService {
+  private logger: Logger
+
+  constructor() {
+    // Initialize logger
+    this.logger = Log4js.getLogger('Angular')
+    this.logger.setLevel(Level.DEBUG)
+    this.logger.addAppender(new BrowserConsoleAppender())
+  }
+
+  getLogger(category: string): Logger {
+    const logger = Log4js.getLogger(category)
+    logger.setLevel(Level.DEBUG)
+    logger.addAppender(new BrowserConsoleAppender())
+    return logger
+  }
+
+  debug(message: string, ...args: unknown[]): void {
+    this.logger.debug(message, ...args)
+  }
+
+  info(message: string, ...args: unknown[]): void {
+    this.logger.info(message, ...args)
+  }
+
+  warn(message: string, ...args: unknown[]): void {
+    this.logger.warn(message, ...args)
+  }
+
+  error(message: string, ...args: unknown[]): void {
+    this.logger.error(message, ...args)
+  }
+
+  fatal(message: string, ...args: unknown[]): void {
+    this.logger.fatal(message, ...args)
+  }
+}
+```
+
+Use the service in your components:
+
+```typescript
+import { Component, OnInit, OnDestroy } from '@angular/core'
+import { LoggingService } from './services/logging.service'
+
+@Component({
+  selector: 'app-my-component',
+  templateUrl: './my-component.component.html',
+  styleUrls: ['./my-component.component.css']
+})
+export class MyComponent implements OnInit, OnDestroy {
+  private logger = this.loggingService.getLogger('MyComponent')
+
+  constructor(private loggingService: LoggingService) {}
+
+  ngOnInit(): void {
+    this.logger.info('Component initialized')
+  }
+
+  ngOnDestroy(): void {
+    this.logger.info('Component destroyed')
+  }
+
+  handleClick(): void {
+    this.logger.debug('Button clicked')
+  }
+
+  handleError(error: Error): void {
+    this.logger.error('An error occurred:', error)
+  }
+}
+```
+
+For HTTP interceptors:
+
+```typescript
+import { Injectable } from '@angular/core'
+import { 
+  HttpInterceptor, 
+  HttpRequest, 
+  HttpHandler, 
+  HttpEvent,
+  HttpResponse,
+  HttpErrorResponse
+} from '@angular/common/http'
+import { Observable } from 'rxjs'
+import { tap } from 'rxjs/operators'
+import { LoggingService } from './services/logging.service'
+
+@Injectable()
+export class LoggingInterceptor implements HttpInterceptor {
+  private logger = this.loggingService.getLogger('HTTP')
+
+  constructor(private loggingService: LoggingService) {}
+
+  intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    const started = Date.now()
+    this.logger.debug(`HTTP Request: ${req.method} ${req.url}`)
+
+    return next.handle(req).pipe(
+      tap(
+        (event) => {
+          if (event instanceof HttpResponse) {
+            const elapsed = Date.now() - started
+            this.logger.info(
+              `HTTP Response: ${req.method} ${req.url} - Status: ${event.status} (${elapsed}ms)`
+            )
+          }
+        },
+        (error: HttpErrorResponse) => {
+          const elapsed = Date.now() - started
+          this.logger.error(
+            `HTTP Error: ${req.method} ${req.url} - Status: ${error.status} (${elapsed}ms)`,
+            error
+          )
+        }
+      )
+    )
+  }
+}
+```
+
+Register the interceptor in your app module:
+
+```typescript
+import { NgModule } from '@angular/core'
+import { HTTP_INTERCEPTORS } from '@angular/common/http'
+import { LoggingInterceptor } from './interceptors/logging.interceptor'
+
+@NgModule({
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoggingInterceptor,
+      multi: true
+    }
+  ]
+})
+export class AppModule {}
+```
+
 ## Best Practices
 
 1. **Use interfaces** for configuration
