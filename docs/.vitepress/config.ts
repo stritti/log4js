@@ -39,6 +39,7 @@ export default defineConfig({
             { text: 'Loggers', link: '/guide/loggers' },
             { text: 'Log Levels', link: '/guide/levels' },
             { text: 'Appenders', link: '/guide/appenders' },
+            { text: 'WebSocket Appender', link: '/guide/websocket-appender' },
             { text: 'Layouts', link: '/guide/layouts' }
           ]
         },

@@ -32,4 +32,6 @@ export interface ServerConfig {
   enableConsoleLogging?: boolean
   enableFileLogging?: boolean
   logFilePath?: string
+  enableWebSocket?: boolean
+  websocketPath?: string
 }

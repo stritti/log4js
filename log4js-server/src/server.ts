@@ -3,13 +3,18 @@
  */
 import express, { type Request, type Response, type NextFunction } from 'express'
 import cors from 'cors'
+import { createServer, type Server as HttpServer } from 'http'
+import { WebSocketServer, WebSocket } from 'ws'
 import { LoggerAdapter } from './logger.js'
 import type { ServerConfig, LogEventRequest, LogEventResponse, LoggingEvent } from './types.js'
 
 export class Log4jsServer {
   private app: express.Application
+  private httpServer: HttpServer | null = null
+  private wss: WebSocketServer | null = null
   private logger: LoggerAdapter
   private config: ServerConfig
+  private clients: Set<WebSocket> = new Set()
 
   constructor(config: ServerConfig = {}) {
     this.config = {
@@ -20,6 +25,8 @@ export class Log4jsServer {
       logLevel: 'info',
       enableConsoleLogging: true,
       enableFileLogging: false,
+      enableWebSocket: true,
+      websocketPath: '/ws',
       ...config
     }
 
@@ -57,7 +64,12 @@ export class Log4jsServer {
   private setupRoutes(): void {
     // Health check
     this.app.get('/health', (req: Request, res: Response) => {
-      res.json({ status: 'ok', timestamp: new Date().toISOString() })
+      res.json({ 
+        status: 'ok', 
+        timestamp: new Date().toISOString(),
+        websocket: this.config.enableWebSocket ? 'enabled' : 'disabled',
+        clients: this.clients.size
+      })
     })
 
     // Main logging endpoint
@@ -125,18 +137,140 @@ export class Log4jsServer {
     })
   }
 
+  private setupWebSocket(): void {
+    if (!this.config.enableWebSocket || !this.httpServer) {
+      return
+    }
+
+    this.wss = new WebSocketServer({ 
+      server: this.httpServer,
+      path: this.config.websocketPath
+    })
+
+    this.wss.on('connection', (ws: WebSocket, req) => {
+      const clientIp = req.socket.remoteAddress
+      console.log(`[WebSocket] Client connected from ${clientIp}`)
+      this.clients.add(ws)
+
+      ws.on('message', (data: Buffer) => {
+        try {
+          const message = data.toString()
+          const payload = JSON.parse(message) as LogEventRequest | LoggingEvent | LoggingEvent[]
+
+          let events: LoggingEvent[]
+
+          // Handle different formats
+          if (Array.isArray(payload)) {
+            events = payload
+          } else if ('events' in payload && Array.isArray(payload.events)) {
+            events = payload.events
+          } else if ('categoryName' in payload && 'level' in payload && 'message' in payload) {
+            events = [payload as LoggingEvent]
+          } else {
+            ws.send(JSON.stringify({
+              state: 'ERROR',
+              error: 'Invalid message format'
+            }))
+            return
+          }
+
+          // Validate events
+          for (const event of events) {
+            if (!event.categoryName || !event.level || !event.message) {
+              ws.send(JSON.stringify({
+                state: 'ERROR',
+                error: 'Missing required fields: categoryName, level, message'
+              }))
+              return
+            }
+          }
+
+          // Log events
+          this.logger.logEvents(events)
+
+          // Send acknowledgment
+          ws.send(JSON.stringify({
+            state: 'OK',
+            message: `Logged ${events.length} event(s)`
+          }))
+
+        } catch (error) {
+          console.error('[WebSocket] Error processing message:', error)
+          ws.send(JSON.stringify({
+            state: 'ERROR',
+            error: error instanceof Error ? error.message : 'Unknown error'
+          }))
+        }
+      })
+
+      ws.on('close', () => {
+        console.log(`[WebSocket] Client disconnected from ${clientIp}`)
+        this.clients.delete(ws)
+      })
+
+      ws.on('error', (error) => {
+        console.error('[WebSocket] Client error:', error)
+        this.clients.delete(ws)
+      })
+
+      // Send welcome message
+      ws.send(JSON.stringify({
+        state: 'OK',
+        message: 'Connected to Log4js WebSocket server'
+      }))
+    })
+
+    console.log(`WebSocket server listening on ${this.config.websocketPath}`)
+  }
+
   start(): void {
     const port = this.config.port!
     const host = this.config.host!
 
-    this.app.listen(port, host, () => {
+    // Create HTTP server
+    this.httpServer = createServer(this.app)
+
+    // Setup WebSocket if enabled
+    if (this.config.enableWebSocket) {
+      this.setupWebSocket()
+    }
+
+    this.httpServer.listen(port, host, () => {
       console.log(`Log4js Server running on http://${host}:${port}`)
       console.log(`Health check: http://${host}:${port}/health`)
       console.log(`Logging endpoint: http://${host}:${port}/log`)
+      
+      if (this.config.enableWebSocket) {
+        console.log(`WebSocket endpoint: ws://${host}:${port}${this.config.websocketPath}`)
+      }
     })
+  }
+
+  stop(): void {
+    // Close all WebSocket connections
+    this.clients.forEach(client => {
+      client.close()
+    })
+    this.clients.clear()
+
+    // Close WebSocket server
+    if (this.wss) {
+      this.wss.close()
+      this.wss = null
+    }
+
+    // Close HTTP server
+    if (this.httpServer) {
+      this.httpServer.close()
+      this.httpServer = null
+    }
   }
 
   getApp(): express.Application {
     return this.app
+  }
+
+  getClientCount(): number {
+    return this.clients.size
   }
 }

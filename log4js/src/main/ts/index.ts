@@ -23,6 +23,8 @@ export { SimpleLayout } from './layouts/simple'
 
 // Appenders
 export { BrowserConsoleAppender, ConsoleAppender } from './appenders/browser-console'
+export { WebSocketAppender } from './appenders/websocket'
+export type { WebSocketAppenderConfig } from './appenders/websocket'
 
 // Default export
 export { Log4js as default } from './log4js'

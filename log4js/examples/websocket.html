@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Log4js WebSocket Appender Example</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    h1 {
+      color: #333;
+    }
+    .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-top: 20px;
+    }
+    .panel {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .panel h2 {
+      margin-top: 0;
+      color: #0099CC;
+    }
+    .status {
+      padding: 10px;
+      border-radius: 4px;
+      margin-bottom: 15px;
+      font-weight: bold;
+    }
+    .status.connected {
+      background: #d4edda;
+      color: #155724;
+    }
+    .status.disconnected {
+      background: #f8d7da;
+      color: #721c24;
+    }
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 15px 0;
+    }
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background 0.3s;
+    }
+    button.primary {
+      background: #0099CC;
+      color: white;
+    }
+    button.primary:hover {
+      background: #007aa3;
+    }
+    button.secondary {
+      background: #FF9933;
+      color: white;
+    }
+    button.secondary:hover {
+      background: #cc7a29;
+    }
+    button.danger {
+      background: #dc3545;
+      color: white;
+    }
+    button.danger:hover {
+      background: #c82333;
+    }
+    button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+    .log-output {
+      background: #1e1e1e;
+      color: #d4d4d4;
+      padding: 15px;
+      border-radius: 4px;
+      max-height: 400px;
+      overflow-y: auto;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .log-entry {
+      margin-bottom: 5px;
+    }
+    .log-entry.TRACE { color: #808080; }
+    .log-entry.DEBUG { color: #569cd6; }
+    .log-entry.INFO { color: #4ec9b0; }
+    .log-entry.WARN { color: #dcdcaa; }
+    .log-entry.ERROR { color: #f48771; }
+    .log-entry.FATAL { color: #ff0000; }
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    .info-box {
+      background: #e7f3ff;
+      border-left: 4px solid #0099CC;
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px;
+      margin: 15px 0;
+    }
+    .stat {
+      background: #f8f9fa;
+      padding: 10px;
+      border-radius: 4px;
+      text-align: center;
+    }
+    .stat-label {
+      font-size: 12px;
+      color: #666;
+      text-transform: uppercase;
+    }
+    .stat-value {
+      font-size: 24px;
+      font-weight: bold;
+      color: #0099CC;
+    }
+  </style>
+</head>
+<body>
+  <h1>🔌 Log4js WebSocket Appender Example</h1>
+  
+  <div class="info-box">
+    <strong>Requirements:</strong> Start the log4js-server with WebSocket support:<br>
+    <code>cd log4js-server && npm start</code>
+  </div>
+
+  <div class="container">
+    <div class="panel">
+      <h2>Configuration</h2>
+      
+      <label for="wsUrl">WebSocket URL:</label>
+      <input type="text" id="wsUrl" value="ws://localhost:3000/ws">
+      
+      <label for="batchSize">Batch Size:</label>
+      <input type="number" id="batchSize" value="10" min="1" max="100">
+      
+      <label for="flushInterval">Flush Interval (ms):</label>
+      <input type="number" id="flushInterval" value="1000" min="100" max="10000">
+      
+      <div class="buttons">
+        <button class="primary" id="connect">Connect</button>
+        <button class="danger" id="disconnect" disabled>Disconnect</button>
+      </div>
+      
+      <div id="connectionStatus" class="status disconnected">
+        Disconnected
+      </div>
+
+      <h3>Statistics</h3>
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-label">Queue Size</div>
+          <div class="stat-value" id="queueSize">0</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Events Sent</div>
+          <div class="stat-value" id="eventsSent">0</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>Logging Actions</h2>
+      
+      <div class="buttons">
+        <button class="primary" id="logTrace">TRACE</button>
+        <button class="primary" id="logDebug">DEBUG</button>
+        <button class="primary" id="logInfo">INFO</button>
+        <button class="secondary" id="logWarn">WARN</button>
+        <button class="danger" id="logError">ERROR</button>
+        <button class="danger" id="logFatal">FATAL</button>
+      </div>
+      
+      <div class="buttons">
+        <button class="primary" id="logBatch">Send Batch (10)</button>
+        <button class="primary" id="logStress">Stress Test (100)</button>
+        <button class="secondary" id="flush">Force Flush</button>
+        <button class="secondary" id="clearLogs">Clear Logs</button>
+      </div>
+      
+      <label for="customMessage">Custom Message:</label>
+      <input type="text" id="customMessage" placeholder="Enter custom log message...">
+      <button class="primary" id="logCustom">Send Custom</button>
+    </div>
+  </div>
+
+  <div class="panel" style="margin-top: 20px;">
+    <h2>Local Log Output</h2>
+    <div id="logOutput" class="log-output"></div>
+  </div>
+
+  <script type="module">
+    import { Log4js, WebSocketAppender, SimpleLayout, Level } from '../dist/log4js.es.js'
+    
+    // State
+    let wsAppender = null
+    let logger = null
+    let eventsSent = 0
+    let statsInterval = null
+    
+    // Elements
+    const wsUrlInput = document.getElementById('wsUrl')
+    const batchSizeInput = document.getElementById('batchSize')
+    const flushIntervalInput = document.getElementById('flushInterval')
+    const connectBtn = document.getElementById('connect')
+    const disconnectBtn = document.getElementById('disconnect')
+    const connectionStatus = document.getElementById('connectionStatus')
+    const queueSizeEl = document.getElementById('queueSize')
+    const eventsSentEl = document.getElementById('eventsSent')
+    const logOutput = document.getElementById('logOutput')
+    const customMessageInput = document.getElementById('customMessage')
+    
+    // Setup logger
+    const log4js = new Log4js()
+    logger = log4js.getLogger('websocket-demo')
+    logger.setLevel(Level.ALL)
+    
+    // Local console appender for display
+    logger.addAppender({
+      append: (event) => {
+        const timestamp = new Date(event.timestamp).toLocaleTimeString()
+        const level = event.level.toString()
+        const message = event.messages.join(' ')
+        
+        const entry = document.createElement('div')
+        entry.className = `log-entry ${level}`
+        entry.textContent = `[${timestamp}] ${level.padEnd(5)} - ${message}`
+        
+        logOutput.appendChild(entry)
+        logOutput.scrollTop = logOutput.scrollHeight
+      }
+    })
+    
+    // Connect handler
+    connectBtn.addEventListener('click', () => {
+      const url = wsUrlInput.value
+      const batchSize = parseInt(batchSizeInput.value)
+      const flushInterval = parseInt(flushIntervalInput.value)
+      
+      wsAppender = new WebSocketAppender({
+        url,
+        batchSize,
+        flushInterval,
+        reconnect: true,
+        reconnectInterval: 3000,
+        maxReconnectAttempts: 10
+      })
+      
+      wsAppender.setLayout(new SimpleLayout())
+      logger.addAppender(wsAppender)
+      
+      // Update UI
+      connectBtn.disabled = true
+      disconnectBtn.disabled = false
+      wsUrlInput.disabled = true
+      batchSizeInput.disabled = true
+      flushIntervalInput.disabled = true
+      
+      // Start stats monitoring
+      statsInterval = setInterval(updateStats, 500)
+      
+      logger.info('WebSocket appender connected')
+      updateConnectionStatus(true)
+    })
+    
+    // Disconnect handler
+    disconnectBtn.addEventListener('click', () => {
+      if (wsAppender) {
+        logger.info('Disconnecting WebSocket appender...')
+        wsAppender.close()
+        logger.removeAppender(wsAppender)
+        wsAppender = null
+      }
+      
+      // Update UI
+      connectBtn.disabled = false
+      disconnectBtn.disabled = true
+      wsUrlInput.disabled = false
+      batchSizeInput.disabled = false
+      flushIntervalInput.disabled = false
+      
+      // Stop stats monitoring
+      if (statsInterval) {
+        clearInterval(statsInterval)
+        statsInterval = null
+      }
+      
+      updateConnectionStatus(false)
+    })
+    
+    // Log level buttons
+    document.getElementById('logTrace').addEventListener('click', () => {
+      logger.trace('This is a TRACE message')
+      eventsSent++
+    })
+    
+    document.getElementById('logDebug').addEventListener('click', () => {
+      logger.debug('This is a DEBUG message')
+      eventsSent++
+    })
+    
+    document.getElementById('logInfo').addEventListener('click', () => {
+      logger.info('This is an INFO message')
+      eventsSent++
+    })
+    
+    document.getElementById('logWarn').addEventListener('click', () => {
+      logger.warn('This is a WARN message')
+      eventsSent++
+    })
+    
+    document.getElementById('logError').addEventListener('click', () => {
+      logger.error('This is an ERROR message', new Error('Sample error'))
+      eventsSent++
+    })
+    
+    document.getElementById('logFatal').addEventListener('click', () => {
+      logger.fatal('This is a FATAL message')
+      eventsSent++
+    })
+    
+    // Batch logging
+    document.getElementById('logBatch').addEventListener('click', () => {
+      for (let i = 0; i < 10; i++) {
+        logger.info(`Batch message ${i + 1}/10`)
+        eventsSent++
+      }
+    })
+    
+    // Stress test
+    document.getElementById('logStress').addEventListener('click', () => {
+      for (let i = 0; i < 100; i++) {
+        const level = ['DEBUG', 'INFO', 'WARN', 'ERROR'][Math.floor(Math.random() * 4)]
+        logger[level.toLowerCase()](`Stress test message ${i + 1}/100`)
+        eventsSent++
+      }
+    })
+    
+    // Custom message
+    document.getElementById('logCustom').addEventListener('click', () => {
+      const message = customMessageInput.value || 'Custom log message'
+      logger.info(message)
+      eventsSent++
+      customMessageInput.value = ''
+    })
+    
+    // Force flush
+    document.getElementById('flush').addEventListener('click', () => {
+      if (wsAppender) {
+        wsAppender.forceFlush()
+        logger.debug('Forced flush of queued events')
+      }
+    })
+    
+    // Clear logs
+    document.getElementById('clearLogs').addEventListener('click', () => {
+      logOutput.innerHTML = ''
+      eventsSent = 0
+      updateStats()
+    })
+    
+    // Update connection status
+    function updateConnectionStatus(connected) {
+      if (connected) {
+        connectionStatus.textContent = 'Connected ✓'
+        connectionStatus.className = 'status connected'
+      } else {
+        connectionStatus.textContent = 'Disconnected'
+        connectionStatus.className = 'status disconnected'
+      }
+    }
+    
+    // Update statistics
+    function updateStats() {
+      if (wsAppender) {
+        queueSizeEl.textContent = wsAppender.getQueueSize()
+      } else {
+        queueSizeEl.textContent = '0'
+      }
+      eventsSentEl.textContent = eventsSent
+    }
+    
+    // Initial log
+    logger.info('WebSocket Appender Example loaded')
+  </script>
+</body>
+</html>

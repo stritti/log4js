@@ -14,6 +14,8 @@ interface ServerConfig {
   enableConsoleLogging?: boolean  // Log to console (default: true)
   enableFileLogging?: boolean     // Log to file (default: false)
   logFilePath?: string            // Log file path (default: 'log4js-server.log')
+  enableWebSocket?: boolean       // Enable WebSocket support (default: true)
+  websocketPath?: string          // WebSocket endpoint path (default: '/ws')
 }
 ```
 
@@ -85,6 +87,34 @@ const server = new Log4jsServer({
 })
 ```
 
+## WebSocket Configuration
+
+### Enable WebSocket Support
+
+```typescript
+const server = new Log4jsServer({
+  enableWebSocket: true,      // Default
+  websocketPath: '/ws'        // Default endpoint path
+})
+```
+
+### Custom WebSocket Path
+
+```typescript
+const server = new Log4jsServer({
+  enableWebSocket: true,
+  websocketPath: '/logs/stream'
+})
+```
+
+### Disable WebSocket (HTTP Only)
+
+```typescript
+const server = new Log4jsServer({
+  enableWebSocket: false  // Only HTTP endpoints
+})
+```
+
 ## Environment-Based Configuration
 
 ```typescript
@@ -95,7 +125,9 @@ const server = new Log4jsServer({
   enableConsoleLogging: process.env.CONSOLE_LOGGING !== 'false',
   enableFileLogging: process.env.FILE_LOGGING === 'true',
   logFilePath: process.env.LOG_FILE_PATH || './logs/app.log',
-  logLevel: process.env.LOG_LEVEL || 'info'
+  logLevel: process.env.LOG_LEVEL || 'info',
+  enableWebSocket: process.env.ENABLE_WEBSOCKET !== 'false',
+  websocketPath: process.env.WEBSOCKET_PATH || '/ws'
 })
 ```
 
@@ -109,6 +141,8 @@ CONSOLE_LOGGING=true
 FILE_LOGGING=true
 LOG_FILE_PATH=./logs/browser-logs.log
 LOG_LEVEL=info
+ENABLE_WEBSOCKET=true
+WEBSOCKET_PATH=/ws
 ```
 
 ## Body Size Limits
