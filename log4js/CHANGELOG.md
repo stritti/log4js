@@ -58,8 +58,10 @@ This release represents a complete rewrite of Log4js with modern JavaScript tech
 - **Removed**: `SafariJSConsoleAppender` (use `BrowserConsoleAppender`)
 - **Removed**: IE-specific event attachment code
 - **Removed**: Array.prototype.push polyfill
-- **Removed**: Grunt build system
+- **Removed**: Grunt build system and Gruntfile.js
+- **Removed**: Grunt tasks directory
 - **Removed**: Karma test runner
+- **Removed**: Old .eslintrc configuration (replaced with .eslintrc.cjs)
 
 #### Simplified
 - **Consolidated Appenders**: Single `BrowserConsoleAppender` for all modern browsers
