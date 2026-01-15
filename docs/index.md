@@ -6,7 +6,7 @@ hero:
   text: The Logging Framework for JavaScript
   tagline: Modern TypeScript logging with zero runtime dependencies
   image:
-    src: /logo.png
+    src: /Log4js-logo.svg
     alt: Log4js
   actions:
     - theme: brand
@@ -20,35 +20,35 @@ features:
   - icon: 🚀
     title: Modern TypeScript
     details: Full TypeScript support with complete type definitions and strict mode enabled
-  
+
   - icon: ⚡️
     title: Lightning Fast
     details: Built with Vite for blazing fast builds (1.2s vs 30+ seconds)
-  
+
   - icon: 📦
     title: Tiny Bundle
     details: Only 2.32 kB gzipped - 50% smaller than v2.x
-  
+
   - icon: 🎯
     title: Type Safe
     details: ES2022+ features with strict TypeScript for maximum type safety
-  
+
   - icon: 🔧
     title: Flexible Appenders
     details: Console, AJAX, file logging and custom appenders
-  
+
   - icon: 🌐
     title: Node.js Server
     details: Optional Express-based server for collecting browser logs
-  
+
   - icon: 📱
     title: Zero Dependencies
     details: No runtime dependencies for the core library
-  
+
   - icon: ✨
     title: ES Modules
     details: Modern ES modules with tree-shaking support
-  
+
   - icon: 🎨
     title: Multiple Formats
     details: ES Module, UMD, and IIFE builds for any environment
@@ -80,11 +80,3 @@ Log4js v3.0 is a complete modernization of the classic JavaScript logging framew
 - **Smaller Bundles**: 50% reduction in bundle size
 - **Better DX**: Full IntelliSense support and type safety
 - **Node.js Server**: New optional server for collecting browser logs
-
-## Sponsors
-
-<p align="center">
-  <a href="https://github.com/stritti/log4js">
-    <img src="https://img.shields.io/github/sponsors/stritti?style=for-the-badge" alt="Sponsors">
-  </a>
-</p>

@@ -4,16 +4,16 @@ export default defineConfig({
   title: 'Log4js',
   description: 'The Logging Framework for JavaScript',
   base: '/log4js/',
-  
+
   themeConfig: {
-    logo: '/logo.png',
-    
+    logo: '/Log4js-logo.svg',
+
     nav: [
       { text: 'Home', link: '/' },
       { text: 'Guide', link: '/guide/' },
       { text: 'API', link: '/api/' },
       { text: 'Server', link: '/server/' },
-      { 
+      {
         text: 'v3.0.0',
         items: [
           { text: 'Changelog', link: '/changelog' },
