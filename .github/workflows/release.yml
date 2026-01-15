@@ -53,11 +53,11 @@ jobs:
         run: npm run build
       
       - name: Release (log4js)
-        working-directory: ./log4js
+        working-directory: .
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npx semantic-release
+        run: npx semantic-release --extends ./log4js/.releaserc.json --package-root ./log4js
       
       - name: Install dependencies (log4js-server)
         working-directory: ./log4js-server
