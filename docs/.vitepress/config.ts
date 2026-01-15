@@ -54,6 +54,7 @@ export default defineConfig({
         {
           text: 'Development',
           items: [
+            { text: 'Architecture', link: '/guide/architecture' },
             { text: 'Releases', link: '/guide/releases' }
           ]
         }
