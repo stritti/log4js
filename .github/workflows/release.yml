@@ -57,7 +57,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npx semantic-release --extends ./log4js/.releaserc.json --package-root ./log4js
+        run: npx semantic-release --extends ./log4js/.releaserc.json --pkg-root ./log4js
       
       - name: Install dependencies (log4js-server)
         working-directory: ./log4js-server
@@ -67,9 +67,13 @@ jobs:
         working-directory: ./log4js-server
         run: npm run build || tsc
       
+      - name: Make git visible for server
+        working-directory: ./log4js-server
+        run: ln -s ../.git .git || true
+              
       - name: Release (log4js-server)
         working-directory: .
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npx semantic-release --extends ./log4js-server/.releaserc.json --package-root ./log4js-server
+        run: npx semantic-release --extends ./log4js-server/.releaserc.json --pkg-root ./log4js-server
