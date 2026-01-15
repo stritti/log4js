@@ -55,7 +55,7 @@ export class Log4jsServer {
     this.app.use(express.urlencoded({ extended: true, limit: this.config.maxBodySize }))
 
     // Request logging
-    this.app.use((req: Request, res: Response, next: NextFunction) => {
+    this.app.use((req: Request, _res: Response, next: NextFunction) => {
       console.log(`${new Date().toISOString()} ${req.method} ${req.path}`)
       next()
     })
@@ -63,7 +63,7 @@ export class Log4jsServer {
 
   private setupRoutes(): void {
     // Health check
-    this.app.get('/health', (req: Request, res: Response) => {
+    this.app.get('/health', (_req: Request, res: Response) => {
       res.json({ 
         status: 'ok', 
         timestamp: new Date().toISOString(),
@@ -73,7 +73,7 @@ export class Log4jsServer {
     })
 
     // Main logging endpoint
-    this.app.post('/log', (req: Request, res: Response) => {
+    this.app.post('/log', (req: Request, res: Response): void => {
       try {
         const body = req.body as LogEventRequest | LoggingEvent | LoggingEvent[]
 
@@ -91,7 +91,8 @@ export class Log4jsServer {
             state: 'ERROR',
             error: 'Invalid request format'
           }
-          return res.status(400).json(response)
+          res.status(400).json(response)
+          return
         }
 
         // Validate events
@@ -101,7 +102,8 @@ export class Log4jsServer {
               state: 'ERROR',
               error: 'Missing required fields: categoryName, level, message'
             }
-            return res.status(400).json(response)
+            res.status(400).json(response)
+            return
           }
         }
 
@@ -132,7 +134,7 @@ export class Log4jsServer {
     })
 
     // 404 handler
-    this.app.use((req: Request, res: Response) => {
+    this.app.use((_req: Request, res: Response) => {
       res.status(404).json({ error: 'Not found' })
     })
   }
