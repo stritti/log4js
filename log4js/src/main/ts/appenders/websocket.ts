@@ -135,15 +135,15 @@ export class WebSocketAppender extends Appender {
 
   private formatEvent(event: LoggingEvent): object {
     return {
-      categoryName: event.logger.category,
+      categoryName: event.logger?.category ?? event.categoryName,
       level: event.level.toString(),
-      message: this.layout.format(event),
-      timestamp: event.timestamp.toISOString(),
+      message: this.layout?.format(event) ?? event.message,
+      timestamp: event.startTime.toISOString(),
       exception: event.exception?.toString()
     }
   }
 
-  append(loggingEvent: LoggingEvent): void {
+  doAppend(loggingEvent: LoggingEvent): void {
     this.eventQueue.push(loggingEvent)
 
     // Immediate flush if batch size reached
