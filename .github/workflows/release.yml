@@ -46,7 +46,7 @@ jobs:
       
       - name: Run tests
         working-directory: ./log4js
-        run: npm test run
+        run: npm test
       
       - name: Build
         working-directory: ./log4js
