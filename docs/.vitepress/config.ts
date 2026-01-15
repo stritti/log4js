@@ -1,12 +1,13 @@
 import { defineConfig } from 'vitepress'
+import { withMermaid } from 'vitepress-plugin-mermaid'
 
-export default defineConfig({
+export default withMermaid(defineConfig({
   title: 'Log4js',
   description: 'The Logging Framework for JavaScript',
   base: '/log4js/',
   
   themeConfig: {
-    logo: '/logo.png',
+    logo: '/logo-transparent.png',
     
     nav: [
       { text: 'Home', link: '/' },
@@ -93,5 +94,16 @@ export default defineConfig({
     ['meta', { name: 'og:locale', content: 'en' }],
     ['meta', { name: 'og:site_name', content: 'Log4js' }],
     ['meta', { name: 'og:image', content: 'https://stritti.github.io/log4js/og-image.png' }]
-  ]
-})
+  ],
+
+  // Mermaid configuration
+  mermaid: {
+    // Configure Mermaid theme
+    theme: 'default'
+  },
+  
+  // Mermaid plugin options
+  mermaidPlugin: {
+    class: 'mermaid'
+  }
+}))
