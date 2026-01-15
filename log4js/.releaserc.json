@@ -1,5 +1,12 @@
 {
-  "branches": ["main", "master"],
+  "branches": [
+    "main",
+    "master",
+    {
+      "name": "develop",
+      "prerelease": "beta"
+    }
+  ],
   "tagFormat": "v${version}",
   "plugins": [
     [

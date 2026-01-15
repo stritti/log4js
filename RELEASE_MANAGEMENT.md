@@ -27,7 +27,14 @@ Log4js v3.0+ uses **semantic-release** for fully automated version management, c
 
 ## Automated Release Process
 
-### How It Works
+### Release Branches
+
+| Branch | Release Type | Version Format | npm Tag |
+|--------|--------------|----------------|---------|
+| `main`/`master` | Production | `3.1.0` | `latest` |
+| `develop` | Pre-release | `3.1.0-beta.1` | `beta` |
+
+### Production Release Workflow
 
 1. **Developer commits** using conventional commit format
 2. **Push to main/master** branch
@@ -38,17 +45,37 @@ Log4js v3.0+ uses **semantic-release** for fully automated version management, c
 7. **CHANGELOG updated** with new entries
 8. **Git tag created** (e.g., `v3.1.0`)
 9. **GitHub release** created with assets
-10. **Package published** to npm
+10. **Package published** to npm with `latest` tag
 11. **Changes committed** back to repository
 
-### Triggering a Release
+### Pre-release Workflow (Beta)
 
-Simply push conventional commits to the `main` or `master` branch:
+1. **Developer commits** to `develop` branch
+2. **Push to develop** branch
+3. **GitHub Actions** workflow triggers
+4. **Tests run** (lint, typecheck, tests, build)
+5. **semantic-release creates beta** version (e.g., `3.1.0-beta.1`)
+6. **Git tag created** (e.g., `v3.1.0-beta.1`)
+7. **GitHub pre-release** created with assets
+8. **Package published** to npm with `beta` tag
+9. **Changes committed** back to repository
 
+### Triggering Releases
+
+**Production Release:**
 ```bash
-git add .
+git checkout main
 git commit -m "feat: add new logging feature"
 git push origin main
+# → Creates v3.1.0
+```
+
+**Beta Pre-release:**
+```bash
+git checkout develop
+git commit -m "feat: experimental feature"
+git push origin develop
+# → Creates v3.1.0-beta.1
 ```
 
 The automation handles the rest!

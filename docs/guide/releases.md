@@ -92,7 +92,16 @@ chore(no-release): update dev dependencies
 
 ## Automated Release Workflow
 
-### How It Works
+### Release Branches
+
+Log4js supports two release workflows:
+
+| Branch | Release Type | Version Format | npm Tag | Description |
+|--------|--------------|----------------|---------|-------------|
+| `main`/`master` | **Production** | `3.1.0` | `latest` | Stable releases for production use |
+| `develop` | **Pre-release** | `3.1.0-beta.1` | `beta` | Beta releases for testing new features |
+
+### Production Releases (main/master)
 
 1. **Developer pushes commits** to `main`/`master` branch
 2. **GitHub Actions triggers** the release workflow
@@ -100,18 +109,49 @@ chore(no-release): update dev dependencies
 4. **semantic-release analyzes** commit messages since last release
 5. **Version determined** based on commit types
 6. **CHANGELOG generated** from commit messages
-7. **Version bumped** in package.json
+7. **Version bumped** in package.json (e.g., `3.1.0`)
 8. **Git tag created** (e.g., `v3.1.0`)
 9. **GitHub release created** with build artifacts
-10. **Package published** to npm
+10. **Package published** to npm with `latest` tag
 11. **Commit pushed** back to repository with changelog
+
+### Pre-releases (develop)
+
+When commits are merged to the `develop` branch:
+
+1. **semantic-release creates a beta pre-release**
+2. **Version format**: `3.1.0-beta.1`, `3.1.0-beta.2`, etc.
+3. **Git tag created**: `v3.1.0-beta.1`
+4. **GitHub release** marked as **pre-release**
+5. **Published to npm** with `beta` tag
+
+**Installing beta versions:**
+```bash
+npm install log4js@beta
+npm install @log4js/server@beta
+```
+
+**Workflow:**
+```bash
+# Develop and test features on develop branch
+git checkout develop
+git commit -m "feat: add new feature"
+git push origin develop
+# → Triggers automatic beta release (e.g., 3.1.0-beta.1)
+
+# When stable, merge to main for production release
+git checkout main
+git merge develop
+git push origin main
+# → Triggers production release (e.g., 3.1.0)
+```
 
 ### Multi-Package Releases
 
 Log4js supports releasing multiple packages:
 
-- **log4js** (main package): Tagged as `v3.0.0`
-- **log4js-server**: Tagged as `server-v1.0.0`
+- **log4js** (main package): Tagged as `v3.0.0` (or `v3.0.0-beta.1`)
+- **log4js-server**: Tagged as `server-v1.0.0` (or `server-v1.0.0-beta.1`)
 
 Each package has its own `.releaserc.json` configuration and releases independently based on commit messages.
 
@@ -187,7 +227,42 @@ Log4js follows [Semantic Versioning (SemVer)](https://semver.org/):
 
 ## Pre-releases
 
-For pre-release versions (alpha, beta, rc):
+Pre-releases are automatically created when commits are merged to the `develop` branch.
+
+### Automatic Beta Releases
+
+```bash
+# Work on develop branch
+git checkout develop
+git commit -m "feat: add experimental feature"
+git push origin develop
+
+# Automatically creates: 3.1.0-beta.1
+```
+
+### Version Progression
+
+```
+develop branch commits:
+3.1.0-beta.1 → 3.1.0-beta.2 → 3.1.0-beta.3
+
+Merge to main:
+3.1.0 (stable release)
+```
+
+### Installing Pre-releases
+
+```bash
+# Install latest beta version
+npm install log4js@beta
+
+# Install specific beta version
+npm install log4js@3.1.0-beta.2
+```
+
+### Manual Pre-release (if needed)
+
+For manual pre-release creation:
 
 ```bash
 # Create a pre-release
