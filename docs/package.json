@@ -1,0 +1,17 @@
+{
+  "name": "@log4js/docs",
+  "version": "3.0.0",
+  "description": "Log4js Documentation",
+  "type": "module",
+  "scripts": {
+    "docs:dev": "vitepress dev",
+    "docs:build": "vitepress build",
+    "docs:preview": "vitepress preview"
+  },
+  "devDependencies": {
+    "mermaid": "^11.12.2",
+    "vitepress": "^1.0.0-rc.35",
+    "vitepress-plugin-mermaid": "^2.0.17",
+    "vue": "^3.4.15"
+  }
+}

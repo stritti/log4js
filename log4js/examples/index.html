@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log4js v3.0 - Modern Example</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        h1 { color: #333; }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        button {
+            background: #0066cc;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        button:hover { background: #0052a3; }
+        .info {
+            background: #e7f3ff;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 20px;
+            border-left: 4px solid #0066cc;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        pre {
+            background: #f4f4f4;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Log4js v3.0 - Modern JavaScript Logging</h1>
+        <p>Log4js has been completely modernized with TypeScript, ES2022+ features, and Vite!</p>
+        
+        <h2>Interactive Demo</h2>
+        <p>Click the buttons below to see logging in action. Open your browser's developer console (F12) to see the logs.</p>
+        
+        <div>
+            <button onclick="logTrace()">Trace</button>
+            <button onclick="logDebug()">Debug</button>
+            <button onclick="logInfo()">Info</button>
+            <button onclick="logWarn()">Warn</button>
+            <button onclick="logError()">Error</button>
+            <button onclick="logFatal()">Fatal</button>
+            <button onclick="clearConsole()">Clear Console</button>
+        </div>
+
+        <div class="info">
+            <p><strong>Version:</strong> <span id="version"></span></p>
+            <p><strong>Build:</strong> Modern TypeScript + Vite</p>
+            <p><strong>Features:</strong> ES2022+, Full Type Safety, Tree Shakeable</p>
+        </div>
+    </div>
+
+    <script src="../dist/log4js.iife.js"></script>
+    <script>
+        const { Log4js, Level, BrowserConsoleAppender } = window
+        const logger = Log4js.getLogger('demo')
+        logger.setLevel(Level.ALL)
+        logger.addAppender(new BrowserConsoleAppender())
+        document.getElementById('version').textContent = Log4js.version
+        logger.info(`Log4js v${Log4js.version} initialized successfully!`)
+
+        function logTrace() { logger.trace('This is a TRACE message') }
+        function logDebug() { logger.debug('This is a DEBUG message') }
+        function logInfo() { logger.info('This is an INFO message') }
+        function logWarn() { logger.warn('This is a WARN message') }
+        function logError() { logger.error('This is an ERROR message') }
+        function logFatal() { logger.fatal('This is a FATAL message') }
+        function clearConsole() { logger.clear(); if (console.clear) console.clear(); logger.info('Console cleared!') }
+    </script>
+</body>
+</html>

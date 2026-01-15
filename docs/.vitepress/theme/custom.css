@@ -1,0 +1,65 @@
+/**
+ * Customize default theme colors to match Log4js branding
+ * Logo colors: #0099CC (blue), #FF9933 (orange)
+ */
+
+:root {
+  /* Primary brand color - Log4js blue */
+  --vp-c-brand-1: #0099CC;
+  --vp-c-brand-2: #0099CC;
+  --vp-c-brand-3: #0099CC;
+  --vp-c-brand-soft: rgba(0, 153, 204, 0.14);
+  
+  /* Accent color - Log4js orange */
+  --vp-c-accent: #FF9933;
+  
+  /* Link colors */
+  --vp-c-link: #0099CC;
+  --vp-c-link-hover: #007AA3;
+  
+  /* Button colors */
+  --vp-button-brand-bg: #0099CC;
+  --vp-button-brand-hover-bg: #007AA3;
+  --vp-button-brand-active-bg: #006B8A;
+  
+  /* Sponsorship colors */
+  --vp-c-sponsor: #FF9933;
+}
+
+.dark {
+  /* Primary brand color in dark mode */
+  --vp-c-brand-1: #33B3DD;
+  --vp-c-brand-2: #33B3DD;
+  --vp-c-brand-3: #33B3DD;
+  --vp-c-brand-soft: rgba(51, 179, 221, 0.14);
+  
+  /* Accent color in dark mode */
+  --vp-c-accent: #FFB366;
+  
+  /* Link colors in dark mode */
+  --vp-c-link: #33B3DD;
+  --vp-c-link-hover: #66C7E5;
+  
+  /* Button colors in dark mode */
+  --vp-button-brand-bg: #33B3DD;
+  --vp-button-brand-hover-bg: #66C7E5;
+  --vp-button-brand-active-bg: #99D9ED;
+  
+  /* Sponsorship colors in dark mode */
+  --vp-c-sponsor: #FFB366;
+}
+
+/* Hero gradient background using Log4js colors */
+.VPHero .name {
+  background: linear-gradient(135deg, #0099CC 0%, #FF9933 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.dark .VPHero .name {
+  background: linear-gradient(135deg, #33B3DD 0%, #FFB366 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}

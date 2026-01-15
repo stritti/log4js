@@ -1,5 +1,6 @@
-[![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
-[![Build Status](https://secure.travis-ci.org/stritti/log4js.png?branch=master)](http://travis-ci.org/stritti/log4js)
-[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![CI](https://github.com/stritti/log4js/workflows/CI/badge.svg)](https://github.com/stritti/log4js/actions)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue)](https://www.typescriptlang.org/)
+[![Vite](https://img.shields.io/badge/Vite-5.0-646CFF)](https://vitejs.dev/)
+
 Log4js
 ======

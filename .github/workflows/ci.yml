@@ -1,0 +1,119 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, master, develop ]
+  pull_request:
+    branches: [ main, master, develop ]
+  release:
+    types: [ created ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x, 22.x, 24.x]
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+        cache-dependency-path: log4js/package-lock.json
+    
+    - name: Install dependencies
+      working-directory: ./log4js
+      run: npm ci
+    
+    - name: Run linter
+      working-directory: ./log4js
+      run: npm run lint
+    
+    - name: Run type checking
+      working-directory: ./log4js
+      run: npm run typecheck
+    
+    - name: Run tests
+      working-directory: ./log4js
+      run: npm test
+    
+    - name: Build
+      working-directory: ./log4js
+      run: npm run build
+    
+    - name: Upload build artifacts
+      if: matrix.node-version == '20.x'
+      uses: actions/upload-artifact@v4
+      with:
+        name: dist
+        path: log4js/dist/
+
+  publish-npm:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    if: github.event_name == 'release'
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        registry-url: 'https://registry.npmjs.org'
+    
+    - name: Install dependencies
+      working-directory: ./log4js
+      run: npm ci
+    
+    - name: Build
+      working-directory: ./log4js
+      run: npm run build
+    
+    - name: Publish to npm
+      working-directory: ./log4js
+      run: npm publish
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  publish-release:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    if: github.event_name == 'release'
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+    
+    - name: Install dependencies
+      working-directory: ./log4js
+      run: npm ci
+    
+    - name: Build
+      working-directory: ./log4js
+      run: npm run build
+    
+    - name: Create distribution archive
+      working-directory: ./log4js
+      run: |
+        mkdir -p ../release
+        tar -czf ../release/log4js-${{ github.ref_name }}.tar.gz -C dist .
+        zip -r ../release/log4js-${{ github.ref_name }}.zip dist/
+    
+    - name: Upload Release Assets
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          release/log4js-*.tar.gz
+          release/log4js-*.zip
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

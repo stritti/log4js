@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Build artifacts
+dist/
+target/
+build/
+*.tsbuildinfo
+
+# TypeScript
+*.js.map
+*.d.ts.map
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Testing
+coverage/
+.nyc_output/
+
+# Misc
+.DS_Store
+*.log
+.cache/
